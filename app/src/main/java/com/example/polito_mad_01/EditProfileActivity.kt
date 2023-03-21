@@ -7,11 +7,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.TextView
+import org.json.JSONObject
 
 class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        getData()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -28,35 +31,49 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun saveData(){
-        val sp = getSharedPreferences("mySharedPreferencies", Context.MODE_PRIVATE).edit()
-        sp.putString("fullName", "Mario Rossi")
-        sp.putString("nickname", "m@r1o_ross1")
-        sp.putInt("age", 20)
-        sp.putString("gender", "M")
-        sp.putString("location", "Torino")
-        sp.putString("phoneNumber", "1234567890")
-        sp.putString("email", "mario.rossi@email.it")
+        val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
+        val user = JSONObject()
+        user.put("fullName", findViewById<TextView>(R.id.fullName_inputView).text)
+        .put("nickname", findViewById<TextView>(R.id.nickName_inputLayout).text)
+        .put("age", findViewById<TextView>(R.id.age_inputLayout).text)
+        .put("gender", findViewById<TextView>(R.id.gender_inputView).text)
+        .put("location", findViewById<TextView>(R.id.location_inputView).text)
+        .put("monday", findViewById<TextView>(R.id.monHours_inputView).text)
+        .put("tuesday", findViewById<TextView>(R.id.tueHours_inputView).text)
+        .put("wednesday", findViewById<TextView>(R.id.wedHours_inputView).text)
+        .put("thursday", findViewById<TextView>(R.id.thuHours_inputView).text)
+        .put("friday", findViewById<TextView>(R.id.friHours_inputView).text)
+        .put("saturday", findViewById<TextView>(R.id.satHours_inputView).text)
+        .put("sunday", findViewById<TextView>(R.id.sunHours_inputView).text)
+        .put("phoneNumber", findViewById<TextView>(R.id.phoneNumber_inputView).text)
+        .put("email", findViewById<TextView>(R.id.mail_inputView).text)
+
+        sp.putString("user", user.toString())
         sp.apply()
     }
 
     private fun getData(){
-        val sp = getSharedPreferences("mySharedPreferencies", Context.MODE_PRIVATE)
-        val fullName = sp.getString("fullName", "Mario Rossi")
-        val nickname = sp.getString("nickname", "m@r1o_ross1")
-        val age = sp.getInt("age", 20)
-        val expertSports = sp.getStringSet("expert", mutableSetOf())
-        val intermediateSports = sp.getStringSet("intermediate", mutableSetOf())
-        val beginnerSports = sp.getStringSet("beginner", mutableSetOf())
-        val gender = sp.getString("gender", "M")
-        val location = sp.getString("location", "Torino")
-        val phoneNumber = sp.getString("phoneNumber", "1234567890")
-        val email = sp.getString("email", "mario.rossi@email.it")
-        val mon = sp.getString("monday", "10.00 - 20.00")
-        val tue = sp.getString("tuesday", "10.00 - 20.00")
-        val wed = sp.getString("wednesday", "10.00 - 20.00")
-        val thu = sp.getString("thursday", "10.00 - 20.00")
-        val fri = sp.getString("friday", "10.00 - 20.00")
-        val sat = sp.getString("saturday", "10.00 - 20.00")
-        val sun = sp.getString("sunday", "10.00 - 20.00")
+        val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
+
+        //extract a json object from a string
+        val userString = sp.getString("user", "{\"fullname\":\"Mario Rossi\",\"nickname\":\"m@r1o_ross1\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
+        val userObject = JSONObject(userString!!)
+
+        findViewById<TextView>(R.id.fullName_inputView).text = userObject.getString("fullName")
+        findViewById<TextView>(R.id.nickName_inputLayout).text = userObject.getString("nickname")
+        findViewById<TextView>(R.id.age_inputLayout).text = userObject.getInt("age").toString()
+        findViewById<TextView>(R.id.description_inputView).text = userObject.getString("description")
+        findViewById<TextView>(R.id.gender_inputView).text = userObject.getString("gender")
+        findViewById<TextView>(R.id.location_inputView).text =userObject.getString("location")
+        findViewById<TextView>(R.id.monHours_inputView).text =userObject.getString("monday")
+        findViewById<TextView>(R.id.tueHours_inputView).text =userObject.getString("tuesday")
+        findViewById<TextView>(R.id.wedHours_inputView).text =userObject.getString("wednesday")
+        findViewById<TextView>(R.id.thuHours_inputView).text =userObject.getString("thursday")
+        findViewById<TextView>(R.id.friHours_inputView).text =userObject.getString("friday")
+        findViewById<TextView>(R.id.satHours_inputView).text =userObject.getString("saturday")
+        findViewById<TextView>(R.id.sunHours_inputView).text =userObject.getString("sunday")
+        findViewById<TextView>(R.id.mail_inputView).text =userObject.getString("email")
+        findViewById<TextView>(R.id.phoneNumber_inputView).text =userObject.getString("phoneNumber")
+
     }
 }
