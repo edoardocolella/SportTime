@@ -1,12 +1,12 @@
 package com.example.polito_mad_01
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 
 class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +24,27 @@ class ShowProfileActivity : AppCompatActivity() {
         val i = Intent(this, EditProfileActivity::class.java)
         startActivity(i)
         return true
+    }
+
+    private fun getData(){
+        val sp = getSharedPreferences("mySharedPreferencies", Context.MODE_PRIVATE)
+        val fullName = sp.getString("fullName", "Mario Rossi")
+        val nickname = sp.getString("nickname", "m@r1o_ross1")
+        val age = sp.getInt("age", 20)
+        val expertSports = sp.getStringSet("expert", mutableSetOf())
+        val intermediateSports = sp.getStringSet("intermediate", mutableSetOf())
+        val beginnerSports = sp.getStringSet("beginner", mutableSetOf())
+        val gender = sp.getString("gender", "M")
+        val location = sp.getString("location", "Torino")
+        val phoneNumber = sp.getString("phoneNumber", "1234567890")
+        val email = sp.getString("email", "mario.rossi@email.it")
+        val mon = sp.getString("monday", "10.00 - 20.00")
+        val tue = sp.getString("tuesday", "10.00 - 20.00")
+        val wed = sp.getString("wednesday", "10.00 - 20.00")
+        val thu = sp.getString("thursday", "10.00 - 20.00")
+        val fri = sp.getString("friday", "10.00 - 20.00")
+        val sat = sp.getString("saturday", "10.00 - 20.00")
+        val sun = sp.getString("sunday", "10.00 - 20.00")
     }
 
 
