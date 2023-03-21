@@ -12,11 +12,14 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintSet.HORIZONTAL
 import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.core.view.children
 
 class ShowProfileActivity : AppCompatActivity() {
 
     private fun adaptOrientation() {
         with(findViewById<LinearLayout>(R.id.appLayout)){
+
+
             orientation = when(resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> LinearLayout.HORIZONTAL
                 else -> LinearLayout.VERTICAL
