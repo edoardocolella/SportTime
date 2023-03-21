@@ -51,10 +51,10 @@ class ShowProfileActivity : AppCompatActivity() {
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
 
         //extract a json object from a string
-        val userString = sp.getString("user", "{\"fullname\":\"Mario Rossi\",\"nickname\":\"m@r1o_ross1\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
+        val userString = sp.getString("user", "{\"fullname\":\"Mario Rossi\",\"description\":\"I'm a student\",\"age\":20,\"nickname\":\"m@r1o_ross1\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
         val userObject = JSONObject(userString!!)
 
-        findViewById<TextView>(R.id.fullName_textView).text = userObject.getString("fullName")
+        findViewById<TextView>(R.id.fullName_textView).text = userObject.getString("fullname")
         findViewById<TextView>(R.id.nickName_textView).text = userObject.getString("nickname")
         findViewById<TextView>(R.id.age_textView).text = userObject.getInt("age").toString()
         findViewById<TextView>(R.id.description_textView).text = userObject.getString("description")
