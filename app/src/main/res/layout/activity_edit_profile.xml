@@ -17,6 +17,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/age_inputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/age_inputView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="hint" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/fullName_inputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -34,6 +46,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nickName_inputView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:hint="@string/hint" />
@@ -43,24 +56,12 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_inputLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/description_inputView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/age_inputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nickName_inputView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:hint="hint" />
         </com.google.android.material.textfield.TextInputLayout>
 
