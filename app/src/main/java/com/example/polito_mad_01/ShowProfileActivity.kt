@@ -10,18 +10,24 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintSet.HORIZONTAL
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 
 class ShowProfileActivity : AppCompatActivity() {
+
+    private fun adaptOrientation() {
+        with(findViewById<LinearLayout>(R.id.appLayout)){
+            orientation = when(resources.configuration.orientation) {
+                Configuration.ORIENTATION_LANDSCAPE -> LinearLayout.HORIZONTAL
+                else -> LinearLayout.VERTICAL
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_profile)
-//
-//        val layout: LinearLayout = findViewById(R.id.infoLayout)
-//        if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
-//            layout.orientation =
-//        } else {
-//
-//        }
+
+        adaptOrientation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
