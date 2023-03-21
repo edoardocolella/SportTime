@@ -1,28 +1,34 @@
 package com.example.polito_mad_01
 
 import android.content.Context
-import android.content.res.Configuration
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintSet.HORIZONTAL
-import androidx.constraintlayout.widget.ConstraintSet.Layout
-import androidx.core.view.children
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.setMargins
+import kotlin.math.roundToInt
 
 class ShowProfileActivity : AppCompatActivity() {
+    private fun fromDpToPx(pxValue: Int) : Int {
+        val density: Float = resources.displayMetrics.density
+        return (pxValue*density).roundToInt()
+    }
 
     private fun adaptOrientation() {
-        with(findViewById<LinearLayout>(R.id.appLayout)){
+        val appLayout: LinearLayout = findViewById(R.id.appLayout)
 
-
-            orientation = when(resources.configuration.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> LinearLayout.HORIZONTAL
-                else -> LinearLayout.VERTICAL
+        when(resources.configuration.orientation){
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                appLayout.orientation = LinearLayout.HORIZONTAL
+            }
+            else -> {
+                appLayout.orientation = LinearLayout.VERTICAL
             }
         }
     }
