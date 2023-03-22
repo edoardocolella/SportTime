@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Polito-MAD-01</string>
     <string name="hint">hint</string>
+    <string name="saveIcon">save</string>
+    <string name="editIcon">edit</string>
     <string name="pictureDescription">profile Picture</string>
     <string name="fullName">Name Surname</string>
     <string name="nickname">Nickname</string>

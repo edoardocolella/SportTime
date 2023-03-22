@@ -13,20 +13,20 @@
         android:id="@+id/profileImage_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_weight="2"
         android:contentDescription="@string/pictureDescription"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:src="@drawable/avatar" />
 
     <LinearLayout
         android:id="@+id/infoLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
             android:id="@+id/fullName_textView"

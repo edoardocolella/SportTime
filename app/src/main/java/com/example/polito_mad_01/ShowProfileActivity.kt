@@ -7,11 +7,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import androidx.core.view.updatePaddingRelative
 import org.json.JSONObject
 
 class ShowProfileActivity : AppCompatActivity() {
@@ -42,21 +42,21 @@ class ShowProfileActivity : AppCompatActivity() {
         when(resources.configuration.orientation){
             Configuration.ORIENTATION_LANDSCAPE -> {
                 appLayout.orientation = LinearLayout.HORIZONTAL
-                profileImage.let {
-                    (it.layoutParams as MarginLayoutParams).marginEnd = fromDpToPx(8)
-                }
-                infoLayout.let {
-                    (it.layoutParams as MarginLayoutParams).marginStart = fromDpToPx(8)
-                }
+                profileImage.updatePaddingRelative(
+                    end = fromDpToPx(8)
+                )
+                infoLayout.updatePaddingRelative(
+                    start = fromDpToPx(8)
+                )
             }
             else -> {
                 appLayout.orientation = LinearLayout.VERTICAL
-                profileImage.let {
-                    (it.layoutParams as MarginLayoutParams).marginEnd = fromDpToPx(16)
-                }
-                infoLayout.let {
-                    (it.layoutParams as MarginLayoutParams).marginStart = fromDpToPx(16)
-                }
+                profileImage.updatePaddingRelative(
+                    end = fromDpToPx(16)
+                )
+                infoLayout.updatePaddingRelative(
+                    start = fromDpToPx(16)
+                )
             }
         }
     }
