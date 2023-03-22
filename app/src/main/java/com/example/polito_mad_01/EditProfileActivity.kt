@@ -2,20 +2,59 @@ package com.example.polito_mad_01
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 
 class EditProfileActivity : AppCompatActivity() {
+
+    var frame: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
+        //frame = findViewById(R.id.imageView)
         getData()
+
+        //checkPermissionCamera
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED) {
+                val permission = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                requestPermissions(permission, 112)
+            }
+        }
+
+        frame?.setOnLongClickListener(View.OnLongClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    == PackageManager.PERMISSION_DENIED
+                ) {
+                    val permission = arrayOf(
+                        android.Manifest.permission.CAMERA,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                    requestPermissions(permission, 121)
+                } else {
+                    //error
+                }
+            } else {
+                //error
+            }
+            openCamera()
+            true
+        })
+        */
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
