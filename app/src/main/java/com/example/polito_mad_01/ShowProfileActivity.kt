@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
@@ -34,22 +36,40 @@ class ShowProfileActivity : AppCompatActivity() {
 
     private fun adaptOrientation() {
         val appLayout: LinearLayout = findViewById(R.id.appLayout)
+        val profileImage: ImageView = findViewById(R.id.profileImage_imageView)
+        val infoLayout: LinearLayout = findViewById(R.id.infoLayout)
 
         when(resources.configuration.orientation){
             Configuration.ORIENTATION_LANDSCAPE -> {
                 appLayout.orientation = LinearLayout.HORIZONTAL
+                profileImage.let {
+                    (it.layoutParams as MarginLayoutParams).marginEnd = fromDpToPx(8)
+                }
+                infoLayout.let {
+                    (it.layoutParams as MarginLayoutParams).marginStart = fromDpToPx(8)
+                }
             }
             else -> {
                 appLayout.orientation = LinearLayout.VERTICAL
+                profileImage.let {
+                    (it.layoutParams as MarginLayoutParams).marginEnd = fromDpToPx(16)
+                }
+                infoLayout.let {
+                    (it.layoutParams as MarginLayoutParams).marginStart = fromDpToPx(16)
+                }
             }
         }
+    }
+
+    private fun fromDpToPx(dpValue: Int) : Int{
+        return (dpValue * resources.displayMetrics.density).toInt()
     }
 
     private fun getData(){
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
 
         //extract a json object from a string
-        val userString = sp.getString("user", "{\"fullName\":\"Mario Rossi\",\"nickname\":\"m@r1o_ross1\",\"description\":\"Best striker San Paolo\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
+        val userString = sp.getString("user", "{\"fullName\":\"Mario Rossi\",\"nickname\":\"C1cal0ne\",\"description\":\"Best striker Cenisia\",\"age\":34,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00, 16:00-20:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
         val userObject = JSONObject(userString!!)
 
         findViewById<TextView>(R.id.fullName_textView).text = userObject.getString("fullName")

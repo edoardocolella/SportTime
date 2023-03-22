@@ -6,11 +6,11 @@
     <string name="nickname">Nickname</string>
     <string name="description">Description</string>
     <string name="profileLabel">Profile</string>
-    <string name="ageLabel">Age: </string>
+    <string name="ageLabel">"Age: "</string>
     <string name="age"></string>
-    <string name="genderLabel">Age: </string>
+    <string name="genderLabel">"Gender: "</string>
     <string name="gender"></string>
-    <string name="locationLabel">Location: </string>
+    <string name="locationLabel">"Location: "</string>
     <string name="location"></string>
     <string name="sportsLabel">Sports</string>
     <string name="expertLabel">Expert</string>
@@ -35,8 +35,8 @@
     <string name="sundayLabel">Sunday</string>
     <string name="sundayHours"></string>
     <string name="contactsLabel">Contacts</string>
-    <string name="emailLabel">Email: </string>
+    <string name="emailLabel">"Email: "</string>
     <string name="email"></string>
-    <string name="phoneLabel">Phone Number: </string>
+    <string name="phoneLabel">"Phone Number: "</string>
     <string name="phoneNumber"></string>
 </resources>
