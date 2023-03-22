@@ -94,7 +94,7 @@
 
                         <LinearLayout
                             android:id="@+id/ageLayout"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="horizontal">
@@ -117,9 +117,9 @@
 
                         <LinearLayout
                             android:id="@+id/genderLayout"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:orientation="horizontal">
 
                             <TextView
@@ -193,18 +193,18 @@
 
                         <TextView
                             android:id="@+id/expertLabel_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="3"
                             android:text="@string/expertLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/expertList_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="7"
                             android:text="@string/expertSports"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -223,18 +223,18 @@
 
                         <TextView
                             android:id="@+id/intermediateLabel_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="3"
                             android:text="@string/intermediateLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/intermediateList_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="7"
                             android:text="@string/intermediateSports"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -253,18 +253,18 @@
 
                         <TextView
                             android:id="@+id/beginnerLabel_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="3"
                             android:text="@string/beginnerLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/beginnerList_textView"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="7"
                             android:text="@string/beginnerSports"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -307,18 +307,18 @@
 
                             <TextView
                                 android:id="@+id/monLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/mondayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/monHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/mondayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -337,18 +337,18 @@
 
                             <TextView
                                 android:id="@+id/tueLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/tuesdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/tueHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/tuesdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -367,18 +367,18 @@
 
                             <TextView
                                 android:id="@+id/wedLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/wednesdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/wedHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/wednesdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -397,18 +397,18 @@
 
                             <TextView
                                 android:id="@+id/thuLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/thursdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/thuHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/thursdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -427,18 +427,18 @@
 
                             <TextView
                                 android:id="@+id/friLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/fridayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/friHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/fridayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -457,18 +457,18 @@
 
                             <TextView
                                 android:id="@+id/satLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/saturdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/satHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/saturdayHours"
                                 android:textSize="16sp" />
 
@@ -488,18 +488,18 @@
 
                             <TextView
                                 android:id="@+id/sunLabel_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
+                                android:layout_weight="1"
                                 android:text="@string/sundayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/sunHours_textView"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_weight="3"
                                 android:text="@string/sundayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
