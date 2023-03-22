@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_weight="2"
-        android:contentDescription="profile Picture"
+        android:contentDescription="@string/pictureDescription"
         android:src="@drawable/avatar" />
 
     <LinearLayout
@@ -32,14 +32,14 @@
             android:id="@+id/fullName_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mario Rossi"
+            android:text="@string/fullName"
             android:textSize="34sp" />
 
         <TextView
             android:id="@+id/nickName_textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nickname"
+            android:text="@string/nickname"
             android:textSize="24sp"
             android:textStyle="italic" />
 
@@ -59,7 +59,7 @@
                     android:id="@+id/description_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Description"
+                    android:text="@string/description"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -74,13 +74,14 @@
                         android:id="@+id/profileLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Profile"
+                        android:text="@string/profileLabel"
                         android:textSize="24sp" />
 
                     <View
-                        android:id="@+id/profileDivider"
+                        android:id="@+id/divider1"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
                         android:background="?android:attr/listDivider" />
 
                     <LinearLayout
@@ -101,7 +102,7 @@
                                 android:id="@+id/ageLabel_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Age: "
+                                android:text="@string/ageLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -109,7 +110,7 @@
                                 android:id="@+id/age_textView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="TextView"
+                                android:text="@string/age"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -124,7 +125,7 @@
                                 android:id="@+id/genderLabel_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Gender: "
+                                android:text="@string/genderLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -132,7 +133,7 @@
                                 android:id="@+id/gender_textView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="TextView"
+                                android:text="@string/gender"
                                 android:textSize="16sp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -147,7 +148,7 @@
                             android:id="@+id/locationLabel_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location: "
+                            android:text="@string/locationLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -155,7 +156,7 @@
                             android:id="@+id/location_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TextView"
+                            android:text="@string/location"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -173,13 +174,14 @@
                         android:id="@+id/sportLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sports"
+                        android:text="@string/sportsLabel"
                         android:textSize="24sp" />
 
                     <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
                         android:background="?android:attr/listDivider" />
 
                     <LinearLayout
@@ -193,7 +195,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="Expert"
+                            android:text="@string/expertLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -202,7 +204,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Basket"
+                            android:text="@string/expertSports"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -223,7 +225,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="Intermediate"
+                            android:text="@string/intermediateLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -232,7 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tennis, Football"
+                            android:text="@string/intermediateSports"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -253,7 +255,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="2"
-                            android:text="Beginner"
+                            android:text="@string/beginnerLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -262,7 +264,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Volleyball"
+                            android:text="@string/beginnerSports"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -280,13 +282,14 @@
                         android:id="@+id/availabilityLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Availability"
+                        android:text="@string/availabilityLabel"
                         android:textSize="24sp" />
 
                     <View
                         android:id="@+id/divider5"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
                         android:background="?android:attr/listDivider" />
 
                     <LinearLayout
@@ -306,7 +309,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/mondayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -315,7 +318,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/mondayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -336,7 +339,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/tuesdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -345,7 +348,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/tuesdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -366,7 +369,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/wednesdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -375,7 +378,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/wednesdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -396,7 +399,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/thursdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -405,7 +408,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/thursdayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -426,7 +429,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/fridayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -435,7 +438,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/fridayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -456,7 +459,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/saturdayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -465,7 +468,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/saturdayHours"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
@@ -474,7 +477,6 @@
                             android:id="@+id/divider11"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_weight="3"
                             android:background="?android:attr/listDivider" />
 
                         <LinearLayout
@@ -488,7 +490,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="Monday"
+                                android:text="@string/sundayLabel"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -497,7 +499,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="TextView"
+                                android:text="@string/sundayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -517,13 +519,14 @@
                         android:id="@+id/contactLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Contacts"
+                        android:text="@string/contactsLabel"
                         android:textSize="24sp" />
 
                     <View
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
+                        android:layout_marginBottom="8dp"
                         android:background="?android:attr/listDivider" />
 
                     <LinearLayout
@@ -535,7 +538,7 @@
                             android:id="@+id/mailLabel_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Email: "
+                            android:text="@string/emailLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -543,7 +546,7 @@
                             android:id="@+id/mail_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="email"
+                            android:text="@string/email"
                             android:textSize="16sp" />
                     </LinearLayout>
 
@@ -556,7 +559,7 @@
                             android:id="@+id/phoneLabel_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Phone number: "
+                            android:text="@string/phoneLabel"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -564,7 +567,7 @@
                             android:id="@+id/phoneNumber_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="1234556678"
+                            android:text="@string/phoneNumber"
                             android:textSize="16sp" />
                     </LinearLayout>
 
