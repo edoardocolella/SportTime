@@ -7,19 +7,21 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
-import androidx.core.view.updatePaddingRelative
 import org.json.JSONObject
 
 class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show_profile)
+
+        val layout = when(resources.configuration.orientation){
+            Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_show_profile_landscape
+            else -> R.layout.activity_show_profile_portrait
+        }
+
+        setContentView(layout)
         getData()
-        adaptOrientation()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -32,37 +34,6 @@ class ShowProfileActivity : AppCompatActivity() {
         val i = Intent(this, EditProfileActivity::class.java)
         startActivity(i)
         return true
-    }
-
-    private fun adaptOrientation() {
-        val appLayout: LinearLayout = findViewById(R.id.appLayout)
-        val profileImage: ImageView = findViewById(R.id.profileImage_imageView)
-        val infoLayout: LinearLayout = findViewById(R.id.infoLayout)
-
-        when(resources.configuration.orientation){
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                appLayout.orientation = LinearLayout.HORIZONTAL
-                profileImage.updatePaddingRelative(
-                    end = fromDpToPx(8)
-                )
-                infoLayout.updatePaddingRelative(
-                    start = fromDpToPx(8)
-                )
-            }
-            else -> {
-                appLayout.orientation = LinearLayout.VERTICAL
-                profileImage.updatePaddingRelative(
-                    end = fromDpToPx(16)
-                )
-                infoLayout.updatePaddingRelative(
-                    start = fromDpToPx(16)
-                )
-            }
-        }
-    }
-
-    private fun fromDpToPx(dpValue: Int) : Int{
-        return (dpValue * resources.displayMetrics.density).toInt()
     }
 
     private fun getData(){
