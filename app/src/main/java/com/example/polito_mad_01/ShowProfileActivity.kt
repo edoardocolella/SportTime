@@ -1,8 +1,11 @@
 package com.example.polito_mad_01
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,6 +24,16 @@ class ShowProfileActivity : AppCompatActivity() {
         }
 
         setContentView(layout)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_DENIED) {
+                val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                requestPermissions(permission, 112)
+            }
+        }
+
         getData()
     }
 
