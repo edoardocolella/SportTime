@@ -5,11 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import org.json.JSONObject
@@ -71,7 +74,10 @@ class ShowProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.sunHours_textView).text =userObject.getString("sunday")
         findViewById<TextView>(R.id.mail_textView).text =userObject.getString("email")
         findViewById<TextView>(R.id.phoneNumber_textView).text =userObject.getString("phoneNumber")
-
+        /*var test :String? = userObject.getString("image_data")
+        val b: ByteArray = Base64.decode(test, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
+        findViewById<ImageView>(R.id.profileImage_imageView).setImageBitmap(bitmap)*/
     }
 
 

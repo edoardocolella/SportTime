@@ -9,21 +9,21 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
 import android.view.*
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
+import java.io.ByteArrayOutputStream
+
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -34,18 +34,25 @@ class EditProfileActivity : AppCompatActivity() {
     var image_uri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     val IMAGE_CAPTURE_CODE = 654
+    var encodedImage: String = ""
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile_portrait)
+
         frame = findViewById(R.id.profileImage_imageView)
+
         val imgButton = findViewById<ImageButton>(R.id.imageButton)
+        registerForContextMenu(imgButton)
+        imgButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View) {
+                v.showContextMenu()
+            }
+        })
 
         getData()
-
-
-        registerForContextMenu(imgButton)
 
     }
 
@@ -87,6 +94,10 @@ class EditProfileActivity : AppCompatActivity() {
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
+            /*val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val b: ByteArray = baos.toByteArray()
+            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)*/
         }
     }
 
@@ -181,6 +192,8 @@ class EditProfileActivity : AppCompatActivity() {
         .put("sunday", findViewById<TextInputEditText>(R.id.sunHours_value).text)
         .put("phoneNumber", findViewById<TextInputEditText>(R.id.phoneNumber_value).text)
         .put("email", findViewById<TextInputEditText>(R.id.mail_value).text)
+        //.put("image_data", encodedImage )
+
 
         sp.putString("user", user.toString())
         sp.apply()
@@ -209,5 +222,7 @@ class EditProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.mail_value).text =userObject.getString("email")
         findViewById<TextView>(R.id.phoneNumber_value).text =userObject.getString("phoneNumber")
 
+
     }
 }
+
