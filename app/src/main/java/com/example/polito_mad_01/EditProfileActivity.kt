@@ -2,14 +2,11 @@ package com.example.polito_mad_01
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
@@ -76,8 +73,8 @@ class EditProfileActivity : AppCompatActivity() {
         user.put("fullName", findViewById<TextInputEditText>(R.id.fullName_inputView).text)
         .put("nickname", findViewById<TextInputEditText>(R.id.nickName_inputView).text)
             .put("description", findViewById<TextInputEditText>(R.id.description_inputView).text)
-            .put("age", findViewById<TextInputEditText>(R.id.age_inputView).text)
-        .put("gender", findViewById<TextInputEditText>(R.id.gender_inputView).text)
+            .put("age", findViewById<TextInputEditText>(R.id.gender_value).text)
+        .put("gender", findViewById<TextInputEditText>(R.id.gender_value).text)
         .put("location", findViewById<TextInputEditText>(R.id.location_inputView).text)
         .put("monday", findViewById<TextInputEditText>(R.id.monHours_inputView).text)
         .put("tuesday", findViewById<TextInputEditText>(R.id.tueHours_inputView).text)
@@ -102,9 +99,9 @@ class EditProfileActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.fullName_inputView).text = userObject.getString("fullName")
         findViewById<TextView>(R.id.nickName_inputView).text = userObject.getString("nickname")
-        findViewById<TextView>(R.id.age_inputView).text = userObject.getInt("age").toString()
+        findViewById<TextView>(R.id.gender_value).text = userObject.getInt("age").toString()
         findViewById<TextView>(R.id.description_inputView).text = userObject.getString("description")
-        findViewById<TextView>(R.id.gender_inputView).text = userObject.getString("gender")
+        findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
         findViewById<TextView>(R.id.location_inputView).text =userObject.getString("location")
         findViewById<TextView>(R.id.monHours_inputView).text =userObject.getString("monday")
         findViewById<TextView>(R.id.tueHours_inputView).text =userObject.getString("tuesday")
