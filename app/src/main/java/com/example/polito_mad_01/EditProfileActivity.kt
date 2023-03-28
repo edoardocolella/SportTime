@@ -1,57 +1,193 @@
 package com.example.polito_mad_01
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.provider.MediaStore
+import android.view.*
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 
 class EditProfileActivity : AppCompatActivity() {
 
     var frame: ImageView? = null
+    //var imgButton: ImageButton? = null
+    private lateinit var cropIntent:Intent
+    var PERMISSION_REQUEST_CODE = 200
+    var image_uri: Uri? = null
+    private val RESULT_LOAD_IMAGE = 123
+    val IMAGE_CAPTURE_CODE = 654
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile_portrait)
-        //frame = findViewById(R.id.imageView)
+        frame = findViewById(R.id.profileImage_imageView)
+        val imgButton = findViewById<ImageButton>(R.id.imageButton)
+
         getData()
 
-        //checkPermissionCamera
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_DENIED) {
-                val permission = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 requestPermissions(permission, 112)
             }
         }
 
-        frame?.setOnLongClickListener(View.OnLongClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
-                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    == PackageManager.PERMISSION_DENIED
-                ) {
-                    val permission = arrayOf(
-                        android.Manifest.permission.CAMERA,
-                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                    requestPermissions(permission, 121)
-                } else {
-                    //error
-                }
-            } else {
-                //error
+        registerForContextMenu(imgButton)
+
+    }
+
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_picture, menu)
+    }
+
+
+    private fun openCamera() {
+        val values = ContentValues()
+        values.put(MediaStore.Images.Media.TITLE, "New Picture")
+        values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
+        image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
+            /*//frame?.setImageURI(image_uri)
+
+            val bitmap = uriToBitmap(image_uri!!)
+            //val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+            frame?.setImageBitmap(bitmap)*/
+            frame?.setImageURI(image_uri)
+            val drawable = frame?.drawable as BitmapDrawable
+            val bitmap = drawable.bitmap
+            val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+            frame?.setImageBitmap(resized)
+
+
+        }
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
+            image_uri = data.data!!
+            frame?.setImageURI(image_uri)
+            val drawable = frame?.drawable as BitmapDrawable
+            val bitmap = drawable.bitmap
+            val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+            frame?.setImageBitmap(resized)
+            //val bitmap = uriToBitmap(image_uri!!)
+            //val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+            //frame!!.setImageBitmap(resized)
+        }
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item!!.itemId) {
+            R.id.gallery -> {
+                val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+
+                return true
             }
-            openCamera()
-            true
-        })
-        */
+            R.id.picture -> {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_DENIED) {
+                        val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        requestPermissions(permission, 121)
+                    } else {
+                        Toast.makeText(this@MainActivity,
+                            "OPEN CAMERA",
+                            Toast.LENGTH_SHORT).show()
+                        openCamera()
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity,
+                        "OPEN CAMERA 2",
+                        Toast.LENGTH_SHORT).show()
+                    openCamera()
+                }
+                Toast.makeText(this@MainActivity,
+                    "OPEN CAMERA 3",
+                    Toast.LENGTH_SHORT).show()
+//                openCamera()*/
+                if(checkPermission()){
+                    openCamera()
+                }else
+                    showPermissionReasonAndRequest(
+                        "Notice",
+                        "Hi, we will request CAMERA permission. " +
+                                "This is required for taking the photo from camera, " +
+                                "please grant it."
+                    )
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun checkPermission(): Boolean{
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            return false;
+        }
+        return true;
+    }
+
+
+    fun requestPermission() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE);
+    }
+
+
+    fun Activity.showPermissionReasonAndRequest(
+        title: String,
+        message: String,
+    ) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(title)
+        builder.setMessage(message)
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            requestPermission()
+        }
+
+        builder.setNegativeButton("NO") { dialog, which ->
+            Toast.makeText(applicationContext,
+                android.R.string.no, Toast.LENGTH_SHORT).show()
+        }
+
+        builder.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
