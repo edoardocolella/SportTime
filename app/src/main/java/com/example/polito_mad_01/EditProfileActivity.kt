@@ -73,7 +73,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun saveData(){
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
         val user = JSONObject()
-        user.put("fullname", findViewById<TextInputEditText>(R.id.fullName_inputView).text)
+        user.put("fullName", findViewById<TextInputEditText>(R.id.fullName_inputView).text)
         .put("nickname", findViewById<TextInputEditText>(R.id.nickName_inputView).text)
             .put("description", findViewById<TextInputEditText>(R.id.description_inputView).text)
             .put("age", findViewById<TextInputEditText>(R.id.age_inputView).text)
@@ -97,10 +97,10 @@ class EditProfileActivity : AppCompatActivity() {
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
 
         //extract a json object from a string
-        val userString = sp.getString("user", "{\"fullname\":\"Mario Rossi\",\"description\":\"I'm a student\",\"age\":20,\"nickname\":\"m@r1o_ross1\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
+        val userString = sp.getString("user", "{\"fullName\":\"Mario Rossi\",\"description\":\"I'm a student\",\"age\":20,\"nickname\":\"m@r1o_ross1\",\"age\":20,\"gender\":\"M\",\"location\":\"Torino\",\"monday\":\"8:00-12:00\",\"tuesday\":\"8:00-12:00\",\"wednesday\":\"8:00-12:00\",\"thursday\":\"8:00-12:00\",\"friday\":\"8:00-12:00\",\"saturday\":\"8:00-12:00\",\"sunday\":\"8:00-12:00\",\"phoneNumber\": \"1234567890\",\"email\": \"mario.rossi@email.it\"}")
         val userObject = JSONObject(userString!!)
 
-        findViewById<TextView>(R.id.fullName_inputView).text = userObject.getString("fullname")
+        findViewById<TextView>(R.id.fullName_inputView).text = userObject.getString("fullName")
         findViewById<TextView>(R.id.nickName_inputView).text = userObject.getString("nickname")
         findViewById<TextView>(R.id.age_inputView).text = userObject.getInt("age").toString()
         findViewById<TextView>(R.id.description_inputView).text = userObject.getString("description")

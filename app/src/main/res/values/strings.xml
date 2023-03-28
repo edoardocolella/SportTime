@@ -9,11 +9,11 @@
     <string name="description">Description</string>
     <string name="profileLabel">Profile</string>
     <string name="ageLabel">"Age: "</string>
-    <string name="age"></string>
+    <string name="age">99</string>
     <string name="genderLabel">"Gender: "</string>
-    <string name="gender"></string>
+    <string name="gender">Male</string>
     <string name="locationLabel">"Location: "</string>
-    <string name="location"></string>
+    <string name="location">Bassano del Grappa, Veneto</string>
     <string name="sportsLabel">Sports</string>
     <string name="expertLabel">Expert</string>
     <string name="expertSports"></string>
