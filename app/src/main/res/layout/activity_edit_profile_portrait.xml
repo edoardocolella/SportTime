@@ -123,7 +123,10 @@
                             android:paddingBottom="8dp"
                             android:text="@string/age"
                             android:textAlignment="viewStart"
-                            android:textSize="24sp" />
+                            android:textSize="24sp"
+                            android:inputType="number"
+                            android:importantForAutofill="no"
+                            />
 
                     </LinearLayout>
 
@@ -134,13 +137,16 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="@android:color/transparent"
-                        android:drawableLeft="@drawable/home_pin_48px"
+                        android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:text="@string/location"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        />
 
                 </LinearLayout>
 
@@ -150,7 +156,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/description"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    />
 
                 <LinearLayout
                     android:id="@+id/sportLayout"
@@ -201,7 +210,9 @@
                             android:paddingBottom="8dp"
                             android:text="@string/expertSports"
                             android:textSize="22sp"
-                            tools:text="@string/expertSports" />
+                            tools:text="@string/expertSports"
+                            android:importantForAutofill="no"
+                            />
                     </LinearLayout>
 
                     <View
@@ -234,7 +245,10 @@
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/intermediateSports"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            android:inputType="text"
+                            android:importantForAutofill="no"
+                            />
                     </LinearLayout>
 
                     <View
@@ -267,7 +281,10 @@
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/beginnerSports"
-                            android:textSize="22sp" />
+                            android:textSize="22sp"
+                            android:inputType="text"
+                            android:importantForAutofill="no"
+                            />
                     </LinearLayout>
 
                 </LinearLayout>
