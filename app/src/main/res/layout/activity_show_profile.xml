@@ -17,8 +17,7 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/face_48px"
-     />
+        android:src="@drawable/face_48px" />
 
     <LinearLayout
         android:id="@+id/infoLayout"
@@ -170,6 +169,14 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/friHours_textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="@string/fridayHours"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/sportLabel_textView"
@@ -434,13 +441,6 @@
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
-                            <TextView
-                                android:id="@+id/friHours_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/fridayHours"
-                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <View
