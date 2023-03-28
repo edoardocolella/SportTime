@@ -33,31 +33,30 @@
             android:id="@+id/fullName_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="name"
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="@string/fullName"
             android:inputType="textPersonName"
             android:text="@string/fullName"
             android:textAlignment="center"
-            android:textColor="@android:color/secondary_text_dark"
-            android:textSize="38sp"
-            android:autofillHints="name"
-            />
+            android:textColor="@android:color/tertiary_text_dark"
+            android:textSize="38sp" />
 
         <EditText
             android:id="@+id/nickName_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:autofillHints="username"
             android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:inputType="text"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="@string/nickname"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:textStyle="italic"
-            android:autofillHints="username"
-            />
+            android:textStyle="italic" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -323,6 +322,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:background="@android:color/transparent"
+                                android:inputType="time"
+                                android:autofillHints="none"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/mondayHours"
@@ -357,6 +358,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:background="@android:color/transparent"
+                                android:inputType="time"
+                                android:autofillHints="none"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/tuesdayHours"
@@ -391,6 +394,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:background="@android:color/transparent"
+                                android:inputType="time"
+                                android:autofillHints="none"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/wednesdayHours"
@@ -425,6 +430,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/thursdayHours"
+                                android:inputType="time"
+                                android:autofillHints="none"
                                 android:textSize="18sp"
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
@@ -462,7 +469,9 @@
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/fridayHours"
-                                android:textSize="18dp" />
+                                android:inputType="time"
+                                android:autofillHints="none"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <View
@@ -495,8 +504,10 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="time"
+                                android:autofillHints="none"
                                 android:text="@string/saturdayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -531,7 +542,9 @@
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/sundayHours"
-                                android:textSize="18dp" />
+                                android:inputType="time"
+                                android:autofillHints="none"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -580,6 +593,8 @@
                             android:background="@android:color/transparent"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
+                            android:inputType="textEmailAddress"
+                            android:autofillHints="emailAddress"
                             android:text="@string/email"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -604,6 +619,8 @@
                             android:background="@android:color/transparent"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
+                            android:inputType="phone"
+                            android:autofillHints="phone"
                             android:text="@string/phoneNumber"
                             android:textSize="18sp" />
                     </LinearLayout>
