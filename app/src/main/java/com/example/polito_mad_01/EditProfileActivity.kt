@@ -82,18 +82,11 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
-            /*//frame?.setImageURI(image_uri)
-
-            val bitmap = uriToBitmap(image_uri!!)
-            //val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            frame?.setImageBitmap(bitmap)*/
             frame?.setImageURI(image_uri)
             val drawable = frame?.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
-
-
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             image_uri = data.data!!
@@ -102,9 +95,6 @@ class EditProfileActivity : AppCompatActivity() {
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
-            //val bitmap = uriToBitmap(image_uri!!)
-            //val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            //frame!!.setImageBitmap(resized)
         }
     }
 
@@ -117,27 +107,6 @@ class EditProfileActivity : AppCompatActivity() {
                 return true
             }
             R.id.picture -> {
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED) {
-                        val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        requestPermissions(permission, 121)
-                    } else {
-                        Toast.makeText(this@MainActivity,
-                            "OPEN CAMERA",
-                            Toast.LENGTH_SHORT).show()
-                        openCamera()
-                    }
-                } else {
-                    Toast.makeText(this@MainActivity,
-                        "OPEN CAMERA 2",
-                        Toast.LENGTH_SHORT).show()
-                    openCamera()
-                }
-                Toast.makeText(this@MainActivity,
-                    "OPEN CAMERA 3",
-                    Toast.LENGTH_SHORT).show()
-//                openCamera()*/
                 if(checkPermission()){
                     openCamera()
                 }else
@@ -156,7 +125,6 @@ class EditProfileActivity : AppCompatActivity() {
     fun checkPermission(): Boolean{
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
             return false;
         }
         return true;
@@ -182,7 +150,7 @@ class EditProfileActivity : AppCompatActivity() {
             requestPermission()
         }
 
-        builder.setNegativeButton("NO") { dialog, which ->
+        builder.setNegativeButton("CANCEL") { dialog, which ->
             Toast.makeText(applicationContext,
                 android.R.string.no, Toast.LENGTH_SHORT).show()
         }
