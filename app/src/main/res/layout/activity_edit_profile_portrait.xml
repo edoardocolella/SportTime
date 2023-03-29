@@ -23,7 +23,8 @@
         android:id="@+id/imageButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        android:contentDescription="@string/takePhoto"
+        app:srcCompat="@drawable/photo_camera_48px" />
 
     <LinearLayout
         android:id="@+id/infoLayout"
@@ -45,7 +46,7 @@
             android:inputType="textPersonName"
             android:text="@string/fullName"
             android:textAlignment="center"
-            android:textColor="@android:color/secondary_text_dark"
+            android:textColor="?android:attr/textColorTertiary"
             android:textSize="38sp" />
 
         <EditText
@@ -337,6 +338,8 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/mondayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -371,6 +374,8 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/tuesdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -405,6 +410,8 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/wednesdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -439,6 +446,8 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/thursdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
@@ -473,8 +482,10 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/fridayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <View
@@ -507,8 +518,10 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/saturdayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -542,8 +555,10 @@
                                 android:background="@android:color/transparent"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:inputType="text"
+                                android:autofillHints="name"
                                 android:text="@string/sundayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -592,6 +607,8 @@
                             android:background="@android:color/transparent"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
+                            android:inputType="textEmailAddress"
+                            android:autofillHints="emailAddress"
                             android:text="@string/email"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -616,6 +633,8 @@
                             android:background="@android:color/transparent"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
+                            android:inputType="phone"
+                            android:autofillHints="phone"
                             android:text="@string/phoneNumber"
                             android:textSize="18sp" />
                     </LinearLayout>
