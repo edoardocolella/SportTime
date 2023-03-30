@@ -27,13 +27,13 @@ import java.io.ByteArrayOutputStream
 
 class EditProfileActivity : AppCompatActivity() {
 
-    var frame: ImageView? = null
+    private var frame: ImageView? = null
     //var imgButton: ImageButton? = null
     private lateinit var cropIntent:Intent
-    var PERMISSION_REQUEST_CODE = 200
-    var image_uri: Uri? = null
+    private val PERMISSION_REQUEST_CODE = 200
+    private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
-    val IMAGE_CAPTURE_CODE = 654
+    private val IMAGE_CAPTURE_CODE = 654
     var encodedImage: String = ""
 
 
@@ -46,12 +46,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         val imgButton = findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
-        imgButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View) {
-                v.showContextMenu()
-            }
-        })
-
+        imgButton.setOnClickListener { v -> v.showContextMenu() }
         getData()
 
     }
@@ -72,24 +67,24 @@ class EditProfileActivity : AppCompatActivity() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        image_uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
-            frame?.setImageURI(image_uri)
+            frame?.setImageURI(imageUri)
             val drawable = frame?.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            image_uri = data.data!!
-            frame?.setImageURI(image_uri)
+            imageUri = data.data!!
+            frame?.setImageURI(imageUri)
             val drawable = frame?.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
@@ -102,7 +97,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        return when (item!!.itemId) {
+        return when (item.itemId) {
             R.id.gallery -> {
                 val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
@@ -125,23 +120,23 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    fun checkPermission(): Boolean{
+    private fun checkPermission(): Boolean{
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED) {
-            return false;
+            return false
         }
-        return true;
+        return true
     }
 
 
-    fun requestPermission() {
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(this,
             arrayOf(Manifest.permission.CAMERA),
-            PERMISSION_REQUEST_CODE);
+            PERMISSION_REQUEST_CODE)
     }
 
 
-    fun Activity.showPermissionReasonAndRequest(
+    private fun Activity.showPermissionReasonAndRequest(
         title: String,
         message: String,
     ) {
@@ -149,11 +144,11 @@ class EditProfileActivity : AppCompatActivity() {
         builder.setTitle(title)
         builder.setMessage(message)
 
-        builder.setPositiveButton("OK") { dialog, which ->
+        builder.setPositiveButton("OK") { _, _ ->
             requestPermission()
         }
 
-        builder.setNegativeButton("CANCEL") { dialog, which ->
+        builder.setNegativeButton("CANCEL") { _, _ ->
             Toast.makeText(applicationContext,
                 android.R.string.no, Toast.LENGTH_SHORT).show()
         }
