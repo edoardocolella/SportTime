@@ -26,6 +26,12 @@ class ShowProfileActivity : AppCompatActivity() {
             else -> R.layout.activity_show_profile_portrait
         }
 
+        // calling the action bar
+        var actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.title = "Profile"
+        }
+
         setContentView(layout)
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
