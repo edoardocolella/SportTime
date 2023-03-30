@@ -7,6 +7,7 @@
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFE7EDF6"
     android:orientation="vertical">
 
     <ImageView
@@ -17,8 +18,7 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/face_48px"
-     />
+        android:src="@drawable/face_48px" />
 
     <LinearLayout
         android:id="@+id/infoLayout"
@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/fullName"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="38sp" />
 
         <TextView
@@ -62,6 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/shape"
                     android:gravity="clip_horizontal|center_horizontal"
                     android:orientation="vertical">
 
@@ -126,6 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -133,6 +136,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/sportsLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
@@ -234,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -241,6 +246,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/availabilityLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
@@ -471,6 +477,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -478,6 +485,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
