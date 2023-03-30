@@ -174,7 +174,22 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                finish()
+
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Are you sure?")
+                builder.setMessage("All changes will be lost")
+
+                builder.setPositiveButton("YES") { _, _ ->
+                    finish()
+                }
+
+                builder.setNegativeButton("NO") { _, _ ->
+                    Toast.makeText(applicationContext,
+                        android.R.string.no, Toast.LENGTH_SHORT).show()
+                }
+
+                builder.show()
+
                 return true
             }
             R.id.action_save_profile -> {
