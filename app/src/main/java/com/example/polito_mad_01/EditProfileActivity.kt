@@ -44,6 +44,15 @@ class EditProfileActivity : AppCompatActivity() {
 
         frame = findViewById(R.id.profileImage_imageView)
 
+        // calling the action bar
+        var actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.title = "Edit Profile"
+        }
+
+        // showing the back button in action bar
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         val imgButton = findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
@@ -163,10 +172,20 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        saveData()
-        val i = Intent(this, ShowProfileActivity::class.java)
-        startActivity(i)
-        return true
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+            R.id.action_save_profile -> {
+                saveData()
+                val i = Intent(this, ShowProfileActivity::class.java)
+                startActivity(i)
+                return true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun saveData(){
