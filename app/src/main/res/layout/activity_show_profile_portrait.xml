@@ -8,7 +8,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFE7EDF6"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="16dp">
 
     <ImageView
         android:id="@+id/profileImage_imageView"
@@ -18,7 +19,8 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/face_48px" />
+        android:src="@drawable/myavatar"
+        />
 
     <LinearLayout
         android:id="@+id/infoLayout"
@@ -36,7 +38,7 @@
             android:text="@string/fullName"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="38sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/nickName_textView"
@@ -85,6 +87,7 @@
                             android:layout_marginEnd="16dp"
                             android:gravity="center_horizontal"
                             android:text="@string/gender"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/face_48px" />
 
@@ -96,6 +99,7 @@
                             android:layout_marginEnd="16dp"
                             android:text="@string/age"
                             android:textAlignment="viewStart"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/cake_48px" />
 
@@ -109,6 +113,7 @@
                         android:layout_marginEnd="16dp"
                         android:gravity="center_horizontal"
                         android:text="@string/location"
+                        android:textColor="#363636"
                         android:textSize="18sp"
                         app:drawableStartCompat="@drawable/home_pin_48px" />
 
@@ -135,22 +140,26 @@
                         android:id="@+id/sportLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@string/sportsLabel"
-                        android:textColor="@color/black"
-                        android:textSize="30sp" />
+                        android:textColor="#363636"
+                        android:textSize="26sp" />
 
                     <View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:layout_height="2dp"
+                        android:layout_marginBottom="4dp"
+                        android:background="#363636" />
 
                     <LinearLayout
                         android:id="@+id/expertLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingBottom="2dp">
 
                         <TextView
                             android:id="@+id/expertLabel_textView"
@@ -158,6 +167,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="@string/expertLabel"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -167,6 +177,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:text="@string/expertSports"
+                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -174,13 +185,17 @@
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="#363636" />
 
                     <LinearLayout
                         android:id="@+id/intermediateLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingBottom="2dp">
 
                         <TextView
                             android:id="@+id/intermediateLabel_textView"
@@ -188,6 +203,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:text="@string/intermediateLabel"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -197,27 +213,34 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:text="@string/intermediateSports"
+                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
+
 
                     <View
                         android:id="@+id/divider4"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="#363636" />
 
                     <LinearLayout
                         android:id="@+id/beginnerLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingTop="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingBottom="2dp">
 
                         <TextView
                             android:id="@+id/beginnerLabel_textView"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="28dp"
                             android:layout_weight="3"
                             android:text="@string/beginnerLabel"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -227,6 +250,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:text="@string/beginnerSports"
+                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -245,28 +269,32 @@
                         android:id="@+id/availabilityLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@string/availabilityLabel"
-                        android:textColor="@color/black"
-                        android:textSize="30sp" />
+                        android:textColor="#363636"
+                        android:textSize="26sp" />
 
                     <View
                         android:id="@+id/divider5"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="#363636" />
 
                     <LinearLayout
                         android:id="@+id/weekLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp">
 
                         <LinearLayout
                             android:id="@+id/monLayout_textView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/monLabel_textView"
@@ -274,6 +302,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/mondayLabel"
+                                android:textColor="#363636"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -283,20 +312,23 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/mondayHours"
+                                android:textColor="#363636"
                                 android:textSize="18sp" />
                         </LinearLayout>
+
 
                         <View
                             android:id="@+id/divider6"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/tueLayout_textView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/tueLabel_textView"
@@ -304,6 +336,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/tuesdayLabel"
+                                android:textColor="#363636"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -313,6 +346,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/tuesdayHours"
+                                android:textColor="#363636"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -320,7 +354,7 @@
                             android:id="@+id/divider7"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/wedLayout_textView"
@@ -333,7 +367,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
+                                android:paddingBottom="2dp"
                                 android:text="@string/wednesdayLabel"
+                                android:textColor="#363636"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -343,6 +379,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/wednesdayHours"
+                                android:textColor="#363636"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -350,13 +387,14 @@
                             android:id="@+id/divider8"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/thuLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/thuLabel_textView"
@@ -364,6 +402,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/thursdayLabel"
+                                android:textColor="#363636"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -373,6 +412,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/thursdayHours"
+                                android:textColor="#363636"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -380,13 +420,14 @@
                             android:id="@+id/divider9"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/friLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/friLabel_textView"
@@ -394,6 +435,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/fridayLabel"
+                                android:textColor="#363636"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -403,20 +445,22 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/fridayHours"
-                                android:textSize="16sp" />
+                                android:textColor="#363636"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <View
                             android:id="@+id/divider10"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/satLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/satLabel_textView"
@@ -424,7 +468,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/saturdayLabel"
-                                android:textSize="16sp"
+                                android:textColor="#363636"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -433,7 +478,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/saturdayHours"
-                                android:textSize="16sp" />
+                                android:textColor="#363636"
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -441,13 +487,14 @@
                             android:id="@+id/divider11"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="#363636" />
 
                         <LinearLayout
                             android:id="@+id/sunLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:paddingBottom="2dp">
 
                             <TextView
                                 android:id="@+id/sunLabel_textView"
@@ -455,6 +502,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2"
                                 android:text="@string/sundayLabel"
+                                android:textColor="#363636"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
 
@@ -464,7 +512,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/sundayHours"
-                                android:textSize="16sp" />
+                                android:textColor="#363636"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -484,27 +533,31 @@
                         android:id="@+id/contactLabel_textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="@string/contactsLabel"
                         android:textColor="@color/black"
-                        android:textSize="30sp" />
+                        android:textSize="26sp" />
 
                     <View
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="2dp"
                         android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="#363636" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp">
 
                         <TextView
                             android:id="@+id/mailLabel_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/emailLabel"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -513,19 +566,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/email"
+                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp">
 
                         <TextView
                             android:id="@+id/phoneLabel_textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phoneLabel"
+                            android:textColor="#363636"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -534,6 +591,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/phoneNumber"
+                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
 
