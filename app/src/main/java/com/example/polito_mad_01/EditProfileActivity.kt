@@ -24,12 +24,12 @@ import org.json.JSONObject
 
 class EditProfileActivity : AppCompatActivity() {
 
-    private var frame: ImageView? = null
-    private val PERMISSION_REQUEST_CODE = 200
-    private var imageUri: Uri? = null
+    private lateinit var frame: ImageView
+    private lateinit var spinner: Spinner
+    private  var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
-    private lateinit var spinner: Spinner
+    private val PERMISSION_REQUEST_CODE = 200
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,19 +91,19 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
-            frame?.setImageURI(imageUri)
-            val drawable = frame?.drawable as BitmapDrawable
+            frame.setImageURI(imageUri)
+            val drawable = frame.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            frame?.setImageBitmap(resized)
+            frame.setImageBitmap(resized)
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
-            frame?.setImageURI(imageUri)
-            val drawable = frame?.drawable as BitmapDrawable
+            frame.setImageURI(imageUri)
+            val drawable = frame.drawable as BitmapDrawable
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            frame?.setImageBitmap(resized)
+            frame.setImageBitmap(resized)
         }
     }
 
@@ -122,9 +122,7 @@ class EditProfileActivity : AppCompatActivity() {
                 } else
                     showPermissionReasonAndRequest(
                         "Notice",
-                        "Hi, we will request CAMERA permission. " +
-                                "This is required for taking the photo from camera, " +
-                                "please grant it."
+                        "Hi, we will request CAMERA permission. This is required for taking the photo from camera, please grant it."
                     )
                 true
             }
@@ -134,10 +132,7 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun checkPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            return false
-        }
+            != PackageManager.PERMISSION_GRANTED) return false
         return true
     }
 
@@ -149,20 +144,13 @@ class EditProfileActivity : AppCompatActivity() {
         )
     }
 
-    private fun Activity.showPermissionReasonAndRequest(
-        title: String,
-        message: String,
-    ) {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(title)
-        .setMessage(message)
-        .setPositiveButton("OK") { _, _ ->
-            requestPermission()
-        }
-
-        builder.setNegativeButton("CANCEL") { _, _ -> }
-
-        builder.show()
+    private fun Activity.showPermissionReasonAndRequest(title: String,message: String, ) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("OK") { _, _ -> requestPermission()}
+            .setNegativeButton("CANCEL") { _, _ -> }
+            .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -174,16 +162,12 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Are you sure?")
-                .setMessage("All changes will be lost")
-                .setPositiveButton("YES") { _, _ ->
-                    finish()
-                }
-                .setNegativeButton("NO") { _, _ -> }
-                .show()
-
+                AlertDialog.Builder(this)
+                    .setTitle("Are you sure?")
+                    .setMessage("All changes will be lost")
+                    .setPositiveButton("YES") { _, _ -> finish() }
+                    .setNegativeButton("NO") { _, _ -> }
+                    .show()
                 return true
             }
             R.id.action_save_profile -> {

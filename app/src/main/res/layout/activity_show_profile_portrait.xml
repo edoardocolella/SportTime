@@ -532,8 +532,9 @@
                             android:id="@+id/mail_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:textSize="18sp" />
+                            android:textAlignment="textEnd"
+                            android:textSize="18sp"
+                            tools:text="adjwpjda" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -555,7 +556,7 @@
                             android:id="@+id/phoneNumber_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textAlignment="center"
+                            android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>
 

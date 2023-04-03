@@ -165,12 +165,12 @@
                         android:text="@string/sportsLabel"
                         android:textSize="30sp" />
 
-                    <View
+                    <!--View
                         android:id="@+id/divider2"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:id="@+id/expertLayout"
@@ -199,11 +199,11 @@
                             android:textSize="22sp" />
                     </LinearLayout>
 
-                    <View
+                    <!--View
                         android:id="@+id/divider3"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:id="@+id/intermediateLayout"
@@ -232,11 +232,11 @@
                             android:textSize="22sp" />
                     </LinearLayout>
 
-                    <View
+                    <!--View
                         android:id="@+id/divider4"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:id="@+id/beginnerLayout"
@@ -282,12 +282,12 @@
                         android:text="@string/availabilityLabel"
                         android:textSize="30sp" />
 
-                    <View
+                    <!--View
                         android:id="@+id/divider5"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:id="@+id/weekLayout"
@@ -324,11 +324,11 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider6"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/tueLayout_value"
@@ -359,11 +359,11 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider7"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/wedLayout_value"
@@ -394,11 +394,11 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider8"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/thuLayout"
@@ -429,11 +429,11 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider9"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/friLayout"
@@ -464,11 +464,11 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider10"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/satLayout"
@@ -500,11 +500,11 @@
 
                         </LinearLayout>
 
-                        <View
+                        <!--View
                             android:id="@+id/divider11"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" />
+                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/sunLayout"
@@ -554,12 +554,12 @@
                         android:text="@string/contactsLabel"
                         android:textSize="30sp" />
 
-                    <View
+                    <!--View
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" />
+                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -582,7 +582,7 @@
                             android:inputType="textEmailAddress"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
-                            android:textAlignment="center"
+                            android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -607,7 +607,7 @@
                             android:inputType="phone"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
-                            android:textAlignment="center"
+                            android:textAlignment="textEnd"
                             android:textSize="18sp" />
 
                     </LinearLayout>
