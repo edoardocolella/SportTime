@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Polito-MAD-01</string>
+    <string name="app_name">SportTime</string>
     <string name="takePhoto">Insert photo</string>
     <string name="saveIcon">save</string>
     <string name="editIcon">edit</string>
