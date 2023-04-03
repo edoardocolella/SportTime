@@ -31,7 +31,7 @@ class ShowProfileActivity : AppCompatActivity() {
         }
 
         // calling the action bar
-        var actionBar = supportActionBar
+        val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "Profile"
         }

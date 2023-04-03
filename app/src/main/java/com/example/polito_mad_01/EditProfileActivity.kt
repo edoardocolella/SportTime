@@ -52,7 +52,7 @@ class EditProfileActivity : AppCompatActivity() {
         frame = findViewById(R.id.profileImage_imageView)
 
         // calling the action bar
-        var actionBar = supportActionBar
+        val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.title = "Edit Profile"
         }
@@ -209,6 +209,7 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun saveData(){
+
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
         val user = JSONObject()
         user.put("fullName", findViewById<EditText>(R.id.fullName_value).text)

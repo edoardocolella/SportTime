@@ -275,7 +275,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/mondayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -305,7 +304,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/tuesdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -335,7 +333,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/wednesdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -365,7 +362,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/thursdayHours"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -395,7 +391,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/fridayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -425,7 +420,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/saturdayHours"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
@@ -456,7 +450,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/sundayHours"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -503,7 +496,6 @@
                             android:id="@+id/mail_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/email"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -524,7 +516,6 @@
                             android:id="@+id/phoneNumber_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/phoneNumber"
                             android:textSize="18sp" />
                     </LinearLayout>
 
