@@ -21,6 +21,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
@@ -64,6 +65,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         val imgButton = findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
+
         imgButton.setOnClickListener { v -> v.showContextMenu() }
         getData()
 
@@ -105,10 +107,10 @@ class EditProfileActivity : AppCompatActivity() {
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
-            /*val baos = ByteArrayOutputStream()
+            val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val b: ByteArray = baos.toByteArray()
-            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)*/
+            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)
         }
     }
 
@@ -150,7 +152,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(Manifest.permission.CAMERA),
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
             PERMISSION_REQUEST_CODE
         )
     }
@@ -284,7 +286,11 @@ class EditProfileActivity : AppCompatActivity() {
         user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
         user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
 
-        //.put("image_data", encodedImage )
+
+        imageUri?.let {
+            user.put("image_data", it )
+            println("$it")
+        }
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
             .putString("user", "$user")
@@ -331,12 +337,10 @@ class EditProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.mail_value).text = userObject.getString("email") ?: ""
             findViewById<TextView>(R.id.phoneNumber_value).text =
                 userObject.getString("phoneNumber") ?: ""
-        }
 
-        /*var test :String? = userObject.getString("image_data")
-            val b: ByteArray = Base64.decode(test, Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageBitmap(bitmap)*/
+            var image :String? = userObject.getString("image_data")
+            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(image?.toUri())
+        }
     }
 
     private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
