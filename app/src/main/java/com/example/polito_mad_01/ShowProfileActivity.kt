@@ -94,6 +94,4 @@ class ShowProfileActivity : AppCompatActivity() {
     private fun setTextView(json:JSONObject, key: String, id: Int){
         findViewById<TextView>(id).text = json.getString(key)?: ""
     }
-
-
 }

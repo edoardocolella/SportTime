@@ -144,7 +144,7 @@ class EditProfileActivity : AppCompatActivity() {
         )
     }
 
-    private fun Activity.showPermissionReasonAndRequest(title: String,message: String, ) {
+    private fun Activity.showPermissionReasonAndRequest(title: String,message: String) {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
