@@ -222,63 +222,49 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun saveData(): Boolean {
 
-        var text: String;
-        val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
         val user = JSONObject()
 
-        text = findViewById<EditText>(R.id.fullName_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()
+        var text = findViewById<EditText>(R.id.fullName_value).text.toString()
+        if (!toastForEmptyFields(text, "Please enter your full name"))
             return false;
-        }
         user.put("fullName", text)
 
         text = findViewById<EditText>(R.id.nickName_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your nickname", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your nickname"))
             return false;
-        }
         user.put("nickname", text)
 
         text = findViewById<EditText>(R.id.description_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your description", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your description"))
             return false;
-        }
         user.put("description", text)
 
         text = findViewById<EditText>(R.id.age_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your age"))
             return false;
-        }
         user.put("age", text)
 
         text = findViewById<EditText>(R.id.gender_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your gender"))
             return false;
-        }
         user.put("gender", text)
 
         text = findViewById<EditText>(R.id.location_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your location", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your location"))
             return false;
-        }
         user.put("location", text)
-        text = findViewById<EditText>(R.id.phoneNumber_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show()
-            return false;
-        }
-        user.put("phoneNumber", text)
 
         text = findViewById<EditText>(R.id.mail_value).text.toString()
-        if (text.isEmpty()) {
-            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
+        if (!toastForEmptyFields(text, "Please enter your mail"))
             return false;
-        }
+        user.put("email", text)
+
+        text = findViewById<EditText>(R.id.phoneNumber_value).text.toString()
+        if (!toastForEmptyFields(text, "Please enter your phone number"))
+            return false;
+        user.put("phoneNumber", text)
+
+
 
 
         user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
@@ -289,10 +275,11 @@ class EditProfileActivity : AppCompatActivity() {
         user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
         user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
 
-
         //.put("image_data", encodedImage )
-        sp.putString("user", "$user")
-        sp.apply()
+
+        getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
+            .putString("user", "$user")
+            .apply()
         return true
     }
 
@@ -333,6 +320,14 @@ class EditProfileActivity : AppCompatActivity() {
             val b: ByteArray = Base64.decode(test, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
             findViewById<ImageView>(R.id.profileImage_imageView).setImageBitmap(bitmap)*/
+    }
+
+    private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
+        if (textToBeChecked.isEmpty()) {
+            Toast.makeText(this, textToBeDisplayed, Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        return true;
     }
 }
 
