@@ -7,7 +7,9 @@
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="#FFE7EDF6"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
 
     <ImageView
         android:id="@+id/profileImage_imageView"
@@ -17,8 +19,14 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/face_48px"
-        />
+        android:src="@drawable/face_48px" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/takePhoto"
+        app:srcCompat="@drawable/photo_camera_48px" />
 
     <LinearLayout
         android:id="@+id/infoLayout"
@@ -33,31 +41,29 @@
             android:id="@+id/fullName_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="name"
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="@string/fullName"
             android:inputType="textPersonName"
             android:text="@string/fullName"
             android:textAlignment="center"
-            android:textColor="@android:color/secondary_text_dark"
-            android:textSize="38sp"
-            android:autofillHints="name"
-            />
+            android:textColor="@color/black"
+            android:textSize="38sp" />
 
         <EditText
             android:id="@+id/nickName_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:autofillHints="username"
             android:background="@android:color/transparent"
+            android:inputType="text"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:text="@string/nickname"
             android:textAlignment="center"
             android:textSize="24sp"
-            android:textStyle="italic"
-            android:autofillHints="username"
-            />
+            android:textStyle="italic" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -75,6 +81,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
+                    android:background="@drawable/shape"
+                    android:elevation="4dp"
                     android:gravity="clip_horizontal|center_horizontal"
                     android:orientation="vertical">
 
@@ -86,8 +94,7 @@
                         android:layout_marginBottom="8dp"
                         android:baselineAligned="false"
                         android:gravity="center"
-                        android:textAlignment="center"
-                        >
+                        android:textAlignment="center">
 
                         <EditText
                             android:id="@+id/gender_value"
@@ -96,19 +103,18 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
+                            android:autofillHints="name"
                             android:background="@android:color/transparent"
                             android:drawableStart="@drawable/face_48px"
                             android:drawablePadding="8dp"
                             android:gravity="center_horizontal"
+                            android:inputType="text"
                             android:paddingLeft="0dp"
                             android:paddingTop="8dp"
                             android:paddingRight="0dp"
                             android:paddingBottom="8dp"
                             android:text="@string/gender"
-                            android:textSize="24sp"
-                            android:autofillHints="name"
-                            android:inputType="text"
-                            />
+                            android:textSize="24sp" />
 
                         <EditText
                             android:id="@+id/age_value"
@@ -120,14 +126,13 @@
                             android:background="@android:color/transparent"
                             android:drawableStart="@drawable/cake_48px"
                             android:drawablePadding="8dp"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/age"
                             android:textAlignment="viewStart"
-                            android:textSize="24sp"
-                            android:inputType="number"
-                            android:importantForAutofill="no"
-                            />
+                            android:textSize="24sp" />
 
                     </LinearLayout>
 
@@ -141,13 +146,12 @@
                         android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:text="@string/location"
-                        android:textSize="24sp"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        />
+                        android:textSize="24sp" />
 
                 </LinearLayout>
 
@@ -156,11 +160,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="@string/description"
-                    android:textSize="20sp"
-                    android:inputType="text"
                     android:importantForAutofill="no"
-                    />
+                    android:inputType="text"
+                    android:text="@string/description"
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:id="@+id/sportLayout"
@@ -168,13 +171,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/shape">
 
                     <TextView
                         android:id="@+id/sportLabel_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/sportsLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
@@ -206,14 +211,13 @@
                             android:layout_weight="7"
                             android:background="@android:color/transparent"
                             android:hint="@string/expertSports"
+                            android:importantForAutofill="no"
                             android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/expertSports"
                             android:textSize="22sp"
-                            tools:text="@string/expertSports"
-                            android:importantForAutofill="no"
-                            />
+                            tools:text="@string/expertSports" />
                     </LinearLayout>
 
                     <View
@@ -243,13 +247,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:background="@android:color/transparent"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/intermediateSports"
-                            android:textSize="22sp"
-                            android:inputType="text"
-                            android:importantForAutofill="no"
-                            />
+                            android:textSize="22sp" />
                     </LinearLayout>
 
                     <View
@@ -279,13 +282,12 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:background="@android:color/transparent"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:text="@string/beginnerSports"
-                            android:textSize="22sp"
-                            android:inputType="text"
-                            android:importantForAutofill="no"
-                            />
+                            android:textSize="22sp" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -296,13 +298,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/shape">
 
                     <TextView
                         android:id="@+id/availabilityLabel_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/availabilityLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
@@ -339,7 +343,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/mondayHours"
@@ -373,7 +379,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/tuesdayHours"
@@ -407,7 +415,9 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/wednesdayHours"
@@ -441,11 +451,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:text="@string/thursdayHours"
-                                android:textSize="18sp"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
-                                android:paddingBottom="4dp" />
+                                android:paddingBottom="4dp"
+                                android:text="@string/thursdayHours"
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <View
@@ -475,11 +487,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/fridayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                         <View
@@ -509,11 +523,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/saturdayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
 
                         </LinearLayout>
 
@@ -544,11 +560,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:autofillHints="name"
                                 android:background="@android:color/transparent"
+                                android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
                                 android:text="@string/sundayHours"
-                                android:textSize="18dp" />
+                                android:textSize="18sp" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -561,13 +579,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/shape">
 
                     <TextView
                         android:id="@+id/contactLabel_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
+                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <View
@@ -594,7 +614,9 @@
                             android:id="@+id/mail_value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:autofillHints="emailAddress"
                             android:background="@android:color/transparent"
+                            android:inputType="textEmailAddress"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
                             android:text="@string/email"
@@ -618,7 +640,9 @@
                             android:id="@+id/phoneNumber_value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:autofillHints="phone"
                             android:background="@android:color/transparent"
+                            android:inputType="phone"
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
                             android:text="@string/phoneNumber"
