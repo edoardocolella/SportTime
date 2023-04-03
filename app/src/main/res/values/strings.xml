@@ -16,11 +16,8 @@
     <string name="location">Location</string>
     <string name="sportsLabel">Sports</string>
     <string name="expertLabel">Expert</string>
-    <string name="expertSports">Sport list</string>
     <string name="intermediateLabel">Intermediate</string>
-    <string name="intermediateSports">Sport list</string>
     <string name="beginnerLabel">Beginner</string>
-    <string name="beginnerSports">Sport list</string>
     <string name="availabilityLabel">Availability</string>
     <string name="mondayLabel">Monday</string>
     <string name="tuesdayLabel">Tuesday</string>

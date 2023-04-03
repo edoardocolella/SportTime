@@ -175,7 +175,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:text="@string/expertSports"
                             android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -211,7 +210,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:text="@string/intermediateSports"
                             android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -248,7 +246,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:text="@string/beginnerSports"
                             android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>

@@ -21,6 +21,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -29,8 +30,9 @@ import java.io.ByteArrayOutputStream
 class EditProfileActivity : AppCompatActivity() {
 
     private var frame: ImageView? = null
+
     //var imgButton: ImageButton? = null
-    private lateinit var cropIntent:Intent
+    private lateinit var cropIntent: Intent
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
@@ -42,7 +44,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = when(resources.configuration.orientation){
+        val layout = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_edit_profile_landscape
             else -> R.layout.activity_edit_profile_portrait
         }
@@ -113,15 +115,16 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.gallery -> {
-                val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                val galleryIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
 
                 return true
             }
             R.id.picture -> {
-                if(checkPermission()){
+                if (checkPermission()) {
                     openCamera()
-                }else
+                } else
                     showPermissionReasonAndRequest(
                         "Notice",
                         "Hi, we will request CAMERA permission. " +
@@ -134,9 +137,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkPermission(): Boolean{
+    private fun checkPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED) {
+            != PackageManager.PERMISSION_GRANTED
+        ) {
             return false
         }
         return true
@@ -144,9 +148,11 @@ class EditProfileActivity : AppCompatActivity() {
 
 
     private fun requestPermission() {
-        ActivityCompat.requestPermissions(this,
+        ActivityCompat.requestPermissions(
+            this,
             arrayOf(Manifest.permission.CAMERA),
-            PERMISSION_REQUEST_CODE)
+            PERMISSION_REQUEST_CODE
+        )
     }
 
 
@@ -163,8 +169,10 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         builder.setNegativeButton("CANCEL") { _, _ ->
-            Toast.makeText(applicationContext,
-                android.R.string.no, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                android.R.string.no, Toast.LENGTH_SHORT
+            ).show()
         }
 
         builder.show()
@@ -189,8 +197,10 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 builder.setNegativeButton("NO") { _, _ ->
-                    Toast.makeText(applicationContext,
-                        android.R.string.no, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        applicationContext,
+                        android.R.string.no, Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 builder.show()
@@ -198,43 +208,116 @@ class EditProfileActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_save_profile -> {
-                saveData()
-                val i = Intent(this, ShowProfileActivity::class.java)
-                startActivity(i)
-                return true
+                if (saveData()) {
+                    val i = Intent(this, ShowProfileActivity::class.java)
+                    startActivity(i)
+                    return true
+                }
+                return false
             }
 
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun saveData(){
+    private fun saveData(): Boolean {
 
+        var text: String;
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
         val user = JSONObject()
-        user.put("fullName", findViewById<EditText>(R.id.fullName_value).text)
-            .put("nickname", findViewById<EditText>(R.id.nickName_value).text)
-            .put("description", findViewById<EditText>(R.id.description_value).text)
-            .put("age", findViewById<EditText>(R.id.age_value).text)
-            .put("gender", findViewById<EditText>(R.id.gender_value).text)
-            .put("location", findViewById<EditText>(R.id.location_value).text)
-            .put("monday", findViewById<EditText>(R.id.monHours_value).text)
-            .put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
-            .put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
-            .put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
-            .put("friday", findViewById<EditText>(R.id.friHours_value).text)
-            .put("saturday", findViewById<EditText>(R.id.satHours_value).text)
-            .put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
-            .put("phoneNumber", findViewById<EditText>(R.id.phoneNumber_value).text)
-            .put("email", findViewById<EditText>(R.id.mail_value).text)
-            //.put("image_data", encodedImage )
+
+        text = findViewById<EditText>(R.id.fullName_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your full name", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("fullName", text)
+
+        text = findViewById<EditText>(R.id.nickName_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your nickname", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("nickname", text)
+
+        text = findViewById<EditText>(R.id.description_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your description", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("description", text)
+
+        text = findViewById<EditText>(R.id.age_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your age", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("age", text)
+
+        text = findViewById<EditText>(R.id.gender_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your gender", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("gender", text)
+
+        text = findViewById<EditText>(R.id.location_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your location", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("location", text)
+
+        text = findViewById<EditText>(R.id.monHours_value).text.toString()
+            user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.tueHours_value).text.toString()
+            user.put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.wedHours_value).text.toString()
+            user.put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.thuHours_value).text.toString()
+            user.put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.friHours_value).text.toString()
+            user.put("friday", findViewById<EditText>(R.id.friHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.satHours_value).text.toString()
+            user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.sunHours_value).text.toString()
+            user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
+
+
+        text = findViewById<EditText>(R.id.phoneNumber_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+        user.put("phoneNumber", text)
+
+        text = findViewById<EditText>(R.id.mail_value).text.toString()
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show()
+            return false;
+        }
+
+        //.put("image_data", encodedImage )
 
 
         sp.putString("user", user.toString())
         sp.apply()
+        return true
     }
 
-    private fun getData(){
+    private fun getData() {
         val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
 
         //extract a json object from a string
@@ -245,18 +328,20 @@ class EditProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.fullName_value).text = userObject.getString("fullName")
             findViewById<TextView>(R.id.nickName_value).text = userObject.getString("nickname")
             findViewById<TextView>(R.id.age_value).text = userObject.getInt("age").toString()
-            findViewById<TextView>(R.id.description_value).text = userObject.getString("description")
+            findViewById<TextView>(R.id.description_value).text =
+                userObject.getString("description")
             findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
-            findViewById<TextView>(R.id.location_value).text =userObject.getString("location")
-            findViewById<TextView>(R.id.monHours_value).text =userObject.getString("monday")
-            findViewById<TextView>(R.id.tueHours_value).text =userObject.getString("tuesday")
-            findViewById<TextView>(R.id.wedHours_value).text =userObject.getString("wednesday")
-            findViewById<TextView>(R.id.thuHours_value).text =userObject.getString("thursday")
-            findViewById<TextView>(R.id.friHours_value).text =userObject.getString("friday")
-            findViewById<TextView>(R.id.satHours_value).text =userObject.getString("saturday")
-            findViewById<TextView>(R.id.sunHours_value).text =userObject.getString("sunday")
-            findViewById<TextView>(R.id.mail_value).text =userObject.getString("email")
-            findViewById<TextView>(R.id.phoneNumber_value).text =userObject.getString("phoneNumber")
+            findViewById<TextView>(R.id.location_value).text = userObject.getString("location")
+            findViewById<TextView>(R.id.monHours_value).text = userObject.getString("monday")
+            findViewById<TextView>(R.id.tueHours_value).text = userObject.getString("tuesday")
+            findViewById<TextView>(R.id.wedHours_value).text = userObject.getString("wednesday")
+            findViewById<TextView>(R.id.thuHours_value).text = userObject.getString("thursday")
+            findViewById<TextView>(R.id.friHours_value).text = userObject.getString("friday")
+            findViewById<TextView>(R.id.satHours_value).text = userObject.getString("saturday")
+            findViewById<TextView>(R.id.sunHours_value).text = userObject.getString("sunday")
+            findViewById<TextView>(R.id.mail_value).text = userObject.getString("email")
+            findViewById<TextView>(R.id.phoneNumber_value).text =
+                userObject.getString("phoneNumber")
         }
 
         /*var test :String? = userObject.getString("image_data")

@@ -73,7 +73,7 @@ class ShowProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.age_value).text = userObject.getInt("age").toString()
             findViewById<TextView>(R.id.description_value).text = userObject.getString("description")
             findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
-            findViewById<TextView>(R.id.location_value).text =userObject.getString("location")
+            findViewById<TextView>(R.id.location_value).text = userObject.getString("location")
             findViewById<TextView>(R.id.monHours_value).text =userObject.getString("monday")
             findViewById<TextView>(R.id.tueHours_value).text =userObject.getString("tuesday")
             findViewById<TextView>(R.id.wedHours_value).text =userObject.getString("wednesday")
