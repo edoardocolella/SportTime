@@ -1,7 +1,6 @@
 package com.example.polito_mad_01
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
@@ -30,7 +29,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
-    lateinit var spinner: Spinner
+    private lateinit var spinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,10 +104,6 @@ class EditProfileActivity : AppCompatActivity() {
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
-            /*val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val b: ByteArray = baos.toByteArray()
-            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)*/
         }
     }
 
@@ -165,12 +160,7 @@ class EditProfileActivity : AppCompatActivity() {
             requestPermission()
         }
 
-        builder.setNegativeButton("CANCEL") { _, _ ->
-            Toast.makeText(
-                applicationContext,
-                android.R.string.no, Toast.LENGTH_SHORT
-            ).show()
-        }
+        builder.setNegativeButton("CANCEL") { _, _ -> }
 
         builder.show()
     }
@@ -191,12 +181,7 @@ class EditProfileActivity : AppCompatActivity() {
                 .setPositiveButton("YES") { _, _ ->
                     finish()
                 }
-                .setNegativeButton("NO") { _, _ ->
-                    Toast.makeText(
-                        applicationContext,
-                        android.R.string.no, Toast.LENGTH_SHORT
-                    ).show()
-                }
+                .setNegativeButton("NO") { _, _ -> }
                 .show()
 
                 return true
@@ -219,29 +204,29 @@ class EditProfileActivity : AppCompatActivity() {
         val user = JSONObject()
         var text = getEditText(R.id.fullName_value)
         if (!toastForEmptyFields(text, "Please enter your full name"))
-            return false;
+            return false
         user.put("fullName", text)
 
         text = getEditText(R.id.nickName_value)
         if (!toastForEmptyFields(text, "Please enter your nickname"))
-            return false;
+            return false
         user.put("nickname", text)
 
         text = getEditText(R.id.age_value)
         if (!toastForEmptyFields(text, "Please enter your age"))
-            return false;
+            return false
         user.put("age", text)
 
         user.put("genderIndex", spinner.selectedItemPosition)
 
         text = getEditText(R.id.location_value)
         if (!toastForEmptyFields(text, "Please enter your location"))
-            return false;
+            return false
         user.put("location", text)
 
         text = getEditText(R.id.description_value)
         if (!toastForEmptyFields(text, "Please enter your description"))
-            return false;
+            return false
         user.put("description", text)
 
         val expertList = getEditText(R.id.expertList_value)
@@ -254,24 +239,24 @@ class EditProfileActivity : AppCompatActivity() {
 
         text = getEditText(R.id.mail_value)
         if (!toastForEmptyFields(text, "Please enter your mail"))
-            return false;
+            return false
         user.put("email", text)
 
         text = getEditText(R.id.phoneNumber_value)
         if (!toastForEmptyFields(text, "Please enter your phone number"))
-            return false;
+            return false
         user.put("phoneNumber", text)
 
         user.put("expertList", expertList)
             .put("intermediateList", intermediateList)
             .put("beginnerList", beginnerList)
-            .put("monday", findViewById<EditText>(R.id.monHours_value).text)
-            .put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
-            .put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
-            .put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
-            .put("friday", findViewById<EditText>(R.id.friHours_value).text)
-            .put("saturday", findViewById<EditText>(R.id.satHours_value).text)
-            .put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
+            .put("monday", getEditText(R.id.monHours_value))
+            .put("tuesday", getEditText(R.id.tueHours_value))
+            .put("wednesday",  getEditText(R.id.wedHours_value))
+            .put("thursday", getEditText(R.id.thuHours_value))
+            .put("friday", getEditText(R.id.friHours_value))
+            .put("saturday", getEditText(R.id.satHours_value))
+            .put("sunday", getEditText(R.id.sunHours_value))
             .put("image_data", imageUri?: "" )
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
@@ -288,23 +273,23 @@ class EditProfileActivity : AppCompatActivity() {
         userString?.let {
             val userObject = JSONObject(userString)
 
-            setTextView(userObject.getString("fullName"), R.id.fullName_value)
-            setTextView(userObject.getString("nickname"), R.id.nickName_value)
-            setTextView(userObject.getString("age"), R.id.age_value)
-            setTextView(userObject.getString("description"), R.id.description_value)
-            setTextView(userObject.getString("location"), R.id.location_value)
-            setTextView(userObject.getString("expertList"), R.id.expertList_value)
-            setTextView(userObject.getString("intermediateList"), R.id.intermediateList_value)
-            setTextView(userObject.getString("beginnerList"), R.id.beginnerList_value)
-            setTextView(userObject.getString("monday"), R.id.monHours_value)
-            setTextView(userObject.getString("tuesday"), R.id.tueHours_value)
-            setTextView(userObject.getString("wednesday"), R.id.wedHours_value)
-            setTextView(userObject.getString("thursday"), R.id.thuHours_value)
-            setTextView(userObject.getString("friday"), R.id.friHours_value)
-            setTextView(userObject.getString("saturday"), R.id.satHours_value)
-            setTextView(userObject.getString("sunday"), R.id.sunHours_value)
-            setTextView(userObject.getString("email"), R.id.mail_value)
-            setTextView(userObject.getString("phoneNumber"), R.id.phoneNumber_value)
+            setTextView("fullName", R.id.fullName_value, userObject)
+            setTextView("nickname", R.id.nickName_value, userObject)
+            setTextView("age", R.id.age_value, userObject)
+            setTextView("description", R.id.description_value, userObject)
+            setTextView("location", R.id.location_value, userObject)
+            setTextView("expertList", R.id.expertList_value, userObject)
+            setTextView("intermediateList", R.id.intermediateList_value, userObject)
+            setTextView("beginnerList", R.id.beginnerList_value, userObject)
+            setTextView("monday", R.id.monHours_value, userObject)
+            setTextView("tuesday", R.id.tueHours_value, userObject)
+            setTextView("wednesday", R.id.wedHours_value, userObject)
+            setTextView("thursday", R.id.thuHours_value, userObject)
+            setTextView("friday", R.id.friHours_value, userObject)
+            setTextView("saturday", R.id.satHours_value, userObject)
+            setTextView("sunday", R.id.sunHours_value, userObject)
+            setTextView("email", R.id.mail_value, userObject)
+            setTextView("phoneNumber", R.id.phoneNumber_value, userObject)
             spinner.setSelection(userObject.getInt("genderIndex"))
 
             userObject.getString("image_data")?.let {
@@ -317,13 +302,13 @@ class EditProfileActivity : AppCompatActivity() {
     private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
         if (textToBeChecked.isEmpty()) {
             Toast.makeText(this, textToBeDisplayed, Toast.LENGTH_SHORT).show()
-            return false;
+            return false
         }
-        return true;
+        return true
     }
 
-    private fun setTextView( text: String?, id: Int){
-        findViewById<TextView>(id).text = text?: ""
+    private fun setTextView( key: String, id: Int, json: JSONObject){
+        findViewById<TextView>(id).text = json.getString(key)?: ""
     }
 
     private fun getEditText( id: Int): String{

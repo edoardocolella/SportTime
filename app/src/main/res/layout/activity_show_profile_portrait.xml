@@ -166,6 +166,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -199,6 +200,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -233,6 +235,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -291,6 +294,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -322,6 +326,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -352,6 +357,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -382,6 +388,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -412,6 +419,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -442,6 +450,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
 
                         </LinearLayout>
@@ -465,7 +474,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
                                 android:text="@string/sundayLabel"
-                                android:textSize="16sp"
+                                android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -473,6 +482,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="5"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -522,6 +532,7 @@
                             android:id="@+id/mail_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -544,6 +555,7 @@
                             android:id="@+id/phoneNumber_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 

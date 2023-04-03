@@ -161,6 +161,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -190,6 +191,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -219,6 +221,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -272,6 +275,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -301,6 +305,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -330,6 +335,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -359,6 +365,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -388,6 +395,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -417,6 +425,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
@@ -447,6 +456,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
+                                android:textAlignment="center"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -493,6 +503,7 @@
                             android:id="@+id/mail_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -513,6 +524,7 @@
                             android:id="@+id/phoneNumber_textView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
 
