@@ -69,7 +69,7 @@ class ShowProfileActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.fullName_textView2).text = userObject.getString("fullName")
         findViewById<TextView>(R.id.nickName_textView).text = userObject.getString("nickname")
-        findViewById<TextView>(R.id.age_textView).text = userObject.getInt("age").toString()
+        findViewById<TextView>(R.id.age_textView).text = userObject.getString("age")
         findViewById<TextView>(R.id.description_textView).text = userObject.getString("description")
         findViewById<TextView>(R.id.gender_textView).text = userObject.getString("gender")
         findViewById<TextView>(R.id.location_textView).text =userObject.getString("location")

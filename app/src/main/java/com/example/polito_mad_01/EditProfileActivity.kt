@@ -8,6 +8,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
@@ -40,7 +41,13 @@ class EditProfileActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit_profile_portrait)
+
+        val layout = when(resources.configuration.orientation){
+            Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_edit_profile_landscape
+            else -> R.layout.activity_edit_profile_portrait
+        }
+
+        setContentView(layout)
 
         frame = findViewById(R.id.profileImage_imageView)
 
@@ -250,8 +257,6 @@ class EditProfileActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.sunHours_value).text =userObject.getString("sunday")
         findViewById<TextView>(R.id.mail_value).text =userObject.getString("email")
         findViewById<TextView>(R.id.phoneNumber_value).text =userObject.getString("phoneNumber")
-
-
     }
 }
 
