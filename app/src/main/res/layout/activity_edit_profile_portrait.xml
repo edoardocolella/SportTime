@@ -157,7 +157,6 @@
                     android:hint="@string/description"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:text="@string/description"
                     android:textSize="20sp" />
 
                 <LinearLayout
