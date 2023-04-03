@@ -5,6 +5,13 @@
     <color name="purple_700">#7AA7EC</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <color name="olive">#FF7C6A0A</color>
+    <color name="sage">#FFBABD8D</color>
+    <color name="apricot">#FFFFDAC6</color>
+    <color name="princeton_orange">#FFFA9500</color>
+    <color name="persimmon">#FFEB6424</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
