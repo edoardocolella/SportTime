@@ -38,11 +38,13 @@ class EditProfileActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     var encodedImage: String = ""
+    val spinner: Spinner = findViewById(R.id.spinner)
 
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         val layout = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_edit_profile_landscape
@@ -50,6 +52,16 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         setContentView(layout)
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(this, R.array.genderArray,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
 
         frame = findViewById(R.id.profileImage_imageView)
 
@@ -258,7 +270,7 @@ class EditProfileActivity : AppCompatActivity() {
         val intermediateList = findViewById<EditText>(R.id.intermediateList_value).text.toString()
         val beginnerList = findViewById<EditText>(R.id.beginnerList_value).text.toString()
 
-        if(expertList.isEmpty() && intermediateList.isEmpty() && beginnerList.isEmpty()){
+        if (expertList.isEmpty() && intermediateList.isEmpty() && beginnerList.isEmpty()) {
             Toast.makeText(this, "Please enter at least one skill", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -283,6 +295,11 @@ class EditProfileActivity : AppCompatActivity() {
         user.put("friday", findViewById<EditText>(R.id.friHours_value).text)
         user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
         user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
+
+        spinner.selectedItem?.let {
+            println("TROVAMI $it")
+            //user.put("gender", it.toString())
+        }
 
         //.put("image_data", encodedImage )
 
