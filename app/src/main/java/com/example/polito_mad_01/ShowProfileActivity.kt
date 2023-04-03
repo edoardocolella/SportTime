@@ -68,21 +68,21 @@ class ShowProfileActivity : AppCompatActivity() {
         userString?.let {
             val userObject = JSONObject(userString)
 
-            findViewById<TextView>(R.id.fullName_value).text = userObject.getString("fullName")
-            findViewById<TextView>(R.id.nickName_value).text = userObject.getString("nickname")
-            findViewById<TextView>(R.id.age_value).text = userObject.getInt("age").toString()
-            findViewById<TextView>(R.id.description_value).text = userObject.getString("description")
-            findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
-            findViewById<TextView>(R.id.location_value).text = userObject.getString("location")
-            findViewById<TextView>(R.id.monHours_value).text =userObject.getString("monday")
-            findViewById<TextView>(R.id.tueHours_value).text =userObject.getString("tuesday")
-            findViewById<TextView>(R.id.wedHours_value).text =userObject.getString("wednesday")
-            findViewById<TextView>(R.id.thuHours_value).text =userObject.getString("thursday")
-            findViewById<TextView>(R.id.friHours_value).text =userObject.getString("friday")
-            findViewById<TextView>(R.id.satHours_value).text =userObject.getString("saturday")
-            findViewById<TextView>(R.id.sunHours_value).text =userObject.getString("sunday")
-            findViewById<TextView>(R.id.mail_value).text =userObject.getString("email")
-            findViewById<TextView>(R.id.phoneNumber_value).text =userObject.getString("phoneNumber")
+            findViewById<TextView>(R.id.fullName_textView).text = userObject.getString("fullName")?: ""
+            findViewById<TextView>(R.id.nickName_textView).text = userObject.getString("nickname")?: ""
+            findViewById<TextView>(R.id.age_textView).text = userObject.getString("age")?: ""
+            findViewById<TextView>(R.id.description_textView).text = userObject.getString("description")?: ""
+            findViewById<TextView>(R.id.gender_textView).text = userObject.getString("gender")?: ""
+            findViewById<TextView>(R.id.location_textView).text =userObject.getString("location")?: ""
+            findViewById<TextView>(R.id.monHours_textView).text =userObject.getString("monday")?: ""
+            findViewById<TextView>(R.id.tueHours_textView).text =userObject.getString("tuesday")?: ""
+            findViewById<TextView>(R.id.wedHours_textView).text =userObject.getString("wednesday")?: ""
+            findViewById<TextView>(R.id.thuHours_textView).text =userObject.getString("thursday")?: ""
+            findViewById<TextView>(R.id.friHours_textView).text =userObject.getString("friday")?: ""
+            findViewById<TextView>(R.id.satHours_textView).text =userObject.getString("saturday")?: ""
+            findViewById<TextView>(R.id.sunHours_textView).text =userObject.getString("sunday")?: ""
+            findViewById<TextView>(R.id.mail_textView).text =userObject.getString("email")?: ""
+            findViewById<TextView>(R.id.phoneNumber_textView).text =userObject.getString("phoneNumber")?: ""
             /*var test :String? = userObject.getString("image_data")
             val b: ByteArray = Base64.decode(test, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)

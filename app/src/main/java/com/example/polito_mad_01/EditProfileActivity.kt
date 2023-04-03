@@ -267,35 +267,6 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         }
         user.put("location", text)
-
-        text = findViewById<EditText>(R.id.monHours_value).text.toString()
-            user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.tueHours_value).text.toString()
-            user.put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.wedHours_value).text.toString()
-            user.put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.thuHours_value).text.toString()
-            user.put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.friHours_value).text.toString()
-            user.put("friday", findViewById<EditText>(R.id.friHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.satHours_value).text.toString()
-            user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
-
-
-        text = findViewById<EditText>(R.id.sunHours_value).text.toString()
-            user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
-
-
         text = findViewById<EditText>(R.id.phoneNumber_value).text.toString()
         if (text.isEmpty()) {
             Toast.makeText(this, "Please enter your phone number", Toast.LENGTH_SHORT).show()
@@ -309,10 +280,18 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         }
 
+
+        user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
+        user.put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
+        user.put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
+        user.put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
+        user.put("friday", findViewById<EditText>(R.id.friHours_value).text)
+        user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
+        user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
+
+
         //.put("image_data", encodedImage )
-
-
-        sp.putString("user", user.toString())
+        sp.putString("user", "$user")
         sp.apply()
         return true
     }
@@ -325,23 +304,29 @@ class EditProfileActivity : AppCompatActivity() {
         userString?.let {
             val userObject = JSONObject(userString)
 
-            findViewById<TextView>(R.id.fullName_value).text = userObject.getString("fullName")
-            findViewById<TextView>(R.id.nickName_value).text = userObject.getString("nickname")
-            findViewById<TextView>(R.id.age_value).text = userObject.getInt("age").toString()
+            findViewById<TextView>(R.id.fullName_value).text =
+                userObject.getString("fullName") ?: ""
+            findViewById<TextView>(R.id.nickName_value).text =
+                userObject.getString("nickname") ?: ""
+            findViewById<TextView>(R.id.age_value).text = userObject.getString("age") ?: ""
             findViewById<TextView>(R.id.description_value).text =
-                userObject.getString("description")
-            findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
-            findViewById<TextView>(R.id.location_value).text = userObject.getString("location")
-            findViewById<TextView>(R.id.monHours_value).text = userObject.getString("monday")
-            findViewById<TextView>(R.id.tueHours_value).text = userObject.getString("tuesday")
-            findViewById<TextView>(R.id.wedHours_value).text = userObject.getString("wednesday")
-            findViewById<TextView>(R.id.thuHours_value).text = userObject.getString("thursday")
-            findViewById<TextView>(R.id.friHours_value).text = userObject.getString("friday")
-            findViewById<TextView>(R.id.satHours_value).text = userObject.getString("saturday")
-            findViewById<TextView>(R.id.sunHours_value).text = userObject.getString("sunday")
-            findViewById<TextView>(R.id.mail_value).text = userObject.getString("email")
+                userObject.getString("description") ?: ""
+            findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender") ?: ""
+            findViewById<TextView>(R.id.location_value).text =
+                userObject.getString("location") ?: ""
+            findViewById<TextView>(R.id.monHours_value).text = userObject.getString("monday") ?: ""
+            findViewById<TextView>(R.id.tueHours_value).text = userObject.getString("tuesday") ?: ""
+            findViewById<TextView>(R.id.wedHours_value).text =
+                userObject.getString("wednesday") ?: ""
+            findViewById<TextView>(R.id.thuHours_value).text =
+                userObject.getString("thursday") ?: ""
+            findViewById<TextView>(R.id.friHours_value).text = userObject.getString("friday") ?: ""
+            findViewById<TextView>(R.id.satHours_value).text =
+                userObject.getString("saturday") ?: ""
+            findViewById<TextView>(R.id.sunHours_value).text = userObject.getString("sunday") ?: ""
+            findViewById<TextView>(R.id.mail_value).text = userObject.getString("email") ?: ""
             findViewById<TextView>(R.id.phoneNumber_value).text =
-                userObject.getString("phoneNumber")
+                userObject.getString("phoneNumber") ?: ""
         }
 
         /*var test :String? = userObject.getString("image_data")
