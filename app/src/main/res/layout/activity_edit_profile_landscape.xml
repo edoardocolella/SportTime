@@ -7,7 +7,6 @@
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFE7EDF6"
     android:baselineAligned="true"
     android:orientation="horizontal"
     android:paddingTop="16dp">
@@ -27,12 +26,13 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:src="@drawable/face_48px"
-            app:layout_constraintBottom_toTopOf="@+id/imageButton"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/face_48px" />
 
-        <ImageButton
+        <!--        <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -45,7 +45,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,18 +67,17 @@
             android:hint="@string/fullName"
             android:inputType="textPersonName"
             android:textAlignment="center"
-            android:textColor="@color/black"
             android:textSize="38sp" />
 
         <EditText
             android:id="@+id/nickName_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints="username"
+            android:importantForAutofill="no"
+            android:hint="@string/nickname"
             android:inputType="text"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:hint="@string/nickname"
             android:textAlignment="center"
             android:textSize="24sp"
             android:textStyle="italic" />
@@ -99,7 +98,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:background="@drawable/shape"
                     android:elevation="4dp"
                     android:gravity="clip_horizontal|center_horizontal"
                     android:orientation="vertical">
@@ -153,7 +151,7 @@
                             android:inputType="number"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
-                            android:textAlignment="viewStart"
+                            android:textAlignment="center"
                             android:textSize="24sp" />
 
                     </LinearLayout>
@@ -167,11 +165,11 @@
                         android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
+                        android:hint="@string/location"
                         android:importantForAutofill="no"
                         android:inputType="text"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:hint="@string/location"
                         android:textSize="24sp" />
 
                 </LinearLayout>
@@ -181,9 +179,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:hint="@string/description"
                     android:importantForAutofill="no"
                     android:inputType="text"
-                    android:hint="@string/description"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -192,7 +190,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -200,7 +197,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/sportsLabel"
-                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <!--View
@@ -234,7 +230,7 @@
                             android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
-                            android:textSize="22sp"/>
+                            android:textSize="22sp" />
                     </LinearLayout>
 
                     <!--View
@@ -311,7 +307,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -319,7 +314,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/availabilityLabel"
-                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <!--View
@@ -356,7 +350,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -390,7 +384,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -424,7 +418,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -458,7 +452,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -492,7 +486,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -526,7 +520,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -561,7 +555,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="3"
-                                android:autofillHints="name"
+                                android:importantForAutofill="no"
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
@@ -578,7 +572,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/shape"
                     android:orientation="vertical">
 
                     <TextView
@@ -586,7 +579,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
-                        android:textColor="@color/black"
                         android:textSize="30sp" />
 
                     <!--View

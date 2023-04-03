@@ -82,10 +82,12 @@ class EditProfileActivity : AppCompatActivity() {
         // showing the back button in action bar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val imgButton = findViewById<ImageButton>(R.id.imageButton)
-        registerForContextMenu(imgButton)
+        if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+            val imgButton = findViewById<ImageButton>(R.id.imageButton)
+            registerForContextMenu(imgButton)
 
-        imgButton.setOnClickListener { v -> v.showContextMenu() }
+            imgButton.setOnClickListener { v -> v.showContextMenu() }
+        }
 
         if(vm.changing){
             getViewModelData()
@@ -173,18 +175,33 @@ class EditProfileActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
             frame.setImageURI(imageUri)
-            val drawable = frame.drawable as BitmapDrawable
-            val bitmap = drawable.bitmap
-            val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            frame.setImageBitmap(resized)
+            when(frame.drawable){
+                is BitmapDrawable -> {
+                    val drawable = frame.drawable as BitmapDrawable
+                    val bitmap = drawable.bitmap
+                    val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+                    frame.setImageBitmap(resized)
+                }
+                else -> {
+                    println("NO")
+                }
+            }
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
             frame.setImageURI(imageUri)
-            val drawable = frame.drawable as BitmapDrawable
-            val bitmap = drawable.bitmap
-            val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-            frame.setImageBitmap(resized)
+
+            when(frame.drawable){
+                is BitmapDrawable -> {
+                    val drawable = frame.drawable as BitmapDrawable
+                    val bitmap = drawable.bitmap
+                    val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
+                    frame.setImageBitmap(resized)
+                }
+                else -> {
+                    println("NO")
+                }
+            }
         }
     }
 
