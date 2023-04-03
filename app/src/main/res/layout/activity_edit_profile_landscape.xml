@@ -106,7 +106,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="18dp">
 
                         <TextView
                             android:id="@+id/textView"
@@ -354,6 +356,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -388,6 +391,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -422,6 +426,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -456,6 +461,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -490,6 +496,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 
@@ -524,6 +531,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
 
                         </LinearLayout>
@@ -559,6 +567,7 @@
                                 android:inputType="text"
                                 android:paddingTop="4dp"
                                 android:paddingBottom="4dp"
+                                android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
 

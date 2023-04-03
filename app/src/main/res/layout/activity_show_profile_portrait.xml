@@ -236,7 +236,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
                             android:textAlignment="center"
-                            android:textColor="#363636"
                             android:textSize="18sp" />
                     </LinearLayout>
 
