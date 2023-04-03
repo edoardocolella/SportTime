@@ -10,39 +10,28 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Base64
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
 
 
 class EditProfileActivity : AppCompatActivity() {
 
     private var frame: ImageView? = null
-
-    //var imgButton: ImageButton? = null
-    private lateinit var cropIntent: Intent
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
-    var encodedImage: String = ""
     lateinit var spinner: Spinner
 
-
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -84,12 +73,8 @@ class EditProfileActivity : AppCompatActivity() {
 
     }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-
+    override fun onCreateContextMenu(menu: ContextMenu?,
+        v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
         val inflater = menuInflater
         inflater.inflate(R.menu.menu_picture, menu)
     }
@@ -161,7 +146,6 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
-
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
@@ -170,16 +154,14 @@ class EditProfileActivity : AppCompatActivity() {
         )
     }
 
-
     private fun Activity.showPermissionReasonAndRequest(
         title: String,
         message: String,
     ) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(title)
-        builder.setMessage(message)
-
-        builder.setPositiveButton("OK") { _, _ ->
+        .setMessage(message)
+        .setPositiveButton("OK") { _, _ ->
             requestPermission()
         }
 
@@ -205,20 +187,17 @@ class EditProfileActivity : AppCompatActivity() {
 
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Are you sure?")
-                builder.setMessage("All changes will be lost")
-
-                builder.setPositiveButton("YES") { _, _ ->
+                .setMessage("All changes will be lost")
+                .setPositiveButton("YES") { _, _ ->
                     finish()
                 }
-
-                builder.setNegativeButton("NO") { _, _ ->
+                .setNegativeButton("NO") { _, _ ->
                     Toast.makeText(
                         applicationContext,
                         android.R.string.no, Toast.LENGTH_SHORT
                     ).show()
                 }
-
-                builder.show()
+                .show()
 
                 return true
             }
@@ -238,66 +217,62 @@ class EditProfileActivity : AppCompatActivity() {
     private fun saveData(): Boolean {
 
         val user = JSONObject()
-
-        var text = findViewById<EditText>(R.id.fullName_value).text.toString()
+        var text = getEditText(R.id.fullName_value)
         if (!toastForEmptyFields(text, "Please enter your full name"))
             return false;
         user.put("fullName", text)
 
-        text = findViewById<EditText>(R.id.nickName_value).text.toString()
+        text = getEditText(R.id.nickName_value)
         if (!toastForEmptyFields(text, "Please enter your nickname"))
             return false;
         user.put("nickname", text)
 
-        text = findViewById<EditText>(R.id.age_value).text.toString()
+        text = getEditText(R.id.age_value)
         if (!toastForEmptyFields(text, "Please enter your age"))
             return false;
         user.put("age", text)
 
-
         user.put("genderIndex", spinner.selectedItemPosition)
 
-        text = findViewById<EditText>(R.id.location_value).text.toString()
+        text = getEditText(R.id.location_value)
         if (!toastForEmptyFields(text, "Please enter your location"))
             return false;
         user.put("location", text)
 
-        text = findViewById<EditText>(R.id.description_value).text.toString()
+        text = getEditText(R.id.description_value)
         if (!toastForEmptyFields(text, "Please enter your description"))
             return false;
         user.put("description", text)
 
-        val expertList = findViewById<EditText>(R.id.expertList_value).text.toString()
-        val intermediateList = findViewById<EditText>(R.id.intermediateList_value).text.toString()
-        val beginnerList = findViewById<EditText>(R.id.beginnerList_value).text.toString()
-
+        val expertList = getEditText(R.id.expertList_value)
+        val intermediateList = getEditText(R.id.intermediateList_value)
+        val beginnerList = getEditText(R.id.beginnerList_value)
         if(expertList.isEmpty() && intermediateList.isEmpty() && beginnerList.isEmpty()){
             Toast.makeText(this, "Please enter at least one skill", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        text = findViewById<EditText>(R.id.mail_value).text.toString()
+        text = getEditText(R.id.mail_value)
         if (!toastForEmptyFields(text, "Please enter your mail"))
             return false;
         user.put("email", text)
 
-        text = findViewById<EditText>(R.id.phoneNumber_value).text.toString()
+        text = getEditText(R.id.phoneNumber_value)
         if (!toastForEmptyFields(text, "Please enter your phone number"))
             return false;
         user.put("phoneNumber", text)
 
         user.put("expertList", expertList)
-        user.put("intermediateList", intermediateList)
-        user.put("beginnerList", beginnerList)
-        user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
-        user.put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
-        user.put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
-        user.put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
-        user.put("friday", findViewById<EditText>(R.id.friHours_value).text)
-        user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
-        user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
-
-        user.put("image_data", imageUri?: "" )
+            .put("intermediateList", intermediateList)
+            .put("beginnerList", beginnerList)
+            .put("monday", findViewById<EditText>(R.id.monHours_value).text)
+            .put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
+            .put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
+            .put("thursday", findViewById<EditText>(R.id.thuHours_value).text)
+            .put("friday", findViewById<EditText>(R.id.friHours_value).text)
+            .put("saturday", findViewById<EditText>(R.id.satHours_value).text)
+            .put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
+            .put("image_data", imageUri?: "" )
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
             .putString("user", "$user")
@@ -313,47 +288,31 @@ class EditProfileActivity : AppCompatActivity() {
         userString?.let {
             val userObject = JSONObject(userString)
 
-            findViewById<TextView>(R.id.fullName_value).text =
-                userObject.getString("fullName") ?: ""
-            findViewById<TextView>(R.id.nickName_value).text =
-                userObject.getString("nickname") ?: ""
-            findViewById<TextView>(R.id.age_value).text = userObject.getString("age") ?: ""
-            findViewById<TextView>(R.id.description_value).text =
-                userObject.getString("description") ?: ""
-
+            setTextView(userObject.getString("fullName"), R.id.fullName_value)
+            setTextView(userObject.getString("nickname"), R.id.nickName_value)
+            setTextView(userObject.getString("age"), R.id.age_value)
+            setTextView(userObject.getString("description"), R.id.description_value)
+            setTextView(userObject.getString("location"), R.id.location_value)
+            setTextView(userObject.getString("expertList"), R.id.expertList_value)
+            setTextView(userObject.getString("intermediateList"), R.id.intermediateList_value)
+            setTextView(userObject.getString("beginnerList"), R.id.beginnerList_value)
+            setTextView(userObject.getString("monday"), R.id.monHours_value)
+            setTextView(userObject.getString("tuesday"), R.id.tueHours_value)
+            setTextView(userObject.getString("wednesday"), R.id.wedHours_value)
+            setTextView(userObject.getString("thursday"), R.id.thuHours_value)
+            setTextView(userObject.getString("friday"), R.id.friHours_value)
+            setTextView(userObject.getString("saturday"), R.id.satHours_value)
+            setTextView(userObject.getString("sunday"), R.id.sunHours_value)
+            setTextView(userObject.getString("email"), R.id.mail_value)
+            setTextView(userObject.getString("phoneNumber"), R.id.phoneNumber_value)
             spinner.setSelection(userObject.getInt("genderIndex"))
 
-            findViewById<TextView>(R.id.location_value).text =
-                userObject.getString("location") ?: ""
-
-            findViewById<TextView>(R.id.expertList_value).text =
-                userObject.getString("expertList") ?: ""
-            findViewById<TextView>(R.id.intermediateList_value).text =
-                userObject.getString("intermediateList") ?: ""
-            findViewById<TextView>(R.id.beginnerList_value).text =
-                userObject.getString("beginnerList") ?: ""
-
-            findViewById<TextView>(R.id.monHours_value).text = userObject.getString("monday") ?: ""
-            findViewById<TextView>(R.id.tueHours_value).text = userObject.getString("tuesday") ?: ""
-            findViewById<TextView>(R.id.wedHours_value).text =
-                userObject.getString("wednesday") ?: ""
-            findViewById<TextView>(R.id.thuHours_value).text =
-                userObject.getString("thursday") ?: ""
-            findViewById<TextView>(R.id.friHours_value).text = userObject.getString("friday") ?: ""
-            findViewById<TextView>(R.id.satHours_value).text =
-                userObject.getString("saturday") ?: ""
-            findViewById<TextView>(R.id.sunHours_value).text = userObject.getString("sunday") ?: ""
-            findViewById<TextView>(R.id.mail_value).text = userObject.getString("email") ?: ""
-            findViewById<TextView>(R.id.phoneNumber_value).text =
-                userObject.getString("phoneNumber") ?: ""
-
-            var image :String? = userObject.getString("image_data")
-
-            image?.let {
-                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
+            userObject.getString("image_data")?.let {
+                imageUri = it.toUri()
+                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
             }
         }
-        }
+    }
 
     private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
         if (textToBeChecked.isEmpty()) {
@@ -362,5 +321,14 @@ class EditProfileActivity : AppCompatActivity() {
         }
         return true;
     }
+
+    private fun setTextView( text: String?, id: Int){
+        findViewById<TextView>(id).text = text?: ""
+    }
+
+    private fun getEditText( id: Int): String{
+        return findViewById<EditText>(id).text.toString()
+    }
+
 }
 

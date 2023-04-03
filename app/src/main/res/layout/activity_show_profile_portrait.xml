@@ -18,7 +18,7 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:src="@drawable/myavatar" />
+        android:src="@drawable/face_48px" />
 
     <LinearLayout
         android:id="@+id/infoLayout"

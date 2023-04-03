@@ -100,7 +100,7 @@ class ShowProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.sunHours_textView).text =userObject.getString("sunday")?: ""
             findViewById<TextView>(R.id.mail_textView).text =userObject.getString("email")?: ""
             findViewById<TextView>(R.id.phoneNumber_textView).text =userObject.getString("phoneNumber")?: ""
-            var image :String? = userObject.getString("image_data")
+            val image :String? = userObject.getString("image_data")
 
             image?.let {
                 findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
