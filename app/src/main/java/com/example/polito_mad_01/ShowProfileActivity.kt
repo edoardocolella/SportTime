@@ -15,6 +15,7 @@ import android.util.Base64
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
@@ -73,7 +74,16 @@ class ShowProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.nickName_textView).text = userObject.getString("nickname")?: ""
             findViewById<TextView>(R.id.age_textView).text = userObject.getString("age")?: ""
             findViewById<TextView>(R.id.description_textView).text = userObject.getString("description")?: ""
-            findViewById<TextView>(R.id.gender_textView).text = userObject.getString("gender")?: ""
+
+            val genderIndex = try {
+                userObject.getInt("genderIndex")
+            } catch (e: Error) {
+                0
+            }
+
+            val gender = resources.getStringArray(R.array.genderArray)[genderIndex]
+
+            findViewById<TextView>(R.id.gender_textView).text = gender
             findViewById<TextView>(R.id.location_textView).text =userObject.getString("location")?: ""
             findViewById<TextView>(R.id.expertList_textView).text =
                 userObject.getString("expertList") ?: ""
@@ -92,7 +102,9 @@ class ShowProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.phoneNumber_textView).text =userObject.getString("phoneNumber")?: ""
             var image :String? = userObject.getString("image_data")
 
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(image?.toUri())
+            image?.let {
+                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
+            }
         }
     }
 

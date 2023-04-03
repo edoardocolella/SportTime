@@ -39,6 +39,7 @@ class EditProfileActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     var encodedImage: String = ""
+    lateinit var spinner: Spinner
 
 
     @SuppressLint("MissingInflatedId")
@@ -51,6 +52,18 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
         setContentView(layout)
+
+        spinner = findViewById(R.id.spinner)
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(this, R.array.genderArray,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
 
         frame = findViewById(R.id.profileImage_imageView)
 
@@ -107,10 +120,10 @@ class EditProfileActivity : AppCompatActivity() {
             val bitmap = drawable.bitmap
             val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
             frame?.setImageBitmap(resized)
-            val baos = ByteArrayOutputStream()
+            /*val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val b: ByteArray = baos.toByteArray()
-            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)
+            encodedImage= Base64.encodeToString(b, Base64.DEFAULT)*/
         }
     }
 
@@ -241,10 +254,8 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         user.put("age", text)
 
-        text = findViewById<EditText>(R.id.gender_value).text.toString()
-        if (!toastForEmptyFields(text, "Please enter your gender"))
-            return false;
-        user.put("gender", text)
+
+        user.put("genderIndex", spinner.selectedItemPosition)
 
         text = findViewById<EditText>(R.id.location_value).text.toString()
         if (!toastForEmptyFields(text, "Please enter your location"))
@@ -286,11 +297,7 @@ class EditProfileActivity : AppCompatActivity() {
         user.put("saturday", findViewById<EditText>(R.id.satHours_value).text)
         user.put("sunday", findViewById<EditText>(R.id.sunHours_value).text)
 
-
-        imageUri?.let {
-            user.put("image_data", it )
-            println("$it")
-        }
+        user.put("image_data", imageUri?: "" )
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
             .putString("user", "$user")
@@ -313,7 +320,9 @@ class EditProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.age_value).text = userObject.getString("age") ?: ""
             findViewById<TextView>(R.id.description_value).text =
                 userObject.getString("description") ?: ""
-            findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender") ?: ""
+
+            spinner.setSelection(userObject.getInt("genderIndex"))
+
             findViewById<TextView>(R.id.location_value).text =
                 userObject.getString("location") ?: ""
 
@@ -339,9 +348,12 @@ class EditProfileActivity : AppCompatActivity() {
                 userObject.getString("phoneNumber") ?: ""
 
             var image :String? = userObject.getString("image_data")
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(image?.toUri())
+
+            image?.let {
+                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
+            }
         }
-    }
+        }
 
     private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
         if (textToBeChecked.isEmpty()) {

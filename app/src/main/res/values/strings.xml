@@ -11,7 +11,7 @@
     <string name="ageLabel">Age: </string>
     <string name="age">Age</string>
     <string name="genderLabel">Gender: </string>
-    <string name="gender">Gender</string>
+    <string name="gender">Non-specified</string>
     <string name="locationLabel">Location: </string>
     <string name="location">Location</string>
     <string name="sportsLabel">Sports</string>
@@ -29,4 +29,10 @@
     <string name="contactsLabel">Contacts</string>
     <string name="emailLabel">Email: </string>
     <string name="phoneLabel">Phone Number: </string>
+    <string-array name="genderArray">
+        <item>Non-specified</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
 </resources>

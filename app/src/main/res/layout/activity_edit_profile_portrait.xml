@@ -79,59 +79,54 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/profileLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:textAlignment="center">
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/gender_value"
-                            android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
                             android:layout_weight="1"
-                            android:autofillHints="name"
-                            android:drawableStart="@drawable/face_48px"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_horizontal"
-                            android:hint="@string/gender"
-                            android:inputType="text"
-                            android:paddingLeft="0dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="0dp"
-                            android:paddingBottom="8dp"
-                            android:textSize="24sp" />
+                            android:text="@string/genderLabel"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:drawableLeftCompat="@drawable/face_48px" />
 
-                        <EditText
-                            android:id="@+id/age_value"
-                            android:layout_width="wrap_content"
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
                             android:layout_weight="1"
-                            android:drawableStart="@drawable/cake_48px"
-                            android:drawablePadding="8dp"
-                            android:hint="@string/age"
-                            android:importantForAutofill="no"
-                            android:inputType="number"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:textAlignment="viewStart"
-                            android:textSize="24sp" />
-
+                            android:entries="@array/genderArray"
+                            android:scrollbarSize="4dp" />
                     </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/age_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/cake_48px"
+                        android:drawablePadding="8dp"
+                        android:hint="@string/age"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
 
                     <EditText
                         android:id="@+id/location_value"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
                         android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
@@ -604,6 +599,7 @@
                             android:paddingTop="4dp"
                             android:paddingBottom="4dp"
                             android:textSize="18sp" />
+
                     </LinearLayout>
 
                 </LinearLayout>
