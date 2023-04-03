@@ -74,6 +74,12 @@ class ShowProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.description_textView).text = userObject.getString("description")?: ""
             findViewById<TextView>(R.id.gender_textView).text = userObject.getString("gender")?: ""
             findViewById<TextView>(R.id.location_textView).text =userObject.getString("location")?: ""
+            findViewById<TextView>(R.id.expertList_textView).text =
+                userObject.getString("expertList") ?: ""
+            findViewById<TextView>(R.id.intermediateList_textView).text =
+                userObject.getString("intermediateList") ?: ""
+            findViewById<TextView>(R.id.beginnerList_textView).text =
+                userObject.getString("beginnerList") ?: ""
             findViewById<TextView>(R.id.monHours_textView).text =userObject.getString("monday")?: ""
             findViewById<TextView>(R.id.tueHours_textView).text =userObject.getString("tuesday")?: ""
             findViewById<TextView>(R.id.wedHours_textView).text =userObject.getString("wednesday")?: ""
