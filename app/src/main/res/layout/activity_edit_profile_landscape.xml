@@ -105,6 +105,31 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/genderLabel"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:drawableLeftCompat="@drawable/face_48px" />
+
+                        <Spinner
+                            android:id="@+id/spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:entries="@array/genderArray"
+                            android:scrollbarSize="4dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:id="@+id/profileLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -115,38 +140,19 @@
                         android:textAlignment="center">
 
                         <EditText
-                            android:id="@+id/gender_value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_weight="1"
-                            android:autofillHints="name"
-                            android:drawableStart="@drawable/face_48px"
-                            android:drawablePadding="8dp"
-                            android:gravity="center_horizontal"
-                            android:inputType="text"
-                            android:paddingLeft="0dp"
-                            android:paddingTop="8dp"
-                            android:paddingRight="0dp"
-                            android:paddingBottom="8dp"
-                            android:hint="@string/gender"
-                            android:textSize="24sp" />
-
-                        <EditText
                             android:id="@+id/age_value"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:layout_weight="1"
                             android:drawableStart="@drawable/cake_48px"
                             android:drawablePadding="8dp"
+                            android:hint="@string/age"
                             android:importantForAutofill="no"
                             android:inputType="number"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
-                            android:hint="@string/age"
                             android:textAlignment="viewStart"
                             android:textSize="24sp" />
 

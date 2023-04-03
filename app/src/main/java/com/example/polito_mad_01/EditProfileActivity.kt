@@ -15,12 +15,28 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.*
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.json.JSONObject
 
+class DataViewModel: ViewModel() {
+    private var _formData = MutableLiveData<JSONObject>().apply { value = JSONObject() }
+    var changing: Boolean = false
+
+    val formData: LiveData<JSONObject>
+        get() = _formData
+
+    fun addField(key: String, value: Any) : DataViewModel { _formData.value?.put(key, value); return this }
+
+    fun clearFields() { _formData = MutableLiveData<JSONObject>().apply { value = JSONObject() } }
+}
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -30,6 +46,8 @@ class EditProfileActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
+
+    private val vm by viewModels<DataViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +86,71 @@ class EditProfileActivity : AppCompatActivity() {
         registerForContextMenu(imgButton)
 
         imgButton.setOnClickListener { v -> v.showContextMenu() }
-        getData()
 
+        if(vm.changing){
+            getViewModelData()
+            vm.changing = false
+            vm.clearFields()
+        } else {
+            getData()
+        }
+
+    }
+
+    fun getViewModelData(){
+        val userObject = vm.formData.value!!
+
+        setTextView("fullName", R.id.fullName_value, userObject)
+        setTextView("nickname", R.id.nickName_value, userObject)
+        setTextView("age", R.id.age_value, userObject)
+        setTextView("description", R.id.description_value, userObject)
+        setTextView("location", R.id.location_value, userObject)
+        setTextView("expertList", R.id.expertList_value, userObject)
+        setTextView("intermediateList", R.id.intermediateList_value, userObject)
+        setTextView("beginnerList", R.id.beginnerList_value, userObject)
+        setTextView("monday", R.id.monHours_value, userObject)
+        setTextView("tuesday", R.id.tueHours_value, userObject)
+        setTextView("wednesday", R.id.wedHours_value, userObject)
+        setTextView("thursday", R.id.thuHours_value, userObject)
+        setTextView("friday", R.id.friHours_value, userObject)
+        setTextView("saturday", R.id.satHours_value, userObject)
+        setTextView("sunday", R.id.sunHours_value, userObject)
+        setTextView("mail", R.id.mail_value, userObject)
+        setTextView("phoneNumber", R.id.phoneNumber_value, userObject)
+        spinner.setSelection(userObject.getInt("genderIndex"))
+
+        userObject.getString("image_data")?.let {
+            imageUri = it.toUri()
+            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if(isChangingConfigurations){
+            vm.changing = true
+
+            vm.addField("fullName", getEditText(R.id.fullName_value))
+                .addField("nickname", getEditText(R.id.nickName_value))
+                .addField("genderIndex", spinner.selectedItemPosition)
+                .addField("age", getEditText(R.id.age_value))
+                .addField("location", getEditText(R.id.location_value))
+                .addField("description", getEditText(R.id.description_value))
+                .addField("expertList", getEditText(R.id.expertList_value))
+                .addField("intermediateList", getEditText(R.id.intermediateList_value))
+                .addField("beginnerList", getEditText(R.id.beginnerList_value))
+                .addField("monday", getEditText(R.id.monHours_value))
+                .addField("tuesday", getEditText(R.id.tueHours_value))
+                .addField("wednesday",  getEditText(R.id.wedHours_value))
+                .addField("thursday", getEditText(R.id.thuHours_value))
+                .addField("friday", getEditText(R.id.friHours_value))
+                .addField("saturday", getEditText(R.id.satHours_value))
+                .addField("sunday", getEditText(R.id.sunHours_value))
+                .addField("mail", getEditText(R.id.mail_value))
+                .addField("phoneNumber", getEditText(R.id.phoneNumber_value))
+                .addField("image_data", imageUri?: "" )
+        }
     }
 
     override fun onCreateContextMenu(menu: ContextMenu?,
