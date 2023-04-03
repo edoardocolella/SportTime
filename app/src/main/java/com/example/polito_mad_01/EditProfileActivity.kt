@@ -234,11 +234,6 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         user.put("nickname", text)
 
-        text = findViewById<EditText>(R.id.description_value).text.toString()
-        if (!toastForEmptyFields(text, "Please enter your description"))
-            return false;
-        user.put("description", text)
-
         text = findViewById<EditText>(R.id.age_value).text.toString()
         if (!toastForEmptyFields(text, "Please enter your age"))
             return false;
@@ -254,6 +249,20 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         user.put("location", text)
 
+        text = findViewById<EditText>(R.id.description_value).text.toString()
+        if (!toastForEmptyFields(text, "Please enter your description"))
+            return false;
+        user.put("description", text)
+
+        val expertList = findViewById<EditText>(R.id.expertList_value).text.toString()
+        val intermediateList = findViewById<EditText>(R.id.intermediateList_value).text.toString()
+        val beginnerList = findViewById<EditText>(R.id.beginnerList_value).text.toString()
+
+        if(expertList.isEmpty() && intermediateList.isEmpty() && beginnerList.isEmpty()){
+            Toast.makeText(this, "Please enter at least one skill", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         text = findViewById<EditText>(R.id.mail_value).text.toString()
         if (!toastForEmptyFields(text, "Please enter your mail"))
             return false;
@@ -264,9 +273,9 @@ class EditProfileActivity : AppCompatActivity() {
             return false;
         user.put("phoneNumber", text)
 
-
-
-
+        user.put("expertList", expertList)
+        user.put("intermediateList", intermediateList)
+        user.put("beginnerList", beginnerList)
         user.put("monday", findViewById<EditText>(R.id.monHours_value).text)
         user.put("tuesday", findViewById<EditText>(R.id.tueHours_value).text)
         user.put("wednesday", findViewById<EditText>(R.id.wedHours_value).text)
@@ -301,6 +310,14 @@ class EditProfileActivity : AppCompatActivity() {
             findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender") ?: ""
             findViewById<TextView>(R.id.location_value).text =
                 userObject.getString("location") ?: ""
+
+            findViewById<TextView>(R.id.expertList_value).text =
+                userObject.getString("expertList") ?: ""
+            findViewById<TextView>(R.id.intermediateList_value).text =
+                userObject.getString("intermediateList") ?: ""
+            findViewById<TextView>(R.id.beginnerList_value).text =
+                userObject.getString("beginnerList") ?: ""
+
             findViewById<TextView>(R.id.monHours_value).text = userObject.getString("monday") ?: ""
             findViewById<TextView>(R.id.tueHours_value).text = userObject.getString("tuesday") ?: ""
             findViewById<TextView>(R.id.wedHours_value).text =
