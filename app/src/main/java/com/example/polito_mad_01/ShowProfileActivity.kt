@@ -1,23 +1,18 @@
 package com.example.polito_mad_01
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
-import android.util.Base64
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
+import androidx.core.net.toUri
 import org.json.JSONObject
 
 class ShowProfileActivity : AppCompatActivity() {
@@ -31,20 +26,16 @@ class ShowProfileActivity : AppCompatActivity() {
         }
 
         // calling the action bar
-        var actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.title = "Profile"
-        }
+        val actionBar = supportActionBar
+        actionBar?.let {it.title = "Profile" }
 
         setContentView(layout)
 
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED || checkSelfPermission(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            == PackageManager.PERMISSION_DENIED) {
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
             val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             requestPermissions(permission, 112)
         }
-
         getData()
     }
 
@@ -68,27 +59,39 @@ class ShowProfileActivity : AppCompatActivity() {
         userString?.let {
             val userObject = JSONObject(userString)
 
-            findViewById<TextView>(R.id.fullName_value).text = userObject.getString("fullName")
-            findViewById<TextView>(R.id.nickName_value).text = userObject.getString("nickname")
-            findViewById<TextView>(R.id.age_value).text = userObject.getInt("age").toString()
-            findViewById<TextView>(R.id.description_value).text = userObject.getString("description")
-            findViewById<TextView>(R.id.gender_value).text = userObject.getString("gender")
-            findViewById<TextView>(R.id.location_value).text =userObject.getString("location")
-            findViewById<TextView>(R.id.monHours_value).text =userObject.getString("monday")
-            findViewById<TextView>(R.id.tueHours_value).text =userObject.getString("tuesday")
-            findViewById<TextView>(R.id.wedHours_value).text =userObject.getString("wednesday")
-            findViewById<TextView>(R.id.thuHours_value).text =userObject.getString("thursday")
-            findViewById<TextView>(R.id.friHours_value).text =userObject.getString("friday")
-            findViewById<TextView>(R.id.satHours_value).text =userObject.getString("saturday")
-            findViewById<TextView>(R.id.sunHours_value).text =userObject.getString("sunday")
-            findViewById<TextView>(R.id.mail_value).text =userObject.getString("email")
-            findViewById<TextView>(R.id.phoneNumber_value).text =userObject.getString("phoneNumber")
-            /*var test :String? = userObject.getString("image_data")
-            val b: ByteArray = Base64.decode(test, Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(b, 0, b.size)
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageBitmap(bitmap)*/
+            setTextView(userObject,"fullName", R.id.fullName_textView)
+            setTextView(userObject,"nickname", R.id.nickName_textView)
+            setTextView(userObject,"age", R.id.age_textView)
+            setTextView(userObject,"description", R.id.description_textView)
+            setTextView(userObject,"location", R.id.location_textView)
+            setTextView(userObject,"expertList", R.id.expertList_textView)
+            setTextView(userObject,"intermediateList", R.id.intermediateList_textView)
+            setTextView(userObject,"beginnerList", R.id.beginnerList_textView)
+            setTextView(userObject,"monday", R.id.monHours_textView)
+            setTextView(userObject,"tuesday", R.id.tueHours_textView)
+            setTextView(userObject,"wednesday", R.id.wedHours_textView)
+            setTextView(userObject,"thursday", R.id.thuHours_textView)
+            setTextView(userObject,"friday", R.id.friHours_textView)
+            setTextView(userObject,"saturday", R.id.satHours_textView)
+            setTextView(userObject,"sunday", R.id.sunHours_textView)
+            setTextView(userObject,"email", R.id.mail_textView)
+            setTextView(userObject,"phoneNumber", R.id.phoneNumber_textView)
+
+            val image :String? = userObject.getString("image_data")
+            image?.let {
+                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
+            }
+
+            val genderIndex =
+                try {userObject.getInt("genderIndex")}
+                catch (e: Error) { 0 }
+
+            val gender = resources.getStringArray(R.array.genderArray)[genderIndex]
+            findViewById<TextView>(R.id.gender_textView).text = gender
+
         }
     }
-
-
+    private fun setTextView(json:JSONObject, key: String, id: Int){
+        findViewById<TextView>(id).text = json.getString(key)?: ""
+    }
 }

@@ -5,6 +5,13 @@
     <color name="purple_700">#7AA7EC</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <color name="rich_black">#FF04080F</color>
+    <color name="glaucos">#FF507DBC</color>
+    <color name="powder_blue">#FFA1C6EA</color>
+    <color name="columbia_blue">#FFBBD1EA</color>
+    <color name="platinum">#FFDAE3E5</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
