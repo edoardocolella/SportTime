@@ -29,6 +29,7 @@
     <string name="contactsLabel">Contacts</string>
     <string name="emailLabel">Email: </string>
     <string name="phoneLabel">Phone Number: </string>
+    <string name="cameraPermission">Hi, we will request CAMERA permission. This is required for taking the photo from camera, please grant it.</string>
     <string-array name="genderArray">
         <item>Non-specified</item>
         <item>Male</item>

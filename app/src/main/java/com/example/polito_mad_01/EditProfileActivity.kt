@@ -21,7 +21,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,6 +46,7 @@ class DataViewModel : ViewModel() {
     }
 }
 
+
 class EditProfileActivity : AppCompatActivity() {
 
     private lateinit var frame: ImageView
@@ -55,6 +55,27 @@ class EditProfileActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
+
+    private val arrayOfPairIDField: Array<Pair<Int, String>> =
+        arrayOf(
+            Pair(R.id.fullName_value, "fullName"),
+            Pair(R.id.nickName_value, "nickname"),
+            Pair(R.id.age_value, "age"),
+            Pair(R.id.location_value, "location"),
+            Pair(R.id.description_value, "description"),
+            Pair(R.id.expertList_value, "expertList"),
+            Pair(R.id.intermediateList_value, "intermediateList"),
+            Pair(R.id.beginnerList_value, "beginnerList"),
+            Pair(R.id.monHours_value, "monday"),
+            Pair(R.id.tueHours_value, "tuesday"),
+            Pair(R.id.wedHours_value, "wednesday"),
+            Pair(R.id.thuHours_value, "thursday"),
+            Pair(R.id.friHours_value, "friday"),
+            Pair(R.id.satHours_value, "saturday"),
+            Pair(R.id.sunHours_value, "sunday"),
+            Pair(R.id.mail_value, "email"),
+            Pair(R.id.phoneNumber_value, "phoneNumber")
+        )
 
     private val vm by viewModels<DataViewModel>()
 
@@ -94,54 +115,40 @@ class EditProfileActivity : AppCompatActivity() {
 
         getData()
         setListeners()
-
     }
 
-
     private fun setListeners() {
-        setListener(R.id.fullName_value, "fullName")
-        setListener(R.id.nickName_value, "nickname")
-        setListener(R.id.age_value, "age")
-        setListener(R.id.location_value, "location")
-        setListener(R.id.description_value, "description")
-        setListener(R.id.expertList_value, "expertList")
-        setListener(R.id.intermediateList_value, "intermediateList")
-        setListener(R.id.beginnerList_value, "beginnerList")
-        setListener(R.id.monHours_value, "monday")
-        setListener(R.id.tueHours_value, "tuesday")
-        setListener(R.id.wedHours_value, "wednesday")
-        setListener(R.id.thuHours_value, "thursday")
-        setListener(R.id.friHours_value, "friday")
-        setListener(R.id.satHours_value, "saturday")
-        setListener(R.id.sunHours_value, "sunday")
-        setListener(R.id.mail_value, "email")
-        setListener(R.id.phoneNumber_value, "phoneNumber")
+        arrayOfPairIDField.forEach {
+        findViewById<EditText>(it.first).addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                vm.addField(it.second, s.toString())
+            }
+        })
+    }
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 vm.addField("genderIndex", position)
             }
         }
     }
 
-    private fun setListener(id: Int, field: String) {
-        findViewById<EditText>(id).addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.addField(field, s.toString())
-            }
-        })
-    }
-
     override fun onCreateContextMenu(
         menu: ContextMenu?,
-        v: View?, menuInfo: ContextMenu.ContextMenuInfo?
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
     ) {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.menu_picture, menu)
+        menuInflater.inflate(R.menu.menu_picture, menu)
     }
 
     private fun openCamera() {
@@ -149,6 +156,7 @@ class EditProfileActivity : AppCompatActivity() {
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
         imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        vm.addField("image_data", imageUri.toString())
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
@@ -172,6 +180,8 @@ class EditProfileActivity : AppCompatActivity() {
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
+            vm.addField("image_data", imageUri.toString())
+
             frame.setImageURI(imageUri)
 
             when (frame.drawable) {
@@ -194,7 +204,6 @@ class EditProfileActivity : AppCompatActivity() {
                 val galleryIntent =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
-
                 return true
             }
             R.id.picture -> {
@@ -203,7 +212,7 @@ class EditProfileActivity : AppCompatActivity() {
                 } else
                     showPermissionReasonAndRequest(
                         "Notice",
-                        "Hi, we will request CAMERA permission. This is required for taking the photo from camera, please grant it."
+                        R.string.cameraPermission.toString()
                     )
                 true
             }
@@ -264,24 +273,26 @@ class EditProfileActivity : AppCompatActivity() {
                 }
                 return false
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun saveData(): Boolean {
-
         val user = vm.formData.value!!
-        if (!toastForEmptyFields(user.getString("fullName"), "your full name"))
-            return false
-        if (!toastForEmptyFields(user.getString("nickname"), "your nickname"))
-            return false
-        if (!toastForEmptyFields(user.getString("age"), "your age"))
-            return false
-        if (!toastForEmptyFields(user.getString("location"), "your location"))
-            return false
-        if (!toastForEmptyFields(user.getString("description"), "your description"))
-            return false
+        arrayOf(
+            Pair("fullName", "your full name"),
+            Pair("nickname", "your nickname"),
+            Pair("age", "your age"),
+            Pair("location", "your location"),
+            Pair("description", "your description"),
+            Pair("email", "your mail"),
+            Pair("phoneNumber", "your phone number")
+        )
+            .forEach {
+                if (!toastForEmptyFields(user.getString(it.first), it.second))
+                    return false
+            }
+
         val expertList = user.getString("expertList")
         val intermediateList = user.getString("intermediateList")
         val beginnerList = user.getString("beginnerList")
@@ -289,11 +300,6 @@ class EditProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "at least one skill", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (!toastForEmptyFields(user.getString("email"), "your mail"))
-            return false
-        if (!toastForEmptyFields(user.getString("phoneNumber"), " your phone number"))
-            return false
-
         user.put("image_data", imageUri ?: "")
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
@@ -329,30 +335,13 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setTextView(key: String, id: Int, json: JSONObject) {
-        findViewById<TextView>(id).text = json.getString(key) ?: ""
-    }
-
     private fun setAllView(userObject: JSONObject) {
-        setTextView("fullName", R.id.fullName_value, userObject)
-        setTextView("nickname", R.id.nickName_value, userObject)
-        setTextView("age", R.id.age_value, userObject)
-        setTextView("description", R.id.description_value, userObject)
-        setTextView("location", R.id.location_value, userObject)
-        setTextView("expertList", R.id.expertList_value, userObject)
-        setTextView("intermediateList", R.id.intermediateList_value, userObject)
-        setTextView("beginnerList", R.id.beginnerList_value, userObject)
-        setTextView("monday", R.id.monHours_value, userObject)
-        setTextView("tuesday", R.id.tueHours_value, userObject)
-        setTextView("wednesday", R.id.wedHours_value, userObject)
-        setTextView("thursday", R.id.thuHours_value, userObject)
-        setTextView("friday", R.id.friHours_value, userObject)
-        setTextView("saturday", R.id.satHours_value, userObject)
-        setTextView("sunday", R.id.sunHours_value, userObject)
-        setTextView("email", R.id.mail_value, userObject)
-        setTextView("phoneNumber", R.id.phoneNumber_value, userObject)
-        spinner.setSelection(userObject.getInt("genderIndex"))
 
+        arrayOfPairIDField.forEach {
+            findViewById<TextView>(it.first).text = userObject.getString(it.second) ?: ""
+        }
+
+        spinner.setSelection(userObject.getInt("genderIndex"))
         userObject.getString("image_data")?.let {
             imageUri = it.toUri()
             findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
