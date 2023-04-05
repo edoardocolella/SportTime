@@ -25,6 +25,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.json.JSONException
 import org.json.JSONObject
 
 class DataViewModel : ViewModel() {
@@ -311,6 +312,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun getData() {
         var userObject = JSONObject()
         if (vm.changing) {
+            print("TROVA")
             userObject = vm.formData.value!!
             vm.changing = false
             vm.clearFields()
@@ -320,6 +322,13 @@ class EditProfileActivity : AppCompatActivity() {
             val userString = sp.getString("user", null)
             userString?.let {
                 userObject = JSONObject(userString)
+            }
+            arrayOfPairIDField.forEach {
+                try {
+                    print( userObject.getString(it.second))
+                } catch (e: JSONException) {
+                    userObject.put(it.second, "")
+                }
             }
 
             vm.setObject(userObject)
@@ -338,14 +347,29 @@ class EditProfileActivity : AppCompatActivity() {
     private fun setAllView(userObject: JSONObject) {
 
         arrayOfPairIDField.forEach {
-            findViewById<TextView>(it.first).text = userObject.getString(it.second) ?: ""
+            val view = findViewById<TextView>(it.first)
+            try {
+                view.text = userObject.getString(it.second) ?: ""
+            } catch (e: JSONException) {
+                view.text = ""
+            }
         }
 
-        spinner.setSelection(userObject.getInt("genderIndex"))
-        userObject.getString("image_data")?.let {
-            imageUri = it.toUri()
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+        try{
+            spinner.setSelection(userObject.getInt("genderIndex"))
         }
+        catch (e: JSONException){
+            spinner.setSelection(0)
+        }
+
+        try {
+            val imgUriString = userObject.getString("image_data")
+            imageUri = imgUriString.toUri()
+            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+        }catch (e: JSONException){
+            println("NO IMAGE")
+        }
+
     }
 
 

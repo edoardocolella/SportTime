@@ -77,10 +77,11 @@ class ShowProfileActivity : AppCompatActivity() {
             setTextView(userObject,"email", R.id.mail_textView)
             setTextView(userObject,"phoneNumber", R.id.phoneNumber_textView)
 
-            val image :String? = userObject.getString("image_data")
-            image?.let {
+            val image :String = userObject.getString("image_data")
+
+            if (image != "")
                 findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(it.toUri())
-            }
+
 
             val genderIndex =
                 try {userObject.getInt("genderIndex")}
