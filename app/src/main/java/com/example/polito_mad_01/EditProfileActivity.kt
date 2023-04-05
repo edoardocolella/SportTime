@@ -1,5 +1,6 @@
 package com.example.polito_mad_01
 
+import DataViewModel
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -22,31 +23,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+
 import org.json.JSONException
 import org.json.JSONObject
-
-class DataViewModel : ViewModel() {
-    private var _formData = MutableLiveData<JSONObject>().apply { value = JSONObject() }
-    var changing: Boolean = false
-    val formData: LiveData<JSONObject>
-        get() = _formData
-
-    fun addField(key: String, value: Any): DataViewModel {
-        _formData.value?.put(key, value); return this
-    }
-
-    fun setObject(obj: JSONObject) {
-        _formData.value = obj
-    }
-
-    fun clearFields() {
-        _formData = MutableLiveData<JSONObject>().apply { value = JSONObject() }
-    }
-}
-
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -166,6 +145,8 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
+
+
             frame.setImageURI(imageUri)
             when (frame.drawable) {
                 is BitmapDrawable -> {
@@ -301,7 +282,10 @@ class EditProfileActivity : AppCompatActivity() {
             Toast.makeText(this, "at least one skill", Toast.LENGTH_SHORT).show()
             return false
         }
-        user.put("image_data", imageUri ?: "")
+
+        imageUri?.let {
+            user.put("image_data", it)
+        }
 
         getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
             .putString("user", "$user")
@@ -312,7 +296,6 @@ class EditProfileActivity : AppCompatActivity() {
     private fun getData() {
         var userObject = JSONObject()
         if (vm.changing) {
-            print("TROVA")
             userObject = vm.formData.value!!
             vm.changing = false
             vm.clearFields()
@@ -325,7 +308,7 @@ class EditProfileActivity : AppCompatActivity() {
             }
             arrayOfPairIDField.forEach {
                 try {
-                    print( userObject.getString(it.second))
+                    userObject.getString(it.second)
                 } catch (e: JSONException) {
                     userObject.put(it.second, "")
                 }
@@ -349,7 +332,7 @@ class EditProfileActivity : AppCompatActivity() {
         arrayOfPairIDField.forEach {
             val view = findViewById<TextView>(it.first)
             try {
-                view.text = userObject.getString(it.second) ?: ""
+                view.text = userObject.getString(it.second)
             } catch (e: JSONException) {
                 view.text = ""
             }
@@ -364,8 +347,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         try {
             val imgUriString = userObject.getString("image_data")
-            imageUri = imgUriString.toUri()
-            findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+            if (imgUriString.isEmpty()) {
+                imageUri = imgUriString.toUri()
+                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+            }
         }catch (e: JSONException){
             println("NO IMAGE")
         }
