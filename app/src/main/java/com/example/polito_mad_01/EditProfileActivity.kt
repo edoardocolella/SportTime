@@ -275,6 +275,18 @@ class EditProfileActivity : AppCompatActivity() {
                     return false
             }
 
+        val regexMail = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
+        val regexPhone = Regex("^[0-9]{10}\$")
+
+        if (!regexMail.matches(user.getString("email"))) {
+            Toast.makeText(this, "invalid email format", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (!regexPhone.matches(user.getString("phoneNumber"))) {
+            Toast.makeText(this, "Phone number should be a 10 digit number", Toast.LENGTH_LONG).show()
+            return false
+        }
+
         val expertList = user.getString("expertList")
         val intermediateList = user.getString("intermediateList")
         val beginnerList = user.getString("beginnerList")
