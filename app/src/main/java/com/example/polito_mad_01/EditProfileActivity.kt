@@ -359,9 +359,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         try {
             val imgUriString = userObject.getString("image_data")
-            if (imgUriString.isEmpty()) {
+            println(" IMAGEEE ${imgUriString}" )
+            if (!imgUriString.isEmpty()) {
                 imageUri = imgUriString.toUri()
-                findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+                frame.setImageURI(imageUri)
             }
         }catch (e: JSONException){
             println("NO IMAGE")
