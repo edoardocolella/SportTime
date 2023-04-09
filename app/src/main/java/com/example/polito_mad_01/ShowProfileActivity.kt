@@ -81,7 +81,13 @@ class ShowProfileActivity : AppCompatActivity() {
             val userObject = JSONObject(userString)
 
             array.forEach {
-                findViewById<TextView>(it.second).text = userObject.getString(it.first)?: ""
+                val view = findViewById<TextView>(it.second)
+                val text = try {
+                    userObject.getString(it.first)
+                }catch (e: JSONException){
+                    ""
+                }
+                view.text = text
             }
 
             try {

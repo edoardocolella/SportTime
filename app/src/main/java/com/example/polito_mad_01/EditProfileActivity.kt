@@ -275,9 +275,14 @@ class EditProfileActivity : AppCompatActivity() {
                     return false
             }
 
+        val regexAge = Regex("^[0-9]{1,3}\$")
         val regexMail = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
         val regexPhone = Regex("^[0-9]{10}\$")
 
+        if (!regexAge.matches(user.getString("age"))) {
+            Toast.makeText(this, "Age should be a number of max 3 digits", Toast.LENGTH_LONG).show()
+            return false
+        }
         if (!regexMail.matches(user.getString("email"))) {
             Toast.makeText(this, "invalid email format", Toast.LENGTH_SHORT).show()
             return false
@@ -343,11 +348,12 @@ class EditProfileActivity : AppCompatActivity() {
 
         arrayOfPairIDField.forEach {
             val view = findViewById<TextView>(it.first)
-            try {
-                view.text = userObject.getString(it.second)
+            val text = try {
+                userObject.getString(it.second)
             } catch (e: JSONException) {
-                view.text = ""
+                ""
             }
+            view.text = text
         }
 
         try{
