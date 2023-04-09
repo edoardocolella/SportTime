@@ -86,7 +86,9 @@ class ShowProfileActivity : AppCompatActivity() {
 
             try {
                 val image :String = userObject.getString("image_data")
-                if (image != "")
+                println(" IMAGE STRING $image" )
+                println(" IMAGE URI ${image.toUri()}")
+                if (image.isNotEmpty())
                     findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(image.toUri())
             }
             catch (_: JSONException) {println("NO IMAGE") }

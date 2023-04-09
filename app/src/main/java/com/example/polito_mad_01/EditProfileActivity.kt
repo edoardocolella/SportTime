@@ -359,8 +359,9 @@ class EditProfileActivity : AppCompatActivity() {
 
         try {
             val imgUriString = userObject.getString("image_data")
-            println(" IMAGEEE ${imgUriString}" )
-            if (!imgUriString.isEmpty()) {
+            println(" IMAGE STRING ${imgUriString}" )
+            println(" IMAGE URI ${imgUriString.toUri()}")
+            if (imgUriString.isNotEmpty()) {
                 imageUri = imgUriString.toUri()
                 frame.setImageURI(imageUri)
             }
