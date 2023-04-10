@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/profileImage_imageView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -17,7 +17,19 @@
         android:contentDescription="@string/pictureDescription"
         android:paddingStart="16dp"
         android:paddingEnd="8dp"
-        android:src="@drawable/face_48px" />
+        android:src="@drawable/face_48px" />-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage_imageView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="@string/pictureDescription"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp"
+        android:src="@drawable/face_48px"
+        app:civ_border_color="@color/columbia_blue"
+        app:civ_border_width="4dp"/>
 
     <LinearLayout
         android:id="@+id/infoLayout"

@@ -148,17 +148,14 @@ class EditProfileActivity : AppCompatActivity() {
 
 
             frame.setImageURI(imageUri)
-            when (frame.drawable) {
+            /*when (frame.drawable) {
                 is BitmapDrawable -> {
-                    val drawable = frame.drawable as BitmapDrawable
-                    val bitmap = drawable.bitmap
-                    val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-                    frame.setImageBitmap(resized)
+                    resizeImage()
                 }
                 else -> {
                     println("NO")
                 }
-            }
+            }*/
         }
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
@@ -166,17 +163,14 @@ class EditProfileActivity : AppCompatActivity() {
 
             frame.setImageURI(imageUri)
 
-            when (frame.drawable) {
+            /*when (frame.drawable) {
                 is BitmapDrawable -> {
-                    val drawable = frame.drawable as BitmapDrawable
-                    val bitmap = drawable.bitmap
-                    val resized = bitmap?.let { Bitmap.createScaledBitmap(it, 400, 400, true) }
-                    frame.setImageBitmap(resized)
+                    resizeImage()
                 }
                 else -> {
                     println("NO")
                 }
-            }
+            }*/
         }
     }
 
@@ -376,6 +370,7 @@ class EditProfileActivity : AppCompatActivity() {
         }
 
     }
+
 
 
 }
