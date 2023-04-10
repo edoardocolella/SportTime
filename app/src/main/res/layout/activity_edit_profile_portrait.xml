@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-
 
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="16dp">
-
-    <!--<ImageView
-        android:id="@+id/profileImage_imageView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:contentDescription="@string/pictureDescription"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:src="@drawable/face_48px"
-        app:srcCompat="@drawable/face_48px" />-->
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="match_parent"
@@ -181,13 +168,6 @@
                         android:text="@string/sportsLabel"
                         android:textSize="30sp" />
 
-                    <!--View
-                        android:id="@+id/divider2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" /-->
-
                     <LinearLayout
                         android:id="@+id/expertLayout"
                         android:layout_width="match_parent"
@@ -215,12 +195,6 @@
                             android:textSize="22sp" />
                     </LinearLayout>
 
-                    <!--View
-                        android:id="@+id/divider3"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" /-->
-
                     <LinearLayout
                         android:id="@+id/intermediateLayout"
                         android:layout_width="match_parent"
@@ -247,12 +221,6 @@
                             android:paddingBottom="8dp"
                             android:textSize="22sp" />
                     </LinearLayout>
-
-                    <!--View
-                        android:id="@+id/divider4"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:id="@+id/beginnerLayout"
@@ -298,13 +266,6 @@
                         android:text="@string/availabilityLabel"
                         android:textSize="30sp" />
 
-                    <!--View
-                        android:id="@+id/divider5"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" /-->
-
                     <LinearLayout
                         android:id="@+id/weekLayout"
                         android:layout_width="match_parent"
@@ -340,12 +301,6 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <!--View
-                            android:id="@+id/divider6"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
-
                         <LinearLayout
                             android:id="@+id/tueLayout_value"
                             android:layout_width="match_parent"
@@ -374,12 +329,6 @@
                                 android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
-
-                        <!--View
-                            android:id="@+id/divider7"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/wedLayout_value"
@@ -410,12 +359,6 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <!--View
-                            android:id="@+id/divider8"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
-
                         <LinearLayout
                             android:id="@+id/thuLayout"
                             android:layout_width="match_parent"
@@ -444,12 +387,6 @@
                                 android:textAlignment="center"
                                 android:textSize="18sp" />
                         </LinearLayout>
-
-                        <!--View
-                            android:id="@+id/divider9"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/friLayout"
@@ -480,12 +417,6 @@
                                 android:textSize="18sp" />
                         </LinearLayout>
 
-                        <!--View
-                            android:id="@+id/divider10"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
-
                         <LinearLayout
                             android:id="@+id/satLayout"
                             android:layout_width="match_parent"
@@ -515,12 +446,6 @@
                                 android:textSize="18sp" />
 
                         </LinearLayout>
-
-                        <!--View
-                            android:id="@+id/divider11"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="?android:attr/listDivider" /-->
 
                         <LinearLayout
                             android:id="@+id/sunLayout"
@@ -569,13 +494,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
                         android:textSize="30sp" />
-
-                    <!--View
-                        android:id="@+id/divider"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="?android:attr/listDivider" /-->
 
                     <LinearLayout
                         android:layout_width="match_parent"

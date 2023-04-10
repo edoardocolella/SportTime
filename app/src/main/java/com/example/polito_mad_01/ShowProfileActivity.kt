@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,8 +13,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.core.net.toUri
-import io.getstream.avatarview.AvatarView
-import io.getstream.avatarview.coil.loadImage
 import org.json.JSONException
 import org.json.JSONObject
 
