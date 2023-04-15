@@ -1,4 +1,4 @@
-package com.example.polito_mad_01
+package com.example.polito_mad_01.activities
 
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import android.Manifest
@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.example.polito_mad_01.R
 
 import org.json.JSONException
 import org.json.JSONObject

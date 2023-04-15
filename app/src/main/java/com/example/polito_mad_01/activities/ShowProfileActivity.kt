@@ -1,4 +1,4 @@
-package com.example.polito_mad_01
+package com.example.polito_mad_01.activities
 
 import android.Manifest
 import android.content.Context
@@ -13,6 +13,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.core.net.toUri
+import com.example.polito_mad_01.R
 import org.json.JSONException
 import org.json.JSONObject
 

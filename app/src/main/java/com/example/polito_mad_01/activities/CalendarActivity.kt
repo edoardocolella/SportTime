@@ -1,8 +1,9 @@
-package com.example.polito_mad_01
+package com.example.polito_mad_01.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.example.polito_mad_01.R
 import com.stacktips.view.CalendarListener
 import com.stacktips.view.CustomCalendarView
 import java.text.SimpleDateFormat
