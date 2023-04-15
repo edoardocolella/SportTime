@@ -230,7 +230,6 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setAllView() {
-
         setEditTextView(R.id.fullName_value,vm.fullName)
         setEditTextView(R.id.nickName_value,vm.nickname)
         setEditTextView(R.id.description_value,vm.description)
@@ -277,6 +276,9 @@ class EditProfileActivity : AppCompatActivity() {
         setOneListener(R.id.friHours_value, vm.fridayAvailability)
         setOneListener(R.id.satHours_value, vm.saturdayAvailability)
         setOneListener(R.id.sunHours_value, vm.sundayAvailability)
+        setOneListener(R.id.expertList_value, vm.expertList)
+        setOneListener(R.id.intermediateList_value, vm.intermediateList)
+        setOneListener(R.id.beginnerList_value, vm.beginnerList)
 
         findViewById<Spinner>(R.id.spinner).onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
