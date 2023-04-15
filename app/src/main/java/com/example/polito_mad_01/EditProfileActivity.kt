@@ -1,6 +1,6 @@
 package com.example.polito_mad_01
 
-import DataViewModel
+import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -9,8 +9,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -57,7 +55,7 @@ class EditProfileActivity : AppCompatActivity() {
             Pair(R.id.phoneNumber_value, "phoneNumber")
         )
 
-    private val vm by viewModels<DataViewModel>()
+    private val vm by viewModels<EditProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
