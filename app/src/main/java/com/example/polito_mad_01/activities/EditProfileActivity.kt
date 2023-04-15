@@ -2,8 +2,7 @@ package com.example.polito_mad_01.activities
 
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import android.Manifest
-import android.app.Activity
-import android.app.AlertDialog
+import android.app.*
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,8 +10,7 @@ import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
 import android.view.*
 import android.widget.*
 import androidx.activity.viewModels
@@ -76,9 +74,12 @@ class EditProfileActivity : AppCompatActivity() {
         vm.imageUriString.value = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+        //startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
+
     }
 
+
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val frame = findViewById<ImageView>(R.id.profileImage_imageView)
@@ -192,7 +193,7 @@ class EditProfileActivity : AppCompatActivity() {
             throw Exception("Age should be a number of max 3 digits")
         }
 
-        val regexMail = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
+        val regexMail = Regex("^[A-Za-z\\d+_.-]+@(.+)\$")
         if (!regexMail.matches(vm.email.value!!)) {
             throw Exception("invalid email format")
         }
@@ -248,7 +249,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         try {
             vm.imageUriString.value?.let {
-                println(" IMAGE STRING ${it}")
+                println(" IMAGE STRING $it")
                 println(" IMAGE URI ${it.toUri()}")
                 if (it.isNotEmpty()) {
                     imageUri = it.toUri()
