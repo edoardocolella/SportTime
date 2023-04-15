@@ -5,7 +5,6 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -21,41 +20,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.R
-
-import org.json.JSONException
-import org.json.JSONObject
 
 class EditProfileActivity : AppCompatActivity() {
 
-    private lateinit var frame: ImageView
-    private lateinit var spinner: Spinner
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
-
-    private val arrayOfPairIDField: Array<Pair<Int, String>> =
-        arrayOf(
-            Pair(R.id.fullName_value, "fullName"),
-            Pair(R.id.nickName_value, "nickname"),
-            Pair(R.id.age_value, "age"),
-            Pair(R.id.location_value, "location"),
-            Pair(R.id.description_value, "description"),
-            Pair(R.id.expertList_value, "expertList"),
-            Pair(R.id.intermediateList_value, "intermediateList"),
-            Pair(R.id.beginnerList_value, "beginnerList"),
-            Pair(R.id.monHours_value, "monday"),
-            Pair(R.id.tueHours_value, "tuesday"),
-            Pair(R.id.wedHours_value, "wednesday"),
-            Pair(R.id.thuHours_value, "thursday"),
-            Pair(R.id.friHours_value, "friday"),
-            Pair(R.id.satHours_value, "saturday"),
-            Pair(R.id.sunHours_value, "sunday"),
-            Pair(R.id.mail_value, "email"),
-            Pair(R.id.phoneNumber_value, "phoneNumber")
-        )
-
     private val vm by viewModels<EditProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,60 +39,25 @@ class EditProfileActivity : AppCompatActivity() {
             else -> R.layout.activity_edit_profile_portrait
         }
         setContentView(layout)
-        spinner = findViewById(R.id.spinner)
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter.createFromResource(
             this, R.array.genderArray,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
-            spinner.adapter = adapter
+            findViewById<Spinner>(R.id.spinner).adapter = adapter
         }
 
-        frame = findViewById(R.id.profileImage_imageView)
-
-        // calling the action bar
         supportActionBar?.let { it.title = "Edit Profile"; it.setDisplayHomeAsUpEnabled(true) }
-
-        // showing the back button in action bar
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             val imgButton = findViewById<ImageButton>(R.id.imageButton)
             registerForContextMenu(imgButton)
-
             imgButton.setOnClickListener { v -> v.showContextMenu() }
         }
 
         getData()
         setListeners()
-    }
-
-    private fun setListeners() {
-        arrayOfPairIDField.forEach {
-        findViewById<EditText>(it.first).addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                vm.addField(it.second, s.toString())
-            }
-        })
-    }
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                vm.addField("genderIndex", position)
-            }
-        }
     }
 
     override fun onCreateContextMenu(
@@ -135,7 +73,7 @@ class EditProfileActivity : AppCompatActivity() {
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
         imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        vm.addField("image_data", imageUri.toString())
+        vm.imageUriString.value = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
@@ -143,56 +81,41 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK) {
-
-
+        val frame = findViewById<ImageView>(R.id.profileImage_imageView)
+        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK)
             frame.setImageURI(imageUri)
-            /*when (frame.drawable) {
-                is BitmapDrawable -> {
-                    resizeImage()
-                }
-                else -> {
-                    println("NO")
-                }
-            }*/
-        }
+
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
-            vm.addField("image_data", imageUri.toString())
-
+            vm.imageUriString.value = imageUri.toString()
             frame.setImageURI(imageUri)
-
-            /*when (frame.drawable) {
-                is BitmapDrawable -> {
-                    resizeImage()
-                }
-                else -> {
-                    println("NO")
-                }
-            }*/
         }
+
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.gallery -> {
-                val galleryIntent =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
-                return true
-            }
-            R.id.picture -> {
-                if (checkPermission()) {
-                    openCamera()
-                } else
-                    showPermissionReasonAndRequest(
-                        "Notice",
-                        R.string.cameraPermission.toString()
-                    )
-                true
-            }
+            R.id.gallery -> gallery()
+            R.id.picture -> picture()
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun gallery(): Boolean {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
+        return true
+    }
+
+    private fun picture(): Boolean {
+        if (checkPermission()) {
+            openCamera()
+        } else
+            showPermissionReasonAndRequest(
+                "Notice",
+                R.string.cameraPermission.toString()
+            )
+        return true
     }
 
     private fun checkPermission(): Boolean {
@@ -216,11 +139,9 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun Activity.showPermissionReasonAndRequest(title: String, message: String) {
         AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
+            .setTitle(title).setMessage(message)
             .setPositiveButton("OK") { _, _ -> requestPermission() }
-            .setNegativeButton("CANCEL") { _, _ -> }
-            .show()
+            .setNegativeButton("CANCEL") { _, _ -> }.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -231,146 +152,160 @@ class EditProfileActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                AlertDialog.Builder(this)
-                    .setTitle("Are you sure?")
-                    .setMessage("All changes will be lost")
-                    .setPositiveButton("YES") { _, _ -> finish() }
-                    .setNegativeButton("NO") { _, _ -> }
-                    .show()
-                return true
-            }
-            R.id.action_save_profile -> {
-                if (saveData()) {
-                    val i = Intent(this, ShowProfileActivity::class.java)
-                    startActivity(i)
-                    return true
-                }
-                return false
-            }
+            android.R.id.home -> showExitDialog()
+            R.id.action_save_profile -> trySaveData()
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun saveData(): Boolean {
-        val user = vm.formData.value!!
-        arrayOf(
-            Pair("fullName", "your full name"),
-            Pair("nickname", "your nickname"),
-            Pair("age", "your age"),
-            Pair("location", "your location"),
-            Pair("description", "your description"),
-            Pair("email", "your mail"),
-            Pair("phoneNumber", "your phone number")
-        )
-            .forEach {
-                if (!toastForEmptyFields(user.getString(it.first), it.second))
-                    return false
-            }
+    private fun showExitDialog(): Boolean {
+        AlertDialog.Builder(this)
+            .setTitle("Are you sure?").setMessage("All changes will be lost")
+            .setPositiveButton("YES") { _, _ -> finish() }
+            .setNegativeButton("NO") { _, _ -> }.show()
+        return true
+    }
 
-        val regexAge = Regex("^[0-9]{1,3}\$")
+    private fun trySaveData(): Boolean {
+        return try {
+            isNotValid()
+            val i = Intent(this, ShowProfileActivity::class.java)
+            startActivity(i)
+            true
+        } catch (e: Exception) {
+            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            false
+        }
+    }
+
+    private fun isNotValid() {
+        fieldIsValid(vm.fullName.value, "Full Name")
+        fieldIsValid(vm.nickname.value, "Nickname")
+        fieldIsValid(vm.description.value, "Description")
+        fieldIsValid(vm.email.value, "Email")
+        fieldIsValid(vm.phoneNumber.value, "Phone Number")
+        fieldIsValid(vm.location.value, "Location")
+        fieldIsValid(vm.age.value, "Age")
+
+        val regexAge = Regex("^\\d{1,3}\$")
+        if (!regexAge.matches(vm.age.value!!)) {
+            throw Exception("Age should be a number of max 3 digits")
+        }
+
         val regexMail = Regex("^[A-Za-z0-9+_.-]+@(.+)\$")
-        val regexPhone = Regex("^[0-9]{10}\$")
-
-        if (!regexAge.matches(user.getString("age"))) {
-            Toast.makeText(this, "Age should be a number of max 3 digits", Toast.LENGTH_LONG).show()
-            return false
-        }
-        if (!regexMail.matches(user.getString("email"))) {
-            Toast.makeText(this, "invalid email format", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        if (!regexPhone.matches(user.getString("phoneNumber"))) {
-            Toast.makeText(this, "Phone number should be a 10 digit number", Toast.LENGTH_LONG).show()
-            return false
+        if (!regexMail.matches(vm.email.value!!)) {
+            throw Exception("invalid email format")
         }
 
-        val expertList = user.getString("expertList")
-        val intermediateList = user.getString("intermediateList")
-        val beginnerList = user.getString("beginnerList")
-        if (expertList.isEmpty() && intermediateList.isEmpty() && beginnerList.isEmpty()) {
-            Toast.makeText(this, "at least one skill", Toast.LENGTH_SHORT).show()
-            return false
+        val regexPhone = Regex("^\\d{10}\$")
+        if (!regexPhone.matches(vm.phoneNumber.value!!)) {
+            throw Exception("Phone number should be a 10 digit number")
+        }
+
+        val expertList = vm.expertList.value
+        val intermediateList = vm.intermediateList.value
+        val beginnerList = vm.beginnerList.value
+        if (expertList.isNullOrEmpty() && intermediateList.isNullOrEmpty() && beginnerList.isNullOrEmpty()) {
+            throw Exception("at least one skill")
         }
 
         imageUri?.let {
-            user.put("image_data", it)
+            vm.imageUriString.value = it.toString()
         }
+    }
 
-        getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE).edit()
-            .putString("user", "$user")
-            .apply()
-        return true
+    private fun fieldIsValid(field: String?, fieldName: String) {
+        if (field.isNullOrEmpty())
+            throw Exception("$fieldName is invalid")
     }
 
     private fun getData() {
-        var userObject = JSONObject()
-        if (vm.changing) {
-            userObject = vm.formData.value!!
-            vm.changing = false
-            vm.clearFields()
+        if (!vm.changing) {
+            //get user from database
         } else {
-            val sp = getSharedPreferences("mySharedPreferences", Context.MODE_PRIVATE)
-            //extract a json object from a string
-            val userString = sp.getString("user", null)
-            userString?.let {
-                userObject = JSONObject(userString)
-            }
-            arrayOfPairIDField.forEach {
-                try {
-                    userObject.getString(it.second)
-                } catch (e: JSONException) {
-                    userObject.put(it.second, "")
-                }
-            }
-
-            vm.setObject(userObject)
-            setAllView(userObject)
+            vm.changing = false
         }
+        setAllView()
     }
 
-    private fun toastForEmptyFields(textToBeChecked: String, textToBeDisplayed: String): Boolean {
-        if (textToBeChecked.isEmpty()) {
-            Toast.makeText(this, "Please enter $textToBeDisplayed", Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
-    }
+    private fun setAllView() {
 
-    private fun setAllView(userObject: JSONObject) {
-
-        arrayOfPairIDField.forEach {
-            val view = findViewById<TextView>(it.first)
-            val text = try {
-                userObject.getString(it.second)
-            } catch (e: JSONException) {
-                ""
-            }
-            view.text = text
-        }
-
-        try{
-            spinner.setSelection(userObject.getInt("genderIndex"))
-        }
-        catch (e: JSONException){
-            spinner.setSelection(0)
-        }
+        setEditTextView(R.id.fullName_value,vm.fullName)
+        setEditTextView(R.id.nickName_value,vm.nickname)
+        setEditTextView(R.id.description_value,vm.description)
+        setEditTextView(R.id.age_value,vm.age)
+        setEditTextView(R.id.mail_value,vm.email)
+        setEditTextView(R.id.location_value,vm.location)
+        setEditTextView(R.id.phoneNumber_value,vm.phoneNumber)
+        setEditTextView(R.id.monHours_value,vm.mondayAvailability)
+        setEditTextView(R.id.tueHours_value,vm.tuesdayAvailability)
+        setEditTextView(R.id.wedHours_value,vm.wednesdayAvailability)
+        setEditTextView(R.id.thuHours_value,vm.thursdayAvailability)
+        setEditTextView(R.id.friHours_value,vm.fridayAvailability)
+        setEditTextView(R.id.satHours_value,vm.saturdayAvailability)
+        setEditTextView(R.id.sunHours_value,vm.sundayAvailability)
+        findViewById<Spinner>(R.id.spinner).setSelection(vm.genderIndex.value ?: 0)
 
         try {
-            val imgUriString = userObject.getString("image_data")
-            println(" IMAGE STRING ${imgUriString}" )
-            println(" IMAGE URI ${imgUriString.toUri()}")
-            if (imgUriString.isNotEmpty()) {
-                imageUri = imgUriString.toUri()
-                frame.setImageURI(imageUri)
+            vm.imageUriString.value?.let {
+                println(" IMAGE STRING ${it}")
+                println(" IMAGE URI ${it.toUri()}")
+                if (it.isNotEmpty()) {
+                    imageUri = it.toUri()
+                    findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+                }
             }
-        }catch (e: JSONException){
-            println("NO IMAGE")
+        } catch (e: Exception) {
+            println("EXCEPTION ${e.message}")
         }
 
     }
 
+    private fun setListeners() {
+        setOneListener(R.id.fullName_value, vm.fullName)
+        setOneListener(R.id.nickName_value, vm.nickname)
+        setOneListener(R.id.description_value, vm.description)
+        setOneListener(R.id.age_value, vm.age)
+        setOneListener(R.id.mail_value, vm.email)
+        setOneListener(R.id.phoneNumber_value, vm.phoneNumber)
+        setOneListener(R.id.location_value, vm.location)
+        setOneListener(R.id.monHours_value, vm.mondayAvailability)
+        setOneListener(R.id.tueHours_value, vm.tuesdayAvailability)
+        setOneListener(R.id.wedHours_value, vm.wednesdayAvailability)
+        setOneListener(R.id.thuHours_value, vm.thursdayAvailability)
+        setOneListener(R.id.friHours_value, vm.fridayAvailability)
+        setOneListener(R.id.satHours_value, vm.saturdayAvailability)
+        setOneListener(R.id.sunHours_value, vm.sundayAvailability)
 
+        findViewById<Spinner>(R.id.spinner).onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long) {
+                    vm.genderIndex.value = position
+                    val arrayID = R.array.genderArray
+                    val array = resources.getStringArray(arrayID)
+                    vm.gender.value = array[position]
+                }
+            }
+    }
+
+    private fun setOneListener(id: Int, field: MutableLiveData<String>) {
+        findViewById<EditText>(id).addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                field.value = s.toString()
+            }
+        })
+    }
+
+    private fun setEditTextView(id : Int, field : MutableLiveData<String>){
+        findViewById<EditText>(id).setText(field.value ?: "")
+    }
 
 }
 

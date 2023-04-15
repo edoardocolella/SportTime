@@ -8,22 +8,22 @@ import java.util.Date
 
 @Entity(tableName = "users")
 data class User(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val name: String,
-    val surname: String,
-    val nickname: String,
-    val description: String,
-    val gender: String,
-    val birthdate: Date,
-    val email: String,
-    val phoneNumber: String,
-    val imageUri: Uri,
-    val location: String,
-    val mondayAvailability: String,
-    val tuesdayAvailability: String,
-    val wednesdayAvailability: String,
-    val thursdayAvailability: String,
-    val fridayAvailability: String,
-    val saturdayAvailability: String,
-    val sundayAvailability: String,
-)
+   var fullname: String,
+   var nickname: String,
+   var description: String,
+    var gender: String,
+   var age: Int,
+   var email: String,
+   var phoneNumber: String,
+    var imageUriString: String,
+   var location: String,
+   var mondayAvailability: String,
+   var tuesdayAvailability: String,
+   var wednesdayAvailability: String,
+   var thursdayAvailability: String,
+   var fridayAvailability: String,
+   var saturdayAvailability: String,
+   var sundayAvailability: String,
+){
+    @PrimaryKey(autoGenerate = true)var id: Int = 0
+}
