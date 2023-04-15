@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.polito_mad_01.model.Reservation
 
 class ShowReservationsViewModel : ViewModel() {
-    private var _formData = MutableLiveData<Reservation>().apply {  }
+    private var _formData = MutableLiveData<Reservation>()
     var changing: Boolean = false
     val formData: LiveData<Reservation>
         get() = _formData
