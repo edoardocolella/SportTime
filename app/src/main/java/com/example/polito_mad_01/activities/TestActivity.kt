@@ -6,13 +6,18 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.lifecycle.AndroidViewModel
+import androidx.room.Room
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.database.SportTimeApplication
+import com.example.polito_mad_01.database.SportTimeDatabase
 import com.example.polito_mad_01.viewmodel.TestViewModel
+import com.example.polito_mad_01.viewmodel.UserViewModelFactory
 import org.w3c.dom.Text
 
 class TestActivity : AppCompatActivity() {
-
-    private val vm by viewModels<TestViewModel>()
+    private val vm: TestViewModel by viewModels {
+        UserViewModelFactory((application as SportTimeApplication).userRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

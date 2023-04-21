@@ -35,5 +35,4 @@ data class Playground(
 
     @ColumnInfo(name = "sport_id")
     val sport_id: Int,
-
-    )
+)

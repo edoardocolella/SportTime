@@ -14,33 +14,27 @@ import com.example.polito_mad_01.model.*
         ReservationExtra::class,
         Sport::class,
         SportSkill::class,
-        User::class
-               ], version = 1)
+        User::class],
+    version = 1,
+    exportSchema = false)
 abstract class SportTimeDatabase: RoomDatabase() {
+    companion object {
+        @Volatile
+        private var instance: SportTimeDatabase? = null
+        fun getDatabase(context: Context): SportTimeDatabase {
+            return instance ?: synchronized(this) {
+                val i = Room.databaseBuilder(
+                    context.applicationContext,
+                    SportTimeDatabase::class.java,
+                    "sport_time"
+                ).build()
+                instance = i
+                return i
+            }
+        }
+    }
     abstract fun userDao(): UserDao
     abstract fun playgroundDao(): PlaygroundDao
     abstract fun sportDao(): SportDao
     abstract fun reservationDao(): ReservationDao
-
-
-    companion object {
-        @Volatile
-        private var instance: SportTimeDatabase? = null
-
-        fun getDatabase(context: Context): SportTimeDatabase =
-            (
-                    instance ?:
-                    synchronized(this){
-                        val i = instance ?: Room.databaseBuilder(
-                            context.applicationContext,
-                            SportTimeDatabase::class.java,
-                            "sport_time"
-                        ).build()
-                        instance = i
-                        instance
-                    }
-            )!!
-    }
-
-
 }
