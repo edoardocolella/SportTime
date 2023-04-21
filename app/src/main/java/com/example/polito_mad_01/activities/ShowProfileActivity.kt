@@ -69,7 +69,7 @@ class ShowProfileActivity : AppCompatActivity() {
     }
 
     private fun setAllView(){
-        val user = vm.user.value!!.user
+        /*val user = vm.user.value!!.user
         val list = vm.user.value!!.sportAvailabilityList
         //val expertList = list.filter { it.skill == "Expert" }
         //val intermediateList = list.filter { it.skill == "Intermediate" }
@@ -91,7 +91,7 @@ class ShowProfileActivity : AppCompatActivity() {
         setTextView(R.id.sunHours_textView, user.sundayAvailability)
         //setTextView(R.id.expertList_textView, expertList.toString())
         //setTextView(R.id.intermediateList_textView, intermediateList.toString())
-        //setTextView(R.id.beginnerList_textView, beginnerList.toString())
+        //setTextView(R.id.beginnerList_textView, beginnerList.toString())*/
     }
 
     private fun setTextView(id: Int, field: String){

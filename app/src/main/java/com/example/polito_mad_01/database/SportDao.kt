@@ -7,13 +7,5 @@ import androidx.room.Query
 
 @Dao
 interface SportDao {
-    @Insert
-    fun insertReservation(reservation: Reservation)
-
-    @Query("SELECT * FROM reservation")
-    fun getALlReservations(): List<Reservation>
-
-    @Delete
-    fun deleteReservation(reservation: Reservation)
 }
 

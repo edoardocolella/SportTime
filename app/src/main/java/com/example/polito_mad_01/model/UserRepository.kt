@@ -8,6 +8,30 @@ class UserRepository(application: Application) {
 
     private val userDao = SportTimeDatabase.getDatabase(application).userDao()
 
-    fun user(): LiveData<UserWithSkills> = userDao.getUserByIdWithSkills(0)
+
+
+    fun user(): LiveData<User> = userDao.getUserById(0)
+    fun addUser() {
+        val user = User(
+            0,
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test",
+            "test")
+            userDao.addUser(user)
+    }
 
 }

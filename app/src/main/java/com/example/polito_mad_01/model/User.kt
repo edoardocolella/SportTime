@@ -30,7 +30,7 @@ data class User(
    var gender: String,
 
    @ColumnInfo(name = "birthdate")
-   var birthdate: Date,
+   var birthdate: String,
 
    @ColumnInfo(name = "location")
    var location: String,
@@ -64,4 +64,8 @@ data class User(
 
    @ColumnInfo(name = "sunday_availability")
    var sundayAvailability: String,
-)
+){
+   override fun toString(): String{
+      return "name:$name"
+   }
+}

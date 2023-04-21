@@ -4,11 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.polito_mad_01.model.Reservation
+import com.example.polito_mad_01.model.*
 
-@Database(entities = [Reservation::class], version = 1)
+@Database(
+    entities = [
+        Playground::class,
+        PlaygroundExtra::class,
+        Reservation::class,
+        ReservationExtra::class,
+        Sport::class,
+        SportSkill::class,
+        User::class
+               ], version = 1)
 abstract class SportTimeDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
+    abstract fun playgroundDao(): PlaygroundDao
+    abstract fun sportDao(): SportDao
+    abstract fun reservationDao(): ReservationDao
+
 
     companion object {
         @Volatile

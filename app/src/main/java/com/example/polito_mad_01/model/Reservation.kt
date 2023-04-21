@@ -34,7 +34,7 @@ data class Reservation(
     val userId: Int,
 
     @ColumnInfo(name = "date")
-    val date: Date,
+    val date: String,
 
     @ColumnInfo(name = "start_time")
     val startTime: String,
