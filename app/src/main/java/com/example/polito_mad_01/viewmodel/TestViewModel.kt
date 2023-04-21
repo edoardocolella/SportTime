@@ -12,12 +12,7 @@ class TestViewModel(private val repo: UserRepository): ViewModel() {
 
     fun getUser() : String{
         val user = repo.user().value
-        print("TEST")
-        if(user != null) {
-            return user.toString()
-        } else {
-            return "ERROR"
-        }
+        return user?.toString() ?: "ERROR"
     }
 
     fun addUser() {
