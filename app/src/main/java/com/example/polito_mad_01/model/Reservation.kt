@@ -4,28 +4,34 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.polito_mad_01.database.Court
 import java.util.Date
 
 @Entity(tableName = "reservations",
     foreignKeys = [
         ForeignKey(
-            entity = com.example.polito_mad_01.database.User::class,
-            parentColumns = arrayOf("id"),
+            entity = User::class,
+            parentColumns = arrayOf("user_id"),
             childColumns = arrayOf("user_id"),
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = Court::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("court_id"),
+            entity = Playground::class,
+            parentColumns = arrayOf("playground_id"),
+            childColumns = arrayOf("playground_id"),
             onDelete = ForeignKey.CASCADE
         )
     ])
 
 data class Reservation(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @ColumnInfo(name = "reservation_id")
+    val reservationId: Int = 0,
+
+    @ColumnInfo(name = "playground_id")
+    val playgroundId: Int,
+
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
 
     @ColumnInfo(name = "date")
     val date: Date,
@@ -36,12 +42,8 @@ data class Reservation(
     @ColumnInfo(name = "end_time")
     val endTime: String,
 
-    @ColumnInfo(name = "price")
-    val price: Double,
+    @ColumnInfo(name = "total_price")
+    val totalPrice: Double,
 
-    @ColumnInfo(name = "playground")
-    val playground: Playground,
 
-    @ColumnInfo(name = "user")
-    val user: User
     )

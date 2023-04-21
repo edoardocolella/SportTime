@@ -7,13 +7,13 @@ import androidx.room.Query
 
 @Dao
 interface CourtDao {
-    @Insert
+ /*   @Insert
     fun insertReservation(reservation: Reservation)
 
     @Query("SELECT * FROM reservation")
     fun getALlReservations(): List<Reservation>
 
     @Delete
-    fun deleteReservation(reservation: Reservation)
+    fun deleteReservation(reservation: Reservation)*/
 }
 

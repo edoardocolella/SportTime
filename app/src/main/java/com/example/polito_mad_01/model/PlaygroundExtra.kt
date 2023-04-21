@@ -1,25 +1,29 @@
 package com.example.polito_mad_01.model
 
+
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "playgrounds",
+    tableName = "playground_extra",
     foreignKeys = [
         ForeignKey(
-            entity = Sport::class,
-            parentColumns = arrayOf("sport_id"),
-            childColumns = arrayOf("sport_id"),
+            entity = Playground::class,
+            parentColumns = arrayOf("playground_id"),
+            childColumns = arrayOf("playground_id"),
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class Playground(
+data class PlaygroundExtra(
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "extra_id")
+    val extraId: Int = 0,
+
     @ColumnInfo(name = "playground_id")
-    val playgroundId: Int = 0,
+    val playgroundId: Int,
 
     @ColumnInfo(name = "name")
     val name: String,
@@ -27,13 +31,9 @@ data class Playground(
     @ColumnInfo(name = "description")
     val description: String,
 
-    @ColumnInfo(name = "location")
-    val location: String,
+    @ColumnInfo(name = "price")
+    val price: Double,
 
-    @ColumnInfo(name = "price_per_slot")
-    val price_per_slot: Double,
 
-    @ColumnInfo(name = "sport_id")
-    val sport_id: Int,
 
     )

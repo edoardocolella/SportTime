@@ -11,13 +11,14 @@ import java.util.Date
 data class User(
 
    @PrimaryKey(autoGenerate = true)
-   val id: Int,
+   @ColumnInfo(name = "user_id")
+   val userId: Int,
 
    @ColumnInfo(name = "name")
-   val name: String?,
+   val name: String,
 
    @ColumnInfo(name = "surname")
-   val surname: String?,
+   val surname: String,
 
    @ColumnInfo(name = "nickname")
    var nickname: String,
@@ -28,8 +29,11 @@ data class User(
    @ColumnInfo(name = "gender")
    var gender: String,
 
-   @ColumnInfo(name = "age")
-   var age: Int,
+   @ColumnInfo(name = "birthdate")
+   var birthdate: Date,
+
+   @ColumnInfo(name = "location")
+   var location: String,
 
    @ColumnInfo(name = "email")
    var email: String,
@@ -37,11 +41,8 @@ data class User(
    @ColumnInfo(name = "phone_number")
    var phoneNumber: String,
 
-   @ColumnInfo(name = "image_uri_string")
-   var imageUriString: String,
-
-   @ColumnInfo(name = "location")
-   var location: String,
+   @ColumnInfo(name = "image_uri")
+   var image_uri: String,
 
    @ColumnInfo(name = "monday_availability")
    var mondayAvailability: String,
