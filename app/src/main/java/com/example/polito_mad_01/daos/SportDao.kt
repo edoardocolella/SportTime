@@ -12,7 +12,7 @@ interface SportDao {
     @Query("SELECT * from sport")
     fun getAllSports(): Flow<List<Sport>>
 
-    @Query("SELECT * from sport where sport_id = :sportId")
-    fun getSportById(sportId: Int): LiveData<Sport>
+    /*@Query("SELECT * from sport where sport_id = :sportId")
+    fun getSportById(sportId: Int): LiveData<Sport>*/
 }
 

@@ -12,7 +12,7 @@ interface PlaygroundDao {
     @Query("SELECT * from playground")
     fun getAllPlaygrounds(): Flow<List<Playground>>
 
-    @Query("SELECT * from user where playground_id = :playgroundId")
-    fun getPlaygroundById(playgroundId: Int): LiveData<Playground>
+    /*@Query("SELECT * from playground where playground_id = :playgroundId")
+    fun getPlaygroundById(playgroundId: Int): LiveData<Playground>*/
 }
 
