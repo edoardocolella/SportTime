@@ -7,7 +7,7 @@ import com.example.polito_mad_01.model.User
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(private val userDao: UserDao) {
-    fun userById(userId: Int): LiveData<User> {
+    fun userById(userId: Int): Flow<User> {
         return userDao.getUserById(userId)
     }
 

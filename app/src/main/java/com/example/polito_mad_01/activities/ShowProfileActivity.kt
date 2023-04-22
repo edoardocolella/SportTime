@@ -21,19 +21,16 @@ class ShowProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = when(resources.configuration.orientation){
-            Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_show_profile_landscape
-            else -> R.layout.activity_show_profile_portrait
-        }
-
         // calling the action bar
         val actionBar = supportActionBar
-        actionBar?.let {it.title = "Profile" }
-        setContentView(layout)
+        actionBar?.let { it.title = "Profile" }
+        setContentView(R.layout.show_profile)
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            val permission = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        ) {
+            val permission =
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
             requestPermissions(permission, 112)
         }
 
@@ -53,48 +50,42 @@ class ShowProfileActivity : AppCompatActivity() {
         return true
     }
 
-    private fun init(){
+    private fun init() {
         try {
             getData()
             setAllView()
-        }
-        catch (e: NotImplementedError){
+        } catch (e: NotImplementedError) {
             e.printStackTrace()
         }
     }
 
-    private fun getData(){
+    private fun getData() {
         //get data from database
-        throw NotImplementedError()
+        //TODO: get data from database
     }
 
-    private fun setAllView(){
-        /*val user = vm.user.value!!.user
-        val list = vm.user.value!!.sportAvailabilityList
-        //val expertList = list.filter { it.skill == "Expert" }
-        //val intermediateList = list.filter { it.skill == "Intermediate" }
-        //val beginnerList = list.filter { it.skill == "Beginner" }
-        setTextView(R.id.fullName_textView , user.fullname)
-        setTextView(R.id.nickName_value , user.nickname)
-        setTextView(R.id.description_textView , user.description)
-        setTextView(R.id.age_textView , user.age.toString())
-        setTextView(R.id.mail_textView , user.email)
-        setTextView(R.id.phoneNumber_textView , user.phoneNumber)
-        setTextView(R.id.gender_textView, user.gender)
-        setTextView(R.id.location_textView , user.location)
-        setTextView(R.id.monHours_textView, user.mondayAvailability)
-        setTextView(R.id.tueHours_textView, user.tuesdayAvailability)
-        setTextView(R.id.wedHours_textView, user.wednesdayAvailability)
-        setTextView(R.id.thuHours_textView, user.thursdayAvailability)
-        setTextView(R.id.friHours_textView, user.fridayAvailability)
-        setTextView(R.id.satHours_textView, user.saturdayAvailability)
-        setTextView(R.id.sunHours_textView, user.sundayAvailability)
-        //setTextView(R.id.expertList_textView, expertList.toString())
-        //setTextView(R.id.intermediateList_textView, intermediateList.toString())
-        //setTextView(R.id.beginnerList_textView, beginnerList.toString())*/
+    private fun setAllView() {
+        setTextView(R.id.fullName_textView, vm.name.value + " " + vm.surname.value)
+        setTextView(R.id.nickName_value, vm.nickname.value)
+        setTextView(R.id.description_textView, vm.description.value)
+        setTextView(R.id.age_textView, vm.age.value.toString())
+        setTextView(R.id.mail_textView, vm.email.value)
+        setTextView(R.id.phoneNumber_textView, vm.phoneNumber.value)
+        setTextView(R.id.gender_textView, vm.gender.value)
+        setTextView(R.id.location_textView, vm.location.value)
+        setTextView(R.id.monHours_textView, vm.mondayAvailability.value)
+        setTextView(R.id.tueHours_textView, vm.tuesdayAvailability.value)
+        setTextView(R.id.wedHours_textView, vm.wednesdayAvailability.value)
+        setTextView(R.id.thuHours_textView, vm.thursdayAvailability.value)
+        setTextView(R.id.friHours_textView, vm.fridayAvailability.value)
+        setTextView(R.id.satHours_textView, vm.saturdayAvailability.value)
+        setTextView(R.id.sunHours_textView, vm.sundayAvailability.value)
+        setTextView(R.id.expertList_textView, vm.expertList.value)
+        setTextView(R.id.intermediateList_textView, vm.intermediateList.value)
+        setTextView(R.id.beginnerList_textView, vm.beginnerList.value)
     }
 
-    private fun setTextView(id: Int, field: String){
-        findViewById<TextView>(id).text = field
+    private fun setTextView(id: Int, field: String?) {
+        field?.let { findViewById<TextView>(id).text = field }
     }
 }

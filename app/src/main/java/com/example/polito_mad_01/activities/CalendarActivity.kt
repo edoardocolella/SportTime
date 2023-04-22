@@ -13,9 +13,9 @@ import java.util.*
 class CalendarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calendar)
+        setContentView(R.layout.calendar)
 
-        var calendarView: CustomCalendarView = findViewById(R.id.calendar_view)
+        val calendarView: CustomCalendarView = findViewById(R.id.calendar_view)
         val currentCalendar: Calendar = Calendar.getInstance(Locale.getDefault())
 
         calendarView.setFirstDayOfWeek(Calendar.MONDAY)

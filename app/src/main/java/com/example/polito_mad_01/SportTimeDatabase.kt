@@ -28,25 +28,57 @@ import kotlinx.coroutines.launch
 abstract class SportTimeDatabase : RoomDatabase() {
 
 
-    private class SportTimeDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-
+    private class SportTimeDatabaseCallback(private val scope: CoroutineScope) : Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    val userDao = database.userDao()
-                    // Add sample words.
-                    val user = User(
-                        0, "test", "test", "test", "test",
-                        "test", "test", "test", "test", "test",
-                        "test", "test", "test", "test",
-                        "test", "test", "test", "test"
-                    )
-                    userDao.addUser(user)
+                    populateData(database)
                 }
             }
+        }
+
+       private suspend fun populateData(database: SportTimeDatabase) {
+            populateSport(database)
+            populateUser(database)
+            populatePlayground(database)
+            populateReservation(database)
+        }
+
+        private suspend fun populateReservation(database: SportTimeDatabase) {
+            val reservationDao = database.reservationDao()
+            val reservation1 = Reservation(0, 1, 1, "2021-01-01", "12:00", "14:00", 10.5)
+            val reservation2 = Reservation(1, 2, 1, "2021-01-01", "10:00", "12:00", 12.6)
+            reservationDao.addReservation(reservation1)
+            reservationDao.addReservation(reservation2)
+        }
+
+        suspend fun populatePlayground(database: SportTimeDatabase) {
+            val playgroundDao = database.playgroundDao()
+            val playground1 = Playground(0, "Parco Dora", "Nice :)", "Turin", 10.0, 1)
+            val playground2 = Playground(1, "Camp Nou", "Sì, lo stadio", "Barcellona", 100.0, 1)
+            playgroundDao.addPlayground(playground1)
+            playgroundDao.addPlayground(playground2)
+        }
+
+        private suspend fun populateUser(database: SportTimeDatabase) {
+            database.userDao().addUser(
+                User(
+                    1, "Mario", "Rossi", "mar10_r0ss1", "Hey there, I'm using WhatsApp!",
+                    "M", "01/01/1990", "Turin", "mario.rossi@mail.com", "1234567890",
+                    null, null, "12-14", null,
+                    null, null, "18-20", null
+                )
+            )
+        }
+
+        private suspend fun populateSport(database: SportTimeDatabase) {
+            val sportDao = database.sportDao()
+            sportDao.addSport(Sport(0, "Basket"))
+            sportDao.addSport(Sport(1, "Football"))
+            sportDao.addSport(Sport(2, "Tennis"))
+            sportDao.addSport(Sport(3, "Volley"))
+            sportDao.addSport(Sport(4, "Ping Pong"))
         }
     }
 
@@ -59,8 +91,7 @@ abstract class SportTimeDatabase : RoomDatabase() {
                     context.applicationContext,
                     SportTimeDatabase::class.java,
                     "sport_time"
-                ).addCallback(SportTimeDatabaseCallback(scope))
-                    .build()
+                ).addCallback(SportTimeDatabaseCallback(scope)).build()
                 INSTANCE = i
                 return i
             }

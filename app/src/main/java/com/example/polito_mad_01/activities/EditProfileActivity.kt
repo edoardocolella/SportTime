@@ -32,11 +32,7 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layout = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> R.layout.activity_edit_profile_landscape
-            else -> R.layout.activity_edit_profile_portrait
-        }
-        setContentView(layout)
+        setContentView(R.layout.edit_profile)
 
         ArrayAdapter.createFromResource(
             this, R.array.genderArray,

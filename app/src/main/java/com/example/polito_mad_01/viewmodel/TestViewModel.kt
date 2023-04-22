@@ -11,15 +11,8 @@ import kotlin.concurrent.thread
 class TestViewModel(private val repo: UserRepository) : ViewModel() {
 
     fun userById(userId: Int): User? {
-        /*users.value?.let {
-            for (user in it) {
-                if (user.userId == userId) {
-                    return user
-                }
-            }
-        }
-        return null*/
-        return repo.userById(userId).value
+        val user =  repo.userById(userId).asLiveData()
+        return user.value
     }
 
     val users: LiveData<List<User>> = repo.users.asLiveData()
