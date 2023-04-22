@@ -9,6 +9,10 @@ class UserWithSkills (
         parentColumn = "user_id",
         entityColumn = "user_id"
     )
-    val skills: List<SportSkill>
+    var skills: List<SportSkill>
 )
-{}
+{
+    override fun toString(): String {
+        return "UserWithSkills(user=$user, skills=$skills)"
+    }
+}

@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = Sport::class,
-            parentColumns = arrayOf("sport_id"),
-            childColumns = arrayOf("sport_id"),
+            parentColumns = arrayOf("sport_name"),
+            childColumns = arrayOf("sport_name"),
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -33,6 +33,6 @@ data class Playground(
     @ColumnInfo(name = "price_per_slot")
     val price_per_slot: Double,
 
-    @ColumnInfo(name = "sport_id")
-    val sport_id: Int,
+    @ColumnInfo(name = "sport_name")
+    val sportName: String,
 )

@@ -1,12 +1,12 @@
 package com.example.polito_mad_01.activities
 
-import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import android.Manifest
 import android.app.*
-import android.content.ContentValues
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.icu.text.SimpleDateFormat
+import android.net.ParseException
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,8 +18,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.MutableLiveData
-import com.example.polito_mad_01.R
+import com.example.polito_mad_01.*
+import com.example.polito_mad_01.model.*
+import com.example.polito_mad_01.viewmodel.*
+import java.util.*
+
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -27,7 +30,12 @@ class EditProfileActivity : AppCompatActivity() {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
-    private val vm by viewModels<EditProfileViewModel>()
+
+    private var imageUriString: String? = null
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory((application as SportTimeApplication).userRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,8 +58,7 @@ class EditProfileActivity : AppCompatActivity() {
             imgButton.setOnClickListener { v -> v.showContextMenu() }
         }
 
-        getData()
-        setListeners()
+        setAllView()
     }
 
     override fun onCreateContextMenu(
@@ -67,7 +74,7 @@ class EditProfileActivity : AppCompatActivity() {
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
         imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        vm.imageUriString.value = imageUri.toString()
+        imageUriString = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         //startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
@@ -84,7 +91,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             imageUri = data.data!!
-            vm.imageUriString.value = imageUri.toString()
+            imageUriString = imageUri.toString()
             frame.setImageURI(imageUri)
         }
 
@@ -166,6 +173,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun trySaveData(): Boolean {
         return try {
             isNotValid()
+            saveData()
             val i = Intent(this, ShowProfileActivity::class.java)
             startActivity(i)
             true
@@ -175,40 +183,62 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun isNotValid() {
-        fieldIsValid(vm.fullName.value, "Full Name")
-        fieldIsValid(vm.nickname.value, "Nickname")
-        fieldIsValid(vm.description.value, "Description")
-        fieldIsValid(vm.email.value, "Email")
-        fieldIsValid(vm.phoneNumber.value, "Phone Number")
-        fieldIsValid(vm.location.value, "Location")
-        fieldIsValid(vm.age.value, "Age")
+    private fun saveData() {
 
-        val regexAge = Regex("^\\d{1,3}\$")
-        if (!regexAge.matches(vm.age.value!!)) {
-            throw Exception("Age should be a number of max 3 digits")
+        val skills = mutableListOf<SportSkill>()
+        createSportList(skills, vm.expertList.value!!, "Expert")
+        createSportList(skills, vm.intermediateList.value!!, "Intermediate")
+        createSportList(skills, vm.beginnerList.value!!, "Beginner")
+
+        vm.user.value!!.skills = skills
+        vm.updateUser()
+    }
+
+    private fun createSportList(skills: MutableList<SportSkill>, s: String, level: String) {
+        s.split("-").forEach { skill ->
+            skills.add(SportSkill(vm.user.value!!.user.userId, skill.trim(), level))
         }
+    }
+
+    private fun isNotValid() {
+        val user = vm.user.value!!.user
+
+        fieldIsValid(user.name, "Full Name")
+        fieldIsValid(user.nickname, "Nickname")
+        fieldIsValid(user.description, "Description")
+        fieldIsValid(user.email, "Email")
+        fieldIsValid(user.phoneNumber, "Phone Number")
+        fieldIsValid(user.location, "Location")
+        fieldIsValid(user.birthdate, "BirthDate")
 
         val regexMail = Regex("^[A-Za-z\\d+_.-]+@(.+)\$")
-        if (!regexMail.matches(vm.email.value!!)) {
+        if (!regexMail.matches(user.email)) {
             throw Exception("invalid email format")
         }
 
+        try {
+            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            formatter.parse(user.birthdate)
+        } catch (e: ParseException) {
+            throw Exception("Birthdate should be in dd-MM-yyyy format")
+        }
+
         val regexPhone = Regex("^\\d{10}\$")
-        if (!regexPhone.matches(vm.phoneNumber.value!!)) {
+        if (!regexPhone.matches(user.phoneNumber)) {
             throw Exception("Phone number should be a 10 digit number")
         }
 
         val expertList = vm.expertList.value
         val intermediateList = vm.intermediateList.value
         val beginnerList = vm.beginnerList.value
-        if (expertList.isNullOrEmpty() && intermediateList.isNullOrEmpty() && beginnerList.isNullOrEmpty()) {
+        if (expertList.isNullOrEmpty()
+            && intermediateList.isNullOrEmpty()
+            && beginnerList.isNullOrEmpty()) {
             throw Exception("at least one skill")
         }
 
-        imageUri?.let {
-            vm.imageUriString.value = it.toString()
-        }
+        imageUri?.let { user.setImageUri(it.toString())}
+
     }
 
     private fun fieldIsValid(field: String?, fieldName: String) {
@@ -216,95 +246,93 @@ class EditProfileActivity : AppCompatActivity() {
             throw Exception("$fieldName is invalid")
     }
 
-    private fun getData() {
-        if (!vm.changing) {
-            //get user from database
-        } else {
-            vm.changing = false
-        }
-        setAllView()
-    }
-
     private fun setAllView() {
-        setEditTextView(R.id.fullName_value,vm.fullName)
-        setEditTextView(R.id.nickName_value,vm.nickname)
-        setEditTextView(R.id.description_value,vm.description)
-        setEditTextView(R.id.age_value,vm.age)
-        setEditTextView(R.id.mail_value,vm.email)
-        setEditTextView(R.id.location_value,vm.location)
-        setEditTextView(R.id.phoneNumber_value,vm.phoneNumber)
-        setEditTextView(R.id.monHours_value,vm.mondayAvailability)
-        setEditTextView(R.id.tueHours_value,vm.tuesdayAvailability)
-        setEditTextView(R.id.wedHours_value,vm.wednesdayAvailability)
-        setEditTextView(R.id.thuHours_value,vm.thursdayAvailability)
-        setEditTextView(R.id.friHours_value,vm.fridayAvailability)
-        setEditTextView(R.id.satHours_value,vm.saturdayAvailability)
-        setEditTextView(R.id.sunHours_value,vm.sundayAvailability)
-        findViewById<Spinner>(R.id.spinner).setSelection(vm.genderIndex.value ?: 0)
+        val userWithSkills = vm.getUserWithSkills(1)
+        userWithSkills.observe(this){
+            vm.user.value = it
+            if(it == null) return@observe
+            val user = it.user
+            val skills = it.skills
 
-        try {
-            vm.imageUriString.value?.let {
-                println(" IMAGE STRING $it")
-                println(" IMAGE URI ${it.toUri()}")
-                if (it.isNotEmpty()) {
-                    imageUri = it.toUri()
+            setEditTextViewAndListener(R.id.fullName_value, user.name, user::setName)
+            //setEditTextViewAndListener(R.id.surname_value, user.surname, user::setSurname)
+            setEditTextViewAndListener(R.id.nickName_value, user.nickname, user::setNickname)
+            setEditTextViewAndListener(R.id.description_value, user.description, user::setDescription)
+            setEditTextViewAndListener(R.id.age_value, user.birthdate, user::setBirthdate)
+            setEditTextViewAndListener(R.id.location_value, user.location, user::setLocation)
+            setEditTextViewAndListener(R.id.mail_value, user.email, user::setEmail)
+            setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, user::setPhoneNumber)
+            setEditTextViewAndListener(R.id.monHours_value, user.mondayAvailability, user::setMondayAvailability)
+            setEditTextViewAndListener(R.id.tueHours_value, user.tuesdayAvailability, user::setTuesdayAvailability)
+            setEditTextViewAndListener(R.id.wedHours_value, user.wednesdayAvailability, user::setWednesdayAvailability)
+            setEditTextViewAndListener(R.id.thuHours_value, user.thursdayAvailability, user::setThursdayAvailability)
+            setEditTextViewAndListener(R.id.friHours_value, user.fridayAvailability, user::setFridayAvailability)
+            setEditTextViewAndListener(R.id.satHours_value, user.saturdayAvailability, user::setSaturdayAvailability)
+            setEditTextViewAndListener(R.id.sunHours_value, user.sundayAvailability, user::setSundayAvailability)
+
+            //convert gender to index
+            //findViewById<Spinner>(R.id.spinner).setSelection(vm.genderIndex.value ?: 0)
+
+            user.image_uri?.let { uri ->
+                if (uri.isNotEmpty()) {
+                    imageUri = uri.toUri()
                     findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
                 }
             }
-        } catch (e: Exception) {
-            println("EXCEPTION ${e.message}")
+
+            skills.let { skillList ->
+                val expertList = skillList
+                    .filter { skill -> skill.skill_level == "Expert" }
+                    .joinToString(" - ") { skill -> skill.sportName }
+                val intermediateList = skillList
+                    .filter { skill -> skill.skill_level == "Intermediate" }
+                    .joinToString(" - ") { skill -> skill.sportName }
+                val beginnerList = skillList
+                    .filter { skill -> skill.skill_level == "Beginner" }
+                    .joinToString(" - ") { skill -> skill.sportName }
+
+                findViewById<TextView>(R.id.expertList).text = expertList
+                findViewById<TextView>(R.id.intermediateList).text = intermediateList
+                findViewById<TextView>(R.id.beginnerList).text = beginnerList
+                }
+
+                val spinner =  findViewById<Spinner>(R.id.spinner)
+                val arrayID = R.array.genderArray
+                val array = resources.getStringArray(arrayID)
+                spinner.setSelection(array.indexOf(user.gender))
+                spinner.onItemSelectedListener =
+                    object : AdapterView.OnItemSelectedListener {
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            user.setGender(array[position])
+                        }
+                    }
+            }
+
         }
 
+    private fun setEditTextViewAndListener(viewId: Int, value: String?, setter: (String) -> Unit) {
+        value?.let { setEditTextView(viewId, it) }
+        setOneListener(viewId, setter)
     }
 
-    private fun setListeners() {
-        setOneListener(R.id.fullName_value, vm.fullName)
-        setOneListener(R.id.nickName_value, vm.nickname)
-        setOneListener(R.id.description_value, vm.description)
-        setOneListener(R.id.age_value, vm.age)
-        setOneListener(R.id.mail_value, vm.email)
-        setOneListener(R.id.phoneNumber_value, vm.phoneNumber)
-        setOneListener(R.id.location_value, vm.location)
-        setOneListener(R.id.monHours_value, vm.mondayAvailability)
-        setOneListener(R.id.tueHours_value, vm.tuesdayAvailability)
-        setOneListener(R.id.wedHours_value, vm.wednesdayAvailability)
-        setOneListener(R.id.thuHours_value, vm.thursdayAvailability)
-        setOneListener(R.id.friHours_value, vm.fridayAvailability)
-        setOneListener(R.id.satHours_value, vm.saturdayAvailability)
-        setOneListener(R.id.sunHours_value, vm.sundayAvailability)
-        setOneListener(R.id.expertList_value, vm.expertList)
-        setOneListener(R.id.intermediateList_value, vm.intermediateList)
-        setOneListener(R.id.beginnerList_value, vm.beginnerList)
-
-        findViewById<Spinner>(R.id.spinner).onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long) {
-                    vm.genderIndex.value = position
-                    val arrayID = R.array.genderArray
-                    val array = resources.getStringArray(arrayID)
-                    vm.gender.value = array[position]
-                }
-            }
+    private fun setEditTextView(id: Int, field: String?) {
+        field?.let { findViewById<EditText>(id).setText(field) }
     }
 
-    private fun setOneListener(id: Int, field: MutableLiveData<String>) {
+    private fun setOneListener(id: Int, setter: (String) -> Unit) {
         findViewById<EditText>(id).addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                field.value = s.toString()
+                setter(s.toString())
             }
         })
     }
-
-    private fun setEditTextView(id : Int, field : MutableLiveData<String>){
-        findViewById<EditText>(id).setText(field.value ?: "")
-    }
-
 }
 

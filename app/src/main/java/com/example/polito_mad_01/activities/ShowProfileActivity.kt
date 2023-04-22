@@ -3,20 +3,20 @@ package com.example.polito_mad_01.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.activity.viewModels
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
+import com.example.polito_mad_01.*
+import com.example.polito_mad_01.viewmodel.*
+
 
 class ShowProfileActivity : AppCompatActivity() {
 
-    private val vm by viewModels<ShowProfileViewModel>()
+    private val vm : ShowProfileViewModel by viewModels{
+        ShowProfileViewModelFactory((application as SportTimeApplication).userRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,11 @@ class ShowProfileActivity : AppCompatActivity() {
             requestPermissions(permission, 112)
         }
 
-        init()
-
+        try {
+            setAllView()
+        } catch (e: NotImplementedError) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,39 +53,37 @@ class ShowProfileActivity : AppCompatActivity() {
         return true
     }
 
-    private fun init() {
-        try {
-            getData()
-            setAllView()
-        } catch (e: NotImplementedError) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun getData() {
-        //get data from database
-        //TODO: get data from database
-    }
-
     private fun setAllView() {
-        setTextView(R.id.fullName_textView, vm.name.value + " " + vm.surname.value)
-        setTextView(R.id.nickName_value, vm.nickname.value)
-        setTextView(R.id.description_textView, vm.description.value)
-        setTextView(R.id.age_textView, vm.age.value.toString())
-        setTextView(R.id.mail_textView, vm.email.value)
-        setTextView(R.id.phoneNumber_textView, vm.phoneNumber.value)
-        setTextView(R.id.gender_textView, vm.gender.value)
-        setTextView(R.id.location_textView, vm.location.value)
-        setTextView(R.id.monHours_textView, vm.mondayAvailability.value)
-        setTextView(R.id.tueHours_textView, vm.tuesdayAvailability.value)
-        setTextView(R.id.wedHours_textView, vm.wednesdayAvailability.value)
-        setTextView(R.id.thuHours_textView, vm.thursdayAvailability.value)
-        setTextView(R.id.friHours_textView, vm.fridayAvailability.value)
-        setTextView(R.id.satHours_textView, vm.saturdayAvailability.value)
-        setTextView(R.id.sunHours_textView, vm.sundayAvailability.value)
-        setTextView(R.id.expertList_textView, vm.expertList.value)
-        setTextView(R.id.intermediateList_textView, vm.intermediateList.value)
-        setTextView(R.id.beginnerList_textView, vm.beginnerList.value)
+        vm.getUserWithSkills(1).observe(this) { userWithSkills ->
+            userWithSkills.user.let {
+                setTextView(R.id.fullName_textView, it.name + " " + it.surname)
+                setTextView(R.id.nickName_textView, it.nickname)
+                setTextView(R.id.description_textView, it.description)
+                setTextView(R.id.age_textView, it.birthdate)
+                setTextView(R.id.mail_textView, it.email)
+                setTextView(R.id.phoneNumber_textView, it.phoneNumber)
+                setTextView(R.id.gender_textView, it.gender)
+                setTextView(R.id.location_textView, it.location)
+                setTextView(R.id.monHours_textView, it.mondayAvailability)
+                setTextView(R.id.tueHours_textView, it.tuesdayAvailability)
+                setTextView(R.id.wedHours_textView, it.wednesdayAvailability)
+                setTextView(R.id.thuHours_textView, it.thursdayAvailability)
+                setTextView(R.id.friHours_textView, it.fridayAvailability)
+                setTextView(R.id.satHours_textView, it.saturdayAvailability)
+                setTextView(R.id.sunHours_textView, it.sundayAvailability)
+            }
+            userWithSkills.skills.let { skillList ->
+                val expertList =
+                    skillList.filter { it.skill_level == "Expert" }.map { it.sportName }
+                val intermediateList =
+                    skillList.filter { it.skill_level == "Intermediate" }.map { it.sportName }
+                val beginnerList =
+                    skillList.filter { it.skill_level == "Beginner" }.map { it.sportName }
+                setTextView(R.id.expertList_textView, expertList.joinToString(", "))
+                setTextView(R.id.intermediateList_textView, intermediateList.joinToString(", "))
+                setTextView(R.id.beginnerList_textView, beginnerList.joinToString(", "))
+            }
+        }
     }
 
     private fun setTextView(id: Int, field: String?) {

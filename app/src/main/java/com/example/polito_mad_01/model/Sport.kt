@@ -6,11 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "sport")
 data class Sport(
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "sport_id")
-    val sportId: Int = 0,
-
-    @ColumnInfo(name = "name")
-    val name: String,
+    @PrimaryKey
+    @ColumnInfo(name = "sport_name")
+    val sportName: String,
 
 )

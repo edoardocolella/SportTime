@@ -18,6 +18,6 @@ interface SportDao {
     fun getSportById(sportId: Int): LiveData<Sport>*/
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addSport(sport: Sport)
+    fun addSport(sport: Sport)
 }
 

@@ -18,7 +18,7 @@ interface PlaygroundDao {
     fun getPlaygroundById(playgroundId: Int): LiveData<Playground>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addPlayground(playground: Playground)
+    fun addPlayground(playground: Playground)
 
 }
 

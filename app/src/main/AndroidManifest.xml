@@ -17,11 +17,6 @@
         <activity
             android:name=".activities.TestActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.CalendarActivity"
@@ -32,7 +27,13 @@
             android:exported="false" />
         <activity
             android:name=".activities.ShowProfileActivity"
-            android:exported="true" />
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

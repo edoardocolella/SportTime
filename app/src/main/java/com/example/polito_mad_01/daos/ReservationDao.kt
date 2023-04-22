@@ -25,7 +25,7 @@ interface ReservationDao {
     fun getUserReservation(userId: Int): LiveData<Reservation>*/
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addReservation(reservation: Reservation)
+    fun addReservation(reservation: Reservation)
 
 }
 

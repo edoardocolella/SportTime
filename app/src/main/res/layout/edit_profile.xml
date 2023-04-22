@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -161,12 +162,36 @@
                     android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/sportLabel_value"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/linearLayout2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sportsLabel"
-                        android:textSize="30sp" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/sportLabel_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/sportsLabel"
+                            android:textSize="30sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/button"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <Button
+                            android:id="@+id/skillButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/change"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/sportLabel_value"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:id="@+id/expertLayout"
@@ -175,7 +200,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/expertLabel_value"
+                            android:id="@+id/expertLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -183,13 +208,11 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/expertList_value"
+                        <TextView
+                            android:id="@+id/expertList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textSize="22sp" />
@@ -202,7 +225,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/intermediateLabel_value"
+                            android:id="@+id/intermediateLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -210,13 +233,11 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/intermediateList_value"
+                        <TextView
+                            android:id="@+id/intermediateList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textSize="22sp" />
@@ -229,7 +250,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/beginnerLabel_value"
+                            android:id="@+id/beginnerLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
@@ -237,13 +258,11 @@
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/beginnerList_value"
+                        <TextView
+                            android:id="@+id/beginnerList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textSize="22sp" />

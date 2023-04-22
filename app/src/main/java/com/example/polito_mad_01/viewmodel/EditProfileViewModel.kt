@@ -1,28 +1,40 @@
 package com.example.polito_mad_01.viewmodel
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.polito_mad_01.model.UserWithSkills
+import com.example.polito_mad_01.repositories.UserRepository
+import kotlin.concurrent.thread
 
-class EditProfileViewModel: ViewModel() {
-    val fullName = MutableLiveData<String>()
-    val nickname = MutableLiveData<String>()
-    val description = MutableLiveData<String>()
-    val age = MutableLiveData<String>()
-    val gender = MutableLiveData<String>()
-    var genderIndex: MutableLiveData<Int> = MutableLiveData<Int>()
-    val email = MutableLiveData<String>()
-    val phoneNumber = MutableLiveData<String>()
-    val location = MutableLiveData<String>()
-    val mondayAvailability = MutableLiveData<String>()
-    val tuesdayAvailability = MutableLiveData<String>()
-    val wednesdayAvailability = MutableLiveData<String>()
-    val thursdayAvailability = MutableLiveData<String>()
-    val fridayAvailability = MutableLiveData<String>()
-    val saturdayAvailability = MutableLiveData<String>()
-    val sundayAvailability = MutableLiveData<String>()
-    val expertList = MutableLiveData<String>()
-    val intermediateList = MutableLiveData<String>()
-    val beginnerList = MutableLiveData<String>()
-    val imageUriString = MutableLiveData<String>()
-    var changing: Boolean = false
+class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
+
+    fun getUserWithSkills(id: Int): LiveData<UserWithSkills> {
+        return userRepository.userWithSkillsById(id).asLiveData()
+    }
+
+    var user: MutableLiveData<UserWithSkills> = MutableLiveData()
+    val expertList: MutableLiveData<String> = MutableLiveData()
+    val intermediateList: MutableLiveData<String> = MutableLiveData()
+    val beginnerList: MutableLiveData<String> = MutableLiveData()
+
+
+    fun updateUser() {
+        user.value?.let {
+            thread {
+                userRepository.updateUser(it.user)
+                userRepository.deleteSkills(it.user.userId)
+                userRepository.insertAllSkills(it.skills)
+            }
+        }
+    }
+}
+
+class EditProfileViewModelFactory(private val repository: UserRepository) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(EditProfileViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return EditProfileViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }
