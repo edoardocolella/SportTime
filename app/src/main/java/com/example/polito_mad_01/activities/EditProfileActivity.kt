@@ -173,7 +173,7 @@ class EditProfileActivity : AppCompatActivity() {
     private fun trySaveData(): Boolean {
         return try {
             isNotValid()
-            saveData()
+            vm.updateUser()
             val i = Intent(this, ShowProfileActivity::class.java)
             startActivity(i)
             true
@@ -183,25 +183,8 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveData() {
-
-        val skills = mutableListOf<SportSkill>()
-        createSportList(skills, vm.expertList.value!!, "Expert")
-        createSportList(skills, vm.intermediateList.value!!, "Intermediate")
-        createSportList(skills, vm.beginnerList.value!!, "Beginner")
-
-        vm.user.value!!.skills = skills
-        vm.updateUser()
-    }
-
-    private fun createSportList(skills: MutableList<SportSkill>, s: String, level: String) {
-        s.split("-").forEach { skill ->
-            skills.add(SportSkill(vm.user.value!!.user.userId, skill.trim(), level))
-        }
-    }
-
     private fun isNotValid() {
-        val user = vm.user.value!!.user
+        val user = vm.user.value!!
 
         fieldIsValid(user.name, "Full Name")
         fieldIsValid(user.nickname, "Nickname")
@@ -228,16 +211,9 @@ class EditProfileActivity : AppCompatActivity() {
             throw Exception("Phone number should be a 10 digit number")
         }
 
-        val expertList = vm.expertList.value
-        val intermediateList = vm.intermediateList.value
-        val beginnerList = vm.beginnerList.value
-        if (expertList.isNullOrEmpty()
-            && intermediateList.isNullOrEmpty()
-            && beginnerList.isNullOrEmpty()) {
-            throw Exception("at least one skill")
-        }
+        //check favouriteSport
 
-        imageUri?.let { user.setImageUri(it.toString())}
+        imageUri?.let { user.image_uri = it.toString() }
 
     }
 
@@ -247,28 +223,64 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setAllView() {
-        val userWithSkills = vm.getUserWithSkills(1)
-        userWithSkills.observe(this){
+        /*val userWithSkills = vm.getUserWithSkills(1)
+        userWithSkills.observe(this) {
             vm.user.value = it
-            if(it == null) return@observe
+            if (it == null) return@observe
             val user = it.user
             val skills = it.skills
 
-            setEditTextViewAndListener(R.id.fullName_value, user.name, user::setName)
+            setEditTextViewAndListener(R.id.fullName_value, user.name, myUser.name)
             //setEditTextViewAndListener(R.id.surname_value, user.surname, user::setSurname)
             setEditTextViewAndListener(R.id.nickName_value, user.nickname, user::setNickname)
-            setEditTextViewAndListener(R.id.description_value, user.description, user::setDescription)
+            setEditTextViewAndListener(
+                R.id.description_value,
+                user.description,
+                user::setDescription
+            )
             setEditTextViewAndListener(R.id.age_value, user.birthdate, user::setBirthdate)
             setEditTextViewAndListener(R.id.location_value, user.location, user::setLocation)
             setEditTextViewAndListener(R.id.mail_value, user.email, user::setEmail)
-            setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, user::setPhoneNumber)
-            setEditTextViewAndListener(R.id.monHours_value, user.mondayAvailability, user::setMondayAvailability)
-            setEditTextViewAndListener(R.id.tueHours_value, user.tuesdayAvailability, user::setTuesdayAvailability)
-            setEditTextViewAndListener(R.id.wedHours_value, user.wednesdayAvailability, user::setWednesdayAvailability)
-            setEditTextViewAndListener(R.id.thuHours_value, user.thursdayAvailability, user::setThursdayAvailability)
-            setEditTextViewAndListener(R.id.friHours_value, user.fridayAvailability, user::setFridayAvailability)
-            setEditTextViewAndListener(R.id.satHours_value, user.saturdayAvailability, user::setSaturdayAvailability)
-            setEditTextViewAndListener(R.id.sunHours_value, user.sundayAvailability, user::setSundayAvailability)
+            setEditTextViewAndListener(
+                R.id.phoneNumber_value,
+                user.phoneNumber,
+                user::setPhoneNumber
+            )
+            setEditTextViewAndListener(
+                R.id.monHours_value,
+                user.mondayAvailability,
+                user::setMondayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.tueHours_value,
+                user.tuesdayAvailability,
+                user::setTuesdayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.wedHours_value,
+                user.wednesdayAvailability,
+                user::setWednesdayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.thuHours_value,
+                user.thursdayAvailability,
+                user::setThursdayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.friHours_value,
+                user.fridayAvailability,
+                user::setFridayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.satHours_value,
+                user.saturdayAvailability,
+                user::setSaturdayAvailability
+            )
+            setEditTextViewAndListener(
+                R.id.sunHours_value,
+                user.sundayAvailability,
+                user::setSundayAvailability
+            )
 
             //convert gender to index
             //findViewById<Spinner>(R.id.spinner).setSelection(vm.genderIndex.value ?: 0)
@@ -294,27 +306,27 @@ class EditProfileActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.expertList).text = expertList
                 findViewById<TextView>(R.id.intermediateList).text = intermediateList
                 findViewById<TextView>(R.id.beginnerList).text = beginnerList
-                }
-
-                val spinner =  findViewById<Spinner>(R.id.spinner)
-                val arrayID = R.array.genderArray
-                val array = resources.getStringArray(arrayID)
-                spinner.setSelection(array.indexOf(user.gender))
-                spinner.onItemSelectedListener =
-                    object : AdapterView.OnItemSelectedListener {
-                        override fun onNothingSelected(parent: AdapterView<*>?) {}
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            user.setGender(array[position])
-                        }
-                    }
             }
 
-        }
+            val spinner = findViewById<Spinner>(R.id.spinner)
+            val arrayID = R.array.genderArray
+            val array = resources.getStringArray(arrayID)
+            spinner.setSelection(array.indexOf(user.gender))
+            spinner.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        user.setGender(array[position])
+                    }
+                }
+        }*/
+
+    }
 
     private fun setEditTextViewAndListener(viewId: Int, value: String?, setter: (String) -> Unit) {
         value?.let { setEditTextView(viewId, it) }

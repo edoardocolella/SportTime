@@ -24,26 +24,11 @@ import java.util.Date
 
 data class Reservation(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "reservation_id")
-    val reservationId: Int = 0,
-
-    @ColumnInfo(name = "playground_id")
-    val playgroundId: Int,
-
-    @ColumnInfo(name = "user_id")
-    val userId: Int,
-
-    @ColumnInfo(name = "date")
+    val reservation_id: Int = 0,
+    val playground_id: Int,
+    val user_id: Int,
     val date: String,
-
-    @ColumnInfo(name = "start_time")
-    val startTime: String,
-
-    @ColumnInfo(name = "end_time")
-    val endTime: String,
-
-    @ColumnInfo(name = "total_price")
-    val totalPrice: Double,
-
-
+    val start_time: String,
+    val end_time: String,
+    val total_price: Double,
     )

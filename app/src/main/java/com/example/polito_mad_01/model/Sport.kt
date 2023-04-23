@@ -7,7 +7,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "sport")
 data class Sport(
     @PrimaryKey
-    @ColumnInfo(name = "sport_name")
-    val sportName: String,
-
+    val sport_name: String,
 )

@@ -18,21 +18,10 @@ import androidx.room.PrimaryKey
 )
 data class Playground(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "playground_id")
-    val playgroundId: Int = 0,
-
-    @ColumnInfo(name = "name")
+    val playground_id: Int = 0,
     val name: String,
-
-    @ColumnInfo(name = "description")
     val description: String,
-
-    @ColumnInfo(name = "location")
     val location: String,
-
-    @ColumnInfo(name = "price_per_slot")
     val price_per_slot: Double,
-
-    @ColumnInfo(name = "sport_name")
-    val sportName: String,
+    val sport_name: String,
 )

@@ -1,14 +1,10 @@
 package com.example.polito_mad_01
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.room.*
 import com.example.polito_mad_01.daos.*
 import com.example.polito_mad_01.model.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+
 
 @Database(
     entities = [
@@ -17,7 +13,6 @@ import kotlinx.coroutines.launch
         Reservation::class,
         ReservationExtra::class,
         Sport::class,
-        SportSkill::class,
         User::class],
     version = 1
 )
@@ -47,6 +42,4 @@ abstract class SportTimeDatabase : RoomDatabase() {
     abstract fun playgroundDao(): PlaygroundDao
     abstract fun sportDao(): SportDao
     abstract fun reservationDao(): ReservationDao
-    abstract fun skillDao(): SkillDao
-
 }

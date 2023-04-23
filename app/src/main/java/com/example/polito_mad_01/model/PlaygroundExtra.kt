@@ -19,21 +19,9 @@ import androidx.room.PrimaryKey
 )
 data class PlaygroundExtra(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "extra_id")
-    val extraId: Int = 0,
-
-    @ColumnInfo(name = "playground_id")
-    val playgroundId: Int,
-
-    @ColumnInfo(name = "name")
+    val extra_id: Int = 0,
+    val playground_id: Int,
     val name: String,
-
-    @ColumnInfo(name = "description")
     val description: String,
-
-    @ColumnInfo(name = "price")
     val price: Double,
-
-
-
     )

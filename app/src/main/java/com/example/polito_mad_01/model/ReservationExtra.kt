@@ -24,15 +24,7 @@ import androidx.room.PrimaryKey
 )
 data class ReservationExtra(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "reservation_extra_id")
-    val reservationExtraId: Int = 0,
-
-    @ColumnInfo(name = "extra_id")
-    val extraId: Int,
-
-    @ColumnInfo(name = "reservation_id")
-    val reservationId: Int,
-
-
-
+    val reservation_extra_id: Int = 0,
+    val extra_id: Int,
+    val reservation_id: Int,
     )
