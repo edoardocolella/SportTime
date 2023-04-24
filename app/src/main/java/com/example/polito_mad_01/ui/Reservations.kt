@@ -1,4 +1,4 @@
-package com.example.polito_mad_01.fragments
+package com.example.polito_mad_01.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,7 +10,7 @@ import com.stacktips.view.CustomCalendarView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReservationsFragment : Fragment(R.layout.fragment_reservations) {
+class Reservations : Fragment(R.layout.fragment_reservations) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

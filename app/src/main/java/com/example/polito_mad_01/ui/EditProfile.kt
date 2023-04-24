@@ -1,30 +1,32 @@
-package com.example.polito_mad_01.activities
+package com.example.polito_mad_01.ui
 
 import android.Manifest
-import android.app.*
-import android.content.*
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.ContentValues
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.*
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
-import android.widget.*
-import androidx.activity.viewModels
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import com.example.polito_mad_01.*
-import com.example.polito_mad_01.model.*
-import com.example.polito_mad_01.viewmodel.*
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.polito_mad_01.R
+import com.example.polito_mad_01.activities_legacy.ShowProfileActivity
 import java.util.*
 
-
-class EditProfileActivity : AppCompatActivity() {
+class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
@@ -32,43 +34,36 @@ class EditProfileActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 200
 
     private var imageUriString: String? = null
-
-    private val vm: EditProfileViewModel by viewModels {
-        EditProfileViewModelFactory((application as SportTimeApplication).userRepository)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.edit_profile)
-
-        ArrayAdapter.createFromResource(
-            this, R.array.genderArray,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            findViewById<Spinner>(R.id.spinner).adapter = adapter
-        }
-
-        supportActionBar?.let { it.title = "Edit Profile"; it.setDisplayHomeAsUpEnabled(true) }
-
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            val imgButton = findViewById<ImageButton>(R.id.imageButton)
-            registerForContextMenu(imgButton)
-            imgButton.setOnClickListener { v -> v.showContextMenu() }
-        }
-
-        setAllView()
+        setHasOptionsMenu(true)
     }
 
-    override fun onCreateContextMenu(
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_edit_profile, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        /*return when (item.itemId) {
+            android.R.id.home -> showExitDialog()
+            R.id.action_save_profile -> trySaveData()
+            else -> super.onOptionsItemSelected(item)
+        }*/
+        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
+        return true
+    }
+
+    /*override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
         menuInflater.inflate(R.menu.menu_picture, menu)
-    }
+    }*/
 
+   /*
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
@@ -80,21 +75,22 @@ class EditProfileActivity : AppCompatActivity() {
         //startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
 
     }
+    */
 
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val frame = findViewById<ImageView>(R.id.profileImage_imageView)
-        if (requestCode == IMAGE_CAPTURE_CODE && resultCode == RESULT_OK)
-            frame.setImageURI(imageUri)
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
-            imageUri = data.data!!
-            imageUriString = imageUri.toString()
-            frame.setImageURI(imageUri)
+        view?.let {
+            val frame = it.findViewById<ImageView>(R.id.profileImage_imageView)
+            if (requestCode == IMAGE_CAPTURE_CODE && resultCode == AppCompatActivity.RESULT_OK)
+                frame.setImageURI(imageUri)
+            if (requestCode == RESULT_LOAD_IMAGE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
+                imageUri = data.data!!
+                imageUriString = imageUri.toString()
+                frame.setImageURI(imageUri)
+            }
         }
-
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -111,7 +107,9 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
+
     private fun picture(): Boolean {
+        /*
         if (checkPermission()) {
             openCamera()
         } else
@@ -119,9 +117,13 @@ class EditProfileActivity : AppCompatActivity() {
                 "Notice",
                 R.string.cameraPermission.toString()
             )
+
+         */
         return true
     }
 
+
+    /*
     private fun checkPermission(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED
@@ -129,6 +131,9 @@ class EditProfileActivity : AppCompatActivity() {
         return true
     }
 
+     */
+
+    /*
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
@@ -140,28 +145,18 @@ class EditProfileActivity : AppCompatActivity() {
             PERMISSION_REQUEST_CODE
         )
     }
+     */
 
+    /*
     private fun Activity.showPermissionReasonAndRequest(title: String, message: String) {
         AlertDialog.Builder(this)
             .setTitle(title).setMessage(message)
             .setPositiveButton("OK") { _, _ -> requestPermission() }
-            .setNegativeButton("CANCEL") { _, _ -> }.show()
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_edit_profile, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> showExitDialog()
-            R.id.action_save_profile -> trySaveData()
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+     */
 
+    /*
     private fun showExitDialog(): Boolean {
         AlertDialog.Builder(this)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
@@ -169,7 +164,9 @@ class EditProfileActivity : AppCompatActivity() {
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
+     */
 
+    /*
     private fun trySaveData(): Boolean {
         return try {
             isNotValid()
@@ -183,6 +180,9 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
+     */
+
+    /*
     private fun isNotValid() {
         val user = vm.user.value!!
 
@@ -216,6 +216,8 @@ class EditProfileActivity : AppCompatActivity() {
         imageUri?.let { user.image_uri = it.toString() }
 
     }
+
+     */
 
     private fun fieldIsValid(field: String?, fieldName: String) {
         if (field.isNullOrEmpty())
@@ -334,11 +336,11 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private fun setEditTextView(id: Int, field: String?) {
-        field?.let { findViewById<EditText>(id).setText(field) }
+        field?.let { view?.findViewById<EditText>(id)?.setText(field) }
     }
 
     private fun setOneListener(id: Int, setter: (String) -> Unit) {
-        findViewById<EditText>(id).addTextChangedListener(object : TextWatcher {
+        view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -347,4 +349,3 @@ class EditProfileActivity : AppCompatActivity() {
         })
     }
 }
-

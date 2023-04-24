@@ -1,4 +1,4 @@
-package com.example.polito_mad_01.model
+package com.example.polito_mad_01.db
 
 import androidx.room.*
 

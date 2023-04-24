@@ -1,7 +1,7 @@
 package com.example.polito_mad_01.viewmodel
 
 import androidx.lifecycle.*
-import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.repositories.UserRepository
 import kotlin.concurrent.thread
 

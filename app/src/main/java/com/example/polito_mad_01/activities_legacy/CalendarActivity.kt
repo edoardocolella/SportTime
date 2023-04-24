@@ -1,4 +1,4 @@
-package com.example.polito_mad_01.activities
+package com.example.polito_mad_01.activities_legacy
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +13,7 @@ import java.util.*
 class CalendarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.calendar)
+        //setContentView(R.layout.calendar)
 
         val calendarView: CustomCalendarView = findViewById(R.id.calendar_view)
         val currentCalendar: Calendar = Calendar.getInstance(Locale.getDefault())

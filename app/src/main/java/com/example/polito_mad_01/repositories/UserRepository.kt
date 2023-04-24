@@ -1,8 +1,8 @@
 package com.example.polito_mad_01.repositories
 
 
-import com.example.polito_mad_01.daos.UserDao
-import com.example.polito_mad_01.model.*
+import com.example.polito_mad_01.db.User
+import com.example.polito_mad_01.db.UserDao
 import kotlinx.coroutines.flow.Flow
 
 class UserRepository(private val userDao: UserDao) {

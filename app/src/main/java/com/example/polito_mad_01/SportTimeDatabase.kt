@@ -2,8 +2,7 @@ package com.example.polito_mad_01
 
 import android.content.Context
 import androidx.room.*
-import com.example.polito_mad_01.daos.*
-import com.example.polito_mad_01.model.*
+import com.example.polito_mad_01.db.*
 
 
 @Database(

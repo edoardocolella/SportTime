@@ -1,30 +1,38 @@
-package com.example.polito_mad_01.fragments
+package com.example.polito_mad_01.activities_legacy
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.activities.EditProfileActivity
-import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
-import com.example.polito_mad_01.viewmodel.ShowProfileViewModelFactory
+import com.example.polito_mad_01.*
+import com.example.polito_mad_01.viewmodel.*
 
-class ProfileFragment : Fragment(R.layout.fragment_profile) {
+
+class ShowProfileActivity : AppCompatActivity() {
+
+    private val vm: ShowProfileViewModel by viewModels {
+        ShowProfileViewModelFactory((application as SportTimeApplication).userRepository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setHasOptionsMenu(true)
-    }
+        // calling the action bar
+        val actionBar = supportActionBar
+        actionBar?.let { it.title = "Profile" }
+        setContentView(R.layout.show_profile)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        ) {
+            val permission =
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            requestPermissions(permission, 112)
+        }
 
         try {
             setAllView()
@@ -33,8 +41,20 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_show_profile, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val i = Intent(this, EditProfileActivity::class.java)
+        startActivity(i)
+        return true
+    }
+
     private fun setAllView() {
-        /*vm.getUser(1).observe(this) { user ->
+        vm.getUser(1).observe(this) { user ->
             user.let {
                 setTextView(R.id.fullName_textView, it.name + " " + it.surname)
                 setTextView(R.id.nickName_textView, it.nickname)
@@ -51,23 +71,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.friHours_textView, it.friday_availability.toString())
                 setTextView(R.id.satHours_textView, it.saturday_availability.toString())
                 setTextView(R.id.sunHours_textView, it.sunday_availability.toString())
-            }*/
+            }
 
             //set favourite sport
         }
-
-
+    }
     private fun setTextView(id: Int, field: String?) {
-        field?.let { view?.findViewById<TextView>(id)?.text = field }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_show_profile, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
-
-        return true
+        field?.let { findViewById<TextView>(id).text = field }
     }
 }
