@@ -123,127 +123,6 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
-                    android:id="@+id/sportLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/sportLabel_textView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/sportsLabel"
-                        android:textSize="26sp" />
-
-                    <View
-                        android:id="@+id/divider2"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginBottom="4dp"
-                        android:background="#363636" />
-
-                    <LinearLayout
-                        android:id="@+id/expertLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp"
-                        android:paddingBottom="2dp">
-
-                        <TextView
-                            android:id="@+id/expertLabel_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="@string/expertLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/expertList_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:textAlignment="center"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                    <View
-                        android:id="@+id/divider3"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#363636" />
-
-                    <LinearLayout
-                        android:id="@+id/intermediateLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="2dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="2dp"
-                        android:paddingBottom="2dp">
-
-                        <TextView
-                            android:id="@+id/intermediateLabel_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="@string/intermediateLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/intermediateList_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:textAlignment="center"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-
-                    <View
-                        android:id="@+id/divider4"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#363636" />
-
-                    <LinearLayout
-                        android:id="@+id/beginnerLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="2dp"
-                        android:paddingTop="2dp"
-                        android:paddingRight="2dp"
-                        android:paddingBottom="2dp">
-
-                        <TextView
-                            android:id="@+id/beginnerLabel_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="@string/beginnerLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/beginnerList_textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:textAlignment="center"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/availabilityLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -275,218 +154,80 @@
                         android:paddingRight="2dp">
 
                         <LinearLayout
-                            android:id="@+id/monLayout_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
-
-                            <TextView
-                                android:id="@+id/monLabel_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/mondayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/monHours_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-
-                        <View
-                            android:id="@+id/divider6"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
-
-                        <LinearLayout
-                            android:id="@+id/tueLayout_textView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
-
-                            <TextView
-                                android:id="@+id/tueLabel_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/tuesdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/tueHours_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:id="@+id/divider7"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
-
-                        <LinearLayout
-                            android:id="@+id/wedLayout_textView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/wedLabel_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/mondayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:paddingBottom="2dp"
-                                android:text="@string/wednesdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/mondayLabel" />
 
-                            <TextView
-                                android:id="@+id/wedHours_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/tuesdayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/tuesdayLabel" />
                         </LinearLayout>
-
-                        <View
-                            android:id="@+id/divider8"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
 
                         <LinearLayout
-                            android:id="@+id/thuLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/thuLabel_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/wednesdayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/thursdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/wednesdayLabel" />
 
-                            <TextView
-                                android:id="@+id/thuHours_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/thursdayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/thursdayLabel" />
+
                         </LinearLayout>
-
-                        <View
-                            android:id="@+id/divider9"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
 
                         <LinearLayout
-                            android:id="@+id/friLayout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
+                            android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/friLabel_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/fridayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/fridayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/fridayLabel" />
 
-                            <TextView
-                                android:id="@+id/friHours_textView"
-                                android:layout_width="0dp"
+                            <CheckBox
+                                android:id="@+id/saturdayAvailability"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:id="@+id/divider10"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
-
-                        <LinearLayout
-                            android:id="@+id/satLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
-
-                            <TextView
-                                android:id="@+id/satLabel_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/saturdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/satHours_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
+                                android:layout_weight="1"
+                                android:clickable="false"
+                                android:text="@string/saturdayLabel" />
 
                         </LinearLayout>
 
-                        <View
-                            android:id="@+id/divider11"
+                        <CheckBox
+                            android:id="@+id/sundayAvailability"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#363636" />
-
-                        <LinearLayout
-                            android:id="@+id/sunLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            android:paddingBottom="2dp">
-
-                            <TextView
-                                android:id="@+id/sunLabel_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:text="@string/sundayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/sunHours_textView"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="5"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:clickable="false"
+                            android:text="@string/sundayLabel" />
                     </LinearLayout>
 
                 </LinearLayout>

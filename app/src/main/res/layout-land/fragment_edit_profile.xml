@@ -35,6 +35,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
     <LinearLayout
         android:id="@+id/infoLayout"
         android:layout_width="0dp"
@@ -44,29 +46,38 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
-        <EditText
-            android:id="@+id/fullName_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="name"
-            android:ems="10"
-            android:hint="@string/fullName"
-            android:inputType="textPersonName"
-            android:textAlignment="center"
-            android:textSize="38sp" />
 
-        <EditText
-            android:id="@+id/nickName_value"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:importantForAutofill="no"
-            android:hint="@string/nickname"
-            android:inputType="text"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="italic" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/name"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="24sp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
+
+            <EditText
+                android:id="@+id/surname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="name"
+                android:hint="@string/surname"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="24sp"
+                android:layout_weight="1"
+                android:textAlignment="center"
+                />
+        </LinearLayout>
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -74,11 +85,24 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp">
 
-            <LinearLayout
+        <LinearLayout
                 android:id="@+id/wrapperLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/nickName_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:importantForAutofill="no"
+                android:hint="@string/nickname"
+                android:inputType="text"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="italic" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -126,7 +150,7 @@
                         android:textAlignment="center">
 
                         <EditText
-                            android:id="@+id/age_value"
+                            android:id="@+id/birthday"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -173,104 +197,6 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
-                    android:id="@+id/sportLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/sportLabel_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sportsLabel"
-                        android:textSize="30sp" />
-
-                    <LinearLayout
-                        android:id="@+id/expertLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/expertLabel_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/expertLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/expertList"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:textSize="22sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/intermediateLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/intermediateLabel_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/intermediateLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/intermediateList_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:textSize="22sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/beginnerLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/beginnerLabel_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3"
-                            android:text="@string/beginnerLabel"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                        <EditText
-                            android:id="@+id/beginnerList_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="7"
-                            android:importantForAutofill="no"
-                            android:inputType="text"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:textSize="22sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:id="@+id/availabilityLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -286,216 +212,79 @@
                         android:textSize="30sp" />
 
                     <LinearLayout
-                        android:id="@+id/weekLayout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:id="@+id/monLayout_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/mondayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mondayLabel"
+                        android:layout_weight="1"
+                        />
 
-                            <TextView
-                                android:id="@+id/monLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/mondayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/monHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/tueLayout_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tueLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/tuesdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/tueHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/wedLayout_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/wedLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/wednesdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/wedHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/thuLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/thuLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/thursdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/thuHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/friLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/friLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/fridayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/friHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/satLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/satLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/saturdayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/satHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/sunLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/sunLabel_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="2"
-                                android:background="@android:color/transparent"
-                                android:text="@string/sundayLabel"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
-
-                            <EditText
-                                android:id="@+id/sunHours_value"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="3"
-                                android:importantForAutofill="no"
-                                android:inputType="text"
-                                android:paddingTop="4dp"
-                                android:paddingBottom="4dp"
-                                android:textAlignment="center"
-                                android:textSize="18sp" />
-                        </LinearLayout>
+                    <CheckBox
+                        android:id="@+id/tuesdayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tuesdayLabel"
+                        android:layout_weight="1"
+                        />
 
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/wednesdayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wednesdayLabel"
+                        android:layout_weight="1"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/thursdayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/thursdayLabel"
+                        android:layout_weight="1"
+                        />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/fridayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fridayLabel"
+                        android:layout_weight="1"
+                        />
+
+                    <CheckBox
+                        android:id="@+id/saturdayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/saturdayLabel"
+                        android:layout_weight="1"
+                        />
+
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/sundayAvailability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sundayLabel" />
 
                 </LinearLayout>
 
@@ -567,8 +356,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
+    </ScrollView>
 
     </LinearLayout>
+
 
 </LinearLayout>

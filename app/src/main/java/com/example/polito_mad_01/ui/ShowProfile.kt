@@ -2,6 +2,7 @@ package com.example.polito_mad_01.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -41,17 +42,21 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.phoneNumber_textView, it.phoneNumber)
                 setTextView(R.id.gender_textView, it.gender)
                 setTextView(R.id.location_textView, it.location)
-                setTextView(R.id.monHours_textView, it.monday_availability.toString())
-                setTextView(R.id.tueHours_textView, it.tuesday_availability.toString())
-                setTextView(R.id.wedHours_textView, it.wednesday_availability.toString())
-                setTextView(R.id.thuHours_textView, it.thursday_availability.toString())
-                setTextView(R.id.friHours_textView, it.friday_availability.toString())
-                setTextView(R.id.satHours_textView, it.saturday_availability.toString())
-                setTextView(R.id.sunHours_textView, it.sunday_availability.toString())
+                setCheckBox(R.id.mondayAvailability, it.monday_availability)
+                setCheckBox(R.id.tuesdayAvailability, it.tuesday_availability)
+                setCheckBox(R.id.wednesdayAvailability, it.wednesday_availability)
+                setCheckBox(R.id.thursdayAvailability, it.thursday_availability)
+                setCheckBox(R.id.fridayAvailability, it.friday_availability)
+                setCheckBox(R.id.saturdayAvailability, it.saturday_availability)
+                setCheckBox(R.id.sundayAvailability, it.sunday_availability)
             }
 
             //set favourite sport
         }
+    }
+
+    private fun setCheckBox(id: Int, field: Boolean) {
+        view?.findViewById<CheckBox>(id)?.isChecked = field
     }
 
 

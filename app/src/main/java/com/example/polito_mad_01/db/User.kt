@@ -26,7 +26,7 @@ data class User(
     var email: String,
     var phoneNumber: String,
     var image_uri: String?,
-    val favouriteSport : String,
+    var favouriteSport : String,
     var monday_availability: Boolean,
     var tuesday_availability: Boolean,
     var wednesday_availability: Boolean,

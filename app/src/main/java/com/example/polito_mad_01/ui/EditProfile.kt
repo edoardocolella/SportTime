@@ -14,18 +14,18 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.activities_legacy.ShowProfileActivity
+import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import java.util.*
 
@@ -43,8 +43,13 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private var imageUriString: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setHasOptionsMenu(true)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setAllView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -52,14 +57,11 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        /*return when (item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> showExitDialog()
             R.id.action_save_profile -> trySaveData()
             else -> super.onOptionsItemSelected(item)
-        }*/
-        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
-
-        return true
+        }
     }
 
     /*override fun onCreateContextMenu(
@@ -159,40 +161,37 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         AlertDialog.Builder(this)
             .setTitle(title).setMessage(message)
             .setPositiveButton("OK") { _, _ -> requestPermission() }
-
-
      */
 
-    /*
+
     private fun showExitDialog(): Boolean {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(activity)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
-            .setPositiveButton("YES") { _, _ -> finish() }
+            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment) }
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
-     */
 
-    /*
+
+
     private fun trySaveData(): Boolean {
         return try {
             isNotValid()
             vm.updateUser()
-            val i = Intent(this, ShowProfileActivity::class.java)
-            startActivity(i)
+            findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+
+           // val i = Intent(this, ShowProfileActivity::class.java)
+          //  startActivity(i)
             true
         } catch (e: Exception) {
-            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
             false
         }
     }
 
-     */
 
-    /*
     private fun isNotValid() {
         val user = vm.user.value!!
-
         fieldIsValid(user.name, "Full Name")
         fieldIsValid(user.nickname, "Nickname")
         fieldIsValid(user.description, "Description")
@@ -224,99 +223,58 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     }
 
-     */
-
     private fun fieldIsValid(field: String?, fieldName: String) {
         if (field.isNullOrEmpty())
             throw Exception("$fieldName is invalid")
     }
 
+    private fun setValue(attribute: String, newValue: String) {
+        when (attribute) {
+            "name" -> vm.user.value?.name = newValue
+            "surname" -> vm.user.value?.surname = newValue
+            "nickname" -> vm.user.value?.nickname = newValue
+            "description" -> vm.user.value?.description = newValue
+            "email" -> vm.user.value?.email = newValue
+            "phoneNumber" -> vm.user.value?.phoneNumber = newValue
+            "location" -> vm.user.value?.location = newValue
+            "birthdate" -> vm.user.value?.birthdate = newValue
+            "favouriteSport" -> vm.user.value?.favouriteSport = newValue
+        }
+    }
+
     private fun setAllView() {
-        /*vm.(1).observe(viewLifecycleOwner) { user ->
+        vm.getUser(1).observe(viewLifecycleOwner) { user ->
+            setEditTextViewAndListener(R.id.name, user.name, "name")
+            setEditTextViewAndListener(R.id.surname, user.surname, "surname")
+            setEditTextViewAndListener(R.id.nickName_value, user.nickname,     "nickname")
+            setEditTextViewAndListener(R.id.description_value, user.description, "description")
+            setEditTextViewAndListener(R.id.mail_value, user.email, "email")
+            setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
+            setEditTextViewAndListener(R.id.location_value, user.location, "location")
+            setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
 
-        setEditTextViewAndListener(R.id.fullName_value, user.name, myUser.name)
-            //setEditTextViewAndListener(R.id.surname_value, user.surname, user::setSurname)
-            setEditTextViewAndListener(R.id.nickName_value, user.nickname, user::setNickname)
-            setEditTextViewAndListener(
-                R.id.description_value,
-                user.description,
-                user::setDescription
-            )
-            setEditTextViewAndListener(R.id.age_value, user.birthdate, user::setBirthdate)
-            setEditTextViewAndListener(R.id.location_value, user.location, user::setLocation)
-            setEditTextViewAndListener(R.id.mail_value, user.email, user::setEmail)
-            setEditTextViewAndListener(
-                R.id.phoneNumber_value,
-                user.phoneNumber,
-                user::setPhoneNumber
-            )
-            setEditTextViewAndListener(
-                R.id.monHours_value,
-                user.mondayAvailability,
-                user::setMondayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.tueHours_value,
-                user.tuesdayAvailability,
-                user::setTuesdayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.wedHours_value,
-                user.wednesdayAvailability,
-                user::setWednesdayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.thuHours_value,
-                user.thursdayAvailability,
-                user::setThursdayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.friHours_value,
-                user.fridayAvailability,
-                user::setFridayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.satHours_value,
-                user.saturdayAvailability,
-                user::setSaturdayAvailability
-            )
-            setEditTextViewAndListener(
-                R.id.sunHours_value,
-                user.sundayAvailability,
-                user::setSundayAvailability
-            )
+            setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
+            setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
+            setCheckedBoxViewAndListener(R.id.wednesdayAvailability, user.wednesday_availability, "wednesday")
+            setCheckedBoxViewAndListener(R.id.thursdayAvailability, user.thursday_availability, "thursday")
+            setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
+            setCheckedBoxViewAndListener(R.id.saturdayAvailability, user.saturday_availability, "saturday")
+            setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
 
-            //convert gender to index
-            //findViewById<Spinner>(R.id.spinner).setSelection(vm.genderIndex.value ?: 0)
+
 
             user.image_uri?.let { uri ->
                 if (uri.isNotEmpty()) {
                     imageUri = uri.toUri()
-                    findViewById<ImageView>(R.id.profileImage_imageView).setImageURI(imageUri)
+                    view?.findViewById<ImageView>(R.id.profileImage_imageView)?.setImageURI(imageUri)
                 }
             }
 
-            skills.let { skillList ->
-                val expertList = skillList
-                    .filter { skill -> skill.skill_level == "Expert" }
-                    .joinToString(" - ") { skill -> skill.sportName }
-                val intermediateList = skillList
-                    .filter { skill -> skill.skill_level == "Intermediate" }
-                    .joinToString(" - ") { skill -> skill.sportName }
-                val beginnerList = skillList
-                    .filter { skill -> skill.skill_level == "Beginner" }
-                    .joinToString(" - ") { skill -> skill.sportName }
-
-                findViewById<TextView>(R.id.expertList).text = expertList
-                findViewById<TextView>(R.id.intermediateList).text = intermediateList
-                findViewById<TextView>(R.id.beginnerList).text = beginnerList
-            }
-
-            val spinner = findViewById<Spinner>(R.id.spinner)
+            val spinner = view?.findViewById<Spinner>(R.id.spinner)
             val arrayID = R.array.genderArray
             val array = resources.getStringArray(arrayID)
-            spinner.setSelection(array.indexOf(user.gender))
-            spinner.onItemSelectedListener =
+            spinner?.setSelection(array.indexOf(user.gender))
+            spinner?.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                     override fun onItemSelected(
@@ -325,28 +283,49 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
                         position: Int,
                         id: Long
                     ) {
-                        user.setGender(array[position])
+                        user.gender = array[position]
                     }
                 }
-        }*/
+        }
 
     }
 
-    private fun setEditTextViewAndListener(viewId: Int, value: String?, setter: (String) -> Unit) {
-        value?.let { setEditTextView(viewId, it) }
-        setOneListener(viewId, setter)
+    private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
+        val checkBox = view?.findViewById<CheckBox>(id)
+        checkBox ?.isChecked = availability
+        checkBox?.setOnCheckedChangeListener() { _, isChecked ->
+            setAvailability(attribute, isChecked)
+        }
+    }
+
+    private fun setAvailability(attribute: String, checked: Boolean) {
+        when(attribute){
+            "monday" -> vm.user.value?.monday_availability = checked
+            "tuesday" -> vm.user.value?.tuesday_availability = checked
+            "wednesday" -> vm.user.value?.wednesday_availability = checked
+            "thursday" -> vm.user.value?.thursday_availability = checked
+            "friday" -> vm.user.value?.friday_availability = checked
+            "saturday" -> vm.user.value?.saturday_availability = checked
+            "sunday" -> vm.user.value?.sunday_availability = checked
+        }
+
+    }
+
+    private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
+        setEditTextView(id, field)
+        setOneListener(id, attribute);
     }
 
     private fun setEditTextView(id: Int, field: String?) {
         field?.let { view?.findViewById<EditText>(id)?.setText(field) }
     }
 
-    private fun setOneListener(id: Int, setter: (String) -> Unit) {
+    private fun setOneListener(id: Int, attribute:String){
         view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setter(s.toString())
+                setValue(attribute, s.toString())
             }
         })
     }
