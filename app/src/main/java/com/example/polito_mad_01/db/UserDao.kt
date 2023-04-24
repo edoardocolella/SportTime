@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
-    @Query("SELECT * from user where user_id = :userId LIMIT 1")
-    fun getUserById(userId: Int): Flow<User>
+    @Query("SELECT * from user where user_id = :user_id")
+    fun getUserById(user_id: Int): Flow<User>
 
     @Query("SELECT * from user")
     fun getAllUsers(): Flow<List<User>>

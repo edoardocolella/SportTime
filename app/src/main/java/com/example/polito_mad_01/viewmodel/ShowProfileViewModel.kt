@@ -1,10 +1,12 @@
 package com.example.polito_mad_01.viewmodel
 
 import androidx.lifecycle.*
+import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.repositories.UserRepository
 
 class ShowProfileViewModel(private val userRepository:  UserRepository): ViewModel() {
-    fun getUser(id: Int)= userRepository.userById(id).asLiveData()
+    fun getUser(id: Int): LiveData<User> = userRepository.userById(id).asLiveData()
+
 }
 
 class ShowProfileViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

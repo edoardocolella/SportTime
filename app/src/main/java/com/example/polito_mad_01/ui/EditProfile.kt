@@ -21,12 +21,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.activities_legacy.ShowProfileActivity
+import com.example.polito_mad_01.viewmodel.*
 import java.util.*
 
 class EditProfile : Fragment(R.layout.fragment_edit_profile) {
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
+    }
 
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
@@ -225,14 +232,9 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setAllView() {
-        /*val userWithSkills = vm.getUserWithSkills(1)
-        userWithSkills.observe(this) {
-            vm.user.value = it
-            if (it == null) return@observe
-            val user = it.user
-            val skills = it.skills
+        /*vm.(1).observe(viewLifecycleOwner) { user ->
 
-            setEditTextViewAndListener(R.id.fullName_value, user.name, myUser.name)
+        setEditTextViewAndListener(R.id.fullName_value, user.name, myUser.name)
             //setEditTextViewAndListener(R.id.surname_value, user.surname, user::setSurname)
             setEditTextViewAndListener(R.id.nickName_value, user.nickname, user::setNickname)
             setEditTextViewAndListener(

@@ -55,6 +55,7 @@ class ShowProfileActivity : AppCompatActivity() {
 
     private fun setAllView() {
         vm.getUser(1).observe(this) { user ->
+            /*
             user.let {
                 setTextView(R.id.fullName_textView, it.name + " " + it.surname)
                 setTextView(R.id.nickName_textView, it.nickname)
@@ -72,6 +73,8 @@ class ShowProfileActivity : AppCompatActivity() {
                 setTextView(R.id.satHours_textView, it.saturday_availability.toString())
                 setTextView(R.id.sunHours_textView, it.sunday_availability.toString())
             }
+
+             */
 
             //set favourite sport
         }
