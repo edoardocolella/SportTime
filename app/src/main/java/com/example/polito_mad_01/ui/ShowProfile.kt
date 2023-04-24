@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.polito_mad_01.R
+import com.example.polito_mad_01.*
+import com.example.polito_mad_01.viewmodel.*
 
 class ShowProfile : Fragment(R.layout.fragment_profile) {
+
+    private val vm: ShowProfileViewModel by viewModels {
+        ShowProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,7 +31,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setAllView() {
-        /*vm.getUser(1).observe(this) { user ->
+        vm.getUser(1).observe(viewLifecycleOwner) { user ->
             user.let {
                 setTextView(R.id.fullName_textView, it.name + " " + it.surname)
                 setTextView(R.id.nickName_textView, it.nickname)
@@ -42,20 +48,23 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.friHours_textView, it.friday_availability.toString())
                 setTextView(R.id.satHours_textView, it.saturday_availability.toString())
                 setTextView(R.id.sunHours_textView, it.sunday_availability.toString())
-            }*/
+            }
 
             //set favourite sport
         }
+    }
 
 
     private fun setTextView(id: Int, field: String?) {
         field?.let { view?.findViewById<TextView>(id)?.text = field }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_show_profile, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
 
