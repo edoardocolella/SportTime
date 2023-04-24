@@ -1,5 +1,7 @@
 package com.example.polito_mad_01.activities
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -20,6 +22,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        ) {
+            val permission =
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            requestPermissions(permission, 112)
+        }
+
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -29,20 +39,17 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
-        //val navController = findNavController(R.id.fragmentContainerView)
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profilePage -> {
-                    navController.navigate(R.id.calendarFragment)
+                    navController.navigate(R.id.profileFragment)
                 }
-                R.id.calendarPage -> {
-                    navController.navigate(R.id.calendarFragment)
-                    Toast.makeText(this@MainActivity, "Second Item Clicked", Toast.LENGTH_SHORT).show()
+                R.id.reservationsPage -> {
+                    navController.navigate(R.id.reservationsFragment)
                 }
-                R.id.eventsPage -> {
-                    navController.navigate(R.id.calendarFragment)
-                    Toast.makeText(this@MainActivity, "third Item Clicked", Toast.LENGTH_SHORT).show()
+                R.id.browsePage -> {
+                    navController.navigate(R.id.browseFragment)
                 }
             }
             drawerLayout.closeDrawers()

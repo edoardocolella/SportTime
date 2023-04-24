@@ -3,16 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/reservationsFragment">
 
     <fragment
-        android:id="@+id/calendarFragment"
-        android:name="com.example.polito_mad_01.fragments.CalendarFragment"
-        android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" />
+        android:id="@+id/reservationsFragment"
+        android:name="com.example.polito_mad_01.fragments.ReservationsFragment"
+        android:label="fragment_reservations"
+        tools:layout="@layout/fragment_reservations" >
+        <action
+            android:id="@+id/action_reservationsFragment_to_showReservationFragment2"
+            app:destination="@id/showReservationFragment2" />
+        <action
+            android:id="@+id/action_reservationsFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
+        <action
+            android:id="@+id/action_reservationsFragment_to_browseFragment2"
+            app:destination="@id/browseFragment" />
+        <action
+            android:id="@+id/action_reservationsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.polito_mad_01.fragments.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        android:id="@+id/browseFragment"
+        android:name="com.example.polito_mad_01.fragments.BrowseFragment"
+        android:label="fragment_browse"
+        tools:layout="@layout/fragment_browse" >
+        <action
+            android:id="@+id/action_browseFragment_to_reservationsFragment"
+            app:destination="@id/reservationsFragment" />
+        <action
+            android:id="@+id/action_browseFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.polito_mad_01.fragments.EditProfileFragment"
+        android:label="fragment_edit_profile"
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editReservationFragment"
+        android:name="com.example.polito_mad_01.fragments.EditReservationFragment"
+        android:label="fragment_edit_reservation"
+        tools:layout="@layout/fragment_edit_reservation" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.polito_mad_01.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_reservationsFragment"
+            app:destination="@id/reservationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showReservationFragment2"
+        android:name="com.example.polito_mad_01.fragments.ShowReservationFragment"
+        android:label="fragment_show_reservation"
+        tools:layout="@layout/fragment_show_reservation" >
+        <action
+            android:id="@+id/action_showReservationFragment2_to_editReservationFragment"
+            app:destination="@id/editReservationFragment" />
+    </fragment>
 </navigation>

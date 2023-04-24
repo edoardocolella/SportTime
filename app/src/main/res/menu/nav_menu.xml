@@ -4,9 +4,9 @@
         android:id="@+id/profilePage"
         android:title="Profile" />
     <item
-        android:id="@+id/calendarPage"
-        android:title="Calendar" />
+        android:id="@+id/reservationsPage"
+        android:title="Reservations" />
     <item
-        android:id="@+id/eventsPage"
-        android:title="Events" />
+        android:id="@+id/browsePage"
+        android:title="Browse" />
 </menu>

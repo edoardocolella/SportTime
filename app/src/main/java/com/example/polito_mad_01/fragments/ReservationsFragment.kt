@@ -10,7 +10,7 @@ import com.stacktips.view.CustomCalendarView
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+class ReservationsFragment : Fragment(R.layout.fragment_reservations) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
