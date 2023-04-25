@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
+import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import java.util.*
 
@@ -171,9 +172,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             isNotValid()
             vm.updateUser()
             findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
-
-           // val i = Intent(this, ShowProfileActivity::class.java)
-          //  startActivity(i)
             true
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
@@ -236,70 +234,77 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private fun setAllView() {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
-            setEditTextViewAndListener(R.id.name, user.name, "name")
-            setEditTextViewAndListener(R.id.surname, user.surname, "surname")
-            setEditTextViewAndListener(R.id.nickName_value, user.nickname,     "nickname")
-            setEditTextViewAndListener(R.id.description_value, user.description, "description")
-            setEditTextViewAndListener(R.id.mail_value, user.email, "email")
-            setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
-            setEditTextViewAndListener(R.id.location_value, user.location, "location")
-            setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
 
-            setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
-            setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
-            setCheckedBoxViewAndListener(R.id.wednesdayAvailability, user.wednesday_availability, "wednesday")
-            setCheckedBoxViewAndListener(R.id.thursdayAvailability, user.thursday_availability, "thursday")
-            setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
-            setCheckedBoxViewAndListener(R.id.saturdayAvailability, user.saturday_availability, "saturday")
-            setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
+            setTextViews(user)
+            setCheckBox(user)
+
+            user.image_uri?.let {
+                if (it.isNotEmpty()) {
+                    imageUri = it.toUri()
+                    view?.findViewById<ImageView>(R.id.profileImage_imageView)
+                        ?.setImageURI(imageUri)}
+            }
+
+            setSpinners(user)
+        }
+
+    }
+
+    private fun setCheckBox(user: User) {
+        setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
+        setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
+        setCheckedBoxViewAndListener(R.id.wednesdayAvailability, user.wednesday_availability, "wednesday")
+        setCheckedBoxViewAndListener(R.id.thursdayAvailability, user.thursday_availability, "thursday")
+        setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
+        setCheckedBoxViewAndListener(R.id.saturdayAvailability, user.saturday_availability, "saturday")
+        setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
+    }
+
+    private fun setTextViews(user: User) {
+        setEditTextViewAndListener(R.id.name, user.name, "name")
+        setEditTextViewAndListener(R.id.surname, user.surname, "surname")
+        setEditTextViewAndListener(R.id.nickName_value, user.nickname,     "nickname")
+        setEditTextViewAndListener(R.id.description_value, user.description, "description")
+        setEditTextViewAndListener(R.id.mail_value, user.email, "email")
+        setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
+        setEditTextViewAndListener(R.id.location_value, user.location, "location")
+        setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
+    }
 
 
 
-            user.image_uri?.let { uri ->
-                if (uri.isNotEmpty()) {
-                    imageUri = uri.toUri()
-                    view?.findViewById<ImageView>(R.id.profileImage_imageView)?.setImageURI(imageUri)
+    private fun setSpinners(user: User) {
+        val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
+        val genderArray = resources.getStringArray(R.array.genderArray)
+        genderSpinner?.setSelection(genderArray.indexOf(user.gender))
+        genderSpinner?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    user.gender = genderArray[position]
                 }
             }
 
-            val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
-            val arrayID = R.array.genderArray
-            val array = resources.getStringArray(arrayID)
-            genderSpinner?.setSelection(array.indexOf(user.gender))
-            genderSpinner?.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        user.gender = array[position]
-                    }
+        val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
+        val sportArray = resources.getStringArray(R.array.sportArray)
+        sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
+        sportSpinner?.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    user.favouriteSport = sportArray[position]
                 }
-
-            val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
-            val sportArrayID = R.array.sportArray
-            val sportArray = resources.getStringArray(sportArrayID)
-            sportArray.map { println("TEST $it")}
-            println("TEST ${user.favouriteSport}")
-            println("TEST ${sportArray.indexOf(user.favouriteSport)}")
-            sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
-            sportSpinner?.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        user.favouriteSport = sportArray[position]
-                    }
-                }
-
-        }
+            }
 
     }
 

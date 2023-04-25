@@ -3,15 +3,7 @@ package com.example.polito_mad_01.db
 import androidx.room.*
 
 
-@Entity(tableName = "user",
-    foreignKeys = [
-        ForeignKey(
-            entity = Sport::class,
-            parentColumns = arrayOf("sport_name"),
-            childColumns = arrayOf("favouriteSport"),
-            onDelete = ForeignKey.CASCADE
-        )]
-)
+@Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "user_id")

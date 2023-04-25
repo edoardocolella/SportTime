@@ -11,7 +11,6 @@ import com.example.polito_mad_01.db.*
         PlaygroundExtra::class,
         Reservation::class,
         ReservationExtra::class,
-        Sport::class,
         User::class],
     version = 1
 )
@@ -39,6 +38,5 @@ abstract class SportTimeDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun playgroundDao(): PlaygroundDao
-    abstract fun sportDao(): SportDao
     abstract fun reservationDao(): ReservationDao
 }

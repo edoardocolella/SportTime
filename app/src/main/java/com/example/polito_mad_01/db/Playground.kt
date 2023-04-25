@@ -4,17 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(
-    tableName = "playground",
-    foreignKeys = [
-        ForeignKey(
-            entity = Sport::class,
-            parentColumns = arrayOf("sport_name"),
-            childColumns = arrayOf("sport_name"),
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
-)
+@Entity(tableName = "playground")
 data class Playground(
     @PrimaryKey(autoGenerate = true)
     val playground_id: Int = 0,
