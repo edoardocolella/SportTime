@@ -188,12 +188,13 @@
                             android:layout_weight="1"
                             android:textSize="30sp" />
 
-                        <Button
-                            android:id="@+id/skillButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/change" />
+                    <Spinner
+                        android:id="@+id/sportSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:entries="@array/sportArray"
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
 
                 <LinearLayout

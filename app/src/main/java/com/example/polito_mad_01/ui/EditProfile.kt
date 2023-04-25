@@ -1,11 +1,7 @@
 package com.example.polito_mad_01.ui
 
-import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.net.Uri
@@ -16,16 +12,12 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.activities_legacy.ShowProfileActivity
-import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import java.util.*
 
@@ -270,11 +262,11 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
                 }
             }
 
-            val spinner = view?.findViewById<Spinner>(R.id.spinner)
+            val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
             val arrayID = R.array.genderArray
             val array = resources.getStringArray(arrayID)
-            spinner?.setSelection(array.indexOf(user.gender))
-            spinner?.onItemSelectedListener =
+            genderSpinner?.setSelection(array.indexOf(user.gender))
+            genderSpinner?.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onNothingSelected(parent: AdapterView<*>?) {}
                     override fun onItemSelected(
@@ -286,6 +278,27 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
                         user.gender = array[position]
                     }
                 }
+
+            val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
+            val sportArrayID = R.array.sportArray
+            val sportArray = resources.getStringArray(sportArrayID)
+            sportArray.map { println("TEST $it")}
+            println("TEST ${user.favouriteSport}")
+            println("TEST ${sportArray.indexOf(user.favouriteSport)}")
+            sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
+            sportSpinner?.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        user.favouriteSport = sportArray[position]
+                    }
+                }
+
         }
 
     }

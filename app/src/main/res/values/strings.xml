@@ -39,6 +39,14 @@
         <item>Female</item>
         <item>Other</item>
     </string-array>
+    <string-array name="sportArray">
+        <item>Basket</item>
+        <item>Football</item>
+        <item>Ping Pong</item>
+        <item>Volley</item>
+    </string-array>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="surname">surname</string>
