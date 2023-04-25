@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="name"
+                android:padding="4dp"
                 android:hint="@string/name"
                 android:textAlignment="center"
                 android:textSize="24sp" />
@@ -65,6 +66,7 @@
                 android:id="@+id/surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="4dp"
                 android:layout_weight="1"
                 android:autofillHints="name"
                 android:hint="@string/surname"
@@ -93,6 +95,7 @@
                     android:inputType="text"
                     android:textAlignment="center"
                     android:textSize="24sp"
+                    android:padding="4dp"
                     android:textStyle="italic" />
 
 
@@ -107,6 +110,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="4dp"
                         android:text="@string/genderLabel"
                         android:textAlignment="center"
                         android:textSize="24sp"
@@ -117,6 +121,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="4dp"
                         android:entries="@array/genderArray"
                         android:scrollbarSize="4dp" />
                 </LinearLayout>
@@ -137,6 +142,7 @@
                         android:hint="@string/age"
                         android:importantForAutofill="no"
                         android:inputType="number"
+                        android:padding="4dp"
                         android:textAlignment="center"
                         android:textSize="24sp" />
 
@@ -146,6 +152,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:padding="4dp"
                         android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
@@ -164,6 +171,7 @@
                     android:hint="@string/description"
                     android:importantForAutofill="no"
                     android:inputType="text"
+                    android:padding="8dp"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -178,7 +186,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/sportsLabel"
                         android:layout_weight="1"
-                        android:textSize="30sp" />
+                        android:padding="4dp"
+                        android:textSize="24sp" />
 
                     <Spinner
                         android:id="@+id/sportSpinner"
@@ -193,6 +202,7 @@
                     android:id="@+id/availabilityLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -200,6 +210,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/availabilityLabel"
+                        android:padding="4dp"
                         android:textSize="30sp" />
 
                     <LinearLayout
@@ -212,6 +223,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/mondayLabel" />
 
                         <CheckBox
@@ -219,6 +231,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/tuesdayLabel" />
 
 
@@ -227,6 +240,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/wednesdayLabel" />
 
                         <CheckBox
@@ -234,6 +248,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/thursdayLabel" />
 
                     </LinearLayout>
@@ -248,6 +263,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/fridayLabel" />
 
                         <CheckBox
@@ -255,6 +271,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/saturdayLabel" />
 
 
@@ -263,12 +280,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:padding="4dp"
                             android:text="@string/sundayLabel" />
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:padding="4dp" />
 
                     </LinearLayout>
 
@@ -285,6 +304,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
+                        android:padding="4dp"
                         android:textSize="30sp" />
 
                     <LinearLayout
@@ -297,6 +317,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/emailLabel"
+                            android:padding="4dp"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -307,6 +328,7 @@
                             android:autofillHints="emailAddress"
                             android:inputType="textEmailAddress"
                             android:textAlignment="textEnd"
+                            android:padding="4dp"
                             android:textSize="18sp" />
                     </LinearLayout>
 
@@ -321,6 +343,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/phoneLabel"
                             android:textSize="18sp"
+                            android:padding="4dp"
                             android:textStyle="bold" />
 
                         <EditText
@@ -330,6 +353,7 @@
                             android:autofillHints="phone"
                             android:inputType="phone"
                             android:textAlignment="textEnd"
+                            android:padding="4dp"
                             android:textSize="18sp" />
                     </LinearLayout>
 

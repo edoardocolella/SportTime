@@ -33,7 +33,7 @@
             android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="4sp"
+            android:padding="4dp"
             android:text="@string/fullName"
             android:textAlignment="center"
             android:textSize="30sp" />
@@ -61,7 +61,7 @@
                         android:id="@+id/nickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/nickname"
                         android:textAlignment="center"
                         android:textSize="24sp"
@@ -81,7 +81,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:gravity="center_horizontal"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:text="@string/non_specified"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/face_48px" />
@@ -92,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:text="@string/birthdate"
                             android:textAlignment="viewStart"
                             android:textSize="18sp"
@@ -107,7 +107,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center_horizontal"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/location"
                         android:textSize="18sp"
                         app:drawableStartCompat="@drawable/home_pin_48px" />
@@ -116,7 +116,7 @@
                         android:id="@+id/description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/description"
                         android:textAlignment="center"
                         android:textSize="20sp" />
@@ -131,7 +131,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:text="@string/favourite_sport"
                             android:textAlignment="center"
                             android:textSize="20sp" />
@@ -142,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/non_specified"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="center"
                             android:textSize="20sp" />
 
@@ -161,7 +161,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/availabilityLabel"
                         android:textSize="26sp" />
 
@@ -305,7 +305,7 @@
                             android:id="@+id/emailLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:text="@string/emailLabel"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -314,7 +314,7 @@
                             android:id="@+id/email_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -330,7 +330,7 @@
                             android:id="@+id/phoneNumberLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:text="@string/phoneLabel"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -339,7 +339,7 @@
                             android:id="@+id/phoneNumber_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>

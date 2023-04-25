@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/fullName"
-            android:padding="4sp"
+            android:padding="4dp"
             android:textAlignment="center"
             android:textSize="38sp" />
 
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nickname"
                         android:textAlignment="center"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:textSize="24sp"
                         android:textStyle="italic" />
 
@@ -81,7 +81,7 @@
                             android:layout_marginEnd="16dp"
                             android:gravity="center_horizontal"
                             android:text="@string/non_specified"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/face_48px" />
 
@@ -92,7 +92,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:text="@string/birthdate"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="viewStart"
                             android:textSize="18sp"
                             app:drawableStartCompat="@drawable/cake_48px" />
@@ -108,7 +108,7 @@
                         android:gravity="center_horizontal"
                         android:text="@string/location"
                         android:textSize="18sp"
-                        android:padding="4sp"
+                        android:padding="4dp"
 
                         app:drawableStartCompat="@drawable/home_pin_48px" />
 
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/description"
                     android:textAlignment="center"
-                    android:padding="4sp"
+                    android:padding="4dp"
                     android:textSize="20sp" />
 
                 <LinearLayout
@@ -133,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/favourite_sport"
                         android:textAlignment="center"
                         android:textSize="20sp" />
@@ -143,7 +143,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:text="@string/non_specified"
                         android:textAlignment="center"
                         android:textSize="20sp" />
@@ -162,7 +162,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/availabilityLabel"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:textAlignment="center"
                         android:textSize="30sp" />
                     <LinearLayout
@@ -262,7 +262,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/contactsLabel"
-                        android:padding="4sp"
+                        android:padding="4dp"
                         android:textSize="30sp" />
 
                     <View
@@ -282,7 +282,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/emailLabel"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -290,7 +290,7 @@
                             android:id="@+id/email_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -305,7 +305,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/phoneLabel"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
@@ -313,7 +313,7 @@
                             android:id="@+id/phoneNumber_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="4sp"
+                            android:padding="4dp"
                             android:textAlignment="center"
                             android:textSize="18sp" />
                     </LinearLayout>

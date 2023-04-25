@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.ui
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
@@ -7,17 +8,18 @@ import android.net.ParseException
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
 import android.view.*
 import android.widget.*
+import android.content.ContentValues
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import java.util.*
@@ -45,10 +47,12 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setAllView()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_edit_profile, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> showExitDialog()
@@ -65,20 +69,17 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         menuInflater.inflate(R.menu.menu_picture, menu)
     }*/
 
-   /*
+
     private fun openCamera() {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        imageUri = activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         imageUriString = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        //startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
-
+        startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
-    */
-
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -111,7 +112,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
 
     private fun picture(): Boolean {
-        /*
         if (checkPermission()) {
             openCamera()
         } else
@@ -119,26 +119,19 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
                 "Notice",
                 R.string.cameraPermission.toString()
             )
-
-         */
         return true
     }
 
-
-    /*
     private fun checkPermission(): Boolean {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (activity?.let { ContextCompat.checkSelfPermission(it, Manifest.permission.CAMERA) }
             != PackageManager.PERMISSION_GRANTED
         ) return false
         return true
     }
 
-     */
-
-    /*
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
-            this,
+            requireActivity(),
             arrayOf(
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -147,15 +140,14 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             PERMISSION_REQUEST_CODE
         )
     }
-     */
 
-    /*
-    private fun Activity.showPermissionReasonAndRequest(title: String, message: String) {
-        AlertDialog.Builder(this)
+    private fun showPermissionReasonAndRequest(title: String, message: String) {
+        AlertDialog.Builder(activity)
             .setTitle(title).setMessage(message)
-            .setPositiveButton("OK") { _, _ -> requestPermission() }
-     */
-
+            .setPositiveButton("OK") { _, _ ->
+                requestPermission()
+            }
+    }
 
     private fun showExitDialog(): Boolean {
         AlertDialog.Builder(activity)
@@ -164,8 +156,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
-
-
 
     private fun trySaveData(): Boolean {
         return try {
@@ -178,7 +168,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             false
         }
     }
-
 
     private fun isNotValid() {
         val user = vm.user.value!!
@@ -206,8 +195,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         if (!regexPhone.matches(user.phoneNumber)) {
             throw Exception("Phone number should be a 10 digit number")
         }
-
-        //check favouriteSport
 
         imageUri?.let { user.image_uri = it.toString() }
 
@@ -311,7 +298,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
         val checkBox = view?.findViewById<CheckBox>(id)
         checkBox ?.isChecked = availability
-        checkBox?.setOnCheckedChangeListener() { _, isChecked ->
+        checkBox?.setOnCheckedChangeListener { _, isChecked ->
             setAvailability(attribute, isChecked)
         }
     }
@@ -331,7 +318,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
         setEditTextView(id, field)
-        setOneListener(id, attribute);
+        setOneListener(id, attribute)
     }
 
     private fun setEditTextView(id: Int, field: String?) {

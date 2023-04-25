@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/profilePage"
-        android:title="Profile" />
+        android:title="@string/profile" />
     <item
         android:id="@+id/reservationsPage"
-        android:title="Reservations" />
+        android:title="@string/reservations" />
     <item
         android:id="@+id/browsePage"
-        android:title="Browse" />
+        android:title="@string/browse" />
 </menu>
