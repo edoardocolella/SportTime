@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.viewmodel.*
 import java.util.*
 

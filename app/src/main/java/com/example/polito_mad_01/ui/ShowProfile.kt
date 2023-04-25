@@ -34,14 +34,15 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     private fun setAllView() {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
             user.let {
-                setTextView(R.id.fullName_textView, it.name + " " + it.surname)
-                setTextView(R.id.nickName_textView, it.nickname)
-                setTextView(R.id.description_textView, it.description)
-                setTextView(R.id.age_textView, it.birthdate)
-                setTextView(R.id.mail_textView, it.email)
-                setTextView(R.id.phoneNumber_textView, it.phoneNumber)
-                setTextView(R.id.gender_textView, it.gender)
-                setTextView(R.id.location_textView, it.location)
+                setTextView(R.id.fullname, it.name + " " + it.surname)
+                setTextView(R.id.nickname, it.nickname)
+                setTextView(R.id.description, it.description)
+                setTextView(R.id.birthdate, it.birthdate)
+                setTextView(R.id.email_text, it.email)
+                setTextView(R.id.phoneNumber_text, it.phoneNumber)
+                setTextView(R.id.gender, it.gender)
+                setTextView(R.id.location, it.location)
+                setTextView(R.id.favouriteSport_text, it.favouriteSport)
                 setCheckBox(R.id.mondayAvailability, it.monday_availability)
                 setCheckBox(R.id.tuesdayAvailability, it.tuesday_availability)
                 setCheckBox(R.id.wednesdayAvailability, it.wednesday_availability)
@@ -50,8 +51,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setCheckBox(R.id.saturdayAvailability, it.saturday_availability)
                 setCheckBox(R.id.sundayAvailability, it.sunday_availability)
             }
-
-            //set favourite sport
         }
     }
 

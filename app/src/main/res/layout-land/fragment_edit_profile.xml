@@ -24,17 +24,16 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:src="@drawable/face_48px"
+            app:civ_border_color="@color/columbia_blue"
+            app:civ_border_width="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/face_48px"
-            app:civ_border_color="@color/columbia_blue"
-            app:civ_border_width="4dp" />
+            app:srcCompat="@drawable/face_48px" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     <LinearLayout
@@ -56,27 +55,21 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autofillHints="name"
                 android:hint="@string/name"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:textSize="24sp"
-                android:layout_weight="1"
                 android:textAlignment="center"
-                />
+                android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/surname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:autofillHints="name"
                 android:hint="@string/surname"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:textSize="24sp"
-                android:layout_weight="1"
                 android:textAlignment="center"
-                />
+                android:textSize="24sp" />
         </LinearLayout>
 
         <ScrollView
@@ -85,123 +78,120 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp">
 
-        <LinearLayout
+            <LinearLayout
                 android:id="@+id/wrapperLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/nickName_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:importantForAutofill="no"
-                android:hint="@string/nickname"
-                android:inputType="text"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="italic" />
+                <EditText
+                    android:id="@+id/nickName_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/nickname"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:textStyle="italic" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:elevation="4dp"
-                    android:gravity="clip_horizontal|center_horizontal"
-                    android:orientation="vertical">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingStart="18dp"
-                        android:paddingEnd="18dp">
+                        android:text="@string/genderLabel"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:drawableLeftCompat="@drawable/face_48px" />
 
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/genderLabel"
-                            android:textAlignment="center"
-                            android:textSize="24sp"
-                            app:drawableLeftCompat="@drawable/face_48px" />
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:entries="@array/genderArray"
+                        android:scrollbarSize="4dp" />
+                </LinearLayout>
 
-                        <Spinner
-                            android:id="@+id/spinner"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:entries="@array/genderArray"
-                            android:scrollbarSize="4dp" />
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/profileLayout"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/birthday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:baselineAligned="false"
-                        android:gravity="center"
-                        android:textAlignment="center">
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/cake_48px"
+                        android:drawablePadding="8dp"
+                        android:hint="@string/age"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
 
-                        <EditText
-                            android:id="@+id/birthday"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/cake_48px"
-                            android:drawablePadding="8dp"
-                            android:hint="@string/age"
-                            android:importantForAutofill="no"
-                            android:inputType="number"
-                            android:paddingTop="8dp"
-                            android:paddingBottom="8dp"
-                            android:textAlignment="center"
-                            android:textSize="24sp" />
-
-                    </LinearLayout>
 
                     <EditText
                         android:id="@+id/location_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_weight="1"
                         android:drawableStart="@drawable/home_pin_48px"
                         android:drawablePadding="8dp"
                         android:gravity="center_horizontal"
                         android:hint="@string/location"
                         android:importantForAutofill="no"
                         android:inputType="text"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
                         android:textSize="24sp" />
 
                 </LinearLayout>
+
 
                 <EditText
                     android:id="@+id/description_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:hint="@string/description"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:textSize="20sp" />
 
                 <LinearLayout
+                    android:id="@+id/sportLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sportLabel_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sportsLabel"
+                        android:layout_weight="1"
+                        android:textSize="30sp" />
+
+                    <Button
+                        android:id="@+id/skillButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/change" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/availabilityLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -216,44 +206,34 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/mondayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mondayLabel"
-                        android:layout_weight="1"
-                        />
+                        <CheckBox
+                            android:id="@+id/mondayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/mondayLabel" />
 
-                    <CheckBox
-                        android:id="@+id/tuesdayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tuesdayLabel"
-                        android:layout_weight="1"
-                        />
+                        <CheckBox
+                            android:id="@+id/tuesdayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/tuesdayLabel" />
 
-                    </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        <CheckBox
+                            android:id="@+id/wednesdayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/wednesdayLabel" />
 
-                    <CheckBox
-                        android:id="@+id/wednesdayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/wednesdayLabel"
-                        android:layout_weight="1"
-                        />
-
-                    <CheckBox
-                        android:id="@+id/thursdayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/thursdayLabel"
-                        android:layout_weight="1"
-                        />
+                        <CheckBox
+                            android:id="@+id/thursdayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/thursdayLabel" />
 
                     </LinearLayout>
 
@@ -262,29 +242,34 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/fridayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/fridayLabel"
-                        android:layout_weight="1"
-                        />
+                        <CheckBox
+                            android:id="@+id/fridayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/fridayLabel" />
 
-                    <CheckBox
-                        android:id="@+id/saturdayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/saturdayLabel"
-                        android:layout_weight="1"
-                        />
+                        <CheckBox
+                            android:id="@+id/saturdayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/saturdayLabel" />
+
+
+                        <CheckBox
+                            android:id="@+id/sundayAvailability"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/sundayLabel" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
-
-                    <CheckBox
-                        android:id="@+id/sundayAvailability"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sundayLabel" />
 
                 </LinearLayout>
 
@@ -292,8 +277,6 @@
                     android:id="@+id/contactLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -322,8 +305,6 @@
                             android:layout_height="wrap_content"
                             android:autofillHints="emailAddress"
                             android:inputType="textEmailAddress"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
                             android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -347,8 +328,6 @@
                             android:layout_height="wrap_content"
                             android:autofillHints="phone"
                             android:inputType="phone"
-                            android:paddingTop="4dp"
-                            android:paddingBottom="4dp"
                             android:textAlignment="textEnd"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -356,7 +335,7 @@
 
                 </LinearLayout>
             </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
     </LinearLayout>
 
