@@ -23,9 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
         ) {
             val permission =
-                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                arrayOf(Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(permission, 112)
         }
 

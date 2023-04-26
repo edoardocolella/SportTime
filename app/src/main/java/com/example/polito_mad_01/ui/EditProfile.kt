@@ -2,7 +2,9 @@ package com.example.polito_mad_01.ui
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.net.Uri
@@ -11,8 +13,7 @@ import android.provider.MediaStore
 import android.text.*
 import android.view.*
 import android.widget.*
-import android.content.ContentValues
-import android.content.pm.PackageManager
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
+import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
 class EditProfile : Fragment(R.layout.fragment_edit_profile) {
@@ -38,12 +40,20 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private var imageUriString: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher
+            .addCallback(this) { showExitDialog() }
+            .isEnabled = true
+
+        val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
+        registerForContextMenu(imgButton)
+        imgButton.setOnClickListener { v -> v.showContextMenu() }
+
+        setHasOptionsMenu(true)
         setAllView()
     }
 
@@ -54,20 +64,19 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> showExitDialog()
-            R.id.action_save_profile -> trySaveData()
-            else -> super.onOptionsItemSelected(item)
+        if (item.itemId ==   R.id.action_save_profile)
+            return trySaveData()
+        return super.onOptionsItemSelected(item)
         }
-    }
 
-    /*override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
-        menuInflater.inflate(R.menu.menu_picture, menu)
-    }*/
+        requireActivity().menuInflater.inflate(R.menu.menu_picture, menu)
+        super.onCreateContextMenu(menu, v, menuInfo)
+    }
 
 
     private fun openCamera() {
@@ -129,6 +138,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         return true
     }
 
+
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
@@ -140,6 +150,8 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             PERMISSION_REQUEST_CODE
         )
     }
+
+
 
     private fun showPermissionReasonAndRequest(title: String, message: String) {
         AlertDialog.Builder(activity)
@@ -224,14 +236,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
             setTextViews(user)
             setCheckBox(user)
-
-            user.image_uri?.let {
-                if (it.isNotEmpty()) {
-                    imageUri = it.toUri()
-                    view?.findViewById<ImageView>(R.id.profileImage_imageView)
-                        ?.setImageURI(imageUri)}
-            }
-
+            setImage(user)
             setSpinners(user)
         }
 
@@ -257,8 +262,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
         setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
     }
-
-
 
     private fun setSpinners(user: User) {
         val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
@@ -333,5 +336,15 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
                 setValue(attribute, s.toString())
             }
         })
+    }
+
+    private fun setImage(user: User) {
+        try {
+            val uri = user.image_uri?.toUri()
+            val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
+            imageView?.setImageURI(uri)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
