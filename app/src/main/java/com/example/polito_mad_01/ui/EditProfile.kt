@@ -6,8 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
-import android.net.ParseException
-import android.net.Uri
+import android.net.*
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.*
@@ -36,11 +35,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
-
     private var imageUriString: String? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,10 +59,10 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId ==   R.id.action_save_profile)
+        if (item.itemId == R.id.action_save_profile)
             return trySaveData()
         return super.onOptionsItemSelected(item)
-        }
+    }
 
     override fun onCreateContextMenu(
         menu: ContextMenu,
@@ -83,7 +78,8 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        imageUri = activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        imageUri =
+            activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         imageUriString = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
@@ -121,13 +117,8 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
 
     private fun picture(): Boolean {
-        if (checkPermission()) {
-            openCamera()
-        } else
-            showPermissionReasonAndRequest(
-                "Notice",
-                R.string.cameraPermission.toString()
-            )
+        if (checkPermission()) openCamera()
+        else showPermissionReasonAndRequest()
         return true
     }
 
@@ -152,13 +143,11 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
 
-
-    private fun showPermissionReasonAndRequest(title: String, message: String) {
+    private fun showPermissionReasonAndRequest() {
         AlertDialog.Builder(activity)
-            .setTitle(title).setMessage(message)
-            .setPositiveButton("OK") { _, _ ->
-                requestPermission()
-            }
+            .setTitle("Notice")
+            .setMessage(R.string.cameraPermission.toString())
+            .setPositiveButton("OK") { _, _ -> requestPermission()}
     }
 
     private fun showExitDialog(): Boolean {
@@ -218,6 +207,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setValue(attribute: String, newValue: String) {
+        val value = vm.user.value
         when (attribute) {
             "name" -> vm.user.value?.name = newValue
             "surname" -> vm.user.value?.surname = newValue
@@ -245,17 +235,29 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private fun setCheckBox(user: User) {
         setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
         setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
-        setCheckedBoxViewAndListener(R.id.wednesdayAvailability, user.wednesday_availability, "wednesday")
-        setCheckedBoxViewAndListener(R.id.thursdayAvailability, user.thursday_availability, "thursday")
+        setCheckedBoxViewAndListener(
+            R.id.wednesdayAvailability,
+            user.wednesday_availability,
+            "wednesday"
+        )
+        setCheckedBoxViewAndListener(
+            R.id.thursdayAvailability,
+            user.thursday_availability,
+            "thursday"
+        )
         setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
-        setCheckedBoxViewAndListener(R.id.saturdayAvailability, user.saturday_availability, "saturday")
+        setCheckedBoxViewAndListener(
+            R.id.saturdayAvailability,
+            user.saturday_availability,
+            "saturday"
+        )
         setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
     }
 
     private fun setTextViews(user: User) {
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
-        setEditTextViewAndListener(R.id.nickName_value, user.nickname,     "nickname")
+        setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
         setEditTextViewAndListener(R.id.description_value, user.description, "description")
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
@@ -268,46 +270,25 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         val genderArray = resources.getStringArray(R.array.genderArray)
         genderSpinner?.setSelection(genderArray.indexOf(user.gender))
         genderSpinner?.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    user.gender = genderArray[position]
-                }
-            }
+            setSpinnerListener { user.gender = genderArray[it] }
 
         val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
         val sportArray = resources.getStringArray(R.array.sportArray)
         sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
         sportSpinner?.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    user.favouriteSport = sportArray[position]
-                }
-            }
-
+            setSpinnerListener { user.favouriteSport = sportArray[it] }
     }
 
     private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
         val checkBox = view?.findViewById<CheckBox>(id)
-        checkBox ?.isChecked = availability
+        checkBox?.isChecked = availability
         checkBox?.setOnCheckedChangeListener { _, isChecked ->
             setAvailability(attribute, isChecked)
         }
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {
-        when(attribute){
+        when (attribute) {
             "monday" -> vm.user.value?.monday_availability = checked
             "tuesday" -> vm.user.value?.tuesday_availability = checked
             "wednesday" -> vm.user.value?.wednesday_availability = checked
@@ -319,6 +300,20 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     }
 
+    private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
+        return object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                lambda(position)
+            }
+        }
+    }
+
     private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
         setEditTextView(id, field)
         setOneListener(id, attribute)
@@ -328,7 +323,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         field?.let { view?.findViewById<EditText>(id)?.setText(field) }
     }
 
-    private fun setOneListener(id: Int, attribute:String){
+    private fun setOneListener(id: Int, attribute: String) {
         view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -339,12 +334,13 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setImage(user: User) {
-        try {
+        /*try {
             val uri = user.image_uri?.toUri()
             val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
             imageView?.setImageURI(uri)
         } catch (e: Exception) {
             e.printStackTrace()
         }
+         */
     }
 }

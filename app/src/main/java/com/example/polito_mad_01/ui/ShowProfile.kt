@@ -59,6 +59,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setImage(user: User) {
+        /*
         try {
             val uri = user.image_uri?.toUri()
             val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
@@ -66,6 +67,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+         */
     }
 
     private fun setCheckBox(id: Int, field: Boolean) {
