@@ -24,7 +24,7 @@ class ShowProfileActivity : AppCompatActivity() {
         // calling the action bar
         val actionBar = supportActionBar
         actionBar?.let { it.title = "Profile" }
-        setContentView(R.layout.show_profile)
+        //setContentView(R.layout.show_profile)
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED

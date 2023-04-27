@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //custom calendar
-    implementation 'com.github.npanigrahy:Custom-Calendar-View:v1.1'
+    implementation 'com.kizitonwose.calendar:view:2.3.0'
 
     //navigation
     implementation 'androidx.fragment:fragment-ktx:1.5.6'
