@@ -13,13 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.adapters.ReservationAdapter
-import com.example.polito_mad_01.db.Reservation
+import com.example.polito_mad_01.db.Slot
 import com.example.polito_mad_01.ui.calendar.DayViewContainer
 import com.example.polito_mad_01.ui.calendar.MonthViewContainer
 import com.example.polito_mad_01.viewmodel.ReservationsViewModel
 import com.example.polito_mad_01.viewmodel.ReservationsViewModelFactory
-import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
-import com.example.polito_mad_01.viewmodel.ShowProfileViewModelFactory
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -49,11 +47,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         // p1
         setupList(view)
 
-        // p2
-        vm.getAllReservations().observe(viewLifecycleOwner) {
-            println(it.toString())
-        }
-
         // p3
         setupCalendar(view)
     }
@@ -64,9 +57,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         //Initialize data to be displayed
         // only list of reservation of selected date
-        val myData: List<Reservation> = listOf(
-            Reservation(0, 0, 1, "07/04/2023", "13", "16", 20.0),
-                    Reservation(0, 0, 1, "07/05/2023", "13", "16", 20.0)
+        val myData: List<Slot> = listOf(
+            Slot(0, 0, 1, "07/04/2023", "13", "16", 20.0, true),
+            Slot(0, 0, 1, "07/05/2023", "13", "16", 20.0, true)
         )
 
         //Show items as a simple linear list
