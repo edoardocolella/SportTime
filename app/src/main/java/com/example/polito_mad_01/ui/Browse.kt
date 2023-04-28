@@ -28,6 +28,7 @@ import com.example.polito_mad_01.viewmodel.ShowFreeSlotsViewModelFactory
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.toList
+import java.text.DateFormat
 import java.time.LocalDate
 
 class Browse : Fragment(R.layout.fragment_browse) {
@@ -54,8 +55,10 @@ class Browse : Fragment(R.layout.fragment_browse) {
         )
         spinner.adapter=adapter
 
-        vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner){
+        //vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner){
+        vm.getFreeSlots("2019-01-01").observe(viewLifecycleOwner){
             freeSlots = it
+            println(it)
         }
 
         spinner.onItemSelectedListener = object : OnItemSelectedListener {
