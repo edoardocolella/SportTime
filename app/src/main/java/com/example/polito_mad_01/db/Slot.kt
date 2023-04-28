@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "reservation",
+@Entity(tableName = "slot",
     foreignKeys = [
         ForeignKey(
             entity = User::class,
@@ -20,13 +20,14 @@ import androidx.room.PrimaryKey
         )
     ])
 
-data class Reservation(
+data class Slot(
     @PrimaryKey(autoGenerate = true)
-    val reservation_id: Int = 0,
+    val slot_id: Int = 0,
     val playground_id: Int,
     val user_id: Int,
     val date: String,
     val start_time: String,
     val end_time: String,
     val total_price: Double,
+    val is_reserved: Boolean,
     )
