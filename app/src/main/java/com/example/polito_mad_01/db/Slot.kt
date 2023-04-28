@@ -19,7 +19,11 @@ data class Slot(
     val date: String,
     val start_time: String,
     val end_time: String,
-    val total_price: Double
+    val total_price: Double,
+    val lighting: Boolean,
+    val heating: Boolean,
+    val equipment: Boolean,
+    val locker_room: Boolean
     )
 
 data class SlotWithPlayground(
@@ -29,3 +33,6 @@ data class SlotWithPlayground(
         entityColumn = "playground_id"
     )
     val playground: Playground)
+
+
+

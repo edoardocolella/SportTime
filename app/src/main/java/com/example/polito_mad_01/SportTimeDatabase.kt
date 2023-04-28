@@ -12,7 +12,6 @@ import com.example.polito_mad_01.db.*
         Playground::class,
         PlaygroundExtra::class,
         Slot::class,
-        ReservationExtra::class,
         User::class],
     version = 1,
     exportSchema = true
@@ -30,7 +29,6 @@ abstract class SportTimeDatabase : RoomDatabase() {
                         SportTimeDatabase::class.java,
                         "sport_time.db"
                     )
-                        //.addCallback(SportTimeDatabaseCallback(scope))
                         .createFromAsset("database/sport_time.db")
                         .build()
                 INSTANCE = i

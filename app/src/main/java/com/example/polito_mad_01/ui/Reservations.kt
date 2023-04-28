@@ -108,8 +108,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 container.day = data
 
                 vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
-                    val formattedDate = data.date.format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
-
+                    val formattedDate = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    println("formattedDate: $formattedDate")
+                    println(list)
                     if(list.map { it.slot.date }.contains(formattedDate)){
                         container.showBadge()
                     }
@@ -143,7 +144,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
 
-                            val dateString = selectedDate!!.format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
+                            val dateString = selectedDate!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
                             val datedList = reservationMap[dateString]
 
 
