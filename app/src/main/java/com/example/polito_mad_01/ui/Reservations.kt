@@ -8,12 +8,14 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.adapters.ReservationAdapter
 import com.example.polito_mad_01.db.Slot
+import com.example.polito_mad_01.db.SlotWithPlayground
 import com.example.polito_mad_01.ui.calendar.DayViewContainer
 import com.example.polito_mad_01.ui.calendar.MonthViewContainer
 import com.example.polito_mad_01.viewmodel.ReservationsViewModel
@@ -25,14 +27,21 @@ import com.kizitonwose.calendar.core.daysOfWeek
 import com.kizitonwose.calendar.view.CalendarView
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
+import java.text.DateFormatSymbols
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
+import kotlin.collections.HashMap
 
 class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
+
+    lateinit var recyclerView: RecyclerView
+
+    private var reservationMap : MutableMap<String, List<SlotWithPlayground>> = mutableMapOf()
 
     // TODO: Today button, arrow button for months, padding, text color changes, badge on top, list of events for each day
 
@@ -44,6 +53,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        reservationMap = mutableMapOf()
+
+        recyclerView = view.findViewById(R.id.reservationList)
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+
         // p1
         setupList(view)
 
@@ -53,14 +67,13 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
 
     fun setupList(view: View){
-        val recyclerView: RecyclerView = view.findViewById(R.id.reservationList)
-
-        //Initialize data to be displayed
-        // only list of reservation of selected date
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-
         vm.getUserReservations(1).observe(viewLifecycleOwner){ list ->
-                recyclerView.adapter = ReservationAdapter(list)
+            list.forEach {
+                val date = it.slot.date
+                val reservations = reservationMap.getOrDefault(date, listOf())
+
+                reservationMap[date] = reservations.plus(it)
+            }
         }
 
         // TODO: move in onlcick
@@ -91,9 +104,17 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             override fun bind(container: DayViewContainer, data: CalendarDay) {
                 val textView = container.textView
 
-                // TODO: LocalMonth
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
+
+                vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
+                    val formattedDate = data.date.format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
+
+                    if(list.map { it.slot.date }.contains(formattedDate)){
+                        container.showBadge()
+                    }
+
+                }
 
                 // Hide days of other months
                 if (data.position != DayPosition.MonthDate) {
@@ -117,11 +138,16 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             calendarView.notifyDateChanged(currentSelection)
 
                             // TODO: set recyclerview list empty
+                            recyclerView.adapter = ReservationAdapter(listOf(), findNavController())
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
 
-                            // TODO: set recyclerview list to only events with date
+                            val dateString = selectedDate!!.format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
+                            val datedList = reservationMap[dateString]
+
+
+                            recyclerView.adapter = ReservationAdapter(datedList?: listOf(), findNavController())
 
                             if (currentSelection != null) {
                                 calendarView.notifyDateChanged(currentSelection)
@@ -137,7 +163,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, data: CalendarMonth) {
 
-                container.monthTextView.text = data.yearMonth.month.toString()
+                // TODO: LocalMonth
+                container.monthTextView.text = DateFormatSymbols().months[data.yearMonth.monthValue-1]
                 container.weekDaysContainer.children.map { it as TextView }
                     .forEachIndexed { index, textView ->
                         val dayOfWeek = daysOfWeek[index]

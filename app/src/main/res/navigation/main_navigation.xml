@@ -13,28 +13,12 @@
         <action
             android:id="@+id/action_reservationsFragment_to_showReservationFragment2"
             app:destination="@id/showReservationFragment2" />
-        <action
-            android:id="@+id/action_reservationsFragment_to_browseFragment"
-            app:destination="@id/browseFragment" />
-        <action
-            android:id="@+id/action_reservationsFragment_to_browseFragment2"
-            app:destination="@id/browseFragment" />
-        <action
-            android:id="@+id/action_reservationsFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
         android:name="com.example.polito_mad_01.ui.Browse"
         android:label="fragment_browse"
-        tools:layout="@layout/fragment_browse" >
-        <action
-            android:id="@+id/action_browseFragment_to_reservationsFragment"
-            app:destination="@id/reservationsFragment" />
-        <action
-            android:id="@+id/action_browseFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_browse" />
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.polito_mad_01.ui.EditProfile"
@@ -48,7 +32,11 @@
         android:id="@+id/editReservationFragment"
         android:name="com.example.polito_mad_01.ui.EditReservation"
         android:label="fragment_edit_reservation"
-        tools:layout="@layout/fragment_edit_reservation" />
+        tools:layout="@layout/fragment_edit_reservation" >
+        <action
+            android:id="@+id/action_editReservationFragment_to_showReservationFragment2"
+            app:destination="@id/showReservationFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.polito_mad_01.ui.ShowProfile"
@@ -57,12 +45,6 @@
         <action
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_browseFragment"
-            app:destination="@id/browseFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_reservationsFragment"
-            app:destination="@id/reservationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/showReservationFragment2"
@@ -72,5 +54,19 @@
         <action
             android:id="@+id/action_showReservationFragment2_to_editReservationFragment"
             app:destination="@id/editReservationFragment" />
+        <action
+            android:id="@+id/action_showReservationFragment2_to_reservationsFragment"
+            app:destination="@id/reservationsFragment" />
+    </fragment>
+    <fragment android:id="@+id/placeholder" >
+        <action
+            android:id="@+id/action_placeholder_to_reservationsFragment"
+            app:destination="@id/reservationsFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_browseFragment"
+            app:destination="@id/browseFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

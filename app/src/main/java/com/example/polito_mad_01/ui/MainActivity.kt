@@ -44,13 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.profilePage -> {
+                R.id.action_placeholder_to_profileFragment -> {
                     navController.navigate(R.id.profileFragment)
                 }
-                R.id.reservationsPage -> {
+                R.id.action_placeholder_to_reservationsFragment -> {
                     navController.navigate(R.id.reservationsFragment)
                 }
-                R.id.browsePage -> {
+                R.id.action_placeholder_to_browseFragment -> {
                     navController.navigate(R.id.browseFragment)
                 }
             }
