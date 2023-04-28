@@ -1,8 +1,6 @@
 package com.example.polito_mad_01.db
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "slot",
     foreignKeys = [
@@ -30,4 +28,14 @@ data class Slot(
     val end_time: String,
     val total_price: Double,
     val is_reserved: Boolean,
+    )
+
+
+@Entity
+data class SlotWithPlayground(
+    @Embedded val slot: Slot,
+    @Relation(
+        parentColumn = "playground_id",
+        entityColumn = "playground_id")
+    val playground: Playground
     )
