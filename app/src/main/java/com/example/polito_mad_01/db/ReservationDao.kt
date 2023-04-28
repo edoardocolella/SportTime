@@ -21,5 +21,9 @@ interface ReservationDao {
             "and date > :date")
     fun getFreeSlots(sport_name:String, date:String): Flow<List<SlotWithPlayground>>
 */
+
+    @Query("DELETE * from slot WHERE slot_id = :slot_id")
+    fun deleteSlot(slot_id: Int) : Int
+
 }
 
