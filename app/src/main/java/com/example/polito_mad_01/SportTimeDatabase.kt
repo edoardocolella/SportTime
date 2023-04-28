@@ -9,7 +9,7 @@ import com.example.polito_mad_01.db.*
     entities = [
         Playground::class,
         PlaygroundExtra::class,
-        Reservation::class,
+        Slot::class,
         ReservationExtra::class,
         User::class],
     version = 1

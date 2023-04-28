@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
     tableName = "reservation_extra",
     foreignKeys = [
         ForeignKey(
-            entity = Reservation::class,
-            parentColumns = arrayOf("reservation_id"),
-            childColumns = arrayOf("reservation_id"),
+            entity = Slot::class,
+            parentColumns = arrayOf("slot_id"),
+            childColumns = arrayOf("slot_id"),
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
@@ -25,5 +25,5 @@ data class ReservationExtra(
     @PrimaryKey(autoGenerate = true)
     val reservation_extra_id: Int = 0,
     val extra_id: Int,
-    val reservation_id: Int,
+    val slot_id: Int,
     )

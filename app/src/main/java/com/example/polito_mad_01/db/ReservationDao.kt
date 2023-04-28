@@ -5,11 +5,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReservationDao {
-    @Query("SELECT * from reservation")
-    fun getAllReservations(): Flow<List<Reservation>>
+    @Query("SELECT * from slot")
+    fun getAllReservations(): Flow<List<Slot>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addReservation(reservation: Reservation)
+    @Query("SELECT * from slot where user_id = :user_id and is_reserved = true")
+    fun getReservationByUserId(user_id: Int): Flow<List<Slot>>
+    
 
 }
 
