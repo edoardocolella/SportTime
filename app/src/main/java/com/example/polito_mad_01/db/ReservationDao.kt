@@ -25,5 +25,8 @@ interface ReservationDao {
     @Query("DELETE * from slot WHERE slot_id = :slot_id")
     fun deleteSlot(slot_id: Int) : Int
 
+    @Query("SELECT * from slot WHERE slot.slot_id = :slot_id")
+    fun getReservationById(slot_id: Int): Flow<SlotWithPlayground>
+
 }
 
