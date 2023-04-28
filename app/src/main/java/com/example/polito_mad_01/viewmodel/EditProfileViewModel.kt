@@ -1,32 +1,34 @@
 package com.example.polito_mad_01.viewmodel
 
 import androidx.lifecycle.*
-import com.example.polito_mad_01.model.UserWithSkills
+import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.repositories.UserRepository
 import kotlin.concurrent.thread
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    fun getUserWithSkills(id: Int): LiveData<UserWithSkills> {
-        return userRepository.userWithSkillsById(id).asLiveData()
+    var user: LiveData<User> = MutableLiveData()
+
+    private val loaded = MutableLiveData<Boolean>(false)
+
+    fun getUser(userId: Int): LiveData<User>{
+        if (loaded.value == false) {
+            user = userRepository.userById(userId).asLiveData()
+            loaded.value = true
+            return user;
+        }
+        return user;
     }
-
-    var user: MutableLiveData<UserWithSkills> = MutableLiveData()
-    val expertList: MutableLiveData<String> = MutableLiveData()
-    val intermediateList: MutableLiveData<String> = MutableLiveData()
-    val beginnerList: MutableLiveData<String> = MutableLiveData()
-
 
     fun updateUser() {
-        user.value?.let {
-            thread {
-                userRepository.updateUser(it.user)
-                userRepository.deleteSkills(it.user.userId)
-                userRepository.insertAllSkills(it.skills)
-            }
+        thread {
+            user.value?.let { userRepository.updateUser(it) }
         }
     }
+
+
 }
+
 
 class EditProfileViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.Factory {
