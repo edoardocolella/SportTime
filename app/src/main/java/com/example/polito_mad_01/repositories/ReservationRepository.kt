@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 class ReservationRepository(private val reservationDao: ReservationDao) {
 
-    val reservations: Flow<List<Slot>> = reservationDao.getAllReservations()
+    fun getAllReservations(): Flow<List<Slot>> = reservationDao.getAllReservations()
 
-/*    fun getReservationByUserId(userID: Int) : Flow<List<SlotWithPlayground>> {
+fun getReservationByUserId(userID: Int) : Flow<List<SlotWithPlayground>> {
         return reservationDao.getReservationByUserId(userID)
-    }*/
+    }
 }

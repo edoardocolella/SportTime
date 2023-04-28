@@ -1,8 +1,6 @@
 package com.example.polito_mad_01.db
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "playground")
 data class Playground(

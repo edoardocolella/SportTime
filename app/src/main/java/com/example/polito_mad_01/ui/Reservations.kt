@@ -57,28 +57,16 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         //Initialize data to be displayed
         // only list of reservation of selected date
-        val myData: List<Slot> = listOf(
-            Slot(0, 0, 1, "07/04/2023", "13", "16", 20.0, true),
-            Slot(0, 0, 1, "07/05/2023", "13", "16", 20.0, true)
-        )
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
 
-        //         vm.getUserReservations(1).observe(viewLifecycleOwner) {
-        //        }
-
-        // set global map date -> list of slots
-
-        vm.getAllReservations().observe(viewLifecycleOwner){ list ->
-            list.forEach {
-                println("test")
-            }
+        vm.getUserReservations(1).observe(viewLifecycleOwner){ list ->
+                recyclerView.adapter = ReservationAdapter(list)
         }
 
         // TODO: move in onlcick
         //Show items as a simple linear list
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
 
         //Populate recyclerView with data
-        recyclerView.adapter = ReservationAdapter(myData)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

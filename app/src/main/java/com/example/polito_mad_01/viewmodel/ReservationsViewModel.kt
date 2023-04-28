@@ -9,13 +9,13 @@ import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
 
-/*    fun getUserReservations(userID: Int) : LiveData<List<SlotWithPlayground>> {
+   fun getUserReservations(userID: Int) : LiveData<List<SlotWithPlayground>> {
         return reservationsRepository.getReservationByUserId(userID).asLiveData()
-    }*/
+    }
 
 
     fun getAllReservations() : LiveData<List<Slot>>{
-        return reservationsRepository.reservations.asLiveData()
+        return reservationsRepository.getAllReservations().asLiveData()
     }
 }
 

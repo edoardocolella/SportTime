@@ -11,7 +11,6 @@ import androidx.room.*
             onDelete = ForeignKey.CASCADE
         )
     ])
-
 data class Slot(
     @PrimaryKey(autoGenerate = true)
     val slot_id: Int = 0,
@@ -20,17 +19,13 @@ data class Slot(
     val date: String,
     val start_time: String,
     val end_time: String,
-    val total_price: Double,
-    val is_reserved: Boolean,
+    val total_price: Double
     )
 
-
-/*
 data class SlotWithPlayground(
     @Embedded val slot: Slot,
     @Relation(
         parentColumn = "playground_id",
-        entityColumn = "playground_id")
-    val playground: Playground
+        entityColumn = "playground_id"
     )
-*/
+    val playground: Playground)
