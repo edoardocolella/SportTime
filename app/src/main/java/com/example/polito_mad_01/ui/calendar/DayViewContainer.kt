@@ -10,5 +10,10 @@ import java.time.LocalDate
 
 class DayViewContainer(view: View) : ViewContainer(view){
     val textView: TextView = view.findViewById(R.id.calendarDayText)
+
     lateinit var day: CalendarDay
+
+    fun showBadge(){
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,R.drawable.calendar_badge)
+    }
 }
