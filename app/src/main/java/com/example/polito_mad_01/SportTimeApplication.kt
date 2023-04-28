@@ -1,6 +1,7 @@
 package com.example.polito_mad_01
 
 import android.app.Application
+import com.example.polito_mad_01.repositories.ReservationRepository
 import com.example.polito_mad_01.repositories.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -10,4 +11,5 @@ class SportTimeApplication : Application() {
     // rather than when the application starts
     private val database by lazy { SportTimeDatabase.getDatabase(this) }
     val userRepository by lazy { UserRepository(database.userDao()) }
+    val reservationRepository by lazy { ReservationRepository(database.reservationDao()) }
 }
