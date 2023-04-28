@@ -40,6 +40,7 @@
         <item>Other</item>
     </string-array>
     <string-array name="sportArray">
+        <item>Choose a sport</item>
         <item>Basket</item>
         <item>Football</item>
         <item>Ping Pong</item>
