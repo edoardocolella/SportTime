@@ -207,7 +207,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setValue(attribute: String, newValue: String) {
-        val value = vm.user.value
         when (attribute) {
             "name" -> vm.user.value?.name = newValue
             "surname" -> vm.user.value?.surname = newValue

@@ -20,10 +20,10 @@ data class Slot(
     val start_time: String,
     val end_time: String,
     val total_price: Double,
-    val lighting: Boolean,
-    val heating: Boolean,
-    val equipment: Boolean,
-    val locker_room: Boolean
+    var lighting: Boolean,
+    var heating: Boolean,
+    var equipment: Boolean,
+    var locker_room: Boolean
     )
 
 data class SlotWithPlayground(
