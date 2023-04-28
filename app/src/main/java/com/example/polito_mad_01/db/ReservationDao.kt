@@ -10,7 +10,6 @@ interface ReservationDao {
 
     @Query("SELECT * from slot where user_id = :user_id and is_reserved = true")
     fun getReservationByUserId(user_id: Int): Flow<List<Slot>>
-    
 
 }
 
