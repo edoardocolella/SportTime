@@ -109,8 +109,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
                 vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
                     val formattedDate = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    println("formattedDate: $formattedDate")
-                    println(list)
                     if(list.map { it.slot.date }.contains(formattedDate)){
                         container.showBadge()
                     }
@@ -137,8 +135,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             // If the user clicks the same date, clear selection.
                             selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
-
-                            // TODO: set recyclerview list empty
                             recyclerView.adapter = ReservationAdapter(listOf(), findNavController())
                         } else {
                             selectedDate = container.day.date

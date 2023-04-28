@@ -9,6 +9,6 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.playgroundName).text = savedInstanceState?.getString("test").toString()
+        view.findViewById<TextView>(R.id.playgroundName).text = requireArguments().getInt("slotID").toString()
     }
 }

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
@@ -30,28 +30,33 @@ class ReservationAdapter(val data:List<SlotWithPlayground>, val navController: N
 
 
     class ReservationViewHolder(view: View, val navController: NavController) : RecyclerView.ViewHolder(view) {
-        val playgroundName : TextView = view.findViewById(R.id.reservationPlayground)
-        val reservationItem : View = view.findViewById(R.id.reservationItem)
+        private val playgroundName : TextView = view.findViewById(R.id.reservationPlayground)
+        private val slotDate : TextView = view.findViewById(R.id.reservationDate)
+        private val slotTime : TextView = view.findViewById(R.id.reservationTime)
+        private val sportImage : ImageView = view.findViewById(R.id.reservationSportImage)
+
+        private val reservationItem : View = view.findViewById(R.id.reservationItem)
 
         fun bind(r: SlotWithPlayground) {
-
-            reservationItem.setOnClickListener {
-                val b : Bundle = bundleOf(
-                    "reservationID" to r.slot.slot_id
-                )
-                b.putString("test", "test")
-                navController.navigate(R.id.action_reservationsFragment_to_showReservationFragment2, b)
-            }
-
             val slot = r.slot
             val playground = r.playground
 
+            reservationItem.setOnClickListener {
+                navController.navigate(R.id.action_reservationsFragment_to_showReservationFragment, bundleOf(
+                    "slotID" to slot.slot_id
+                ))
+            }
+
             playgroundName.text = playground.name
-
-
-/*            name.text = u.text
-            address.text = u.address
-            icon.load(u.iconURL) //this requires library COIL*/
+            slotDate.text = slot.date
+            slotTime.text = slot.start_time + " - " + slot.end_time
+            sportImage.setImageResource(when(playground.sport_name){
+                "Football" -> R.drawable.sports_soccer_48px
+                "Volley" -> R.drawable.sports_volleyball_48px
+                "Ping Pong" -> R.drawable.sports_tennis_48px
+                "Basket" -> R.drawable.sports_basketball_48px
+                else -> R.drawable.selection_background
+            })
         }
     }
 }
