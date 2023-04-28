@@ -12,7 +12,6 @@ import android.widget.ListAdapter
 import android.widget.Spinner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.Reservation
 import com.example.polito_mad_01.db.Slot
 
 class Browse : Fragment(R.layout.fragment_browse) {
@@ -47,11 +46,11 @@ class Browse : Fragment(R.layout.fragment_browse) {
     }
 }
 
-class FreeSlotAdapter(val data:List<Slot>): RecyclerView.Adapter<FreeSlotAdapter.>(){
+class FreeSlotAdapter(val data:List<Slot>): RecyclerView.Adapter<FreeSlotAdapter.FreeSlotHolder>(){
     override fun getItemCount() = data.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int){
-        val v = LayoutInflater.from(parent.context).inflate(R.layout. ,parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FreeSlotHolder{
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.reservation_item_layout ,parent, false)
         return FreeSlotHolder(v)
     }
 
