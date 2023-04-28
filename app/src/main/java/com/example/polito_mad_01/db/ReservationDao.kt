@@ -8,9 +8,18 @@ interface ReservationDao {
     @Query("SELECT * from slot")
     fun getAllReservations(): Flow<List<Slot>>
 
-    @Query("SELECT * from slot where user_id = :user_id and is_reserved = true")
-    fun getReservationByUserId(user_id: Int): Flow<List<Slot>>
-    
+    /*@Transaction
+    @Query("SELECT * from slot WHERE slot.user_id = :user_id")
+    fun getReservationByUserId(user_id: Int): Flow<List<SlotWithPlayground>>
 
+    *//** @param date format: yyyy-MM-dd*//*
+    @Transaction
+    @Query("SELECT * from slot " +
+            "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
+            "where is_reserved = false " +
+            "and sport_name = :sport_name " +
+            "and date > :date")
+    fun getFreeSlots(sport_name:String, date:String): Flow<List<SlotWithPlayground>>
+*/
 }
 

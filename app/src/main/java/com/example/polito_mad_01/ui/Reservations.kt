@@ -67,6 +67,13 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         // set global map date -> list of slots
 
+        vm.getAllReservations().observe(viewLifecycleOwner){ list ->
+            list.forEach {
+                println("test")
+            }
+        }
+
+        // TODO: move in onlcick
         //Show items as a simple linear list
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
