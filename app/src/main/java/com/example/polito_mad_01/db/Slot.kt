@@ -5,37 +5,27 @@ import androidx.room.*
 @Entity(tableName = "slot",
     foreignKeys = [
         ForeignKey(
-            entity = User::class,
-            parentColumns = arrayOf("user_id"),
-            childColumns = arrayOf("user_id"),
-            onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
             entity = Playground::class,
             parentColumns = arrayOf("playground_id"),
             childColumns = arrayOf("playground_id"),
             onDelete = ForeignKey.CASCADE
         )
     ])
-
 data class Slot(
     @PrimaryKey(autoGenerate = true)
     val slot_id: Int = 0,
     val playground_id: Int,
-    val user_id: Int,
+    val user_id: Int?,
     val date: String,
     val start_time: String,
     val end_time: String,
-    val total_price: Double,
-    val is_reserved: Boolean,
+    val total_price: Double
     )
 
-
-@Entity
 data class SlotWithPlayground(
     @Embedded val slot: Slot,
     @Relation(
         parentColumn = "playground_id",
-        entityColumn = "playground_id")
-    val playground: Playground
+        entityColumn = "playground_id"
     )
+    val playground: Playground)

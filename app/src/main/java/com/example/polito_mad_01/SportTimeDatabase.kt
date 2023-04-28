@@ -2,6 +2,8 @@ package com.example.polito_mad_01
 
 import android.content.Context
 import androidx.room.*
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.polito_mad_01.db.*
 
 
@@ -12,7 +14,8 @@ import com.example.polito_mad_01.db.*
         Slot::class,
         ReservationExtra::class,
         User::class],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 abstract class SportTimeDatabase : RoomDatabase() {
 

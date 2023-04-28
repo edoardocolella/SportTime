@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.db.*
 
-class ReservationAdapter(val data:List<Slot>) :
+class ReservationAdapter(val data:List<SlotWithPlayground>) :
     RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>(){
 
     override fun getItemCount() = data.size
@@ -28,7 +28,13 @@ class ReservationAdapter(val data:List<Slot>) :
 /*        val name: TextView = v.findViewById(R.id.name)
         val address: TextView = v.findViewById(R.id.address)
         val icon: ImageView = v.findViewById(R.id.icon)*/
-        fun bind(r: Slot) {
+
+        fun bind(r: SlotWithPlayground) {
+            val slot = r.slot
+            val playground = r.playground
+
+
+
 /*            name.text = u.text
             address.text = u.address
             icon.load(u.iconURL) //this requires library COIL*/
