@@ -29,7 +29,7 @@ class ReservationAdapter(val data:List<SlotWithPlayground>, val navController: N
     }
 
 
-    class ReservationViewHolder(view: View, val navController: NavController) : RecyclerView.ViewHolder(view) {
+    class ReservationViewHolder(view: View, private val navController: NavController) : RecyclerView.ViewHolder(view) {
         private val playgroundName : TextView = view.findViewById(R.id.reservationPlayground)
         private val slotDate : TextView = view.findViewById(R.id.reservationDate)
         private val slotTime : TextView = view.findViewById(R.id.reservationTime)

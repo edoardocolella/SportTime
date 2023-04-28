@@ -20,10 +20,7 @@ import com.example.polito_mad_01.ui.calendar.DayViewContainer
 import com.example.polito_mad_01.ui.calendar.MonthViewContainer
 import com.example.polito_mad_01.viewmodel.ReservationsViewModel
 import com.example.polito_mad_01.viewmodel.ReservationsViewModelFactory
-import com.kizitonwose.calendar.core.CalendarDay
-import com.kizitonwose.calendar.core.CalendarMonth
-import com.kizitonwose.calendar.core.DayPosition
-import com.kizitonwose.calendar.core.daysOfWeek
+import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.CalendarView
 import com.kizitonwose.calendar.view.MonthDayBinder
 import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
@@ -54,6 +51,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         super.onViewCreated(view, savedInstanceState)
 
         reservationMap = mutableMapOf()
+        selectedDate = null
 
         recyclerView = view.findViewById(R.id.reservationList)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
@@ -75,11 +73,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 reservationMap[date] = reservations.plus(it)
             }
         }
-
-        // TODO: move in onlcick
-        //Show items as a simple linear list
-
-        //Populate recyclerView with data
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -109,7 +102,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
                 vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
                     val formattedDate = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    if(list.map { it.slot.date }.contains(formattedDate)){
+                    if(list.map { it.slot.date }.contains(data.date.toString())){
                         container.showBadge()
                     }
 
@@ -160,8 +153,17 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, data: CalendarMonth) {
 
-                // TODO: LocalMonth
                 container.monthTextView.text = DateFormatSymbols().months[data.yearMonth.monthValue-1]
+                container.yearTextView.text = data.yearMonth.year.toString()
+
+                container.prevMonthButton.setOnClickListener {
+                    calendarView.smoothScrollToMonth(data.yearMonth.previousMonth)
+                }
+
+                container.nextMonthButton.setOnClickListener {
+                    calendarView.smoothScrollToMonth(data.yearMonth.nextMonth)
+                }
+
                 container.weekDaysContainer.children.map { it as TextView }
                     .forEachIndexed { index, textView ->
                         val dayOfWeek = daysOfWeek[index]
