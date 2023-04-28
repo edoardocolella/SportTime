@@ -18,7 +18,7 @@ interface ReservationDao {
             "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
             "where user_id <> null " +
             "and date > :date")
-    fun getFreeSlots(sport_name:String, date:String): Flow<List<SlotWithPlayground>>
+    fun getFreeSlots(date:String): Flow<List<SlotWithPlayground>>
 
     @Query("DELETE * from slot WHERE slot_id = :slot_id")
     fun deleteSlot(slot_id: Int) : Int

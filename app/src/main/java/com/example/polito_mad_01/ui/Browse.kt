@@ -56,7 +56,7 @@ class Browse : Fragment(R.layout.fragment_browse) {
         spinner.adapter=adapter
 
         //vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner){
-        vm.getFreeSlots("2019-01-01").observe(viewLifecycleOwner){
+        vm.getFreeSlots("01-01-2019").observe(viewLifecycleOwner){
             freeSlots = it
             println(it)
         }
