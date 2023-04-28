@@ -15,4 +15,8 @@ fun getReservationByUserId(userID: Int) : Flow<List<SlotWithPlayground>> {
     fun getReservationById(id: Int): Flow<SlotWithPlayground> {
         return reservationDao.getReservationById(id)
     }
+
+    fun getFreeSlots(date: String): Flow<List<SlotWithPlayground>>{
+        return reservationDao.getFreeSlots(date)
+    }
 }
