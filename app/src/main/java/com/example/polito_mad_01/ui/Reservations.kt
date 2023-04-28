@@ -62,6 +62,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             Slot(0, 0, 1, "07/05/2023", "13", "16", 20.0, true)
         )
 
+        //         vm.getUserReservations(1).observe(viewLifecycleOwner) {
+        //        }
+
+        // set global map date -> list of slots
+
         //Show items as a simple linear list
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
@@ -115,9 +120,14 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             // If the user clicks the same date, clear selection.
                             selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
+
+                            // TODO: set recyclerview list empty
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
+
+                            // TODO: set recyclerview list to only events with date
+
                             if (currentSelection != null) {
                                 calendarView.notifyDateChanged(currentSelection)
                             }
