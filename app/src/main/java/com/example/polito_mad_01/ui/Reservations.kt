@@ -7,9 +7,17 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.SportTimeApplication
+import com.example.polito_mad_01.adapters.ReservationAdapter
+import com.example.polito_mad_01.db.Slot
 import com.example.polito_mad_01.ui.calendar.DayViewContainer
 import com.example.polito_mad_01.ui.calendar.MonthViewContainer
+import com.example.polito_mad_01.viewmodel.ReservationsViewModel
+import com.example.polito_mad_01.viewmodel.ReservationsViewModelFactory
 import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.CalendarMonth
 import com.kizitonwose.calendar.core.DayPosition
@@ -26,12 +34,39 @@ import java.util.*
 class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
 
-    // TODO: Today button, text color changes, badge on top, list of events for each day
+    // TODO: Today button, arrow button for months, padding, text color changes, badge on top, list of events for each day
+
+    private val vm: ReservationsViewModel by viewModels {
+        ReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // p1
+        setupList(view)
+
+        // p3
         setupCalendar(view)
+    }
+
+
+    fun setupList(view: View){
+        val recyclerView: RecyclerView = view.findViewById(R.id.reservationList)
+
+        //Initialize data to be displayed
+        // only list of reservation of selected date
+        val myData: List<Slot> = listOf(
+            Slot(0, 0, 1, "07/04/2023", "13", "16", 20.0, true),
+            Slot(0, 0, 1, "07/05/2023", "13", "16", 20.0, true)
+        )
+
+        //Show items as a simple linear list
+        recyclerView.layoutManager = LinearLayoutManager(view.context)
+
+        //Populate recyclerView with data
+        recyclerView.adapter = ReservationAdapter(myData)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

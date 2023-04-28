@@ -8,4 +8,7 @@ class ReservationRepository(private val reservationDao: ReservationDao) {
 
     val reservations: Flow<List<Slot>> = reservationDao.getAllReservations()
 
+    fun getReservationByUserId(userID: Int) : Flow<List<Slot>> {
+        return reservationDao.getReservationByUserId(userID)
+    }
 }
