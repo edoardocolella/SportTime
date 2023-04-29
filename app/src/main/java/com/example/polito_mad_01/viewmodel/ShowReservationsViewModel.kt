@@ -1,17 +1,24 @@
 package com.example.polito_mad_01.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.polito_mad_01.db.Slot
+import com.example.polito_mad_01.db.SlotWithPlayground
+import com.example.polito_mad_01.repositories.ReservationRepository
 
-class ShowReservationsViewModel : ViewModel() {
-    private var _formData = MutableLiveData<Slot>()
-    var changing: Boolean = false
-    val formData: LiveData<Slot>
-        get() = _formData
+class ShowReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
 
-    fun setObject(obj: Slot) {
-        _formData.value = obj
+    fun getReservation(slotID: Int) : LiveData<SlotWithPlayground> {
+        return reservationsRepository.getReservationById(slotID).asLiveData()
+    }
+}
+
+class ShowReservationsViewModelFactory(private val repository: ReservationRepository) :
+    ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(ShowReservationsViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return ShowReservationsViewModel(repository) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
