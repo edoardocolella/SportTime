@@ -16,12 +16,20 @@ import java.time.LocalDate
 
 class Browse : Fragment(R.layout.fragment_browse) {
 
+    lateinit var recyclerViewBrowse: RecyclerView
+    lateinit var noFreeSlots : TextView
+
     private val vm: ShowFreeSlotsViewModel by viewModels{
         ShowFreeSlotsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        noFreeSlots = view.findViewById(R.id.no_free_slots)
+        noFreeSlots.visibility = View.GONE
+        recyclerViewBrowse =view.findViewById(R.id.recyclerViewBrowse)
+        recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
 
         activity?.actionBar?.title = "Browse"
 
@@ -46,11 +54,15 @@ class Browse : Fragment(R.layout.fragment_browse) {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     selectedFilter = spinner.selectedItem.toString()
-                    val recyclerViewBrowse =
-                        view.findViewById<RecyclerView>(R.id.recyclerViewBrowse)
-                    recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
-                    recyclerViewBrowse.adapter =
-                        FreeSlotAdapter(slots.filter { it.playground.sport_name == selectedFilter })
+                    val freeSlots = slots.filter { it.playground.sport_name == selectedFilter }
+                    recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
+                    if(freeSlots.isEmpty()){
+                        recyclerViewBrowse.visibility = View.GONE
+                        noFreeSlots.visibility = View.VISIBLE
+                    }else{
+                        recyclerViewBrowse.visibility = View.VISIBLE
+                        noFreeSlots.visibility = View.GONE
+                    }
                 }
             }
         }
