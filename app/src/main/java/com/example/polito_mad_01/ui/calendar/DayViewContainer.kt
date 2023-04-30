@@ -16,4 +16,12 @@ class DayViewContainer(view: View) : ViewContainer(view){
     fun showBadge(){
         textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,R.drawable.calendar_badge)
     }
+
+    fun showReservationBadge(){
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,R.drawable.calendar_badge)
+    }
+
+    fun showFreeBadge(){
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,R.drawable.calendar_badge)
+    }
 }
