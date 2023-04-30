@@ -15,7 +15,7 @@ data class Slot(
     @PrimaryKey(autoGenerate = true)
     val slot_id: Int = 0,
     val playground_id: Int,
-    val user_id: Int?,
+    var user_id: Int?,
     val date: String,
     val start_time: String,
     val end_time: String,
