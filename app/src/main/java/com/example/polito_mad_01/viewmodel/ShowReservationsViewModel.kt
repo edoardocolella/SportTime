@@ -7,8 +7,11 @@ import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ShowReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
 
+    lateinit var slot : LiveData<SlotWithPlayground>
     fun getReservation(slotID: Int) : LiveData<SlotWithPlayground> {
-        return reservationsRepository.getReservationById(slotID).asLiveData()
+        slot = reservationsRepository.getReservationById(slotID).asLiveData()
+
+        return slot
     }
 }
 
