@@ -3,11 +3,16 @@ package com.example.polito_mad_01.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
+import com.example.polito_mad_01.adapters.ServicesAdapter
 import com.example.polito_mad_01.viewmodel.*
 
 class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
@@ -19,25 +24,53 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         slotID = requireArguments().getInt("slotID")
+
         vm.getReservation(slotID).observe(viewLifecycleOwner) {
+            requireActivity().onBackPressedDispatcher
+                .addCallback(this) {
+                    val args = bundleOf(
+                        "selectedDate" to it.slot.date
+                    )
+                    findNavController().navigate(R.id.action_showReservationFragment2_to_reservationsFragment, args)
+                }
+                .isEnabled = true
+
             setTextView(R.id.playgroundName, it.playground.name)
             setTextView(R.id.playgroundLocation, it.playground.location)
             setTextView(R.id.playgroundSport, it.playground.sport_name)
+
+            val image : ImageView = view.findViewById(R.id.playgroundImage)
+            when(it.playground.sport_name) {
+                "Football" -> image.setImageResource(R.drawable.football_photo)
+                "Basket" -> image.setImageResource(R.drawable.basketball_photo)
+                "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
+                "Ping Pong" -> image.setImageResource(R.drawable.pingping_photo)
+                else -> image.setImageResource(R.drawable.sport_photo)
+            }
+
             val stringPrice = it.playground.price_per_slot.toString() + "€"
             setTextView(R.id.playgroundPrice, stringPrice)
             setTextView(R.id.slotDate, it.slot.date)
             val stringTime = "${it.slot.start_time} - ${it.slot.end_time}"
             setTextView(R.id.slotTime, stringTime)
-            setCheckedBoxView(R.id.reservationEquipment, it.slot.equipment)
-            setCheckedBoxView(R.id.reservationHeating, it.slot.heating)
-            setCheckedBoxView(R.id.reservationLighting, it.slot.lighting)
-            setCheckedBoxView(R.id.reservationLockerRoom, it.slot.locker_room)
+
+            var services = listOf<String>()
+            services = if(it.slot.equipment) services.plus("- Equipment") else services
+            services = if(it.slot.heating) services.plus("- Heating") else services
+            services = if(it.slot.lighting) services.plus("- Lightning") else services
+            services = if(it.slot.locker_room) services.plus("- Locker room") else services
+
+            view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
+                list.layoutManager = LinearLayoutManager(view.context)
+                list.adapter = ServicesAdapter(services)
+            }
         }
     }
 
@@ -64,8 +97,4 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
         view?.findViewById<TextView>(viewId)?.text = text
     }
 
-    private fun setCheckedBoxView(id: Int, availability: Boolean) {
-        val checkBox = view?.findViewById<CheckBox>(id)
-        checkBox?.isChecked = availability
-    }
 }
