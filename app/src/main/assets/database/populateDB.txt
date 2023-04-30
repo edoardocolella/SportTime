@@ -1,0 +1,31 @@
+
+INSERT INTO user (user_id, name, surname, nickname, description, gender, birthdate, location, email, phoneNumber, image_uri, favouriteSport, monday_availability, tuesday_availability, wednesday_availability, thursday_availability, friday_availability, saturday_availability, sunday_availability) VALUES (1, 'Mario', 'Rossi', 'mar10_r0ss1', 'Hey, There!', 'Male', '1990/01/01', 'Turin', 'mario.rossi@email.com', '1234567890', NULL, 'Football', 1, 0, 1, 0, 1, 0, 1);
+
+
+INSERT INTO playground (playground_id, name, description, location, price_per_slot, sport_name) 
+VALUES(1, 'Campo Sportivo Carmagnola', 'Campetto Cittadino', 'Torino', 5.0, 'Football'),
+	(2, 'Campo da Canestro Brraccini', 'Un campetto urbano', 'Torino', 10.0, 'Basket'),
+ (3, "Centro sociale Comala", "Tavolino pubblico", "Torino", 2.00, "Ping Pong"),
+ (4, "Mana Beach", "Campi coperti e all'aperto", "Torino", 22.0, "Volley");
+ 
+
+
+INSERT INTO slot (slot_id, playground_id, user_id, date, start_time, end_time, total_price, lighting, heating, equipment, locker_room) 
+VALUES(1, 1, 1, '2023-04-07', '10:00', '12:00', 15.0, 0, 0, 0, 0),
+	(2, 1, NULL, '2023-04-10', '12:00', '14:00', 15.0, 0, 0, 0, 0),
+	(3, 2, 1, '2023-04-18', '18:00', '20:00', 15.0, 0, 0, 0, 0),
+	(4, 2, NULL, '2023-04-20', '20:00', '22:00', 15.0, 0, 0, 0, 0),
+	(5, 2, 1, '2023-05-02', '16:00', '18:00', 50.0, 0, 0, 0, 0),
+	(6, 2, NULL, '2023-05-20', '12:00', '15:00', 17.0, 0, 0, 0, 0),
+   	(7, 1, 1, '2023-05-10', '10:00', '12:00', '19:00', 0, 1, 1, 0),
+   	(8, 1, NULL, '2023-05-11', '12:00', '14:00', 12.0, 1, 0, 1, 1),
+   	(9, 1, 1, '2023-05-12', '10:00', '12:00', '19:00', 0, 1, 0, 1),
+   	(10, 2, NULL, '2023-05-13', '12:00', '14:00', 12.0, 1, 0, 1, 0),
+   	(11, 2, 1, '2023-05-14', '10:00', '12:00', '19:00', 0, 1, 0, 0),
+   	(12, 2, NULL, '2023-05-15', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (13, 3, NULL, '2023-05-15', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (14, 3, 1, '2023-05-16', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (15, 3, NULL, '2023-05-17', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (16, 4, NULL, '2023-05-15', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (17, 4, 1, '2023-05-16', '12:00', '14:00', 12.0, 1, 1, 1, 0),
+            (18, 4, NULL, '2023-05-17', '12:00', '14:00', 12.0, 1, 1, 1, 0);

@@ -1,35 +1,17 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
+import android.view.*
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.flow.Flow
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.db.ReservationDao
+import androidx.recyclerview.widget.*
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.SlotWithPlayground
-import com.example.polito_mad_01.repositories.ReservationRepository
-import com.example.polito_mad_01.viewmodel.ShowFreeSlotsViewModel
-import com.example.polito_mad_01.viewmodel.ShowFreeSlotsViewModelFactory
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.toList
-import java.text.DateFormat
+import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
 
 class Browse : Fragment(R.layout.fragment_browse) {
@@ -44,8 +26,7 @@ class Browse : Fragment(R.layout.fragment_browse) {
         activity?.actionBar?.title = "Browse"
 
         val spinner = view.findViewById<Spinner>(R.id.spinnerBrowse)
-        var selectedFilter = resources.getStringArray(R.array.sportArray)[0]
-        lateinit var freeSlots: List<SlotWithPlayground>
+        var selectedFilter: String
 
         val adapter = ArrayAdapter.createFromResource(
             view.context,
@@ -54,25 +35,25 @@ class Browse : Fragment(R.layout.fragment_browse) {
         )
         spinner.adapter=adapter
 
-        vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner){
+        vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner) { slots ->
             println(LocalDate.now().toString())
-            freeSlots = it
-        }
 
-        spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                selectedFilter = resources.getStringArray(R.array.sportArray)[0]
-            }
-            @RequiresApi(Build.VERSION_CODES.O)
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                selectedFilter = spinner.selectedItem.toString()
-                println(freeSlots.filter { it.playground.sport_name == selectedFilter })
-                val recyclerViewBrowse = view.findViewById<RecyclerView>(R.id.recyclerViewBrowse)
-                recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
-                recyclerViewBrowse.adapter=FreeSlotAdapter(freeSlots.filter { it.playground.sport_name == selectedFilter })
+            spinner.onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    selectedFilter = resources.getStringArray(R.array.sportArray)[0]
+                }
+
+                @RequiresApi(Build.VERSION_CODES.O)
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    selectedFilter = spinner.selectedItem.toString()
+                    val recyclerViewBrowse =
+                        view.findViewById<RecyclerView>(R.id.recyclerViewBrowse)
+                    recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
+                    recyclerViewBrowse.adapter =
+                        FreeSlotAdapter(slots.filter { it.playground.sport_name == selectedFilter })
+                }
             }
         }
-
 
     }
 }
@@ -91,15 +72,20 @@ class FreeSlotAdapter(val data:List<SlotWithPlayground>): RecyclerView.Adapter<F
     }
 
     class FreeSlotHolder(v: View): RecyclerView.ViewHolder(v){
-        val playgroundName = v.findViewById<TextView>(R.id.reservationPlayground)
-        val date = v.findViewById<TextView>(R.id.reservationDate)
-        val time = v.findViewById<TextView>(R.id.reservationTime)
+        private val playgroundName = findTextById(R.id.reservationPlayground, v)
+        private val date = findTextById(R.id.reservationDate,v)
+        private val time = findTextById(R.id.reservationTime, v)
         fun bind(fs: SlotWithPlayground){
             playgroundName.text = fs.playground.name
             date.text = fs.slot.date
             val startToEnd = "${fs.slot.start_time} - ${fs.slot.end_time}"
             time.text = startToEnd
         }
+
+        private fun findTextById(id: Int, v: View): TextView {
+            return v.findViewById<TextView>(id)
+        }
     }
+
 
 }

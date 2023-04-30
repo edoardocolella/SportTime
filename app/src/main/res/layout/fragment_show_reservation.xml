@@ -34,7 +34,8 @@
             android:id="@+id/reservationInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/playgroundName"
@@ -56,22 +57,28 @@
                 android:id="@+id/playgroundSport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
                 android:text="TextView"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/directions_run_48px" />
 
             <TextView
                 android:id="@+id/playgroundLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
                 android:text="TextView"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/home_pin_48px" />
 
             <TextView
                 android:id="@+id/playgroundPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
                 android:text="TextView"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                app:drawableLeftCompat="@drawable/payments_48px" />
 
             <View
                 android:id="@+id/divider2"
@@ -99,16 +106,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:drawablePadding="4dp"
                     android:text="TextView"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/calendar_month_48px" />
 
                 <TextView
                     android:id="@+id/slotTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:drawablePadding="4dp"
                     android:text="TextView"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    app:drawableStartCompat="@drawable/schedule_48px" />
 
             </LinearLayout>
 

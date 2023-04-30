@@ -10,7 +10,6 @@ import com.example.polito_mad_01.db.*
 @Database(
     entities = [
         Playground::class,
-        PlaygroundExtra::class,
         Slot::class,
         User::class],
     version = 1,

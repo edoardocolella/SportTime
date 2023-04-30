@@ -12,4 +12,5 @@ class SportTimeApplication : Application() {
     private val database by lazy { SportTimeDatabase.getDatabase(this) }
     val userRepository by lazy { UserRepository(database.userDao()) }
     val reservationRepository by lazy { ReservationRepository(database.reservationDao()) }
+    val showReservationsRepository by lazy { ReservationRepository(database.reservationDao()) }
 }
