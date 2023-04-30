@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.ShowReservation">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/playgroundImage"
         android:layout_width="0dp"
@@ -41,8 +39,7 @@
                 android:id="@+id/playgroundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="36dp"
+                android:textSize="36sp"
                 android:textStyle="bold" />
 
             <View
@@ -58,7 +55,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/directions_run_48px" />
 
@@ -67,7 +63,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/home_pin_48px" />
 
@@ -76,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="4dp"
-                android:text="TextView"
                 android:textSize="16sp"
                 app:drawableLeftCompat="@drawable/payments_48px" />
 
@@ -92,7 +86,7 @@
                 android:id="@+id/detailsLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Details"
+                android:text="@string/details"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -107,7 +101,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
-                    android:text="TextView"
                     android:textSize="16sp"
                     app:drawableStartCompat="@drawable/calendar_month_48px" />
 
@@ -117,7 +110,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="4dp"
-                    android:text="TextView"
                     android:textSize="16sp"
                     app:drawableStartCompat="@drawable/schedule_48px" />
 
@@ -132,18 +124,64 @@
                 android:background="?android:attr/listDivider" />
 
             <TextView
-                android:id="@+id/additionalServicesLabel"
+                android:id="@+id/serviceLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Services"
+                android:text="@string/serviceLabel"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/additionalServicesView"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/reservationLighting"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:clickable="false"
+                android:text="@string/lightingService" />
+
+            <CheckBox
+                android:id="@+id/reservationHeating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="4dp"
+                android:clickable="false"
+                android:text="@string/heatingService" />
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/reservationEquipment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:clickable="false"
+            android:text="@string/equipmentService" />
+
+        <CheckBox
+            android:id="@+id/reservationLockerRoom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:clickable="false"
+            android:text="@string/lockerRoomService" />
+
+        </LinearLayout>
+        </LinearLayout>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

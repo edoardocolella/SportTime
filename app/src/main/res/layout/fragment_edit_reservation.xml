@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/playgroundImage"
@@ -36,14 +35,12 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <EditText
-                android:id="@+id/editPlaygroundName"
+            <TextView
+                android:id="@+id/playgroundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:height="48dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
                 android:textSize="30sp" />
 
             <View
@@ -54,33 +51,43 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
-                android:id="@+id/editSportName"
+            <TextView
+                android:id="@+id/playgroundDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:height="48dp"
+                android:ems="10"
+                android:textSize="20sp" />
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/playgroundSport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Sport Name"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/directions_run_48px" />
 
-            <EditText
-                android:id="@+id/editLocation"
+            <TextView
+                android:id="@+id/playgroundLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Location"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/home_pin_48px" />
 
-            <EditText
-                android:id="@+id/editPrice"
+            <TextView
+                android:id="@+id/reservationTotalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Price"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/payments_48px"/>
 
@@ -107,8 +114,8 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/editDate"
+                <TextView
+                    android:id="@+id/reservationTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -118,7 +125,7 @@
                     android:textSize="20sp"
                     app:drawableStartCompat="@drawable/calendar_month_48px" />
 
-                <EditText
+                <TextView
                     android:id="@+id/editHour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,7 +168,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/lightingService"
+                        android:id="@+id/reservationLighting"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -169,7 +176,7 @@
                         android:text="@string/lightingService" />
 
                     <CheckBox
-                        android:id="@+id/heatingService"
+                        android:id="@+id/reservationHeating"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -184,7 +191,7 @@
                     android:orientation="horizontal">
 
                     <CheckBox
-                        android:id="@+id/equipmentService"
+                        android:id="@+id/reservationEquipment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -192,7 +199,7 @@
                         android:text="@string/equipmentService" />
 
                     <CheckBox
-                        android:id="@+id/lockerRoomService"
+                        android:id="@+id/reservationLockerRoom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
