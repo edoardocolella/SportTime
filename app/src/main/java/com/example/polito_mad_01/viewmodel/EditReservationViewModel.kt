@@ -19,6 +19,19 @@ class EditReservationViewModel(private val repository: ReservationRepository): V
         }
     }
 
+    fun deleteReservation() {
+        thread {
+            val slot = reservation.value?.slot!!
+            slot.user_id = null
+            slot.heating = false
+            slot.lighting = false
+            slot.locker_room = false
+            slot.equipment = false
+            repository.updateReservation(slot)
+        }
+
+    }
+
 }
 
 class EditReservationViewModelFactory(private val repository: ReservationRepository) : ViewModelProvider.Factory {

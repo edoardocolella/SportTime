@@ -61,6 +61,19 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             setCheckedBoxViewAndListener(R.id.reservationLighting, reservation.lighting, "lighting")
             setCheckedBoxViewAndListener(R.id.reservationLockerRoom, reservation.locker_room, "locker_room")
 
+            view?.findViewById<Button>(R.id.deleteButton)?.setOnClickListener {
+                tryDeleteSlot()
+                findNavController().navigate(R.id.action_editReservationFragment_to_showReservationFragment2)
+            }
+
+        }
+    }
+
+    private fun tryDeleteSlot() {
+        try {
+            vm.deleteReservation()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -99,10 +112,10 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         )
         if (item.itemId == R.id.action_save_reservation)
             trySaveData()
-            findNavController().navigate(
-                R.id.action_editReservationFragment_to_showReservationFragment2,
-                args
-            )
+        findNavController().navigate(
+            R.id.action_editReservationFragment_to_showReservationFragment2,
+            args
+        )
         return true
     }
 
