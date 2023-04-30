@@ -139,18 +139,70 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/additionalServicesLabel"
+            <LinearLayout
+                android:id="@+id/serviceLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Services"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/additionalServicesView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/serviceLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/serviceLabel"
+                    android:padding="4dp"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/lightingService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/lightingService" />
+
+                    <CheckBox
+                        android:id="@+id/heatingService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/heatingService" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/equipmentService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/equipmentService" />
+
+                    <CheckBox
+                        android:id="@+id/lockerRoomService"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/lockerRoomService" />
+
+                </LinearLayout>
+        </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

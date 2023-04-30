@@ -19,6 +19,7 @@
     <string name="intermediateLabel">Intermediate</string>
     <string name="beginnerLabel">Beginner</string>
     <string name="availabilityLabel">Availability</string>
+    <string name="serviceLabel">Service</string>
     <string name="mondayLabel">Monday</string>
     <string name="tuesdayLabel">Tuesday</string>
     <string name="wednesdayLabel">Wednesday</string>
@@ -31,6 +32,11 @@
     <string name="phoneLabel">Phone Number: </string>
     <string name="cameraPermission">Hi, we will request CAMERA permission. This is required for taking the photo from camera, please grant it.</string>
     <string name="change">Change</string>
+    <string name="lightingService">Lighting</string>
+    <string name="heatingService">Heating</string>
+    <string name="equipmentService">Equipment</string>
+    <string name="lockerRoomService">Locker Room</string>
+
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string-array name="genderArray">
