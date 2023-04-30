@@ -3,9 +3,7 @@ package com.example.polito_mad_01.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
@@ -20,9 +18,14 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         EditReservationViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
     }
 
-    override fun onCreateView(inflater: LayoutInflater,        container: ViewGroup?,        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_edit_reservation, menu)
     }
 
     fun setAllView(){
