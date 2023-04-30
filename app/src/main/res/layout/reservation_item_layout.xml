@@ -46,11 +46,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/reservationPlayground"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Playground Name" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/reservationPlayground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Playground Name"
+                    />
+
+                <TextView
+                    android:id="@+id/reservationFree"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="textEnd"
+                     />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

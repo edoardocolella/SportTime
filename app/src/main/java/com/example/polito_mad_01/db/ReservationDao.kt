@@ -9,7 +9,7 @@ interface ReservationDao {
     fun getAllReservations(): Flow<List<Slot>>
 
     @Transaction
-    @Query("SELECT * from slot WHERE slot.user_id = :user_id")
+    @Query("SELECT * from slot WHERE slot.user_id = :user_id or user_id IS NULL")
     fun getReservationByUserId(user_id: Int): Flow<List<SlotWithPlayground>>
 
     /** @param date format: yyyy-MM-dd*/
