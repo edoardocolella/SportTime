@@ -63,4 +63,7 @@
     <string name="sporttime">SportTime</string>
     <string name="hello_blank_fragment">TODO</string>
     <string name="reservationsLabel">Reservations</string>
+    <string name="noReservations">No reservation found for this day, try another one!</string>
+    <string name="services">Services</string>
+    <string name="details">Details</string>
 </resources>

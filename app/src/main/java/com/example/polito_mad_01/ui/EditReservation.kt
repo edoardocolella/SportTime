@@ -1,18 +1,18 @@
 package com.example.polito_mad_01.ui
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
-import android.widget.CheckBox
-import android.widget.EditText
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
+import android.widget.*
+import androidx.core.os.bundleOf
+import androidx.fragment.app.*
+import androidx.navigation.fragment.findNavController
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
+
+    private var slotID = 0
+
 
     private val vm: EditReservationViewModel by viewModels {
         EditReservationViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
@@ -23,37 +23,40 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         setHasOptionsMenu(true)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setAllView()
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_edit_reservation, menu)
     }
 
-    fun setAllView(){
-        val id = arguments?.getInt("reservationId")?:1
-        vm.getReservation(id).observe(viewLifecycleOwner)
+    private fun setAllView(){
+        slotID = requireArguments().getInt("slotID")
+        vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
             val reservation = it.slot
             val playground = it.playground
 
-            /*
             setTextView(R.id.playgroundName, playground.name)
             setTextView(R.id.playgroundDescription, playground.description)
             setTextView(R.id.playgroundLocation, playground.location)
             setTextView(R.id.playgroundSport, playground.sport_name)
-            setTextView(R.id.reservationDate, reservation.date)
-            setTextView(R.id.reservationStartTime, reservation.start_time)
-            setTextView(R.id.reservationEndTime, reservation.end_time)
+            setTextView(R.id.editDate, reservation.date)
+            setTextView(R.id.editHour, "${reservation.start_time}-${reservation.end_time}")
             setTextView(R.id.reservationTotalPrice, reservation.total_price.toString())
             setCheckedBoxViewAndListener(R.id.reservationEquipment, reservation.equipment, "equipment")
             setCheckedBoxViewAndListener(R.id.reservationHeating, reservation.heating, "heating")
             setCheckedBoxViewAndListener(R.id.reservationLighting, reservation.lighting, "lighting")
             setCheckedBoxViewAndListener(R.id.reservationLockerRoom, reservation.locker_room, "locker_room")
-            */
+
         }
     }
 
     private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<EditText>(viewId)?.setText(text)
+        view?.findViewById<TextView>(viewId)?.text = text
     }
     private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
         val checkBox = view?.findViewById<CheckBox>(id)
@@ -72,12 +75,26 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
 
-    fun trySaveData(){
+    private fun trySaveData(){
         try {
-            vm.reservation.value?.slot?.let { vm.updateReservation(it) }
+            vm.reservation.value?.slot?.let { vm.updateReservation() }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val args = bundleOf(
+            "slotID" to slotID
+        )
+        if (item.itemId == R.id.action_save_reservation)
+            trySaveData()
+            findNavController().navigate(
+                R.id.action_editReservationFragment_to_showReservationFragment2,
+                args
+            )
+        return true
     }
 
 }

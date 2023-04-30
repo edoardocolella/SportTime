@@ -53,6 +53,12 @@
                    android:layout_marginBottom="8dp"
                    android:background="?android:attr/listDivider" />
 
+               <TextView
+                   android:id="@+id/no_reservations"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="@string/noReservations" />
+
                <androidx.recyclerview.widget.RecyclerView
                    android:id="@+id/reservationList"
                    android:layout_width="match_parent"
