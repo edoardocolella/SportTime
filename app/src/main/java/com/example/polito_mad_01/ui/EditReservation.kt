@@ -3,6 +3,7 @@ package com.example.polito_mad_01.ui
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
@@ -53,11 +54,23 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             setCheckedBoxViewAndListener(R.id.reservationLockerRoom, reservation.locker_room, "locker_room")
 
             view?.findViewById<Button>(R.id.deleteButton)?.setOnClickListener {
-                tryDeleteSlot()
-                findNavController().navigate(R.id.action_editReservationFragment_to_showReservationFragment2)
+                showDeleteDialog()
             }
 
         }
+    }
+
+    private fun showDeleteDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete Reservation")
+            .setMessage("Are you sure you want to delete this reservation?")
+            .setPositiveButton("Yes") { _, _ ->
+                tryDeleteSlot()
+                findNavController().navigate(R.id.action_editReservationFragment_to_reservationsFragment)
+                Toast.makeText(requireContext(), "Reservation deleted", Toast.LENGTH_SHORT).show()
+            }
+            .setNegativeButton("No") { _, _ -> }
+            .create().show()
     }
 
     private fun tryDeleteSlot() {
