@@ -25,7 +25,8 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setAllView()
+        activity?.actionBar?.title  = "Editing"
+        setAllView(view)
     }
 
     @Deprecated("Deprecated in Java")
@@ -33,19 +34,27 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         inflater.inflate(R.menu.menu_edit_reservation, menu)
     }
 
-    private fun setAllView(){
+    private fun setAllView(view: View){
         slotID = requireArguments().getInt("slotID")
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
             val reservation = it.slot
             val playground = it.playground
 
+            val image : ImageView = view.findViewById(R.id.playgroundImage)
+            when(it.playground.sport_name) {
+                "Football" -> image.setImageResource(R.drawable.football_photo)
+                "Basket" -> image.setImageResource(R.drawable.basketball_photo)
+                "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
+                "Ping Pong" -> image.setImageResource(R.drawable.pingping_photo)
+                else -> image.setImageResource(R.drawable.sport_photo)
+            }
+
             setTextView(R.id.playgroundName, playground.name)
-            setTextView(R.id.playgroundDescription, playground.description)
             setTextView(R.id.playgroundLocation, playground.location)
             setTextView(R.id.playgroundSport, playground.sport_name)
-            setTextView(R.id.editDate, reservation.date)
-            setTextView(R.id.editHour, "${reservation.start_time}-${reservation.end_time}")
+            setTextView(R.id.reservationDate, reservation.date)
+            setTextView(R.id.reservationTime, "${reservation.start_time}-${reservation.end_time}")
             setTextView(R.id.reservationTotalPrice, reservation.total_price.toString())
             setCheckedBoxViewAndListener(R.id.reservationEquipment, reservation.equipment, "equipment")
             setCheckedBoxViewAndListener(R.id.reservationHeating, reservation.heating, "heating")

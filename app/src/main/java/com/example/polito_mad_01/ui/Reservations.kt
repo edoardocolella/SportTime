@@ -52,7 +52,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         super.onViewCreated(view, savedInstanceState)
 
         reservationMap = mutableMapOf()
-        selectedDate = LocalDate.now()
+        val selectedDateString = arguments?.getString("selectedDate")
+        selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
 
         noReservations = view.findViewById(R.id.no_reservations)
         recyclerView = view.findViewById(R.id.reservationList)
@@ -88,8 +89,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
         calendarView.setup(startMonth, endMonth, daysOfWeek.first())
-        calendarView.scrollToMonth(currentMonth)
         selectedDate?.let {
+            calendarView.scrollToMonth(it.yearMonth)
             calendarView.notifyDateChanged(it)
         }
 

@@ -74,7 +74,7 @@ class FreeSlotAdapter(val data:List<SlotWithPlayground>): RecyclerView.Adapter<F
     class FreeSlotHolder(v: View): RecyclerView.ViewHolder(v){
         private val playgroundName = findTextById(R.id.reservationPlayground, v)
         private val date = findTextById(R.id.reservationDate,v)
-        private val time = findTextById(R.id.reservationTime, v)
+        private val time = findTextById(R.id.reservationDate, v)
         fun bind(fs: SlotWithPlayground){
             playgroundName.text = fs.playground.name
             date.text = fs.slot.date

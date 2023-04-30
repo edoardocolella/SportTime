@@ -11,6 +11,7 @@
         android:id="@+id/playgroundImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/reservationScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,28 +40,11 @@
                 android:id="@+id/playgroundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:height="48dp"
-                android:ems="10"
-                android:textSize="30sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/divider4"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="?android:attr/listDivider" />
-
-            <TextView
-                android:id="@+id/playgroundDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:height="48dp"
-                android:ems="10"
-                android:textSize="20sp" />
-
-            <View
-                android:id="@+id/divider7"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginTop="8dp"
@@ -115,7 +99,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/reservationTime"
+                    android:id="@+id/reservationDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -126,7 +110,7 @@
                     app:drawableStartCompat="@drawable/calendar_month_48px" />
 
                 <TextView
-                    android:id="@+id/editHour"
+                    android:id="@+id/reservationTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -173,7 +157,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="4dp"
-                        android:text="@string/lightingService" />
+                        android:text="@string/lightingService"
+                        android:textSize="20sp" />
 
                     <CheckBox
                         android:id="@+id/reservationHeating"
@@ -181,7 +166,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="4dp"
-                        android:text="@string/heatingService" />
+                        android:text="@string/heatingService"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -196,7 +182,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="4dp"
-                        android:text="@string/equipmentService" />
+                        android:text="@string/equipmentService"
+                        android:textSize="20sp" />
 
                     <CheckBox
                         android:id="@+id/reservationLockerRoom"
@@ -204,7 +191,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:padding="4dp"
-                        android:text="@string/lockerRoomService" />
+                        android:text="@string/lockerRoomService"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
         </LinearLayout>

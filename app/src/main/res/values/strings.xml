@@ -19,7 +19,7 @@
     <string name="intermediateLabel">Intermediate</string>
     <string name="beginnerLabel">Beginner</string>
     <string name="availabilityLabel">Availability</string>
-    <string name="serviceLabel">Service</string>
+    <string name="serviceLabel">Available services</string>
     <string name="mondayLabel">Monday</string>
     <string name="tuesdayLabel">Tuesday</string>
     <string name="wednesdayLabel">Wednesday</string>
