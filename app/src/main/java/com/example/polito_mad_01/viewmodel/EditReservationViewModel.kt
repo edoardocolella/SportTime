@@ -3,6 +3,7 @@ package com.example.polito_mad_01.viewmodel
 import androidx.lifecycle.*
 import com.example.polito_mad_01.db.*
 import com.example.polito_mad_01.repositories.ReservationRepository
+import kotlin.concurrent.thread
 
 class EditReservationViewModel(private val repository: ReservationRepository): ViewModel() {
 
@@ -12,15 +13,17 @@ class EditReservationViewModel(private val repository: ReservationRepository): V
         return reservation
     }
 
-    fun updateReservation(slot: Slot) {
-
+    fun updateReservation() {
+        thread {
+            reservation.value?.slot?.let{repository.updateReservation(it)}
+        }
     }
 
 }
 
 class EditReservationViewModelFactory(private val repository: ReservationRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ShowProfileViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(EditReservationViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return EditReservationViewModel(repository) as T
         }
