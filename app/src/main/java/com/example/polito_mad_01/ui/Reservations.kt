@@ -37,6 +37,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
 
     lateinit var recyclerView: RecyclerView
+    lateinit var noReservations : TextView
 
     private var reservationMap : MutableMap<String, List<SlotWithPlayground>> = mutableMapOf()
 
@@ -51,8 +52,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         super.onViewCreated(view, savedInstanceState)
 
         reservationMap = mutableMapOf()
-        selectedDate = null
+        selectedDate = LocalDate.now()
 
+        noReservations = view.findViewById(R.id.no_reservations)
         recyclerView = view.findViewById(R.id.reservationList)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
@@ -87,6 +89,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
         calendarView.setup(startMonth, endMonth, daysOfWeek.first())
         calendarView.scrollToMonth(currentMonth)
+        selectedDate?.let {
+            calendarView.notifyDateChanged(it)
+        }
 
         // DayBinder
         calendarView.dayBinder = object : MonthDayBinder<DayViewContainer> {
@@ -128,7 +133,10 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             // If the user clicks the same date, clear selection.
                             selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
-                            recyclerView.adapter = ReservationAdapter(listOf(), findNavController())
+
+                            recyclerView.visibility = View.GONE
+                            noReservations.visibility = View.VISIBLE
+                            //recyclerView.adapter = ReservationAdapter(listOf(), findNavController())
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
@@ -137,7 +145,15 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             val datedList = reservationMap[dateString]
 
 
-                            recyclerView.adapter = ReservationAdapter(datedList?: listOf(), findNavController())
+                            if(datedList == null || datedList?.size == 0){
+                                recyclerView.visibility = View.GONE
+                                noReservations.visibility = View.VISIBLE
+                            } else {
+                                recyclerView.visibility = View.VISIBLE
+                                noReservations.visibility = View.GONE
+                                recyclerView.adapter = ReservationAdapter(datedList?: listOf(), findNavController())
+                            }
+
 
                             if (currentSelection != null) {
                                 calendarView.notifyDateChanged(currentSelection)
