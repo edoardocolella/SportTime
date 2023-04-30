@@ -11,6 +11,7 @@ import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
+import java.util.SortedMap
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
@@ -47,7 +48,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             val playground = it.playground
 
             vm.getSlotsByPlayground(playground.playground_id).observe(viewLifecycleOwner) { list->
-                val dateTimeMap = mutableMapOf<String, List<String>>()
+                val dateTimeMap : SortedMap<String, List<String>> = sortedMapOf()
 
                 val dateSpinner = view.findViewById<Spinner>(R.id.dateSpinner)
                 val timeSpinner = view.findViewById<Spinner>(R.id.timeSpinner)
@@ -60,17 +61,21 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                 }
                 val date = it.slot.date
                 val times = dateTimeMap.getOrDefault(date, listOf())
-                dateTimeMap[date] = times.plus("${it.slot.start_time}-${it.slot.end_time}")
+
+                val reservationTime = "${it.slot.start_time}-${it.slot.end_time}"
+                dateTimeMap[date] = times.plus(reservationTime)
 
                 val dateAdapter = ArrayAdapter(
                     view.context,
                     android.R.layout.simple_spinner_dropdown_item,
-                    dateTimeMap.keys.toList().sorted()
+                    dateTimeMap.keys.toList()
                 )
                 dateSpinner.adapter = dateAdapter
+                dateSpinner.setSelection(dateTimeMap.keys.toList().indexOf(date))
+
                 dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                        val date : String = dateTimeMap.keys.toList().sorted()[p2]
+                        val date : String = dateTimeMap.keys.toList()[p2]
 
                         val timeAdapter = ArrayAdapter(
                             view.context,
@@ -78,6 +83,9 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                             dateTimeMap[date]!!.toMutableList(),
                         )
                         timeSpinner.adapter = timeAdapter
+
+                        val timeList = dateTimeMap[date]!!
+                        timeSpinner.setSelection(timeList.indexOf(reservationTime))
                     }
 
                     override fun onNothingSelected(p0: AdapterView<*>?) {
