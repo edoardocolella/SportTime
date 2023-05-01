@@ -1,14 +1,17 @@
 package com.example.polito_mad_01.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
+import java.util.SortedMap
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
@@ -24,9 +27,9 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         setHasOptionsMenu(true)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.actionBar?.title  = "Editing"
         setAllView(view)
     }
 
@@ -35,12 +38,65 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         inflater.inflate(R.menu.menu_edit_reservation, menu)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View){
         slotID = requireArguments().getInt("slotID")
+
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
             val reservation = it.slot
             val playground = it.playground
+
+            vm.getSlotsByPlayground(playground.playground_id).observe(viewLifecycleOwner) { list->
+                val dateTimeMap : SortedMap<String, List<String>> = sortedMapOf()
+
+                val dateSpinner = view.findViewById<Spinner>(R.id.dateSpinner)
+                val timeSpinner = view.findViewById<Spinner>(R.id.timeSpinner)
+
+                list.forEach { sp ->
+                    val date = sp.slot.date
+                    val times = dateTimeMap.getOrDefault(date, listOf())
+
+                    dateTimeMap[sp.slot.date] = times.plus("${sp.slot.start_time}-${sp.slot.end_time}")
+                }
+                val date = it.slot.date
+                val times = dateTimeMap.getOrDefault(date, listOf())
+
+                val reservationTime = "${it.slot.start_time}-${it.slot.end_time}"
+                dateTimeMap[date] = times.plus(reservationTime)
+
+                val dateAdapter = ArrayAdapter(
+                    view.context,
+                    android.R.layout.simple_spinner_dropdown_item,
+                    dateTimeMap.keys.toList()
+                )
+                dateSpinner.adapter = dateAdapter
+                dateSpinner.setSelection(dateTimeMap.keys.toList().indexOf(date))
+
+                dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                        val date : String = dateTimeMap.keys.toList()[p2]
+
+                        val timeAdapter = ArrayAdapter(
+                            view.context,
+                            android.R.layout.simple_spinner_dropdown_item,
+                            dateTimeMap[date]!!.toMutableList(),
+                        )
+                        timeSpinner.adapter = timeAdapter
+
+                        val timeList = dateTimeMap[date]!!
+                        timeSpinner.setSelection(timeList.indexOf(reservationTime))
+                    }
+
+                    override fun onNothingSelected(p0: AdapterView<*>?) {
+                        timeSpinner.isEnabled = false
+                        timeSpinner.isClickable = false
+                        timeSpinner.adapter = null
+                    }
+
+                }
+
+            }
 
             val image : ImageView = view.findViewById(R.id.playgroundImage)
             when(it.playground.sport_name) {

@@ -1,11 +1,14 @@
 package com.example.polito_mad_01.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ServicesAdapter
 import com.example.polito_mad_01.viewmodel.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
     private var slotID = 0
@@ -79,17 +84,26 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
         inflater.inflate(R.menu.menu_show_reservation, menu)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val args = bundleOf(
             "slotID" to slotID
         )
 
-        if (item.itemId == R.id.action_edit_reservation)
-            findNavController().navigate(
-                R.id.action_showReservationFragment2_to_editReservationFragment,
-                args
-            )
+        if (item.itemId == R.id.action_edit_reservation){
+            if(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) >
+                vm.slot.value?.slot?.date!! ) {
+                Toast.makeText(requireContext(), "You cannot edit past reservations", Toast.LENGTH_SHORT).show()
+            } else {
+                findNavController().navigate(
+                    R.id.action_showReservationFragment2_to_editReservationFragment,
+                    args
+                )
+            }
+
+        }
+
         return true
     }
 

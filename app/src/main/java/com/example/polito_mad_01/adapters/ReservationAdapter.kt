@@ -30,7 +30,6 @@ class ReservationAdapter(private val data:List<SlotWithPlayground>, val navContr
 
     class ReservationViewHolder(view: View, private val navController: NavController) : RecyclerView.ViewHolder(view) {
         private val playgroundName : TextView = view.findViewById(R.id.reservationPlayground)
-        private val freeText: TextView = view.findViewById(R.id.reservationFree)
         private val slotDate : TextView = view.findViewById(R.id.reservationDate)
         private val slotTime : TextView = view.findViewById(R.id.reservationTime)
         private val sportImage : ImageView = view.findViewById(R.id.reservationSportImage)
@@ -41,9 +40,7 @@ class ReservationAdapter(private val data:List<SlotWithPlayground>, val navContr
             val slot = r.slot
             val playground = r.playground
 
-            val free = (slot.user_id == null)
-
-            if(!free) reservationItem.setOnClickListener {
+            reservationItem.setOnClickListener {
                 navController.navigate(R.id.action_reservationsFragment_to_showReservationFragment, bundleOf(
                     "slotID" to slot.slot_id
                 ))
@@ -51,7 +48,6 @@ class ReservationAdapter(private val data:List<SlotWithPlayground>, val navContr
             }
 
             playgroundName.text = playground.name
-            freeText.text = if(free) "Free" else "Booked"
             slotDate.text = slot.date
             val timeString = "${slot.start_time}-${slot.end_time}"
             slotTime.text = timeString
