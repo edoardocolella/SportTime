@@ -37,5 +37,13 @@ interface ReservationDao {
             "and slot.playground_id = :playgroundID")
     fun getPlaygroundFreeSlots(playgroundID: Int, today: String): Flow<List<SlotWithPlayground>>
 
+
+    @Query("SELECT * from slot " +
+            "WHERE slot.start_time = :originalStartTime " +
+            "and slot.end_time = :originalEndTime " +
+            "and slot.date = :date " +
+            "and slot.playground_id = :playgroundID")
+    fun getSlotByStartEndTime(originalStartTime: String, originalEndTime: String, date: String, playgroundID: Int): Flow<Slot>
+
 }
 

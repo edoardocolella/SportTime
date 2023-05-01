@@ -1,12 +1,8 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.*
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
@@ -63,14 +59,14 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             val stringPrice = it.playground.price_per_slot.toString() + "€"
             setTextView(R.id.playgroundPrice, stringPrice)
             setTextView(R.id.slotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time} - ${it.slot.end_time}"
+            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
             setTextView(R.id.slotTime, stringTime)
 
-            var services = listOf<String>()
-            services = if(it.slot.equipment) services.plus("- Equipment") else services
-            services = if(it.slot.heating) services.plus("- Heating") else services
-            services = if(it.slot.lighting) services.plus("- Lightning") else services
-            services = if(it.slot.locker_room) services.plus("- Locker room") else services
+            val services = mutableListOf<String>()
+            if(it.slot.equipment) services.plus("- Equipment")
+            if(it.slot.heating) services.plus("- Heating")
+            if(it.slot.lighting) services.plus("- Lightning")
+            if(it.slot.locker_room) services.plus("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)

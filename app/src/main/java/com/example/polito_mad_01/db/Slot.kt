@@ -13,12 +13,12 @@ import androidx.room.*
     ])
 data class Slot(
     @PrimaryKey(autoGenerate = true)
-    val slot_id: Int = 0,
+    var slot_id: Int = 0,
     val playground_id: Int,
     var user_id: Int?,
-    val date: String,
-    val start_time: String,
-    val end_time: String,
+    var date: String,
+    var start_time: String,
+    var end_time: String,
     val total_price: Double,
     var lighting: Boolean,
     var heating: Boolean,

@@ -1,34 +1,24 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.adapters.ReservationAdapter
+import com.example.polito_mad_01.adapters.*
 import com.example.polito_mad_01.db.SlotWithPlayground
-import com.example.polito_mad_01.ui.calendar.DayViewContainer
-import com.example.polito_mad_01.ui.calendar.MonthViewContainer
-import com.example.polito_mad_01.viewmodel.ReservationsViewModel
-import com.example.polito_mad_01.viewmodel.ReservationsViewModelFactory
+import com.example.polito_mad_01.ui.calendar.*
+import com.example.polito_mad_01.viewmodel.*
 import com.kizitonwose.calendar.core.*
-import com.kizitonwose.calendar.view.CalendarView
-import com.kizitonwose.calendar.view.MonthDayBinder
-import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
+import com.kizitonwose.calendar.view.*
 import java.text.DateFormatSymbols
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
+import java.time.*
+import java.time.format.*
 import java.util.*
 
 class Reservations : Fragment(R.layout.fragment_reservations) {
@@ -65,14 +55,14 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         freeSlotsView.layoutManager = LinearLayoutManager(view.context)
 
         // p1
-        setupList(view)
+        setupList()
 
         // p3
         setupCalendar(view)
     }
 
 
-    fun setupList(view: View){
+    private fun setupList(){
         vm.getUserReservations(1).observe(viewLifecycleOwner){ list ->
             list.forEach {
                 val date = it.slot.date
