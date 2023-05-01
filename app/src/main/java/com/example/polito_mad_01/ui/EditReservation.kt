@@ -264,6 +264,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                     val newSlot = vm.reservation.value?.slot?.copy()!!
                     newSlot.slot_id = reservationWithIdRequested.slot_id
                     slotID = reservationWithIdRequested.slot_id
+                    println("newReservation: $newSlot")
                     vm.updateReservation(newSlot)
 
                 }
