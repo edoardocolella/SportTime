@@ -7,23 +7,26 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.net.*
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.*
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
-import de.hdodenhof.circleimageview.CircleImageView
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
+
 
 class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
@@ -37,6 +40,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -186,7 +190,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
 
         try {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             formatter.parse(user.birthdate)
         } catch (e: ParseException) {
             throw Exception("Birthdate should be in dd-MM-yyyy format")
@@ -220,6 +224,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView() {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
 
@@ -253,7 +258,9 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setTextViews(user: User) {
+
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
@@ -261,7 +268,25 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
-        setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
+        setBirthdateView(user)
+    }
+
+    private fun setBirthdateView(user: User) {
+        val birthdateView = requireView().findViewById<TextView>(R.id.birthday)
+        birthdateView.text = user.birthdate
+
+        val materialDatePicker=
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date").build()
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
+            birthdateView.text = date
+            setValue("birthdate", date)
+        }
+        birthdateView.setOnClickListener {
+            materialDatePicker.show(childFragmentManager, "DATE_PICKER")
+        }
+
     }
 
     private fun setSpinners(user: User) {
@@ -313,33 +338,46 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
-    private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
+    /*private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
         setEditTextView(id, field)
         setOneListener(id, attribute)
-    }
+    }*/
 
-    private fun setEditTextView(id: Int, field: String?) {
-        field?.let { view?.findViewById<EditText>(id)?.setText(field) }
-    }
+private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
+    val textName = requireView().findViewById<TextInputLayout>(id)
+    textName.editText?.setText(field)
+    textName.editText?.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
+            setValue(attribute, s.toString())
+    })
+}
 
-    private fun setOneListener(id: Int, attribute: String) {
-        view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setValue(attribute, s.toString())
-            }
-        })
-    }
 
-    private fun setImage(user: User) {
-        /*try {
-            val uri = user.image_uri?.toUri()
-            val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
-            imageView?.setImageURI(uri)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-         */
+
+private fun setEditTextView(id: Int, field: String?) {
+field?.let { view?.findViewById<EditText>(id)?.setText(field) }
+}
+
+private fun setOneListener(id: Int, attribute: String) {
+view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
+    override fun afterTextChanged(s: Editable?) {}
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        setValue(attribute, s.toString())
     }
+})
+}
+
+private fun setImage(user: User) {
+/*try {
+    val uri = user.image_uri?.toUri()
+    val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
+    imageView?.setImageURI(uri)
+} catch (e: Exception) {
+    e.printStackTrace()
+}
+ */
+}
 }

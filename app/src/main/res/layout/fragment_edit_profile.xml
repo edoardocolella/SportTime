@@ -37,349 +37,364 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent" >
             <LinearLayout
-                android:id="@+id/wrapperLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent">
 
-                    <EditText
-                        android:id="@+id/name"
+
+                    <LinearLayout
+                        android:id="@+id/wrapperLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autofillHints="name"
+                                android:ems="10"
+                                android:hint="@string/name"
+                                android:inputType="textPersonName"
+                                android:padding="10dp"
+                                android:textAlignment="center"
+                                android:textSize="38sp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/surname"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autofillHints="name"
+                                android:ems="10"
+
+                                android:hint="@string/surname"
+                                android:inputType="textPersonName"
+                                android:padding="10dp"
+                                android:textAlignment="center"
+                                android:textSize="38sp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/nickName_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="username"
+                            android:hint="@string/nickname"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:padding="10dp"
+
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            android:textStyle="italic">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/location_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/home_pin_48px"
+                            android:drawablePadding="8dp"
+                            android:gravity="center_horizontal"
+                            android:hint="@string/location"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:padding="10dp"
+                            android:textSize="24sp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/description_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/description"
+                            android:importantForAutofill="no"
+                            android:inputType="text"
+                            android:padding="8dp"
+                            android:textAlignment="viewStart"
+                            android:textSize="20sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp">
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="10dp"
+                                android:text="@string/genderLabel"
+                                android:textAlignment="center"
+                                android:textSize="24sp"
+                                app:drawableLeftCompat="@drawable/face_48px" />
+
+                            <Spinner
+                                android:id="@+id/spinner"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:entries="@array/genderArray"
+                                android:padding="10dp"
+                                android:scrollbarSize="10dp" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/birthday"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:layout_weight="1"
+                            android:drawablePadding="8dp"
+                            android:hint="@string/age"
+                            android:importantForAutofill="no"
+                            android:padding="10dp"
+                            android:textAlignment="center"
+                            android:textSize="24sp"
+                            app:drawableStartCompat="@drawable/cake_48px" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:id="@+id/sportLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/sportLabel_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:autofillHints="name"
-                        android:ems="10"
-                        android:hint="@string/name"
-                        android:inputType="textPersonName"
                         android:padding="4dp"
-                        android:textAlignment="center"
-                        android:textSize="38sp" />
-
-                    <EditText
-                    android:id="@+id/surname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="name"
-                    android:ems="10"
-                    android:padding="4dp"
-
-                    android:hint="@string/surname"
-                    android:layout_weight="1"
-                    android:inputType="textPersonName"
-                    android:textAlignment="center"
-                    android:textSize="38sp" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/nickName_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="username"
-                    android:hint="@string/nickname"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="4dp"
-
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    android:textStyle="italic" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:elevation="4dp"
-                    android:gravity="clip_horizontal|center_horizontal"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp">
-
-                        <TextView
-                            android:id="@+id/textView"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/genderLabel"
-                            android:textAlignment="center"
-                            android:padding="4dp"
-                            android:textSize="24sp"
-                            app:drawableLeftCompat="@drawable/face_48px" />
+                        android:text="@string/sportsLabel"
+                        android:textSize="30sp" />
 
                         <Spinner
-                            android:id="@+id/spinner"
-                            android:layout_width="0dp"
-                            android:padding="4dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:entries="@array/genderArray"
-                            android:scrollbarSize="4dp" />
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/birthday"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/cake_48px"
-                        android:drawablePadding="8dp"
-                        android:hint="@string/age"
-                        android:importantForAutofill="no"
-                        android:inputType="number"
-                        android:padding="4dp"
-                        android:textAlignment="center"
-                        android:textSize="24sp" />
-
-                    <EditText
-                        android:id="@+id/location_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/home_pin_48px"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_horizontal"
-                        android:hint="@string/location"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:padding="4dp"
-                        android:textSize="24sp" />
-
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/description_value"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:hint="@string/description"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:textAlignment="viewStart"
-                    android:textSize="20sp" />
-
-                <LinearLayout
-                    android:id="@+id/sportLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/sportLabel_value"
+                            android:id="@+id/sportSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/sportsLabel"
                             android:layout_weight="1"
+                            android:entries="@array/sportArray"
+                            android:padding="4dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/availabilityLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/availabilityLabel_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:padding="4dp"
+                            android:text="@string/availabilityLabel"
                             android:textSize="30sp" />
 
-                    <Spinner
-                        android:id="@+id/sportSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:padding="4dp"
-                        android:entries="@array/sportArray"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/availabilityLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/availabilityLabel_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/availabilityLabel"
-                        android:padding="4dp"
-                        android:textSize="30sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/mondayAvailability"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/mondayLabel" />
+                            android:orientation="horizontal">
 
-                        <CheckBox
-                            android:id="@+id/tuesdayAvailability"
+                            <CheckBox
+                                android:id="@+id/mondayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/mondayLabel" />
+
+                            <CheckBox
+                                android:id="@+id/tuesdayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/tuesdayLabel" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/tuesdayLabel" />
+                            android:orientation="horizontal">
 
+                            <CheckBox
+                                android:id="@+id/wednesdayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/wednesdayLabel" />
+
+                            <CheckBox
+                                android:id="@+id/thursdayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/thursdayLabel" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/fridayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/fridayLabel" />
+
+                            <CheckBox
+                                android:id="@+id/saturdayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/saturdayLabel" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/sundayAvailability"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp"
+                                android:text="@string/sundayLabel" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:padding="4dp" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/contactLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/wednesdayAvailability"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/wednesdayLabel" />
-
-                        <CheckBox
-                            android:id="@+id/thursdayAvailability"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/thursdayLabel" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/fridayAvailability"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/fridayLabel" />
-
-                        <CheckBox
-                            android:id="@+id/saturdayAvailability"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/saturdayLabel" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <CheckBox
-                            android:id="@+id/sundayAvailability"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="4dp"
-                            android:text="@string/sundayLabel" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="4dp"
-                            android:layout_weight="1" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/contactLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/contactLabel_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="4dp"
-                        android:text="@string/contactsLabel"
-                        android:textSize="30sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
                         <TextView
-                            android:id="@+id/mailLabel_value"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/contactLabel_value"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/emailLabel"
-                            android:padding="4dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:padding="10dp"
+                            android:text="@string/contactsLabel"
+                            android:textSize="30sp" />
 
-                        <EditText
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/mail_value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="emailAddress"
-                            android:padding="4dp"
+                            android:hint="@string/emailLabel"
                             android:inputType="textEmailAddress"
+                            android:padding="10dp"
                             android:textAlignment="textEnd"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                            android:textSize="18sp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
-                        <TextView
-                            android:id="@+id/phoneLabel_value"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/phoneLabel"
-                            android:textSize="18sp"
-                            android:padding="4dp"
-                            android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <EditText
+
+                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/phoneNumber_value"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:autofillHints="phone"
+                            android:hint="@string/phoneLabel"
                             android:inputType="phone"
-                            android:padding="4dp"
+                            android:padding="10dp"
                             android:textAlignment="textEnd"
-                            android:textSize="18sp" />
+                            android:textSize="18sp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
 
                     </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
         </ScrollView>
 
     </LinearLayout>
+
+</LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

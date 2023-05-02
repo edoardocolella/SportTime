@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_placeholder_to_showOldReservations"
             app:destination="@id/showOldReservations" />
+        <action
+            android:id="@+id/action_placeholder_to_showProfileContainer"
+            app:destination="@id/showProfileContainer" />
     </fragment>
     <fragment
         android:id="@+id/showOldReservation"
@@ -111,4 +114,9 @@
             android:id="@+id/action_showOldReservations_to_showOldReservation"
             app:destination="@id/showOldReservation" />
     </fragment>
+    <fragment
+        android:id="@+id/showProfileContainer"
+        android:name="com.example.polito_mad_01.ui.ShowProfileContainer"
+        android:label="fragment_show_profile_container"
+        tools:layout="@layout/fragment_show_profile_container" />
 </navigation>

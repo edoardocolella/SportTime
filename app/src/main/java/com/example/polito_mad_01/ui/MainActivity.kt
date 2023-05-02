@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.oldReservations -> {
                     navController.navigate(R.id.showOldReservations)
                 }
+                R.id.prova -> {
+                    navController.navigate(R.id.showProfileContainer)
+                }
             }
             drawerLayout.closeDrawers()
             true
