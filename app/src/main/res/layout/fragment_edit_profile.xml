@@ -218,7 +218,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+               <!-- <LinearLayout
                         android:id="@+id/availabilityLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -325,6 +325,101 @@
 
                         </LinearLayout>
                     </LinearLayout>
+                    -->
+
+                <TextView
+                    android:id="@+id/availabilityLabel_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:padding="10dp"
+                    android:text="@string/availabilityLabel"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <Button
+                        android:id="@+id/mondayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Mo"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/tuesdayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Tu"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/wednesdayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="We"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/thursdayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Th"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/fridayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Fr"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/saturdayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Sa"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/sundayButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:layout_margin="4dp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="Su"
+                        android:textSize="8sp"
+                        android:textColor="#000" />
+
+                </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/contactLayout"
@@ -342,7 +437,8 @@
                             android:padding="10dp"
                             android:text="@string/contactsLabel"
                             android:textAlignment="center"
-                            android:textSize="30sp" />
+                            android:textSize="30sp"
+                            />
 
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -382,6 +478,9 @@
 
 
                     </LinearLayout>
+
+
+
 
                 </LinearLayout>
         </ScrollView>

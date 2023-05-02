@@ -2,9 +2,11 @@ package com.example.polito_mad_01.ui
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -47,6 +49,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.gender, it.gender)
                 setTextView(R.id.location, it.location)
                 setTextView(R.id.favouriteSport_text, it.favouriteSport)
+
+                /*
                 setCheckBox(R.id.mondayAvailability, it.monday_availability)
                 setCheckBox(R.id.tuesdayAvailability, it.tuesday_availability)
                 setCheckBox(R.id.wednesdayAvailability, it.wednesday_availability)
@@ -54,9 +58,32 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setCheckBox(R.id.fridayAvailability, it.friday_availability)
                 setCheckBox(R.id.saturdayAvailability, it.saturday_availability)
                 setCheckBox(R.id.sundayAvailability, it.sunday_availability)
+                */
+                setAllButtons(it)
 
             }
         }
+    }
+
+    private fun setAllButtons(user: User) {
+        setButtonColor(R.id.mondayButton, user.monday_availability, "monday")
+        setButtonColor(R.id.tuesdayButton, user.tuesday_availability, "tuesday")
+        setButtonColor(R.id.wednesdayButton, user.wednesday_availability, "wednesday")
+        setButtonColor(R.id.thursdayButton, user.thursday_availability, "thursday")
+        setButtonColor(R.id.fridayButton, user.friday_availability, "friday")
+        setButtonColor(R.id.saturdayButton, user.saturday_availability, "saturday")
+        setButtonColor(R.id.sundayButton, user.sunday_availability, "sunday")
+    }
+
+    private fun setButtonColor(id: Int, value: Boolean, attribute: String) {
+
+        val button = requireView().findViewById<Button>(id)
+
+        val colorTrue = ContextCompat.getColor(requireContext(), R.color.powder_blue)
+        val colorFalse = ContextCompat.getColor(requireContext(), R.color.gray)
+
+        if(value) button.setBackgroundColor(colorTrue)
+        else button.setBackgroundColor(colorFalse)
     }
 
     private fun setImage(user: User) {

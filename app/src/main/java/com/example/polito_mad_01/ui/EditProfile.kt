@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.*
 import android.os.Build
@@ -18,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
@@ -229,33 +231,40 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
 
             setTextViews(user)
-            setCheckBox(user)
+            //setCheckBox(user)
+            setButtons(user)
             setImage(user)
             setSpinners(user)
         }
 
     }
 
-    private fun setCheckBox(user: User) {
-        setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
-        setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
-        setCheckedBoxViewAndListener(
-            R.id.wednesdayAvailability,
-            user.wednesday_availability,
-            "wednesday"
-        )
-        setCheckedBoxViewAndListener(
-            R.id.thursdayAvailability,
-            user.thursday_availability,
-            "thursday"
-        )
-        setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
-        setCheckedBoxViewAndListener(
-            R.id.saturdayAvailability,
-            user.saturday_availability,
-            "saturday"
-        )
-        setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
+    private fun setButtons(user: User) {
+        setButtonAndListener(R.id.mondayButton, user.monday_availability, "monday")
+        setButtonAndListener(R.id.tuesdayButton, user.tuesday_availability, "tuesday")
+        setButtonAndListener(R.id.wednesdayButton, user.wednesday_availability, "wednesday")
+        setButtonAndListener(R.id.thursdayButton, user.thursday_availability, "thursday")
+        setButtonAndListener(R.id.fridayButton, user.friday_availability, "friday")
+        setButtonAndListener(R.id.saturdayButton, user.saturday_availability, "saturday")
+        setButtonAndListener(R.id.sundayButton, user.sunday_availability, "sunday")
+    }
+
+    private fun setButtonAndListener(id: Int, value: Boolean, attribute: String) {
+        val button = requireView().findViewById<Button>(id)
+        setButtonColor(value, button)
+        button.setOnClickListener {
+            val newValue = !getAvailability(attribute)
+            setAvailability(attribute, newValue)
+            setButtonColor(newValue, button)
+        }
+    }
+
+    private fun setButtonColor(value: Boolean, button: Button) {
+        val colorTrue =  getColor(requireContext(),R.color.powder_blue)
+        val colorFalse = getColor(requireContext(),R.color.gray)
+
+        if(value) button.setBackgroundColor(colorTrue)
+        else button.setBackgroundColor(colorFalse)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -303,14 +312,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             setSpinnerListener { user.favouriteSport = sportArray[it] }
     }
 
-    private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
-        val checkBox = view?.findViewById<CheckBox>(id)
-        checkBox?.isChecked = availability
-        checkBox?.setOnCheckedChangeListener { _, isChecked ->
-            setAvailability(attribute, isChecked)
-        }
-    }
-
     private fun setAvailability(attribute: String, checked: Boolean) {
         when (attribute) {
             "monday" -> vm.user.value?.monday_availability = checked
@@ -321,7 +322,19 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             "saturday" -> vm.user.value?.saturday_availability = checked
             "sunday" -> vm.user.value?.sunday_availability = checked
         }
+    }
 
+    private fun getAvailability(attribute: String):Boolean{
+        return when (attribute) {
+            "monday" -> vm.user.value?.monday_availability!!
+            "tuesday" -> vm.user.value?.tuesday_availability!!
+            "wednesday" -> vm.user.value?.wednesday_availability !!
+            "thursday" -> vm.user.value?.thursday_availability !!
+            "friday" -> vm.user.value?.friday_availability !!
+            "saturday" -> vm.user.value?.saturday_availability !!
+            "sunday" -> vm.user.value?.sunday_availability !!
+            else -> false
+        }
     }
 
     private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
