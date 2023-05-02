@@ -12,6 +12,13 @@ interface ReservationDao {
     @Query("SELECT * from slot WHERE slot.user_id = :user_id")
     fun getReservationByUserId(user_id: Int): Flow<List<SlotWithPlayground>>
 
+    @Transaction
+    @Query("SELECT * from slot " +
+            "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
+            "where user_id = :user_id " +
+            "and date < :date")
+    fun getOldReservationsByUserId(user_id: Int): Flow<List<SlotWithPlayground>>
+
     /** @param date format: yyyy-MM-dd*/
     @Transaction
     @Query("SELECT * from slot " +
@@ -28,6 +35,5 @@ interface ReservationDao {
 
     @Update
     fun updateReservation(slot: Slot)
-
 }
 

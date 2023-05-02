@@ -44,7 +44,6 @@ class Browse : Fragment(R.layout.fragment_browse) {
         spinner.adapter=adapter
 
         vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner) { slots ->
-            println(LocalDate.now().toString())
 
             spinner.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -54,7 +53,9 @@ class Browse : Fragment(R.layout.fragment_browse) {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     selectedFilter = spinner.selectedItem.toString()
+
                     val freeSlots = slots.filter { it.playground.sport_name == selectedFilter }
+                    println(freeSlots)
                     recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
                     if(freeSlots.isEmpty()){
                         recyclerViewBrowse.visibility = View.GONE
