@@ -157,7 +157,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private fun showExitDialog(): Boolean {
         AlertDialog.Builder(activity)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
-            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment) }
+            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment) }
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
@@ -166,7 +166,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         return try {
             isNotValid()
             vm.updateUser()
-            findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
             true
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
@@ -272,15 +272,15 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setBirthdateView(user: User) {
-        val birthdateView = requireView().findViewById<TextView>(R.id.birthday)
-        birthdateView.text = user.birthdate
+        val birthdateView = requireView().findViewById<TextInputLayout>(R.id.birthday)
+        birthdateView.editText?.setText(user.birthdate)
 
         val materialDatePicker=
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select a Date").build()
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-            birthdateView.text = date
+            birthdateView.editText?.setText(date)
             setValue("birthdate", date)
         }
         birthdateView.setOnClickListener {
@@ -290,11 +290,11 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun setSpinners(user: User) {
-        val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
+
+        val textField = requireView().findViewById<TextInputLayout>(R.id.gender)
         val genderArray = resources.getStringArray(R.array.genderArray)
-        genderSpinner?.setSelection(genderArray.indexOf(user.gender))
-        genderSpinner?.onItemSelectedListener =
-            setSpinnerListener { user.gender = genderArray[it] }
+        val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
+        (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
         val sportArray = resources.getStringArray(R.array.sportArray)
@@ -338,10 +338,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
-    /*private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
-        setEditTextView(id, field)
-        setOneListener(id, attribute)
-    }*/
 
 private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
     val textName = requireView().findViewById<TextInputLayout>(id)
@@ -352,22 +348,6 @@ private fun setEditTextViewAndListener(id: Int, field: String?, attribute: Strin
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
             setValue(attribute, s.toString())
     })
-}
-
-
-
-private fun setEditTextView(id: Int, field: String?) {
-field?.let { view?.findViewById<EditText>(id)?.setText(field) }
-}
-
-private fun setOneListener(id: Int, attribute: String) {
-view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
-    override fun afterTextChanged(s: Editable?) {}
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        setValue(attribute, s.toString())
-    }
-})
 }
 
 private fun setImage(user: User) {

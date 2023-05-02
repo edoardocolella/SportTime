@@ -93,7 +93,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save_profile)
-            findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_editProfileContainer)
         return true
     }
 

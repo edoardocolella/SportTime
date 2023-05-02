@@ -9,7 +9,7 @@ import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 
 
-class ShowProfileContainer : Fragment(R.layout.fragment_show_profile_container) {
+class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) {
 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager2
