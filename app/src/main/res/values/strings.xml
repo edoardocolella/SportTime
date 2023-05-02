@@ -69,4 +69,6 @@
     <string name="details">Details</string>
     <string name="delete">Delete</string>
     <string name="freeSlotsLabel">Free Slots</string>
+    <string name="feedBackIcon">feedback</string>
+    <string name="oldReservations">Past reservations</string>
 </resources>

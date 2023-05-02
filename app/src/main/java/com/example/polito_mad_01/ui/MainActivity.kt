@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.browsePage -> {
                     navController.navigate(R.id.browseFragment)
                 }
+                R.id.oldReservations -> {
+                    navController.navigate(R.id.showOldReservations)
+                }
             }
             drawerLayout.closeDrawers()
             true
