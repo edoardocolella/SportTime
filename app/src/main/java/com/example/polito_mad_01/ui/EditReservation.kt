@@ -131,11 +131,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     private fun setNewTime(chosenDate: String, chosenTime: String) {
         val start = chosenTime.split("-")[0]
         val end = chosenTime.split("-")[1]
-
-        println("chosenDate: $chosenDate")
-        println("start: $start")
-        println("end: $end")
-
         vm.setActualTime(chosenDate, start, end)
     }
 
@@ -223,9 +218,9 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
 
-    private fun trySaveData() {
+    private fun trySaveData(){
+
         try {
-            //vm.reservation.value?.slot?.let { vm.updateReservation() }
 
             val actualStartTime = vm.reservation.value?.slot?.start_time!!
             val actualEndTime = vm.reservation.value?.slot?.end_time!!
@@ -233,11 +228,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             val originalStartTime = vm.originalStartTime.value!!
             val originalEndTime = vm.originalEndTime.value!!
             val originalDate = vm.originalDate.value!!
-
-            println("actualStartTime: $actualStartTime")
-            println("actualEndTime: $actualEndTime")
-            println("originalStartTime: $originalStartTime")
-            println("originalEndTime: $originalEndTime")
 
             if (actualStartTime != originalStartTime || actualEndTime != originalEndTime || originalDate != actualDate) {
                 //orario cambiato, necessario aggiornare sia lo slot precedentre che quello nuovo
@@ -251,7 +241,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                 oldReservation.end_time = originalEndTime
                 oldReservation.date = originalDate
 
-                println("oldReservation: $oldReservation")
                 vm.updateReservation(oldReservation)
 
                 vm.getSlotByStartEndTimeDatePlayground(
@@ -263,14 +252,19 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                     val reservationWithIdRequested = it.copy()
                     val newSlot = vm.reservation.value?.slot?.copy()!!
                     newSlot.slot_id = reservationWithIdRequested.slot_id
-                    slotID = reservationWithIdRequested.slot_id
-                    println("newReservation: $newSlot")
                     vm.updateReservation(newSlot)
+
+                    println("slot di partenza: $oldReservation")
+                    println("slot di arrivo: $newSlot")
+
+                    println("SlotID save: ${newSlot.slot_id}")
+                    navigate(newSlot.slot_id)
 
                 }
 
             } else {
                 vm.updateReservation(vm.reservation.value?.slot?.copy()!!)
+                navigate(vm.reservation.value?.slot?.slot_id!!)
             }
 
         } catch (e: Exception) {
@@ -283,14 +277,18 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
         if (item.itemId == R.id.action_save_reservation) {
             trySaveData()
-            val args = bundleOf("slotID" to slotID)
-
-            findNavController().navigate(
-                R.id.action_editReservationFragment_to_showReservationFragment2,
-                args
-            )
         }
         return true
+    }
+
+    private fun navigate(newSlotID: Int){
+        val args = bundleOf("slotID" to newSlotID)
+        println("SlotID move: $newSlotID")
+
+        findNavController().navigate(
+            R.id.action_editReservationFragment_to_showReservationFragment2,
+            args
+        )
     }
 
 }
