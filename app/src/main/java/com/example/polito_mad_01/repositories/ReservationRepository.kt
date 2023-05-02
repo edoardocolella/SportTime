@@ -25,4 +25,11 @@ class ReservationRepository(private val reservationDao: ReservationDao) {
     }
 
     fun updateReservation(slot: Slot) = reservationDao.updateReservation(slot)
+    fun getFreeSlotsByPlayground(playgroundID: Int, today: String): Flow<List<SlotWithPlayground>> {
+        return reservationDao.getPlaygroundFreeSlots(playgroundID, today)
+    }
+
+    fun getSlotByStartEndTime(originalStartTime: String, originalEndTime: String, date:String, playgroundID: Int): Flow<Slot> {
+        return reservationDao.getSlotByStartEndTime(originalStartTime, originalEndTime,date, playgroundID)
+    }
 }
