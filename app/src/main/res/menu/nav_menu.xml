@@ -9,4 +9,7 @@
     <item
         android:id="@+id/browsePage"
         android:title="@string/browse" />
+
+    <item android:id="@+id/oldReservations"
+        android:title="@string/oldReservations" />
 </menu>

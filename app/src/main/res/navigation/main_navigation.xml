@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_editReservationFragment_to_showReservationFragment2"
             app:destination="@id/showReservationFragment" />
+        <action
+            android:id="@+id/action_editReservationFragment_to_reservationsFragment"
+            app:destination="@id/reservationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -74,5 +77,38 @@
         <action
             android:id="@+id/action_placeholder_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_placeholder_to_showOldReservations"
+            app:destination="@id/showOldReservations" />
+    </fragment>
+    <fragment
+        android:id="@+id/showOldReservation"
+        android:name="com.example.polito_mad_01.ui.ShowOldReservation"
+        android:label="fragment_show_old_reservation"
+        tools:layout="@layout/fragment_show_old_reservation" >
+        <action
+            android:id="@+id/action_showOldReservation_to_createFeedback"
+            app:destination="@id/createFeedback" />
+        <action
+            android:id="@+id/action_showOldReservation_to_showOldReservations"
+            app:destination="@id/showOldReservations" />
+    </fragment>
+    <fragment
+        android:id="@+id/createFeedback"
+        android:name="com.example.polito_mad_01.ui.CreateFeedback"
+        android:label="fragment_create_feedback"
+        tools:layout="@layout/fragment_create_feedback" >
+        <action
+            android:id="@+id/action_createFeedback_to_showOldReservation"
+            app:destination="@id/showOldReservation" />
+    </fragment>
+    <fragment
+        android:id="@+id/showOldReservations"
+        android:name="com.example.polito_mad_01.ui.ShowOldReservations"
+        android:label="fragment_show_old_reservations"
+        tools:layout="@layout/fragment_show_old_reservations" >
+        <action
+            android:id="@+id/action_showOldReservations_to_showOldReservation"
+            app:destination="@id/showOldReservation" />
     </fragment>
 </navigation>

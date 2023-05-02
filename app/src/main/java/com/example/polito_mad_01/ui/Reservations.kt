@@ -1,43 +1,33 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.adapters.ReservationAdapter
-import com.example.polito_mad_01.db.Slot
+import com.example.polito_mad_01.adapters.*
 import com.example.polito_mad_01.db.SlotWithPlayground
-import com.example.polito_mad_01.ui.calendar.DayViewContainer
-import com.example.polito_mad_01.ui.calendar.MonthViewContainer
-import com.example.polito_mad_01.viewmodel.ReservationsViewModel
-import com.example.polito_mad_01.viewmodel.ReservationsViewModelFactory
+import com.example.polito_mad_01.ui.calendar.*
+import com.example.polito_mad_01.viewmodel.*
 import com.kizitonwose.calendar.core.*
-import com.kizitonwose.calendar.view.CalendarView
-import com.kizitonwose.calendar.view.MonthDayBinder
-import com.kizitonwose.calendar.view.MonthHeaderFooterBinder
+import com.kizitonwose.calendar.view.*
 import java.text.DateFormatSymbols
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-import java.time.format.TextStyle
+import java.time.*
+import java.time.format.*
 import java.util.*
-import kotlin.collections.HashMap
 
 class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
 
-    lateinit var recyclerView: RecyclerView
+    lateinit var reservationsView: RecyclerView
+    lateinit var freeSlotsView: RecyclerView
     lateinit var noReservations : TextView
+    lateinit var noFreeSlots : TextView
 
     private var reservationMap : MutableMap<String, List<SlotWithPlayground>> = mutableMapOf()
 
@@ -52,21 +42,27 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         super.onViewCreated(view, savedInstanceState)
 
         reservationMap = mutableMapOf()
-        selectedDate = LocalDate.now()
+        val selectedDateString = arguments?.getString("selectedDate")
+        selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
 
         noReservations = view.findViewById(R.id.no_reservations)
-        recyclerView = view.findViewById(R.id.reservationList)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
+        noFreeSlots = view.findViewById(R.id.no_free_slots)
+
+        reservationsView = view.findViewById(R.id.reservationList)
+        reservationsView.layoutManager = LinearLayoutManager(view.context)
+
+        freeSlotsView = view.findViewById(R.id.freeSlotList)
+        freeSlotsView.layoutManager = LinearLayoutManager(view.context)
 
         // p1
-        setupList(view)
+        setupList()
 
         // p3
         setupCalendar(view)
     }
 
 
-    fun setupList(view: View){
+    private fun setupList(){
         vm.getUserReservations(1).observe(viewLifecycleOwner){ list ->
             list.forEach {
                 val date = it.slot.date
@@ -88,8 +84,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
         calendarView.setup(startMonth, endMonth, daysOfWeek.first())
-        calendarView.scrollToMonth(currentMonth)
         selectedDate?.let {
+            calendarView.scrollToMonth(it.yearMonth)
             calendarView.notifyDateChanged(it)
         }
 
@@ -106,9 +102,12 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 container.day = data
 
                 vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
-                    val formattedDate = data.date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                    if(list.map { it.slot.date }.contains(data.date.toString())){
-                        container.showBadge()
+                    if(list.filter{ it.slot.user_id == null }.map { it.slot.date }.contains(data.date.toString())){
+                        container.showFreeBadge()
+                    }
+
+                    if(list.filter{ it.slot.user_id != null }.map { it.slot.date }.contains(data.date.toString())){
+                        container.showReservationBadge()
                     }
 
                 }
@@ -134,9 +133,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
 
-                            recyclerView.visibility = View.GONE
+                            reservationsView.visibility = View.GONE
                             noReservations.visibility = View.VISIBLE
-                            //recyclerView.adapter = ReservationAdapter(listOf(), findNavController())
+
+                            freeSlotsView.visibility = View.GONE
+                            noFreeSlots.visibility = View.VISIBLE
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
@@ -145,13 +146,24 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             val datedList = reservationMap[dateString]
 
 
-                            if(datedList == null || datedList?.size == 0){
-                                recyclerView.visibility = View.GONE
-                                noReservations.visibility = View.VISIBLE
+                            if(datedList == null || datedList.none { it.slot.user_id == null }){
+                                freeSlotsView.visibility = View.GONE
+                                noFreeSlots.visibility = View.VISIBLE
+
                             } else {
-                                recyclerView.visibility = View.VISIBLE
+                                freeSlotsView.visibility = View.VISIBLE
+                                noFreeSlots.visibility = View.GONE
+                                freeSlotsView.adapter = FreeSlotAdapter(datedList.filter{it.slot.user_id == null})
+                            }
+
+                            if(datedList == null || datedList.none { it.slot.user_id != null }){
+                                reservationsView.visibility = View.GONE
+                                noReservations.visibility = View.VISIBLE
+
+                            } else {
+                                reservationsView.visibility = View.VISIBLE
                                 noReservations.visibility = View.GONE
-                                recyclerView.adapter = ReservationAdapter(datedList?: listOf(), findNavController())
+                                reservationsView.adapter = ReservationAdapter(datedList.filter{it.slot.user_id != null}, findNavController())
                             }
 
 

@@ -19,7 +19,7 @@
     <string name="intermediateLabel">Intermediate</string>
     <string name="beginnerLabel">Beginner</string>
     <string name="availabilityLabel">Availability</string>
-    <string name="serviceLabel">Service</string>
+    <string name="serviceLabel">Available services</string>
     <string name="mondayLabel">Monday</string>
     <string name="tuesdayLabel">Tuesday</string>
     <string name="wednesdayLabel">Wednesday</string>
@@ -67,4 +67,8 @@
     <string name="noFreeSlots">No free reservation slots found for this day, try another one!</string>
     <string name="services">Services</string>
     <string name="details">Details</string>
+    <string name="delete">Delete</string>
+    <string name="freeSlotsLabel">Free Slots</string>
+    <string name="feedBackIcon">feedback</string>
+    <string name="oldReservations">Past reservations</string>
 </resources>
