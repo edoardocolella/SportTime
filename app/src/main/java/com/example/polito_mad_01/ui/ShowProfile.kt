@@ -24,7 +24,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setHasOptionsMenu(true)
+        if(savedInstanceState == null)
+            setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

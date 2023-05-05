@@ -42,10 +42,10 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
 
         requireActivity().onBackPressedDispatcher
             .addCallback(this) { showExitDialog() }
@@ -57,18 +57,6 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setAllView(view)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_edit_profile, menu)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_save_profile)
-            return trySaveData()
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onCreateContextMenu(
         menu: ContextMenu,
