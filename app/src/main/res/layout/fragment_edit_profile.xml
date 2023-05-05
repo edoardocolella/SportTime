@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="16dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
@@ -17,24 +18,30 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImage_imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/pictureDescription"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:src="@drawable/face_48px"
             app:civ_border_color="@color/columbia_blue"
-            app:civ_border_width="4dp" />
+            app:civ_border_width="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
             android:layout_margin="6dp"
-            android:layout_weight="1"
             android:contentDescription="@string/takePhoto"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/photo_camera_48px" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -181,7 +188,8 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:inputType="none"
+                        tools:ignore="LabelFor" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,7 +207,8 @@
                     <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="none" />
+                        android:inputType="none"
+                        tools:ignore="LabelFor" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -273,10 +282,11 @@
                     android:layout_margin="4dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Mo"
+                    android:text="@string/mondayInitials"
                     style="?android:attr/buttonBarButtonStyle"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/tuesdayButton"
@@ -286,9 +296,10 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="Tu"
+                    android:text="@string/tuesdayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/wednesdayButton"
@@ -298,9 +309,10 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="We"
+                    android:text="@string/wednesdayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/thursdayButton"
@@ -310,9 +322,10 @@
                     android:layout_weight="1"
                     style="?android:attr/buttonBarButtonStyle"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="Th"
+                    android:text="@string/thursdayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/fridayButton"
@@ -322,9 +335,10 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="Fr"
+                    android:text="@string/fridayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/saturdayButton"
@@ -334,9 +348,10 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="Sa"
+                    android:text="@string/saturdayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
                 <Button
                     android:id="@+id/sundayButton"
@@ -346,14 +361,16 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|center_horizontal"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="Su"
+                    android:text="@string/sundayInitials"
                     android:textColor="#000"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    tools:ignore="SmallSp" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

@@ -72,4 +72,11 @@
     <string name="feedBackIcon">feedback</string>
     <string name="oldReservations">Past reservations</string>
     <string name="skills">Skills</string>
+    <string name="mondayInitials">Mo</string>
+    <string name="tuesdayInitials">Tu</string>
+    <string name="wednesdayInitials">We</string>
+    <string name="thursdayInitials">Th</string>
+    <string name="fridayInitials">Fr</string>
+    <string name="saturdayInitials">Sa</string>
+    <string name="sundayInitials">Su</string>
 </resources>
