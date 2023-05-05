@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.textfield.TextInputLayout
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ShowProfile : Fragment(R.layout.fragment_profile) {
@@ -50,15 +51,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.location, it.location)
                 setTextView(R.id.favouriteSport_text, it.favouriteSport)
 
-                /*
-                setCheckBox(R.id.mondayAvailability, it.monday_availability)
-                setCheckBox(R.id.tuesdayAvailability, it.tuesday_availability)
-                setCheckBox(R.id.wednesdayAvailability, it.wednesday_availability)
-                setCheckBox(R.id.thursdayAvailability, it.thursday_availability)
-                setCheckBox(R.id.fridayAvailability, it.friday_availability)
-                setCheckBox(R.id.saturdayAvailability, it.saturday_availability)
-                setCheckBox(R.id.sundayAvailability, it.sunday_availability)
-                */
                 setAllButtons(it)
 
             }
@@ -97,10 +89,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         }
 
          */
-    }
-
-    private fun setCheckBox(id: Int, field: Boolean) {
-        view?.findViewById<CheckBox>(id)?.isChecked = field
     }
 
 

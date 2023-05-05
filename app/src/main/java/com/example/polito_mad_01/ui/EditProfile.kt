@@ -45,6 +45,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         requireActivity().onBackPressedDispatcher
             .addCallback(this) { showExitDialog() }
@@ -53,13 +54,12 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
-
-        setHasOptionsMenu(true)
-        setAllView()
+        setAllView(view)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_edit_profile, menu)
     }
 
@@ -227,10 +227,10 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setAllView() {
+    private fun setAllView(view: View) {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
 
-            setTextViews(user)
+            setTextViews(view,user)
             //setCheckBox(user)
             setButtons(user)
             setImage(user)
@@ -268,7 +268,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setTextViews(user: User) {
+    private fun setTextViews(view: View, user: User) {
 
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
@@ -277,12 +277,14 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
-        setBirthdateView(user)
+        setBirthdateView(view,user)
     }
 
-    private fun setBirthdateView(user: User) {
-        val birthdateView = requireView().findViewById<TextInputLayout>(R.id.birthday)
+    private fun setBirthdateView(view:View,user: User) {
+        val birthdateView = view.findViewById<TextInputLayout>(R.id.birthday)
         birthdateView.editText?.setText(user.birthdate)
+
+        println(birthdateView)
 
         val materialDatePicker=
             MaterialDatePicker.Builder.datePicker()
@@ -292,7 +294,8 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             birthdateView.editText?.setText(date)
             setValue("birthdate", date)
         }
-        birthdateView.setOnClickListener {
+
+        birthdateView.editText?.setOnClickListener {
             materialDatePicker.show(childFragmentManager, "DATE_PICKER")
         }
 
