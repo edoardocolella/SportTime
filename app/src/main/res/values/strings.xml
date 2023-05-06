@@ -68,7 +68,9 @@
     <string name="services">Services</string>
     <string name="details">Details</string>
     <string name="delete">Delete</string>
+    <string name="createReview">Create review</string>
     <string name="freeSlotsLabel">Free Slots</string>
     <string name="feedBackIcon">feedback</string>
     <string name="oldReservations">Past reservations</string>
+    <string name="noOldReservations">It seems you never participated to any activity</string>
 </resources>

@@ -12,8 +12,12 @@ class ReservationRepository(private val reservationDao: ReservationDao) {
         return reservationDao.getReservationByUserId(userID)
     }
 
-    fun getOldReservationsByUserId(user_id: Int): Flow<List<SlotWithPlayground>>{
-        return reservationDao.getOldReservationsByUserId(user_id)
+    fun getOldReservationsByUserId(user_id: Int, date: String): Flow<List<SlotWithPlayground>>{
+        return reservationDao.getOldReservationsByUserId(user_id, date)
+    }
+
+    fun getOldReservationById(id: Int): Flow<SlotWithPlayground>{
+        return reservationDao.getOldReservationById(id)
     }
 
     fun getReservationById(id: Int): Flow<SlotWithPlayground> {

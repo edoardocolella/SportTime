@@ -52,7 +52,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                 "Football" -> image.setImageResource(R.drawable.football_photo)
                 "Basket" -> image.setImageResource(R.drawable.basketball_photo)
                 "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-                "Ping Pong" -> image.setImageResource(R.drawable.pingping_photo)
+                "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
                 else -> image.setImageResource(R.drawable.sport_photo)
             }
 

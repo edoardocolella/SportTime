@@ -13,7 +13,6 @@ class ReservationsViewModel(private val reservationsRepository: ReservationRepos
         return reservationsRepository.getReservationByUserId(userID).asLiveData()
     }
 
-
     fun getAllReservations() : LiveData<List<Slot>>{
         return reservationsRepository.getAllReservations().asLiveData()
     }

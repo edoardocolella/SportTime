@@ -18,8 +18,8 @@ import com.example.polito_mad_01.viewmodel.*
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     private var slotID = 0
 
-    private val vm: ShowReservationsViewModel by viewModels {
-        ShowReservationsViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
+    private val vm: ShowOldReservationViewModel by viewModels {
+        ShowOldReservationViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,26 +32,23 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
         super.onViewCreated(view, savedInstanceState)
         slotID = requireArguments().getInt("slotID")
 
-        vm.getReservation(slotID).observe(viewLifecycleOwner) {
+        vm.getOldReservationById(slotID).observe(viewLifecycleOwner) {
             requireActivity().onBackPressedDispatcher
                 .addCallback(this) {
-                    val args = bundleOf(
-                        "selectedDate" to it.slot.date
-                    )
-                    findNavController().navigate(R.id.action_showReservationFragment2_to_reservationsFragment, args)
+                    findNavController().navigate(R.id.action_showOldReservation_to_showOldReservations)
                 }
                 .isEnabled = true
 
-            setTextView(R.id.playgroundName, it.playground.name)
-            setTextView(R.id.playgroundLocation, it.playground.location)
-            setTextView(R.id.playgroundSport, it.playground.sport_name)
+            setTextView(R.id.oldResPlaygroundName, it.playground.name)
+            setTextView(R.id.oldResPlaygroundLocation, it.playground.location)
+            setTextView(R.id.oldResPlaygroundSport, it.playground.sport_name)
 
-            val image : ImageView = view.findViewById(R.id.playgroundImage)
+            val image : ImageView = view.findViewById(R.id.oldResSportImage)
             when(it.playground.sport_name) {
                 "Football" -> image.setImageResource(R.drawable.football_photo)
                 "Basket" -> image.setImageResource(R.drawable.basketball_photo)
                 "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-                "Ping Pong" -> image.setImageResource(R.drawable.pingping_photo)
+                "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
                 else -> image.setImageResource(R.drawable.sport_photo)
             }
 

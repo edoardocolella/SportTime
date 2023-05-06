@@ -1,14 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.ShowOldReservation">
+    
+    <ImageView
+        android:id="@+id/oldResSportImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/oldReservationScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"
+        tools:src="@tools:sample/backgrounds/scenic" />
+    
+    <ScrollView
+        android:id="@+id/oldReservationScroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/oldResSportImage"
+        app:layout_constraintVertical_weight="2">
+    
+        <LinearLayout
+            android:id="@+id/oldReservationInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+    
+            <TextView
+                android:id="@+id/oldResPlaygroundName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+    
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
+    
+            <TextView
+                android:id="@+id/oldResPlaygroundSport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/directions_run_48px" />
+    
+            <TextView
+                android:id="@+id/oldResPlaygroundLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/home_pin_48px" />
+    
+            <TextView
+                android:id="@+id/oldResPlaygroundPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="4dp"
+                android:textSize="20sp"
+                app:drawableLeftCompat="@drawable/payments_48px" />
+    
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
+    
+            <TextView
+                android:id="@+id/oldResDetailsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/details"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+    
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+    
+                <TextView
+                    android:id="@+id/oldResSlotDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/calendar_month_48px" />
+    
+                <TextView
+                    android:id="@+id/oldResSlotTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="4dp"
+                    android:textSize="20sp"
+                    app:drawableStartCompat="@drawable/schedule_48px" />
+    
+            </LinearLayout>
+    
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
+    
+            <TextView
+                android:id="@+id/sldResServiceLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/serviceLabel"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+    
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/oldResServicesView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+            <Button
+                android:id="@+id/Review_Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/createReview"
+                />
+    
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

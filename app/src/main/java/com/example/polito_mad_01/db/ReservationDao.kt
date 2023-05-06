@@ -17,7 +17,13 @@ interface ReservationDao {
             "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
             "where user_id = :user_id " +
             "and date < :date")
-    fun getOldReservationsByUserId(user_id: Int): Flow<List<SlotWithPlayground>>
+    fun getOldReservationsByUserId(user_id: Int, date: String): Flow<List<SlotWithPlayground>>
+
+    @Transaction
+    @Query("SELECT * from slot " +
+            "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
+            "where slot_id = :id ")
+    fun getOldReservationById(id: Int): Flow<SlotWithPlayground>
 
     /** @param date format: yyyy-MM-dd*/
     @Transaction
