@@ -13,5 +13,6 @@
     <color name="platinum">#FFDAE3E5</color>
 
     <color name="black">#FF000000</color>
+    <color name="gray">#E9E9EB</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -5,25 +5,30 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.*
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.*
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
-import de.hdodenhof.circleimageview.CircleImageView
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.textfield.TextInputLayout
 import java.util.*
+
 
 class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
@@ -37,6 +42,8 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
 
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,22 +54,9 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
-
-        setHasOptionsMenu(true)
-        setAllView()
+        setAllView(view)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_edit_profile, menu)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_save_profile)
-            return trySaveData()
-        return super.onOptionsItemSelected(item)
-    }
 
     override fun onCreateContextMenu(
         menu: ContextMenu,
@@ -153,7 +147,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     private fun showExitDialog(): Boolean {
         AlertDialog.Builder(activity)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
-            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment) }
+            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment) }
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
@@ -162,7 +156,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         return try {
             isNotValid()
             vm.updateUser()
-            findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
             true
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
@@ -186,7 +180,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
 
         try {
-            val formatter = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             formatter.parse(user.birthdate)
         } catch (e: ParseException) {
             throw Exception("Birthdate should be in dd-MM-yyyy format")
@@ -220,40 +214,50 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
-    private fun setAllView() {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setAllView(view: View) {
         vm.getUser(1).observe(viewLifecycleOwner) { user ->
 
-            setTextViews(user)
-            setCheckBox(user)
+            setTextViews(view,user)
+            //setCheckBox(user)
+            setButtons(user)
             setImage(user)
             setSpinners(user)
         }
 
     }
 
-    private fun setCheckBox(user: User) {
-        setCheckedBoxViewAndListener(R.id.mondayAvailability, user.monday_availability, "monday")
-        setCheckedBoxViewAndListener(R.id.tuesdayAvailability, user.tuesday_availability, "tuesday")
-        setCheckedBoxViewAndListener(
-            R.id.wednesdayAvailability,
-            user.wednesday_availability,
-            "wednesday"
-        )
-        setCheckedBoxViewAndListener(
-            R.id.thursdayAvailability,
-            user.thursday_availability,
-            "thursday"
-        )
-        setCheckedBoxViewAndListener(R.id.fridayAvailability, user.friday_availability, "friday")
-        setCheckedBoxViewAndListener(
-            R.id.saturdayAvailability,
-            user.saturday_availability,
-            "saturday"
-        )
-        setCheckedBoxViewAndListener(R.id.sundayAvailability, user.sunday_availability, "sunday")
+    private fun setButtons(user: User) {
+        setButtonAndListener(R.id.mondayButton, user.monday_availability, "monday")
+        setButtonAndListener(R.id.tuesdayButton, user.tuesday_availability, "tuesday")
+        setButtonAndListener(R.id.wednesdayButton, user.wednesday_availability, "wednesday")
+        setButtonAndListener(R.id.thursdayButton, user.thursday_availability, "thursday")
+        setButtonAndListener(R.id.fridayButton, user.friday_availability, "friday")
+        setButtonAndListener(R.id.saturdayButton, user.saturday_availability, "saturday")
+        setButtonAndListener(R.id.sundayButton, user.sunday_availability, "sunday")
     }
 
-    private fun setTextViews(user: User) {
+    private fun setButtonAndListener(id: Int, value: Boolean, attribute: String) {
+        val button = requireView().findViewById<Button>(id)
+        setButtonColor(value, button)
+        button.setOnClickListener {
+            val newValue = !getAvailability(attribute)
+            setAvailability(attribute, newValue)
+            setButtonColor(newValue, button)
+        }
+    }
+
+    private fun setButtonColor(value: Boolean, button: Button) {
+        val colorTrue =  getColor(requireContext(),R.color.powder_blue)
+        val colorFalse = getColor(requireContext(),R.color.gray)
+
+        if(value) button.setBackgroundColor(colorTrue)
+        else button.setBackgroundColor(colorFalse)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setTextViews(view: View, user: User) {
+
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
@@ -261,29 +265,42 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
-        setEditTextViewAndListener(R.id.birthday, user.birthdate, "birthdate")
+        setBirthdateView(view,user)
+    }
+
+    private fun setBirthdateView(view:View,user: User) {
+        val birthdateView = view.findViewById<TextInputLayout>(R.id.birthday)
+        birthdateView.editText?.setText(user.birthdate)
+
+        println(birthdateView)
+
+        val materialDatePicker=
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date").build()
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
+            birthdateView.editText?.setText(date)
+            setValue("birthdate", date)
+        }
+
+        birthdateView.editText?.setOnClickListener {
+            materialDatePicker.show(childFragmentManager, "DATE_PICKER")
+        }
+
     }
 
     private fun setSpinners(user: User) {
-        val genderSpinner = view?.findViewById<Spinner>(R.id.spinner)
+
+        val textField = requireView().findViewById<TextInputLayout>(R.id.gender)
         val genderArray = resources.getStringArray(R.array.genderArray)
-        genderSpinner?.setSelection(genderArray.indexOf(user.gender))
-        genderSpinner?.onItemSelectedListener =
-            setSpinnerListener { user.gender = genderArray[it] }
+        val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
+        (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
         val sportArray = resources.getStringArray(R.array.sportArray)
         sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
         sportSpinner?.onItemSelectedListener =
             setSpinnerListener { user.favouriteSport = sportArray[it] }
-    }
-
-    private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
-        val checkBox = view?.findViewById<CheckBox>(id)
-        checkBox?.isChecked = availability
-        checkBox?.setOnCheckedChangeListener { _, isChecked ->
-            setAvailability(attribute, isChecked)
-        }
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {
@@ -296,7 +313,19 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             "saturday" -> vm.user.value?.saturday_availability = checked
             "sunday" -> vm.user.value?.sunday_availability = checked
         }
+    }
 
+    private fun getAvailability(attribute: String):Boolean{
+        return when (attribute) {
+            "monday" -> vm.user.value?.monday_availability!!
+            "tuesday" -> vm.user.value?.tuesday_availability!!
+            "wednesday" -> vm.user.value?.wednesday_availability !!
+            "thursday" -> vm.user.value?.thursday_availability !!
+            "friday" -> vm.user.value?.friday_availability !!
+            "saturday" -> vm.user.value?.saturday_availability !!
+            "sunday" -> vm.user.value?.sunday_availability !!
+            else -> false
+        }
     }
 
     private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
@@ -313,33 +342,26 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         }
     }
 
-    private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
-        setEditTextView(id, field)
-        setOneListener(id, attribute)
-    }
 
-    private fun setEditTextView(id: Int, field: String?) {
-        field?.let { view?.findViewById<EditText>(id)?.setText(field) }
-    }
+private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
+    val textName = requireView().findViewById<TextInputLayout>(id)
+    textName.editText?.setText(field)
+    textName.editText?.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {}
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
+            setValue(attribute, s.toString())
+    })
+}
 
-    private fun setOneListener(id: Int, attribute: String) {
-        view?.findViewById<EditText>(id)?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                setValue(attribute, s.toString())
-            }
-        })
-    }
-
-    private fun setImage(user: User) {
-        /*try {
-            val uri = user.image_uri?.toUri()
-            val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
-            imageView?.setImageURI(uri)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-         */
-    }
+private fun setImage(user: User) {
+/*try {
+    val uri = user.image_uri?.toUri()
+    val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
+    imageView?.setImageURI(uri)
+} catch (e: Exception) {
+    e.printStackTrace()
+}
+ */
+}
 }

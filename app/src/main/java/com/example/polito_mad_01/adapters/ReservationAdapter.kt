@@ -37,6 +37,7 @@ class ReservationAdapter(
 
         private val reservationItem: View = view.findViewById(R.id.reservationItem)
 
+
         private fun findTextViewById(id: Int): TextView {
             return itemView.findViewById(id)
         }

@@ -26,11 +26,7 @@
         android:id="@+id/editProfileFragment"
         android:name="com.example.polito_mad_01.ui.EditProfile"
         android:label="fragment_edit_profile"
-        tools:layout="@layout/fragment_edit_profile" >
-        <action
-            android:id="@+id/action_editProfileFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/editReservationFragment"
         android:name="com.example.polito_mad_01.ui.EditReservation"
@@ -49,8 +45,8 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
+            android:id="@+id/action_profileFragment_to_editProfileContainer"
+            app:destination="@id/editProfileContainer" />
     </fragment>
     <fragment
         android:id="@+id/showReservationFragment"
@@ -111,4 +107,24 @@
             android:id="@+id/action_showOldReservations_to_showOldReservation"
             app:destination="@id/showOldReservation" />
     </fragment>
+    <fragment
+        android:id="@+id/editProfileContainer"
+        android:name="com.example.polito_mad_01.ui.EditProfileContainer"
+        android:label="fragment_show_profile_container"
+        tools:layout="@layout/fragment_show_profile_container" >
+        <action
+            android:id="@+id/action_editProfileContainer_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_editProfileContainer_to_showSkill"
+            app:destination="@id/showSkill" />
+        <action
+            android:id="@+id/action_editProfileContainer_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showSkill"
+        android:name="com.example.polito_mad_01.ui.ShowSkill"
+        android:label="fragment_show_skill"
+        tools:layout="@layout/fragment_show_skill" />
 </navigation>
