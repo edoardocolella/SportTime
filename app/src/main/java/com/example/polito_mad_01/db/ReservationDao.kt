@@ -29,7 +29,7 @@ interface ReservationDao {
     @Transaction
     @Query("SELECT * from slot " +
             "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
-            "where user_id is not null " +
+            "where user_id is null " +
             "and date > :date")
     fun getFreeSlots(date:String): Flow<List<SlotWithPlayground>>
 
@@ -41,5 +41,22 @@ interface ReservationDao {
 
     @Update
     fun updateReservation(slot: Slot)
+
+    @Transaction
+    @Query("SELECT * from slot " +
+            "INNER JOIN playground ON slot.playground_id = playground.playground_id " +
+            "where user_id is null " +
+            "and date > :today " +
+            "and slot.playground_id = :playgroundID")
+    fun getPlaygroundFreeSlots(playgroundID: Int, today: String): Flow<List<SlotWithPlayground>>
+
+
+    @Query("SELECT * from slot " +
+            "WHERE slot.start_time = :originalStartTime " +
+            "and slot.end_time = :originalEndTime " +
+            "and slot.date = :date " +
+            "and slot.playground_id = :playgroundID")
+    fun getSlotByStartEndTime(originalStartTime: String, originalEndTime: String, date: String, playgroundID: Int): Flow<Slot>
+
 }
 
