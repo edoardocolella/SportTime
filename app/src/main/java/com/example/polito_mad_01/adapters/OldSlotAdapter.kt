@@ -16,7 +16,7 @@ class OldSlotAdapter(
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OldSlotHolder{
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.freeslot_item_layout ,parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.oldslot_item_layout ,parent, false)
         return OldSlotHolder(v, navController)
     }
 
@@ -42,7 +42,7 @@ class OldSlotAdapter(
             oldSlotItem.setOnClickListener{
                 navController.navigate(
                     R.id.action_showOldReservations_to_showOldReservation, bundleOf(
-                        "slotId" to fs.slot.slot_id
+                        "slotID" to fs.slot.slot_id
                     )
                 )
             }

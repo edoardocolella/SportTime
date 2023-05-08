@@ -18,9 +18,9 @@ class ShowOldReservationViewModel(private val repository: ReservationRepository)
 class ShowOldReservationViewModelFactory(private val repository: ReservationRepository) :
     ViewModelProvider.Factory{
     override fun <T: ViewModel> create(modelClass: Class<T>): T{
-        if (modelClass.isAssignableFrom(ShowOldReservationsViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(ShowOldReservationViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ShowOldReservationsViewModel(repository) as T
+            return ShowOldReservationViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

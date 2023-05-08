@@ -30,6 +30,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         slotID = requireArguments().getInt("slotID")
 
         vm.getOldReservationById(slotID).observe(viewLifecycleOwner) {
@@ -66,7 +67,8 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             if(it.slot.locker_room) services.add("- Locker room")
             println(services)
 
-            view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
+            view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
+                println("------------List: ${list}------------")
                 list.layoutManager = LinearLayoutManager(view.context)
                 list.adapter = ServicesAdapter(services)
             }

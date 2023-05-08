@@ -9,7 +9,7 @@
 
     <ImageView
 
-        android:id="@+id/reservationSportImage"
+        android:id="@+id/oldResSportImage"
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:padding="4dp"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="6"
-        app:layout_constraintStart_toEndOf="@+id/reservationSportImage"
+        app:layout_constraintStart_toEndOf="@+id/oldResSportImage"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/reservationPlayground"
+                android:id="@+id/oldResPlaygroundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Playground Name" />
@@ -56,14 +56,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/reservationDate"
+                    android:id="@+id/oldResSlotDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Date" />
 
                 <TextView
-                    android:id="@+id/reservationTime"
+                    android:id="@+id/oldResSlotTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

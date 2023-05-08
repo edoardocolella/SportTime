@@ -32,7 +32,7 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
 
         noOldSlots = view.findViewById(R.id.no_old_res_tv)
         noOldSlots.visibility=View.GONE
-        recyclerViewOldRes =view.findViewById(R.id.recyclerViewBrowse)
+        recyclerViewOldRes =view.findViewById(R.id.oldResRecyclerView)
         recyclerViewOldRes.layoutManager = LinearLayoutManager(view.context)
 
         vm.getOldReservations(1, LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
