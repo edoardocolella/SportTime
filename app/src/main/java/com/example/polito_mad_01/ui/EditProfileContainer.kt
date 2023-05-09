@@ -1,19 +1,23 @@
 package com.example.polito_mad_01.ui
 
+import android.icu.text.SimpleDateFormat
+import android.net.ParseException
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*
-
+import java.util.*
 
 
 class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) {
@@ -40,8 +44,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_save_profile) {
-            return true
-            //return trySaveData()
+            return trySaveData()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -66,5 +69,54 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
             }
         })
 
+    }
+
+    private fun trySaveData(): Boolean {
+        return try {
+            isNotValid()
+            vm.updateUser()
+            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
+            true
+        } catch (e: Exception) {
+            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
+            false
+        }
+    }
+
+
+    private fun isNotValid() {
+        val user = vm.user.value!!.user
+        fieldIsValid(user.name, "Full Name")
+        fieldIsValid(user.nickname, "Nickname")
+        fieldIsValid(user.description, "Description")
+        fieldIsValid(user.email, "Email")
+        fieldIsValid(user.phoneNumber, "Phone Number")
+        fieldIsValid(user.location, "Location")
+        fieldIsValid(user.birthdate, "BirthDate")
+
+        val regexMail = Regex("^[A-Za-z\\d+_.-]+@(.+)\$")
+        if (!regexMail.matches(user.email)) {
+            throw Exception("invalid email format")
+        }
+
+        try {
+            val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            formatter.parse(user.birthdate)
+        } catch (e: ParseException) {
+            throw Exception("Birthdate should be in dd-MM-yyyy format")
+        }
+
+        val regexPhone = Regex("^\\d{10}\$")
+        if (!regexPhone.matches(user.phoneNumber)) {
+            throw Exception("Phone number should be a 10 digit number")
+        }
+
+        //imageUri?.let { user.image_uri = it.toString() }
+
+    }
+
+    private fun fieldIsValid(field: String?, fieldName: String) {
+        if (field.isNullOrEmpty())
+            throw Exception("$fieldName is invalid")
     }
 }

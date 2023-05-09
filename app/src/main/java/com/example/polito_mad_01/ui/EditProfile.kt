@@ -145,54 +145,6 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         return true
     }
 
-    private fun trySaveData(): Boolean {
-        return try {
-            isNotValid()
-            vm.updateUser()
-            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
-            true
-        } catch (e: Exception) {
-            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
-            false
-        }
-    }
-
-    private fun isNotValid() {
-        val user = vm.user.value!!.user
-        fieldIsValid(user.name, "Full Name")
-        fieldIsValid(user.nickname, "Nickname")
-        fieldIsValid(user.description, "Description")
-        fieldIsValid(user.email, "Email")
-        fieldIsValid(user.phoneNumber, "Phone Number")
-        fieldIsValid(user.location, "Location")
-        fieldIsValid(user.birthdate, "BirthDate")
-
-        val regexMail = Regex("^[A-Za-z\\d+_.-]+@(.+)\$")
-        if (!regexMail.matches(user.email)) {
-            throw Exception("invalid email format")
-        }
-
-        try {
-            val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            formatter.parse(user.birthdate)
-        } catch (e: ParseException) {
-            throw Exception("Birthdate should be in dd-MM-yyyy format")
-        }
-
-        val regexPhone = Regex("^\\d{10}\$")
-        if (!regexPhone.matches(user.phoneNumber)) {
-            throw Exception("Phone number should be a 10 digit number")
-        }
-
-        imageUri?.let { user.image_uri = it.toString() }
-
-    }
-
-    private fun fieldIsValid(field: String?, fieldName: String) {
-        if (field.isNullOrEmpty())
-            throw Exception("$fieldName is invalid")
-    }
-
     private fun setValue(attribute: String, newValue: String) {
         when (attribute) {
             "name" -> vm.user.value?.user?.name = newValue
