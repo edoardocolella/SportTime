@@ -6,10 +6,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
+import com.example.polito_mad_01.viewmodel.*
+
 
 
 class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) {
@@ -17,6 +21,10 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager2
     lateinit var showProfilePageAdapter: ShowProfilePageAdapter
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +51,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
 
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.view_pager)
-        showProfilePageAdapter = ShowProfilePageAdapter(requireActivity())
+        showProfilePageAdapter = ShowProfilePageAdapter(requireActivity(), vm)
         viewPager.adapter = showProfilePageAdapter
 
         tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

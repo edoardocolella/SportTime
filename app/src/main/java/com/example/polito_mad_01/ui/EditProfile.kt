@@ -2,10 +2,8 @@ package com.example.polito_mad_01.ui
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.*
 import android.os.Build
@@ -30,18 +28,13 @@ import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 
-class EditProfile : Fragment(R.layout.fragment_edit_profile) {
-
-    private val vm: EditProfileViewModel by viewModels {
-        EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
-    }
+class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
 
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
