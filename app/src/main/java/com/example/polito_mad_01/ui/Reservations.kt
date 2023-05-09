@@ -8,12 +8,16 @@ import androidx.core.view.children
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.*
 import com.example.polito_mad_01.db.SlotWithPlayground
 import com.example.polito_mad_01.ui.calendar.*
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.*
 import java.text.DateFormatSymbols
@@ -28,6 +32,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     lateinit var freeSlotsView: RecyclerView
     lateinit var noReservations : TextView
     lateinit var noFreeSlots : TextView
+
+    lateinit var tabLayout : TabLayout
+    lateinit var viewPager : ViewPager2
 
     private var reservationMap : MutableMap<String, List<SlotWithPlayground>> = mutableMapOf()
 
@@ -54,6 +61,12 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         freeSlotsView = view.findViewById(R.id.freeSlotList)
         freeSlotsView.layoutManager = LinearLayoutManager(view.context)
 
+
+        tabLayout =  view.findViewById(R.id.reservationTabLayout)
+        viewPager = view.findViewById(R.id.reservationViewPager)
+        viewPager.adapter = DaySlotAdapter(this, listOf())
+
+
         // p1
         setupList()
 
@@ -62,14 +75,17 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setupList(){
-        vm.getUserReservations(1).observe(viewLifecycleOwner){ list ->
+        vm.getUserSlots(1).observe(viewLifecycleOwner){ list ->
             list.forEach {
                 val date = it.slot.date
                 val reservations = reservationMap.getOrDefault(date, listOf())
 
                 reservationMap[date] = reservations.plus(it)
             }
+
+            setList()
         }
     }
 
@@ -101,7 +117,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
 
-                vm.getUserReservations(1).observe(viewLifecycleOwner) { list ->
+                vm.getUserSlots(1).observe(viewLifecycleOwner) { list ->
                     if(list.filter{ it.slot.user_id == null }.map { it.slot.date }.contains(data.date.toString())){
                         container.showFreeBadge()
                     }
@@ -132,40 +148,19 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             // If the user clicks the same date, clear selection.
                             selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
+                            setList()
 
                             reservationsView.visibility = View.GONE
                             noReservations.visibility = View.VISIBLE
 
                             freeSlotsView.visibility = View.GONE
                             noFreeSlots.visibility = View.VISIBLE
+
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
 
-                            val dateString = selectedDate!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                            val datedList = reservationMap[dateString]
-
-
-                            if(datedList == null || datedList.none { it.slot.user_id == null }){
-                                freeSlotsView.visibility = View.GONE
-                                noFreeSlots.visibility = View.VISIBLE
-
-                            } else {
-                                freeSlotsView.visibility = View.VISIBLE
-                                noFreeSlots.visibility = View.GONE
-                                freeSlotsView.adapter = FreeSlotAdapter(datedList.filter{it.slot.user_id == null})
-                            }
-
-                            if(datedList == null || datedList.none { it.slot.user_id != null }){
-                                reservationsView.visibility = View.GONE
-                                noReservations.visibility = View.VISIBLE
-
-                            } else {
-                                reservationsView.visibility = View.VISIBLE
-                                noReservations.visibility = View.GONE
-                                reservationsView.adapter = ReservationAdapter(datedList.filter{it.slot.user_id != null}, findNavController())
-                            }
-
+                            setList()
 
                             if (currentSelection != null) {
                                 calendarView.notifyDateChanged(currentSelection)
@@ -201,5 +196,45 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             }
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setList(){
+        val dateString = selectedDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val slotList = reservationMap[dateString] ?: listOf()
 
-}
+        viewPager.adapter = DaySlotAdapter(this, slotList)
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tabLayout.visibility = View.VISIBLE
+            when {
+                slotList.isEmpty() -> tabLayout.visibility = View.INVISIBLE
+                slotList.none { it.slot.user_id == null } -> tab.text ="Reservations"
+                slotList.none { it.slot.user_id != null } -> tab.text ="Free slots"
+                else -> when(position){
+                    0 -> tab.text = "Reservations"
+                    1 -> tab.text = "Free slots"
+                }
+            }
+        }.attach()
+    }
+
+/*        val datedList = slotList
+        if(datedList == null || datedList.none { it.slot.user_id == null }){
+            freeSlotsView.visibility = View.GONE
+            noFreeSlots.visibility = View.VISIBLE
+
+        } else {
+            freeSlotsView.visibility = View.VISIBLE
+            noFreeSlots.visibility = View.GONE
+            freeSlotsView.adapter = FreeSlotAdapter(datedList.filter{it.slot.user_id == null})
+        }
+
+        if(datedList == null || datedList.none { it.slot.user_id != null }){
+            reservationsView.visibility = View.GONE
+            noReservations.visibility = View.VISIBLE
+
+        } else {
+            reservationsView.visibility = View.VISIBLE
+            noReservations.visibility = View.GONE
+            reservationsView.adapter = ReservationAdapter(datedList.filter{it.slot.user_id != null}, findNavController())
+        }*/
+    }

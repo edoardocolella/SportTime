@@ -42,7 +42,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
         super.onViewCreated(view, savedInstanceState)
 
         tabLayout = view.findViewById(R.id.tabLayout)
-        viewPager = view.findViewById(R.id.view_pager)
+        viewPager = view.findViewById(R.id.reservationsViewPager)
         showProfilePageAdapter = ShowProfilePageAdapter(requireActivity())
         viewPager.adapter = showProfilePageAdapter
 
