@@ -31,7 +31,7 @@ class OldSlotAdapter(
         private val time = findTextById(R.id.oldResSlotTime, v)
         private val sportImage : ImageView = v.findViewById(R.id.oldResSportImage)
 
-        private val oldSlotItem: View = v.findViewById(R.id.oldSlotItem)
+        private val oldSlotItem: View = v.findViewById(R.id.internalLayout)
 
         fun bind(fs: SlotWithPlayground){
             playgroundName.text = fs.playground.name
