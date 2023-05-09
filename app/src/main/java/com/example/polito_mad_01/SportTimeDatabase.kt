@@ -2,8 +2,6 @@ package com.example.polito_mad_01
 
 import android.content.Context
 import androidx.room.*
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.polito_mad_01.db.*
 
 
@@ -11,6 +9,7 @@ import com.example.polito_mad_01.db.*
     entities = [
         Playground::class,
         Slot::class,
+        Skill::class,
         User::class],
     version = 1,
     exportSchema = true

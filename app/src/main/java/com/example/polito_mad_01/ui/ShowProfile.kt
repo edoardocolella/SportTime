@@ -39,7 +39,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setAllView() {
-        vm.getUser(1).observe(viewLifecycleOwner) { user ->
+        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
+            val user = userWithSkills.user
             user.let {
                setImage(user)
                 setTextView(R.id.fullname, it.name + " " + it.surname)
@@ -50,10 +51,11 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.phoneNumber_text, it.phoneNumber)
                 setTextView(R.id.gender, it.gender)
                 setTextView(R.id.location, it.location)
-                setTextView(R.id.favouriteSport_text, it.favouriteSport)
-
                 setAllButtons(it)
-
+            }
+            val skills = userWithSkills.skillList
+            skills.let{
+                //mostra chips
             }
         }
     }
