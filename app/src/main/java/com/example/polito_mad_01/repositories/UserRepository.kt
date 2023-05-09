@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 class UserRepository(private val userDao: UserDao) {
     fun userById(userId: Int): Flow<User> =  userDao.getUserById(userId)
 
-    fun userWithSkillsById(userId: Int): Flow<UserWithSkills> = userWithSkillsById(userId)
+    fun userWithSkillsById(userId: Int): Flow<UserWithSkills> = userDao.getUserWithSkillsById(userId)
 
     val allUsers: Flow<List<User>> = userDao.getAllUsers()
     fun updateUser(user: User) = userDao.updateUser(user)

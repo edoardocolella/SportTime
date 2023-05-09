@@ -1,19 +1,19 @@
 package com.example.polito_mad_01.viewmodel
 
 import androidx.lifecycle.*
-import com.example.polito_mad_01.db.User
+import com.example.polito_mad_01.db.UserWithSkills
 import com.example.polito_mad_01.repositories.UserRepository
 import kotlin.concurrent.thread
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    var user: LiveData<User> = MutableLiveData()
+    var user: LiveData<UserWithSkills> = MutableLiveData()
 
     private val loaded = MutableLiveData<Boolean>(false)
 
-    fun getUser(userId: Int): LiveData<User>{
+    fun getUser(userId: Int): LiveData<UserWithSkills>{
         if (loaded.value == false) {
-            user = userRepository.userById(userId).asLiveData()
+            user = userRepository.userWithSkillsById(userId).asLiveData()
             loaded.value = true
             return user;
         }
@@ -22,7 +22,7 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
 
     fun updateUser() {
         thread {
-            user.value?.let { userRepository.updateUser(it) }
+            user.value?.let { userRepository.updateUserWithSkills(it) }
         }
     }
 

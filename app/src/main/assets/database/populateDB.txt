@@ -1,6 +1,6 @@
 
 INSERT INTO user (user_id, name, surname, nickname, description, gender, birthdate, location, email, phoneNumber, image_uri, favouriteSport, monday_availability, tuesday_availability, wednesday_availability, thursday_availability, friday_availability, saturday_availability, sunday_availability)
-VALUES (1, 'Mario', 'Rossi', 'mar10_r0ss1', 'Hey, There!', 'Male', '1990/01/01', 'Turin', 'mario.rossi@email.com', '1234567890', NULL, 'Football', 1, 0, 1, 0, 1, 0, 1);
+VALUES (1, 'Mario', 'Rossi', 'mar10_r0ss1', 'Hey, There!', 'Male', '1990-01-01', 'Turin', 'mario.rossi@email.com', '1234567890', NULL, 'Football', 1, 0, 1, 0, 1, 0, 1);
 
 INSERT INTO playground (playground_id, name, description, location, price_per_slot, sport_name) VALUES
 (1, 'Campo Sportivo Carmagnola', 'Campetto Cittadino', 'Torino', 5.0, 'Football'),

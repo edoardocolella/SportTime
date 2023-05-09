@@ -165,7 +165,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun isNotValid() {
-        val user = vm.user.value!!
+        val user = vm.user.value!!.user
         fieldIsValid(user.name, "Full Name")
         fieldIsValid(user.nickname, "Nickname")
         fieldIsValid(user.description, "Description")
@@ -202,27 +202,30 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private fun setValue(attribute: String, newValue: String) {
         when (attribute) {
-            "name" -> vm.user.value?.name = newValue
-            "surname" -> vm.user.value?.surname = newValue
-            "nickname" -> vm.user.value?.nickname = newValue
-            "description" -> vm.user.value?.description = newValue
-            "email" -> vm.user.value?.email = newValue
-            "phoneNumber" -> vm.user.value?.phoneNumber = newValue
-            "location" -> vm.user.value?.location = newValue
-            "birthdate" -> vm.user.value?.birthdate = newValue
-            "favouriteSport" -> vm.user.value?.favouriteSport = newValue
+            "name" -> vm.user.value?.user?.name = newValue
+            "surname" -> vm.user.value?.user?.surname = newValue
+            "nickname" -> vm.user.value?.user?.nickname = newValue
+            "description" -> vm.user.value?.user?.description = newValue
+            "email" -> vm.user.value?.user?.email = newValue
+            "phoneNumber" -> vm.user.value?.user?.phoneNumber = newValue
+            "location" -> vm.user.value?.user?.location = newValue
+            "birthdate" -> vm.user.value?.user?.birthdate = newValue
+            "favouriteSport" -> vm.user.value?.user?.favouriteSport = newValue
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
-        vm.getUser(1).observe(viewLifecycleOwner) { user ->
-
+        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
+            val user = userWithSkills.user
             setTextViews(view,user)
             //setCheckBox(user)
             setButtons(user)
             setImage(user)
             setSpinners(user)
+
+            val skills = userWithSkills.skillList
+
         }
 
     }
@@ -305,25 +308,25 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private fun setAvailability(attribute: String, checked: Boolean) {
         when (attribute) {
-            "monday" -> vm.user.value?.monday_availability = checked
-            "tuesday" -> vm.user.value?.tuesday_availability = checked
-            "wednesday" -> vm.user.value?.wednesday_availability = checked
-            "thursday" -> vm.user.value?.thursday_availability = checked
-            "friday" -> vm.user.value?.friday_availability = checked
-            "saturday" -> vm.user.value?.saturday_availability = checked
-            "sunday" -> vm.user.value?.sunday_availability = checked
+            "monday" -> vm.user.value?.user?.monday_availability = checked
+            "tuesday" -> vm.user.value?.user?.tuesday_availability = checked
+            "wednesday" -> vm.user.value?.user?.wednesday_availability = checked
+            "thursday" -> vm.user.value?.user?.thursday_availability = checked
+            "friday" -> vm.user.value?.user?.friday_availability = checked
+            "saturday" -> vm.user.value?.user?.saturday_availability = checked
+            "sunday" -> vm.user.value?.user?.sunday_availability = checked
         }
     }
 
     private fun getAvailability(attribute: String):Boolean{
         return when (attribute) {
-            "monday" -> vm.user.value?.monday_availability!!
-            "tuesday" -> vm.user.value?.tuesday_availability!!
-            "wednesday" -> vm.user.value?.wednesday_availability !!
-            "thursday" -> vm.user.value?.thursday_availability !!
-            "friday" -> vm.user.value?.friday_availability !!
-            "saturday" -> vm.user.value?.saturday_availability !!
-            "sunday" -> vm.user.value?.sunday_availability !!
+            "monday" -> vm.user.value?.user?.monday_availability!!
+            "tuesday" -> vm.user.value?.user?.tuesday_availability!!
+            "wednesday" -> vm.user.value?.user?.wednesday_availability !!
+            "thursday" -> vm.user.value?.user?.thursday_availability !!
+            "friday" -> vm.user.value?.user?.friday_availability !!
+            "saturday" -> vm.user.value?.user?.saturday_availability !!
+            "sunday" -> vm.user.value?.user?.sunday_availability !!
             else -> false
         }
     }
