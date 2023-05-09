@@ -24,5 +24,8 @@ interface UserDao {
 
     @Update
     fun updateUser(user: User)
+
+    @Update
+    fun updateSkills(skills: List<Skill>)
 }
 

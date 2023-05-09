@@ -139,7 +139,9 @@ VALUES (1, 1, NULL, '2023-05-01', '10:00', '12:00', 10.0, 0, 0, 0, 0),
 (127, 4, 1, '2023-05-16', '10:00', '12:00', 10.0, 0, 0, 0, 0),
 (128, 4, NULL, '2023-05-16', '12:00', '14:00', 10.0, 1, 0, 0, 1);
 
+
 INSERT INTO SKILL(user_id, sport_name, level)
 VALUES (1, "Football", "Expert"),
         (1, "Volley", "Beginner"),
-        (1, "Basket", "Intermediate");
+        (1, "Basket", "Intermediate"),
+        (1, "Ping Pong", "none");
