@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/saffron_light"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -28,7 +29,18 @@
             android:clickable="false"
             android:focusable="true">
 
-    <ImageView
+            <ImageView
+                android:id="@+id/oldSlotColorBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/oldResSportImage"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/old_slot_marker" />
+
+            <ImageView
 
         android:id="@+id/oldResSportImage"
         android:layout_width="0dp"
@@ -36,8 +48,8 @@
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintStart_toEndOf="@+id/oldSlotColorBox"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/selection_background" />
 
@@ -47,7 +59,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="24"
         app:layout_constraintStart_toEndOf="@+id/oldResSportImage"
         app:layout_constraintTop_toTopOf="parent">
 
