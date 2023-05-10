@@ -9,7 +9,6 @@ import com.example.polito_mad_01.db.*
     entities = [
         Playground::class,
         Slot::class,
-        User::class,
         Review::class,
         Skill::class,
         User::class],
