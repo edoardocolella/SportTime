@@ -16,10 +16,16 @@ import com.example.polito_mad_01.viewmodel.*
 
 
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
-    private var slotID = 0
+    private var slotId = 0
+    private var userId = 0
+    private var playgroundId = 0
 
-    private val vm: ShowOldReservationViewModel by viewModels {
+    private val oldResVm: ShowOldReservationViewModel by viewModels {
         ShowOldReservationViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
+    }
+
+    private val reviewVm: ReviewViewModel by viewModels{
+        ReviewViewModelFactory((activity?.application as SportTimeApplication).reviewRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +37,29 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        slotID = requireArguments().getInt("slotID")
+        userId = requireArguments().getInt("userId")
+        slotId = requireArguments().getInt("slotId")
+        playgroundId = requireArguments().getInt("playgroundId")
 
-        vm.getOldReservationById(slotID).observe(viewLifecycleOwner) {
+        val reviewLayout = view.findViewById<LinearLayout>(R.id.reviewedLinearLayout)
+        val reviewButton = view.findViewById<Button>(R.id.ReviewButton)
+        reviewLayout.visibility = View.GONE
+        reviewButton.visibility = View.GONE
+
+        reviewVm.getSingleReview(userId, playgroundId).observe(viewLifecycleOwner){
+            if(it==null){
+                reviewLayout.visibility = View.GONE
+                reviewButton.visibility = View.VISIBLE
+                //onClickListener con navigate a createReview
+            }else{
+                reviewLayout.visibility = View.VISIBLE
+                reviewButton.visibility = View.GONE
+                view.findViewById<RatingBar>(R.id.reviewedRatingBar).rating = it.rating.toFloat()
+                view.findViewById<TextView>(R.id.reviewedText).text = it.review_text
+            }
+        }
+
+        oldResVm.getOldReservationById(slotId).observe(viewLifecycleOwner) {
             requireActivity().onBackPressedDispatcher
                 .addCallback(this) {
                     findNavController().navigate(R.id.action_showOldReservation_to_showOldReservations)
@@ -68,7 +94,6 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             println(services)
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
-                println("------------List: ${list}------------")
                 list.layoutManager = LinearLayoutManager(view.context)
                 list.adapter = ServicesAdapter(services)
             }
@@ -84,7 +109,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val args = bundleOf(
-            "playgroundID" to vm.slot.value?.playground?.playground_id
+            "playgroundID" to oldResVm.slot.value?.playground?.playground_id
         )
 
         if(item.itemId == R.id.action_feedback_reservation){

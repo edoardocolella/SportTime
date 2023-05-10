@@ -60,7 +60,7 @@
     <string name="profile">Profile</string>
     <string name="reservations">Reservations</string>
     <string name="browse">Browse</string>
-    <string name="sporttime">SportTime</string>
+    <string name="sportTime">SportTime</string>
     <string name="hello_blank_fragment">TODO</string>
     <string name="reservationsLabel">Reservations</string>
     <string name="noReservations">No reservation found for this day, try another one!</string>
@@ -80,5 +80,7 @@
     <string name="fridayInitials">Fr</string>
     <string name="saturdayInitials">Sa</string>
     <string name="sundayInitials">Su</string>
+
+    <string name="reviewTitle">Your review for this playground</string>
     <string name="noOldReservations">It seems you never participated to any activity</string>
 </resources>
