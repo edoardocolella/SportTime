@@ -2,7 +2,6 @@ package com.example.polito_mad_01.db
 
 import androidx.room.*
 
-
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true)
@@ -26,4 +25,28 @@ data class User(
     var friday_availability: Boolean,
     var saturday_availability: Boolean,
     var sunday_availability: Boolean
-) {}
+)
+
+@Entity(tableName = "skill",
+    primaryKeys = ["user_id", "sport_name"],
+    foreignKeys = [ForeignKey(entity = User::class,
+        parentColumns = arrayOf("user_id"),
+        childColumns = arrayOf("user_id"),
+        onDelete = ForeignKey.CASCADE
+    )]
+)
+data class Skill(
+    @ColumnInfo(name = "user_id")
+    val userId: Int,
+    val sport_name: String,
+    val level: String
+)
+
+data class UserWithSkills(
+    @Embedded val user: User,
+    @Relation(
+        parentColumn = "user_id",
+        entityColumn = "user_id"
+    )
+    val skillList: List<Skill>)
+

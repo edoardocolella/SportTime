@@ -2,10 +2,8 @@ package com.example.polito_mad_01.ui
 
 import android.Manifest
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.net.*
 import android.os.Build
@@ -30,18 +28,13 @@ import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 
-class EditProfile : Fragment(R.layout.fragment_edit_profile) {
-
-    private val vm: EditProfileViewModel by viewModels {
-        EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
-    }
+class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
 
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -152,77 +145,32 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         return true
     }
 
-    private fun trySaveData(): Boolean {
-        return try {
-            isNotValid()
-            vm.updateUser()
-            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
-            true
-        } catch (e: Exception) {
-            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
-            false
-        }
-    }
-
-    private fun isNotValid() {
-        val user = vm.user.value!!
-        fieldIsValid(user.name, "Full Name")
-        fieldIsValid(user.nickname, "Nickname")
-        fieldIsValid(user.description, "Description")
-        fieldIsValid(user.email, "Email")
-        fieldIsValid(user.phoneNumber, "Phone Number")
-        fieldIsValid(user.location, "Location")
-        fieldIsValid(user.birthdate, "BirthDate")
-
-        val regexMail = Regex("^[A-Za-z\\d+_.-]+@(.+)\$")
-        if (!regexMail.matches(user.email)) {
-            throw Exception("invalid email format")
-        }
-
-        try {
-            val formatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            formatter.parse(user.birthdate)
-        } catch (e: ParseException) {
-            throw Exception("Birthdate should be in dd-MM-yyyy format")
-        }
-
-        val regexPhone = Regex("^\\d{10}\$")
-        if (!regexPhone.matches(user.phoneNumber)) {
-            throw Exception("Phone number should be a 10 digit number")
-        }
-
-        imageUri?.let { user.image_uri = it.toString() }
-
-    }
-
-    private fun fieldIsValid(field: String?, fieldName: String) {
-        if (field.isNullOrEmpty())
-            throw Exception("$fieldName is invalid")
-    }
-
     private fun setValue(attribute: String, newValue: String) {
         when (attribute) {
-            "name" -> vm.user.value?.name = newValue
-            "surname" -> vm.user.value?.surname = newValue
-            "nickname" -> vm.user.value?.nickname = newValue
-            "description" -> vm.user.value?.description = newValue
-            "email" -> vm.user.value?.email = newValue
-            "phoneNumber" -> vm.user.value?.phoneNumber = newValue
-            "location" -> vm.user.value?.location = newValue
-            "birthdate" -> vm.user.value?.birthdate = newValue
-            "favouriteSport" -> vm.user.value?.favouriteSport = newValue
+            "name" -> vm.user.value?.user?.name = newValue
+            "surname" -> vm.user.value?.user?.surname = newValue
+            "nickname" -> vm.user.value?.user?.nickname = newValue
+            "description" -> vm.user.value?.user?.description = newValue
+            "email" -> vm.user.value?.user?.email = newValue
+            "phoneNumber" -> vm.user.value?.user?.phoneNumber = newValue
+            "location" -> vm.user.value?.user?.location = newValue
+            "birthdate" -> vm.user.value?.user?.birthdate = newValue
+            "favouriteSport" -> vm.user.value?.user?.favouriteSport = newValue
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
-        vm.getUser(1).observe(viewLifecycleOwner) { user ->
-
+        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
+            val user = userWithSkills.user
             setTextViews(view,user)
             //setCheckBox(user)
             setButtons(user)
             setImage(user)
             setSpinners(user)
+
+            val skills = userWithSkills.skillList
+
         }
 
     }
@@ -305,25 +253,25 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
 
     private fun setAvailability(attribute: String, checked: Boolean) {
         when (attribute) {
-            "monday" -> vm.user.value?.monday_availability = checked
-            "tuesday" -> vm.user.value?.tuesday_availability = checked
-            "wednesday" -> vm.user.value?.wednesday_availability = checked
-            "thursday" -> vm.user.value?.thursday_availability = checked
-            "friday" -> vm.user.value?.friday_availability = checked
-            "saturday" -> vm.user.value?.saturday_availability = checked
-            "sunday" -> vm.user.value?.sunday_availability = checked
+            "monday" -> vm.user.value?.user?.monday_availability = checked
+            "tuesday" -> vm.user.value?.user?.tuesday_availability = checked
+            "wednesday" -> vm.user.value?.user?.wednesday_availability = checked
+            "thursday" -> vm.user.value?.user?.thursday_availability = checked
+            "friday" -> vm.user.value?.user?.friday_availability = checked
+            "saturday" -> vm.user.value?.user?.saturday_availability = checked
+            "sunday" -> vm.user.value?.user?.sunday_availability = checked
         }
     }
 
     private fun getAvailability(attribute: String):Boolean{
         return when (attribute) {
-            "monday" -> vm.user.value?.monday_availability!!
-            "tuesday" -> vm.user.value?.tuesday_availability!!
-            "wednesday" -> vm.user.value?.wednesday_availability !!
-            "thursday" -> vm.user.value?.thursday_availability !!
-            "friday" -> vm.user.value?.friday_availability !!
-            "saturday" -> vm.user.value?.saturday_availability !!
-            "sunday" -> vm.user.value?.sunday_availability !!
+            "monday" -> vm.user.value?.user?.monday_availability!!
+            "tuesday" -> vm.user.value?.user?.tuesday_availability!!
+            "wednesday" -> vm.user.value?.user?.wednesday_availability !!
+            "thursday" -> vm.user.value?.user?.thursday_availability !!
+            "friday" -> vm.user.value?.user?.friday_availability !!
+            "saturday" -> vm.user.value?.user?.saturday_availability !!
+            "sunday" -> vm.user.value?.user?.sunday_availability !!
             else -> false
         }
     }

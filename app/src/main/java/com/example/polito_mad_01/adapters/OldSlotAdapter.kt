@@ -32,7 +32,7 @@ class OldSlotAdapter(
         private val sportImage : ImageView = v.findViewById(R.id.oldResSportImage)
         //private val price = findTextById(R.id.oldResPlaygroundPrice, v)
 
-        private val oldSlotItem: View = v.findViewById(R.id.oldSlotItem)
+        private val oldSlotItem: View = v.findViewById(R.id.internalLayout)
 
         fun bind(fs: SlotWithPlayground){
             //price.text = fs.playground.price_per_slot.toString()

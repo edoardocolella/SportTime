@@ -11,14 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/saffron_light"
+        android:clickable="true"
+        android:focusable="true"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"
-        android:focusable="true">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/internalLayout"
@@ -29,6 +30,17 @@
             android:focusable="true">
 
             <ImageView
+                android:id="@+id/reservationColorBox"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/reservationSportImage"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/reservation_marker" />
+
+            <ImageView
 
                 android:id="@+id/reservationSportImage"
                 android:layout_width="0dp"
@@ -36,8 +48,8 @@
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_weight="6"
+                app:layout_constraintStart_toEndOf="@+id/reservationColorBox"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/selection_background" />
 
@@ -47,7 +59,7 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="6"
+                app:layout_constraintHorizontal_weight="24"
                 app:layout_constraintStart_toEndOf="@+id/reservationSportImage"
                 app:layout_constraintTop_toTopOf="parent">
 
