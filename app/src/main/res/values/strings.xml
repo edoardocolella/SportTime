@@ -52,6 +52,12 @@
         <item>Ping Pong</item>
         <item>Volley</item>
     </string-array>
+    <string-array name="sportLevelArray">
+        <item>Choose the level</item>
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Expert</item>
+    </string-array>
     <string name="surname">Surname</string>
     <string name="name">Name</string>
     <string name="favourite_sport">Favourite Sport</string>

@@ -1,6 +1,8 @@
 package com.example.polito_mad_01.viewmodel
 
 import androidx.lifecycle.*
+import com.example.polito_mad_01.db.Skill
+import com.example.polito_mad_01.db.SlotWithPlayground
 import com.example.polito_mad_01.db.UserWithSkills
 import com.example.polito_mad_01.repositories.UserRepository
 import kotlin.concurrent.thread
@@ -8,6 +10,8 @@ import kotlin.concurrent.thread
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     var user: LiveData<UserWithSkills> = MutableLiveData()
+    var sport_skills = MutableLiveData<List<Skill>>()
+
 
     private val loaded = MutableLiveData<Boolean>(false)
 
