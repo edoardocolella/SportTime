@@ -21,7 +21,6 @@ import com.google.android.material.chip.ChipGroup
 class EditSkill(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_skill) {
 
     private lateinit var mView: View
-    private lateinit var taskViewModel: TaskViewModel
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)

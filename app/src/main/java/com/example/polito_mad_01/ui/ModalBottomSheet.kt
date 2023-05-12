@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputLayout
 
 class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogFragment() {
 
-    private lateinit var taskViewModel: TaskViewModel
     private lateinit var listSkill: List<Skill>
 
 
