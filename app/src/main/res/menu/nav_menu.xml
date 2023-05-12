@@ -2,15 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/profilePage"
+        android:icon="@drawable/person_48px"
         android:title="@string/profile" />
     <item
         android:id="@+id/reservationsPage"
+        android:icon="@drawable/event_48px"
         android:title="@string/reservations" />
     <item
         android:id="@+id/browsePage"
+        android:icon="@drawable/language_48px"
         android:title="@string/browse" />
 
-    <item android:id="@+id/oldReservations"
+    <item
+        android:id="@+id/oldReservations"
+        android:icon="@drawable/history_48px"
         android:title="@string/oldReservations" />
 
 </menu>
