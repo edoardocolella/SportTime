@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
@@ -84,8 +85,8 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
                 frame.loadImage(imageUri)
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
                 imageUri = data.data!!
-                imageUriString = imageUri.toString()
-                frame.setImageURI(imageUri)
+                //imageUriString = imageUri.toString()
+                frame.loadImage(imageUri)
             }
         }
     }

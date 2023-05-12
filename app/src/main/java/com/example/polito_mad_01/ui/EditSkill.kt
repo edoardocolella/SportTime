@@ -91,9 +91,13 @@ class EditSkill(private val vm: EditProfileViewModel) : Fragment(R.layout.fragme
                     "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
                 }
 
-                /*if(skills[i].sport_name.equals("Basket"))
-                    chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
-                */chip.isChipIconVisible = true
+                when(skills[i].level){
+                    "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
+                    "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
+                    "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+                }
+                
+                chip.isChipIconVisible = true
                 chip.isCloseIconVisible = true
                 // necessary to get single selection working
                 chip.isClickable = true

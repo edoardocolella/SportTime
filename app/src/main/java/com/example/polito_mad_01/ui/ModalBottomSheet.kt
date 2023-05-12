@@ -66,8 +66,6 @@ class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogF
         val adapter1 = ArrayAdapter(requireContext(), R.layout.sport_list_item, sportLevelArray)
         (textField1.editText as? AutoCompleteTextView)?.setAdapter(adapter1)
 
-
-
     }
 
 
