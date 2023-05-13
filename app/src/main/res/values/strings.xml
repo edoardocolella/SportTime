@@ -46,14 +46,12 @@
         <item>Other</item>
     </string-array>
     <string-array name="sportArray">
-        <item>Choose a sport</item>
         <item>Basket</item>
         <item>Football</item>
         <item>Ping Pong</item>
         <item>Volley</item>
     </string-array>
     <string-array name="sportLevelArray">
-        <item>Choose the level</item>
         <item>Beginner</item>
         <item>Intermediate</item>
         <item>Expert</item>
@@ -89,4 +87,6 @@
 
     <string name="reviewTitle">Your review for this playground</string>
     <string name="noOldReservations">It seems you never participated to any activity</string>
+    <string name="add_skill">Add Skill</string>
+    <string name="sport_skills">Sport skills</string>
 </resources>

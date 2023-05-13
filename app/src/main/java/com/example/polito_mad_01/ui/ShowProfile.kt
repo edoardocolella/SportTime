@@ -60,19 +60,22 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
             }
 
             val skills = userWithSkills.skillList
-            for(i in 0 until skills.size){
+            for(skill in skills){
+
+                if(skill.level == "none") continue
+
                 val chip = Chip(context)
 
-                chip.text = skills[i].sport_name
+                chip.text = skill.sport_name
 
-                when(skills[i].sport_name){
+                when(skill.sport_name){
                     "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
                     "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
                     "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
                     "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
                 }
 
-                when(skills[i].level){
+                when(skill.level){
                     "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
                     "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
                     "Expert" -> chip.setChipBackgroundColorResource(R.color.red)

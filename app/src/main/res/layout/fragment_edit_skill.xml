@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.ShowSkill"
+    tools:context=".ui.EditSkill"
     android:orientation="vertical">
 
     <com.google.android.material.chip.ChipGroup
@@ -12,16 +12,17 @@
         style="@style/Widget.MaterialComponents.ChipGroup"
         android:layout_width="370dp"
         android:layout_height="400dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         />
 
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip_1"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addSkill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Skill"
-        app:chipIcon="@drawable/baseline_add_24" />
+        android:text="@string/add_skill"
+        android:layout_gravity="center"
+         />
 
 
 </LinearLayout>

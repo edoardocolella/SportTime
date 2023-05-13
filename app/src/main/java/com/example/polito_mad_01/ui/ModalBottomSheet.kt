@@ -1,24 +1,15 @@
 package com.example.polito_mad_01.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputLayout
 
-class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogFragment() {
-
-    private lateinit var listSkill: List<Skill>
-
+class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,7 +28,6 @@ class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogF
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.button).setOnClickListener {
-            Toast.makeText(context, "Perform add operation", Toast.LENGTH_SHORT).show()
             saveAction()
             dismiss()
         }
@@ -47,10 +37,33 @@ class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogF
     }
 
     private fun saveAction() {
-        vm.sport_skills.value = listOf(Skill(1,view?.findViewById<TextInputLayout>(R.id.sportName)?.editText?.text.toString(),view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString() ))
-        vm.user.value?.skillList?.add(Skill(1, view?.findViewById<TextInputLayout>(R.id.sportName)?.editText?.text.toString(),view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString()))
-        //vm.sport_skills.value = listOf(view?.findViewById<TextInputLayout>(R.id.sportName)?.editText?.text.toString(),view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString())
-        println("USER USER USER USER ${vm.user.value}")
+
+        val sportName =
+            view?.findViewById<TextInputLayout>(R.id.sportName)?.editText?.text.toString()
+        val sportLevel =
+            view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString()
+
+        val newSkill = Skill(1, sportName, sportLevel)
+
+        val oldList = vm.user.value?.skillList
+
+        for (skill in oldList!!) {
+            if(skill.sport_name == newSkill.sport_name && skill.level != "none"){
+                Toast.makeText(context, "There is already that skill", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        for (skill in oldList) {
+            if(skill.sport_name == newSkill.sport_name && skill.level == "none"){
+                vm.user.value?.skillList?.remove(skill)
+            }
+        }
+
+
+            vm.user.value?.skillList?.add(newSkill)
+        vm.newSkill.value = newSkill
+
     }
 
 
@@ -68,7 +81,7 @@ class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogF
 
     }
 
-
+    /*
     private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
         return object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -82,4 +95,6 @@ class ModalBottomSheet(private val vm: EditProfileViewModel): BottomSheetDialogF
             }
         }
     }
+
+     */
 }
