@@ -20,11 +20,14 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
 import java.util.*
 
 
@@ -77,13 +80,13 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         view?.let {
-            val frame = it.findViewById<ImageView>(R.id.profileImage_imageView)
+            val frame = it.findViewById<AvatarView>(R.id.profileImage_imageView)
             if (requestCode == IMAGE_CAPTURE_CODE && resultCode == AppCompatActivity.RESULT_OK)
-                frame.setImageURI(imageUri)
+                frame.loadImage(imageUri)
             if (requestCode == RESULT_LOAD_IMAGE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
                 imageUri = data.data!!
-                imageUriString = imageUri.toString()
-                frame.setImageURI(imageUri)
+                //imageUriString = imageUri.toString()
+                frame.loadImage(imageUri)
             }
         }
     }
@@ -291,25 +294,33 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
     }
 
 
-private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
-    val textName = requireView().findViewById<TextInputLayout>(id)
-    textName.editText?.setText(field)
-    textName.editText?.addTextChangedListener(object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
-            setValue(attribute, s.toString())
-    })
-}
+    private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
+        val textName = requireView().findViewById<TextInputLayout>(id)
+        textName.editText?.setText(field)
+        textName.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
+                setValue(attribute, s.toString())
+        })
+    }
 
-private fun setImage(user: User) {
-/*try {
-    val uri = user.image_uri?.toUri()
-    val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
-    imageView?.setImageURI(uri)
-} catch (e: Exception) {
-    e.printStackTrace()
-}
- */
-}
+    private fun setImage(user: User) {
+    /*try {
+        val uri = user.image_uri?.toUri()
+        val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
+        imageView?.setImageURI(uri)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+     */
+
+        view?.findViewById<AvatarView>(R.id.profileImage_imageView)?.loadImage(
+            data = user.image_uri,
+            onError = { _,_ ->
+                requireView().findViewById<AvatarView>(R.id.profileImage_imageView).avatarInitials = user.name.substring(0,1) + user.surname.substring(0,1)
+            }
+        )
+
+    }
 }
