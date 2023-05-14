@@ -17,4 +17,8 @@ class ReviewRepository(private val reviewDao: ReviewDao) {
     fun getSingleReview(user_id: Int, playground_id: Int): Flow<Review>{
         return reviewDao.getSingleReview(user_id, playground_id)
     }
+
+    fun addReview(reviewToAdd: Review){
+        reviewDao.addReview(reviewToAdd)
+    }
 }

@@ -10,7 +10,7 @@ VALUES (1, 'Mario', 'Rossi', 'mar10_r0ss1', 'Hey, There!', 'Male', '1990-01-01',
 
 INSERT INTO playground (playground_id, name, description, location, price_per_slot, sport_name) 
 VALUES(1, 'Campo Sportivo Carmagnola', 'Campetto Cittadino', 'Torino', 5.0, 'Football'),
-	(2, 'Campo da Canestro Brraccini', 'Un campetto urbano', 'Torino', 10.0, 'Basket'),
+	(2, 'Campo da Canestro Braccini', 'Un campetto urbano', 'Torino', 10.0, 'Basket'),
     (3, "Centro sociale Comala", "Tavolino pubblico", "Torino", 2.00, "Ping Pong"),
     (4, "Mana Beach", "Campi coperti e all'aperto", "Torino", 22.0, "Volley");
  

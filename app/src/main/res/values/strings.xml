@@ -83,4 +83,6 @@
 
     <string name="reviewTitle">Your review for this playground</string>
     <string name="noOldReservations">It seems you never participated to any activity</string>
+    <string name="writeReviewHere">Write here your review</string>
+    <string name="submitReview">Submit review</string>
 </resources>

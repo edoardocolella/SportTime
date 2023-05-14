@@ -4,7 +4,6 @@ import android.os.*
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
@@ -28,11 +27,6 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
         ReviewViewModelFactory((activity?.application as SportTimeApplication).reviewRepository)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +44,14 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             if(it==null){
                 reviewLayout.visibility = View.GONE
                 reviewButton.visibility = View.VISIBLE
-                //onClickListener con navigate a createReview
+                reviewButton.setOnClickListener {
+                    val args = bundleOf(
+                        "userId" to userId,
+                        "playgroundId" to playgroundId,
+                        "slotId" to slotId
+                    )
+                    findNavController().navigate(R.id.action_showOldReservation_to_createFeedback, args)
+                }
             }else{
                 reviewLayout.visibility = View.VISIBLE
                 reviewButton.visibility = View.GONE
@@ -95,25 +96,6 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
                 list.adapter = ServicesAdapter(services)
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_show_old_reservation, menu)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val args = bundleOf(
-            "playgroundID" to oldResVm.slot.value?.playground?.playground_id
-        )
-
-        if(item.itemId == R.id.action_feedback_reservation){
-            findNavController().navigate(R.id.action_showOldReservation_to_createFeedback, args)
-        }
-
-        return true
     }
 
     private fun setTextView(viewId: Int, text: String) {
