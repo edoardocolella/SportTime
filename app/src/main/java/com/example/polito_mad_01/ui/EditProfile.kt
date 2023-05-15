@@ -6,8 +6,7 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.net.*
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.provider.MediaStore
 import android.text.*
 import android.view.*
@@ -20,7 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
-import coil.load
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
@@ -78,17 +76,25 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        view?.let {
-            val frame = it.findViewById<AvatarView>(R.id.profileImage_imageView)
-            if (requestCode == IMAGE_CAPTURE_CODE && resultCode == AppCompatActivity.RESULT_OK)
-                frame.loadImage(imageUri)
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == AppCompatActivity.RESULT_OK && data != null) {
-                imageUri = data.data!!
-                //imageUriString = imageUri.toString()
-                frame.loadImage(imageUri)
+
+        println("onActivityResult: requestCode $requestCode, resultCode $resultCode. data $data")
+        var string : String? = ""
+        if(resultCode == AppCompatActivity.RESULT_OK) {
+            if (requestCode == IMAGE_CAPTURE_CODE && imageUri != Uri.EMPTY ) {
+                 string = imageUri.toString()
+            }
+            else if (requestCode == RESULT_LOAD_IMAGE){
+                imageUri = data?.data
+                string = imageUri.toString()
+            }
+            println("new uriString $string")
+            if(!string.isNullOrEmpty()) {
+                println("SAVING IMAGE URI")
+                vm.user.value?.user?.image_uri = string
+                setImage()
             }
         }
+
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -137,7 +143,7 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         AlertDialog.Builder(activity)
             .setTitle("Notice")
             .setMessage(R.string.cameraPermission.toString())
-            .setPositiveButton("OK") { _, _ -> requestPermission()}
+            .setPositiveButton("OK") { _, _ -> requestPermission() }
     }
 
     private fun showExitDialog(): Boolean {
@@ -166,13 +172,17 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
     private fun setAllView(view: View) {
         vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
             val user = userWithSkills.user
-            setTextViews(view,user)
-            //setCheckBox(user)
-            setButtons(user)
-            setImage(user)
-            setSpinners(user)
 
-            val skills = userWithSkills.skillList
+            imageUri = try {
+                Uri.parse(user.image_uri)
+            } catch (e: Exception) {
+                Uri.EMPTY
+            }
+
+            setTextViews(view, user)
+            setButtons(user)
+            setImage()
+            setSpinners(user)
 
         }
 
@@ -199,10 +209,10 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
     }
 
     private fun setButtonColor(value: Boolean, button: Button) {
-        val colorTrue =  getColor(requireContext(),R.color.powder_blue)
-        val colorFalse = getColor(requireContext(),R.color.gray)
+        val colorTrue = getColor(requireContext(), R.color.powder_blue)
+        val colorFalse = getColor(requireContext(), R.color.gray)
 
-        if(value) button.setBackgroundColor(colorTrue)
+        if (value) button.setBackgroundColor(colorTrue)
         else button.setBackgroundColor(colorFalse)
     }
 
@@ -216,16 +226,14 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
-        setBirthdateView(view,user)
+        setBirthdateView(view, user)
     }
 
-    private fun setBirthdateView(view:View,user: User) {
+    private fun setBirthdateView(view: View, user: User) {
         val birthdateView = view.findViewById<TextInputLayout>(R.id.birthday)
         birthdateView.editText?.setText(user.birthdate)
 
-        println(birthdateView)
-
-        val materialDatePicker=
+        val materialDatePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select a Date").build()
         materialDatePicker.addOnPositiveButtonClickListener {
@@ -266,15 +274,15 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         }
     }
 
-    private fun getAvailability(attribute: String):Boolean{
+    private fun getAvailability(attribute: String): Boolean {
         return when (attribute) {
             "monday" -> vm.user.value?.user?.monday_availability!!
             "tuesday" -> vm.user.value?.user?.tuesday_availability!!
-            "wednesday" -> vm.user.value?.user?.wednesday_availability !!
-            "thursday" -> vm.user.value?.user?.thursday_availability !!
-            "friday" -> vm.user.value?.user?.friday_availability !!
-            "saturday" -> vm.user.value?.user?.saturday_availability !!
-            "sunday" -> vm.user.value?.user?.sunday_availability !!
+            "wednesday" -> vm.user.value?.user?.wednesday_availability!!
+            "thursday" -> vm.user.value?.user?.thursday_availability!!
+            "friday" -> vm.user.value?.user?.friday_availability!!
+            "saturday" -> vm.user.value?.user?.saturday_availability!!
+            "sunday" -> vm.user.value?.user?.sunday_availability!!
             else -> false
         }
     }
@@ -305,22 +313,21 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         })
     }
 
-    private fun setImage(user: User) {
-    /*try {
-        val uri = user.image_uri?.toUri()
-        val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
-        imageView?.setImageURI(uri)
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-     */
+    private fun setImage() {
 
-        view?.findViewById<AvatarView>(R.id.profileImage_imageView)?.loadImage(
-            data = user.image_uri,
-            onError = { _,_ ->
-                requireView().findViewById<AvatarView>(R.id.profileImage_imageView).avatarInitials = user.name.substring(0,1) + user.surname.substring(0,1)
-            }
-        )
+        val name = vm.user.value?.user?.name!!
+        val surname = vm.user.value?.user?.surname!!
+
+        val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
+
+        println("imageUri: $imageUri")
+        println("imageUri == Uri.EMPTY: ${imageUri == Uri.EMPTY}")
+
+        if (imageUri != Uri.EMPTY) {
+            println("Setting image")
+            frame.loadImage(imageUri)
+        }
+        else frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
 
     }
 }
