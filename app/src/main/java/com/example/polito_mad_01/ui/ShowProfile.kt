@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -13,8 +14,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 import de.hdodenhof.circleimageview.CircleImageView
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
 
 class ShowProfile : Fragment(R.layout.fragment_profile) {
 
@@ -53,12 +58,36 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setTextView(R.id.location, it.location)
                 setAllButtons(it)
             }
+
             val skills = userWithSkills.skillList
-            skills.let{
-                //mostra chips
+            for(skill in skills){
+
+                if(skill.level == "none") continue
+
+                val chip = Chip(context)
+
+                chip.text = skill.sport_name
+
+                when(skill.sport_name){
+                    "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
+                    "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
+                    "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
+                    "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
+                }
+
+                when(skill.level){
+                    "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
+                    "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
+                    "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+                }
+
+                chip.isChipIconVisible = true
+                view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
+
         }
     }
+
 
     private fun setAllButtons(user: User) {
         setButtonColor(R.id.mondayButton, user.monday_availability, "monday")
@@ -92,6 +121,13 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         }
 
          */
+
+        view?.findViewById<AvatarView>(R.id.profileImage_imageView)?.loadImage(
+            data = user.image_uri,
+            onError = { _,_ ->
+                requireView().findViewById<AvatarView>(R.id.profileImage_imageView).avatarInitials = user.name.substring(0,1) + user.surname.substring(0,1)
+            }
+        )
     }
 
 

@@ -9,6 +9,7 @@ import com.example.polito_mad_01.db.*
     entities = [
         Playground::class,
         Slot::class,
+        Review::class,
         Skill::class,
         User::class],
     version = 1,
@@ -38,4 +39,5 @@ abstract class SportTimeDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun playgroundDao(): PlaygroundDao
     abstract fun reservationDao(): ReservationDao
+    abstract fun reviewDao(): ReviewDao
 }

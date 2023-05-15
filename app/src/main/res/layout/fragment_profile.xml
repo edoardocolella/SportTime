@@ -10,28 +10,21 @@
     android:background="@color/gray"
     >
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:elevation="8dp"
-        android:layout_margin="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:cardCornerRadius="8dp"
-        >
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImage_imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/pictureDescription"
-        android:padding="20dp"
-        android:src="@drawable/face_48px"
-        app:civ_border_color="@color/columbia_blue"
-        app:civ_border_width="4dp" />
-
-    </androidx.cardview.widget.CardView>
+        <io.getstream.avatarview.AvatarView
+            android:id="@+id/profileImage_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/pictureDescription"
+            android:paddingStart="16dp"
+            android:layout_weight="2"
+            android:paddingEnd="16dp"
+            android:src="@drawable/face_48px"
+            app:avatarViewInitialsBackgroundColor="#FF507DBC"
+            app:avatarViewShape="circle"
+            app:civ_border_color="@color/columbia_blue"
+            app:civ_border_width="4dp" />
 
 
     <androidx.cardview.widget.CardView
@@ -281,6 +274,38 @@
                 android:textSize="8sp"
                 tools:ignore="SmallSp" />
 
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="8dp"
+            android:background="#363636" />
+
+        <TextView
+            android:id="@+id/favoriteSportLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="@string/sport_skills"
+            android:textSize="26sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group"
+                style="@style/Widget.MaterialComponents.Chip.Entry"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                app:chipSpacing = "8dp"
+                app:chipSpacingHorizontal = "8dp"
+                chipSpacingVertical = "8dp"
+                android:layout_marginStart="8dp"/>
         </LinearLayout>
 
     </LinearLayout>

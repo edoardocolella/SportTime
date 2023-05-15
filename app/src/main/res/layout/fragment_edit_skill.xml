@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.EditSkill">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.EditSkill"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group1"
+        style="@style/Widget.MaterialComponents.ChipGroup"
+        android:layout_width="370dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="8dp"
+        />
 
-</FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addSkill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_skill"
+        android:layout_gravity="center"
+         />
+
+
+</LinearLayout>

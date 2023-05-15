@@ -25,15 +25,17 @@ class OldSlotAdapter(
         holder.bind(fs)
     }
 
-    class OldSlotHolder(val v: View, private val navController: NavController): RecyclerView.ViewHolder(v){
+    class OldSlotHolder(v: View, private val navController: NavController): RecyclerView.ViewHolder(v){
         private val playgroundName = findTextById(R.id.oldResPlaygroundName, v)
         private val date = findTextById(R.id.oldResSlotDate,v)
         private val time = findTextById(R.id.oldResSlotTime, v)
         private val sportImage : ImageView = v.findViewById(R.id.oldResSportImage)
+        //private val price = findTextById(R.id.oldResPlaygroundPrice, v)
 
         private val oldSlotItem: View = v.findViewById(R.id.internalLayout)
 
         fun bind(fs: SlotWithPlayground){
+            //price.text = fs.playground.price_per_slot.toString()
             playgroundName.text = fs.playground.name
             date.text = fs.slot.date
             val startToEnd = "${fs.slot.start_time} - ${fs.slot.end_time}"
@@ -42,7 +44,9 @@ class OldSlotAdapter(
             oldSlotItem.setOnClickListener{
                 navController.navigate(
                     R.id.action_showOldReservations_to_showOldReservation, bundleOf(
-                        "slotID" to fs.slot.slot_id
+                        "slotId" to fs.slot.slot_id,
+                        "userId" to fs.slot.user_id,
+                        "playgroundId" to fs.slot.playground_id
                     )
                 )
             }

@@ -46,11 +46,15 @@
         <item>Other</item>
     </string-array>
     <string-array name="sportArray">
-        <item>Choose a sport</item>
         <item>Basket</item>
         <item>Football</item>
         <item>Ping Pong</item>
         <item>Volley</item>
+    </string-array>
+    <string-array name="sportLevelArray">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Expert</item>
     </string-array>
     <string name="surname">Surname</string>
     <string name="name">Name</string>
@@ -60,7 +64,7 @@
     <string name="profile">Profile</string>
     <string name="reservations">Reservations</string>
     <string name="browse">Browse</string>
-    <string name="sporttime">SportTime</string>
+    <string name="sportTime">SportTime</string>
     <string name="hello_blank_fragment">TODO</string>
     <string name="reservationsLabel">Reservations</string>
     <string name="noReservations">No reservation or free slot found for this day, try another one!</string>
@@ -80,5 +84,11 @@
     <string name="fridayInitials">Fr</string>
     <string name="saturdayInitials">Sa</string>
     <string name="sundayInitials">Su</string>
+
+    <string name="reviewTitle">Your review for this playground</string>
     <string name="noOldReservations">It seems you never participated to any activity</string>
+    <string name="writeReviewHere">Write here your review</string>
+    <string name="submitReview">Submit review</string>
+    <string name="add_skill">Add Skill</string>
+    <string name="sport_skills">Sport skills</string>
 </resources>

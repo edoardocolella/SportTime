@@ -4,7 +4,6 @@ import android.os.*
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
@@ -16,24 +15,52 @@ import com.example.polito_mad_01.viewmodel.*
 
 
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
-    private var slotID = 0
+    private var slotId = 0
+    private var userId = 0
+    private var playgroundId = 0
 
-    private val vm: ShowOldReservationViewModel by viewModels {
+    private val oldResVm: ShowOldReservationViewModel by viewModels {
         ShowOldReservationViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
+    private val reviewVm: ReviewViewModel by viewModels{
+        ReviewViewModelFactory((activity?.application as SportTimeApplication).reviewRepository)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        slotID = requireArguments().getInt("slotID")
+        userId = requireArguments().getInt("userId")
+        slotId = requireArguments().getInt("slotId")
+        playgroundId = requireArguments().getInt("playgroundId")
 
-        vm.getOldReservationById(slotID).observe(viewLifecycleOwner) {
+        val reviewLayout = view.findViewById<LinearLayout>(R.id.reviewedLinearLayout)
+        val reviewButton = view.findViewById<Button>(R.id.ReviewButton)
+        reviewLayout.visibility = View.GONE
+        reviewButton.visibility = View.GONE
+
+        reviewVm.getSingleReview(userId, playgroundId).observe(viewLifecycleOwner){
+            if(it==null){
+                reviewLayout.visibility = View.GONE
+                reviewButton.visibility = View.VISIBLE
+                reviewButton.setOnClickListener {
+                    val args = bundleOf(
+                        "userId" to userId,
+                        "playgroundId" to playgroundId,
+                        "slotId" to slotId
+                    )
+                    findNavController().navigate(R.id.action_showOldReservation_to_createFeedback, args)
+                }
+            }else{
+                reviewLayout.visibility = View.VISIBLE
+                reviewButton.visibility = View.GONE
+                view.findViewById<RatingBar>(R.id.reviewedRatingBar).rating = it.rating.toFloat()
+                view.findViewById<TextView>(R.id.reviewedText).text = it.review_text
+            }
+        }
+
+        oldResVm.getOldReservationById(slotId).observe(viewLifecycleOwner) {
             requireActivity().onBackPressedDispatcher
                 .addCallback(this) {
                     findNavController().navigate(R.id.action_showOldReservation_to_showOldReservations)
@@ -43,6 +70,11 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             setTextView(R.id.oldResPlaygroundName, it.playground.name)
             setTextView(R.id.oldResPlaygroundLocation, it.playground.location)
             setTextView(R.id.oldResPlaygroundSport, it.playground.sport_name)
+            val stringPrice = it.playground.price_per_slot.toString() + "€"
+            setTextView(R.id.oldResPlaygroundPrice, stringPrice)
+            setTextView(R.id.oldResSlotDate, it.slot.date)
+            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
+            setTextView(R.id.oldResSlotTime, stringTime)
 
             val image : ImageView = view.findViewById(R.id.oldResSportImage)
             when(it.playground.sport_name) {
@@ -53,45 +85,17 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
                 else -> image.setImageResource(R.drawable.sport_photo)
             }
 
-            val stringPrice = it.playground.price_per_slot.toString() + "€"
-            setTextView(R.id.playgroundPrice, stringPrice)
-            setTextView(R.id.slotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
-            setTextView(R.id.slotTime, stringTime)
-
             val services = mutableListOf<String>()
-            println(it.slot)
             if(it.slot.equipment) services.add("- Equipment")
             if(it.slot.heating) services.add("- Heating")
             if(it.slot.lighting) services.add("- Lightning")
             if(it.slot.locker_room) services.add("- Locker room")
-            println(services)
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
-                println("------------List: ${list}------------")
                 list.layoutManager = LinearLayoutManager(view.context)
                 list.adapter = ServicesAdapter(services)
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_show_old_reservation, menu)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val args = bundleOf(
-            "playgroundID" to vm.slot.value?.playground?.playground_id
-        )
-
-        if(item.itemId == R.id.action_feedback_reservation){
-            findNavController().navigate(R.id.action_showOldReservation_to_createFeedback, args)
-        }
-
-        return true
     }
 
     private fun setTextView(viewId: Int, text: String) {
