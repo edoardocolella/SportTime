@@ -1,138 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/appLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/gray"
-    >
+    android:orientation="vertical">
 
-        <io.getstream.avatarview.AvatarView
-            android:id="@+id/profileImage_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:contentDescription="@string/pictureDescription"
-            android:paddingStart="16dp"
-            android:layout_weight="2"
-            android:paddingEnd="16dp"
-            android:src="@drawable/face_48px"
-            app:avatarViewInitialsBackgroundColor="#FF507DBC"
-            app:avatarViewShape="circle"
-            app:civ_border_color="@color/columbia_blue"
-            app:civ_border_width="4dp" />
+    <io.getstream.avatarview.AvatarView
+        android:id="@+id/profileImage_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="2"
+        android:contentDescription="@string/pictureDescription"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:src="@drawable/face_48px"
+        app:avatarViewInitialsBackgroundColor="@color/design_default_color_secondary_variant"
+        app:avatarViewShape="circle"
+        app:civ_border_color="@color/columbia_blue"
+        app:civ_border_width="4dp" />
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:elevation="8dp"
         android:layout_margin="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        app:cardCornerRadius="8dp"
-        >
+        android:layout_weight="1"
+        android:elevation="8dp"
+        app:cardCornerRadius="8dp">
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/fullname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/fullName"
-            android:textAlignment="center"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/nickname"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="@string/description"
-            android:textAlignment="center"
-            android:textSize="20sp" />
 
         <LinearLayout
-            android:id="@+id/profileLayout"
+            android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textAlignment="center">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
-                android:id="@+id/location"
-                android:layout_width="wrap_content"
+                android:id="@+id/fullname"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:padding="4dp"
+                android:text="@string/fullName"
+                android:textAlignment="center"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/nickname"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/description"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/profileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAlignment="center">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp"
+                    android:text="@string/location"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/home_pin_48px" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:padding="4dp"
-                android:text="@string/location"
-                android:textSize="18sp"
-                app:drawableStartCompat="@drawable/home_pin_48px" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center_horizontal"
+                    android:padding="4dp"
+                    android:text="@string/non_specified"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/face_48px" />
+
+                <TextView
+                    android:id="@+id/birthdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="4dp"
+                    android:text="@string/birthdate"
+                    android:textAlignment="viewStart"
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/cake_48px" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="#363636" />
 
             <TextView
-                android:id="@+id/gender"
-                android:layout_width="wrap_content"
+                android:id="@+id/contactLabel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_horizontal"
-                android:padding="4dp"
-                android:text="@string/non_specified"
-                android:textSize="18sp"
-                app:drawableStartCompat="@drawable/face_48px" />
-
-            <TextView
-                android:id="@+id/birthdate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:padding="4dp"
-                android:text="@string/birthdate"
-                android:textAlignment="viewStart"
-                android:textSize="18sp"
-                app:drawableStartCompat="@drawable/cake_48px" />
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="#363636" />
-
-        <TextView
-            android:id="@+id/contactLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/contactsLabel"
-            android:textSize="26sp" />
+                android:gravity="center"
+                android:text="@string/contactsLabel"
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/phoneNumber_text"
@@ -141,7 +144,7 @@
                 android:padding="4dp"
                 android:textAlignment="viewStart"
                 android:textSize="18sp"
-                app:drawableStartCompat="@drawable/cake_48px" />
+                app:drawableStartCompat="@drawable/call_48px" />
 
             <TextView
                 android:id="@+id/email_text"
@@ -150,165 +153,158 @@
                 android:padding="4dp"
                 android:textAlignment="viewStart"
                 android:textSize="18sp"
-                app:drawableStartCompat="@drawable/cake_48px"/>
+                app:drawableStartCompat="@drawable/mail_48px" />
 
-        <View
-            android:id="@+id/divider5"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="#363636" />
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="#363636" />
 
-        <TextView
-            android:id="@+id/availabilityLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="@string/availabilityLabel"
-            android:textSize="26sp" />
+            <TextView
+                android:id="@+id/availabilityLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/availabilityLabel"
+                android:textSize="26sp" />
 
-        <LinearLayout
-            android:id="@+id/availabilityButtonsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            style="?android:attr/buttonBarStyle"
-            android:padding="8dp">
+            <LinearLayout
+                android:id="@+id/availabilityButtonsLayout"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-            <Button
-                android:id="@+id/mondayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/mondayInitials"
-                android:textColor="#000"
-                style="?android:attr/buttonBarButtonStyle"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/mondayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/mondayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/tuesdayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/tuesdayInitials"
-                android:textColor="#000"
-                style="?android:attr/buttonBarButtonStyle"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/tuesdayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/tuesdayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/wednesdayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/wednesdayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/wednesdayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/wednesdayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/thursdayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/thursdayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/thursdayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/thursdayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/fridayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/fridayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/fridayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/fridayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/saturdayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center_vertical|center_horizontal"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/saturdayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/saturdayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/saturdayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
 
-            <Button
-                android:id="@+id/sundayButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                style="?android:attr/buttonBarButtonStyle"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/sundayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
+                <Button
+                    android:id="@+id/sundayButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/sundayInitials"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="#363636" />
+
+            <TextView
+                android:id="@+id/favoriteSportLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/sport_skills"
+                android:textSize="26sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chip_group"
+                    style="@style/Widget.MaterialComponents.Chip.Entry"
+                    chipSpacingVertical="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="8dp"
+                    app:chipSpacing="8dp"
+                    app:chipSpacingHorizontal="8dp" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <View
-            android:id="@+id/divider8"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="#363636" />
-
-        <TextView
-            android:id="@+id/favoriteSportLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="4dp"
-            android:text="@string/sport_skills"
-            android:textSize="26sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group"
-                style="@style/Widget.MaterialComponents.Chip.Entry"
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                app:chipSpacing = "8dp"
-                app:chipSpacingHorizontal = "8dp"
-                chipSpacingVertical = "8dp"
-                android:layout_marginStart="8dp"/>
-        </LinearLayout>
-
-    </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

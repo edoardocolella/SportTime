@@ -1,6 +1,7 @@
 package com.example.polito_mad_01.ui
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -76,9 +77,9 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 }
 
                 when(skill.level){
-                    "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
-                    "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
-                    "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+                    "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
+                    "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
+                    "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
                 }
 
                 chip.isChipIconVisible = true
