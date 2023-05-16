@@ -29,13 +29,18 @@ import io.getstream.avatarview.coil.loadImage
 import java.util.*
 
 
-class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
+class EditProfile : Fragment(R.layout.fragment_edit_profile) {
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory(((activity?.application) as SportTimeApplication).userRepository)
+    }
 
     private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
     private var imageUriString: String? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

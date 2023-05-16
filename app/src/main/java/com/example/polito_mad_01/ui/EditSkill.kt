@@ -9,15 +9,22 @@ import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
+import com.example.polito_mad_01.viewmodel.EditProfileViewModelFactory
 import com.google.android.material.chip.*
 
 
-class EditSkill(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_skill) {
+class EditSkill : Fragment(R.layout.fragment_edit_skill) {
 
     private lateinit var mView: View
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory(((activity?.application) as SportTimeApplication).userRepository)
+    }
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
