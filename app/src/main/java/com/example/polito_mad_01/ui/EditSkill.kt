@@ -67,10 +67,10 @@ class EditSkill(private val vm: EditProfileViewModel) : Fragment(R.layout.fragme
             "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px)
         }
 
-        when (skill.level) {
-            "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
-            "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
-            "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+        when(skill.level){
+            "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
+            "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
+            "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
         }
 
         chip.isChipIconVisible = true
