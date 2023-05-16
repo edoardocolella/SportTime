@@ -61,12 +61,26 @@
                 android:textSize="24sp"
                 android:textStyle="italic" />
 
+            <View
+                android:id="@+id/achievementsDivider"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginBottom="8dp"
+                android:background="#363636" />
+
+            <TextView
+                android:id="@+id/achievementsLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/achievements"
+                android:textSize="26sp" />
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
-                android:text="@string/description"
                 android:textAlignment="center"
                 android:textSize="20sp" />
 

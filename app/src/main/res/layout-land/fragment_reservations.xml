@@ -36,7 +36,7 @@
               app:cv_dayViewResource="@layout/calendar_day_layout"
               app:cv_monthHeaderResource="@layout/calendar_day_titles_container"
               app:cv_outDateStyle="endOfGrid"
-
+              app:cv_orientation="horizontal"
               />
      </androidx.cardview.widget.CardView>
 

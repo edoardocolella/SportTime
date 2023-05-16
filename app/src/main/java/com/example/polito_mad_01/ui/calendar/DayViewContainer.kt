@@ -31,4 +31,8 @@ class DayViewContainer(view: View) : ViewContainer(view){
 
         hasFreeSlot = true
     }
+
+    fun hideBadges(){
+        textView.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0)
+    }
 }

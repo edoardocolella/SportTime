@@ -32,12 +32,17 @@ import java.net.URI
 import java.util.*
 
 
-class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
+class EditProfile : Fragment(R.layout.fragment_edit_profile) {
+
+    private val vm: EditProfileViewModel by viewModels {
+        EditProfileViewModelFactory(((activity?.application) as SportTimeApplication).userRepository)
+    }
 
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
     private  var imageUriForCamera : Uri? = null
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -225,7 +230,7 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
-        setEditTextViewAndListener(R.id.description_value, user.description, "description")
+        setEditTextViewAndListener(R.id.achievements_value, user.description, "description")
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")

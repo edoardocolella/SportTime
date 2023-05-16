@@ -16,9 +16,7 @@
         android:text="@string/createReview"
         android:textAlignment="center"
         android:textSize="36sp"
-        android:textStyle="bold"
-        android:textColor="@color/indigo"
-        />
+        android:textStyle="bold" />
 
     <View
         android:id="@+id/createReviewDivider1"
@@ -47,16 +45,15 @@
         android:layout_weight="8"
 
         android:hint="@string/writeReviewHere"
-        android:textAlignment="textStart"
-        app:boxBackgroundColor="#F4E8C3">
+        android:textAlignment="textStart">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/createReviewEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:shadowColor="@color/gray"
-            android:minLines="2"
             android:gravity="top"
+            android:minLines="2"
+            android:shadowColor="@color/gray"
             android:textAlignment="textStart" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -65,9 +62,7 @@
         android:id="@+id/SubmitReviewButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/indigo"
-        android:text="@string/submitReview"
-        />
+        android:text="@string/submitReview" />
 
 
 </LinearLayout>

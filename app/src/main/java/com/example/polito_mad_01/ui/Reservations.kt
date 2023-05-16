@@ -103,11 +103,14 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 container.day = data
 
                 vm.getUserSlots(1).observe(viewLifecycleOwner) { list ->
-                    if(list.filter{ it.slot.user_id == null }.map { it.slot.date }.contains(data.date.toString())){
+                    // Reset badges
+                    container.hideBadges()
+
+                    if(list.filter{ it.slot.user_id == null }.any{ it.slot.date == data.date.toString()}){
                         container.showFreeBadge()
                     }
 
-                    if(list.filter{ it.slot.user_id != null }.map { it.slot.date }.contains(data.date.toString())){
+                    if(list.filter{ it.slot.user_id != null }.any{ it.slot.date == data.date.toString()}){
                         container.showReservationBadge()
                     }
 
@@ -116,6 +119,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 // Hide days of other months
                 if (data.position != DayPosition.MonthDate) {
                     container.textView.visibility = View.INVISIBLE
+                } else {
+                    container.textView.visibility = View.VISIBLE
                 }
 
                 // Set background for selected date
@@ -154,7 +159,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, data: CalendarMonth) {
-
                 container.monthTextView.text = DateFormatSymbols().months[data.yearMonth.monthValue-1].mapIndexed {
                     index, letter -> if(index == 0) letter.uppercaseChar() else letter
                 }.joinToString("")
