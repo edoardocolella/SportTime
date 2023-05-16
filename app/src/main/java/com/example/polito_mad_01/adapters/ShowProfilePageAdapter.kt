@@ -13,8 +13,8 @@ class ShowProfilePageAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0 -> EditProfile()
-            1 -> EditSkill()
+            0 -> EditProfile(vm)
+            1 -> EditSkill(vm)
             else -> throw (Exception("Invalid position"))}
     }
 

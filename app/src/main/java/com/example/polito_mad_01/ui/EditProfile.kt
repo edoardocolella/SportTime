@@ -32,11 +32,7 @@ import java.net.URI
 import java.util.*
 
 
-class EditProfile : Fragment(R.layout.fragment_edit_profile) {
-
-    private val vm: EditProfileViewModel by viewModels {
-        EditProfileViewModelFactory(((activity?.application) as SportTimeApplication).userRepository)
-    }
+class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
 
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
