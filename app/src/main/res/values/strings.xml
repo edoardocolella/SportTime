@@ -6,7 +6,7 @@
     <string name="pictureDescription">Profile picture</string>
     <string name="fullName">Name Surname</string>
     <string name="nickname">Nickname</string>
-    <string name="description">Description</string>
+    <string name="achievements">Achievements</string>
     <string name="profileLabel">Profile</string>
     <string name="ageLabel">Age: </string>
     <string name="age">Age</string>
