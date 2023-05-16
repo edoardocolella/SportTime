@@ -23,9 +23,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+        style="@style/Widget.MaterialComponents.ChipGroup"
+        android:layout_width="370dp"
+        android:layout_height="500dp"
+        android:layout_marginStart="8dp"
+        android:layout_weight="2" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addSkill"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,6 +43,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/chip_group1" />
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:contentDescription="Add Skill"
+        android:text="Add Skill"
+        app:backgroundTint="@color/charcoal"
+        app:icon="@drawable/baseline_add_24" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
