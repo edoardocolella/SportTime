@@ -84,9 +84,9 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
         }
 
         when (skill.level) {
-            "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
-            "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
-            "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+            "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
+            "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
+            "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
         }
 
         chip.isChipIconVisible = true
