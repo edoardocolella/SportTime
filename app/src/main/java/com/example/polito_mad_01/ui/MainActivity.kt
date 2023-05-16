@@ -12,6 +12,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +29,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val db = Firebase.firestore
+         db.collection("users").document("1").get().addOnSuccessListener {
+             println("TEST ${it.data}")
+         }
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED

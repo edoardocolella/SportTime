@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "865490758234",
+    "project_id": "sporttime-8c5df",
+    "storage_bucket": "sporttime-8c5df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865490758234:android:8398f0edda4645a920c663",
+        "android_client_info": {
+          "package_name": "com.example.polito_mad_01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "865490758234-i8o2jn9id57a4l3d5ih1mmneoeqe7l9j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.polito_mad_01",
+            "certificate_hash": "c76f7318e9e9b6dd4972678c12cbedecd50eb033"
+          }
+        },
+        {
+          "client_id": "865490758234-tns3gndpl0s4895rn97o1psdum1637am.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnXDwp8bbu2I2U65KGD3YjbzK33CpaI68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "865490758234-tns3gndpl0s4895rn97o1psdum1637am.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
