@@ -227,7 +227,7 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
-        setEditTextViewAndListener(R.id.description_value, user.description, "description")
+        setEditTextViewAndListener(R.id.achievements_value, user.description, "description")
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")

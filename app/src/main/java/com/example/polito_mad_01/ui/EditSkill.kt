@@ -10,6 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.db.Skill
@@ -30,6 +32,10 @@ class EditSkill : Fragment(R.layout.fragment_edit_skill) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(        inflater: LayoutInflater,        container: ViewGroup?,        savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.fragment_edit_skill, container, false)
+
+        val chipGroup = mView.findViewById<ChipGroup>(R.id.chip_group1)
+        vm.chipGroup = MutableLiveData(chipGroup)
+
         setAllView()
         return mView
     }
@@ -48,10 +54,6 @@ class EditSkill : Fragment(R.layout.fragment_edit_skill) {
         val addSkillButton = mView.findViewById<Button>(R.id.addSkill)
         addSkillButton.setOnClickListener { showBottomSheetDialogFragment() }
 
-        vm.newSkill.observe(viewLifecycleOwner) {
-            addChipToGroup(it)
-            println("Actual state of the list: ${vm.user.value?.skillList}")
-        }
     }
 
     private fun addAllChipToGroup(value: List<Skill>) {
@@ -62,6 +64,9 @@ class EditSkill : Fragment(R.layout.fragment_edit_skill) {
         ContextCompat.getDrawable(requireContext(), iconCode)
 
     private fun addChipToGroup(skill: Skill) {
+
+        val chipGroup = mView.findViewById<ChipGroup>(R.id.chip_group1)
+
         val chip = Chip(context)
         chip.text = skill.sport_name
 
@@ -85,17 +90,18 @@ class EditSkill : Fragment(R.layout.fragment_edit_skill) {
         // necessary to get single selection working
         chip.isClickable = true
         chip.isCheckable = false
-        view?.findViewById<ChipGroup>(R.id.chip_group1)?.addView(chip)
+        chipGroup.addView(chip)
+
         chip.setOnCloseIconClickListener {
 
-            val skillToAdd = Skill(1,skill.sport_name, "none")
-            vm.user.value?.skillList?.remove(skill)
-            vm.user.value?.skillList?.add(skillToAdd)
+            var skillList = vm.user.value?.skillList!!
 
-            view?.findViewById<ChipGroup>(R.id.chip_group1)?.removeView(chip as View)
+            skillList = skillList.filter { it.sport_name != skill.sport_name }.toMutableList()
+            skillList.add(Skill(1, skill.sport_name, "none"))
 
+            vm.user.value?.skillList = skillList
 
-            println("Actual state of the list: ${vm.user.value?.skillList}")
+            chipGroup.removeView(chip as View)
 
         }
     }
