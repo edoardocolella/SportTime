@@ -45,17 +45,18 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         super.onViewCreated(view, savedInstanceState)
 
         requireActivity().onBackPressedDispatcher
-            .addCallback(this) { showExitDialog() }
+            .addCallback(this) {
+                showExitDialog()
+            }
             .isEnabled = true
 
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
 
-        if(savedInstanceState == null ) {
-            println("onViewCreated: savedInstanceState is null")
+        if(savedInstanceState == null )
             setAllView(view)
-        }
+
     }
 
 
@@ -83,20 +84,14 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        println("onActivityResult: requestCode = $requestCode")
-
         if(resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == IMAGE_CAPTURE_CODE
-                && imageUriForCamera != null
-                && imageUriForCamera != Uri.EMPTY ) {
-
+                && imageUriForCamera != null  && imageUriForCamera != Uri.EMPTY ) {
                 vm.user.value?.user?.image_uri = imageUriForCamera.toString()
                 vm.imageUri.value = imageUriForCamera.toString()
             }
             else if (requestCode == RESULT_LOAD_IMAGE){
-                println("onActivityResult: data?.data = ${data?.data}")
                 if( data?.data != null) {
-
                     vm.user.value?.user?.image_uri = data.data.toString()
                     vm.imageUri.value = data.data.toString()
                 }
@@ -158,7 +153,8 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     private fun showExitDialog(): Boolean {
         AlertDialog.Builder(activity)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
-            .setPositiveButton("YES") { _, _ -> findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment) }
+            .setPositiveButton("YES")
+            { _, _ -> findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment) }
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }
@@ -180,8 +176,6 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
         vm.imageUri.observe(viewLifecycleOwner){
-            println("REFRESHED")
-            println("MY URI IS $it")
             setImage(it)
         }
 
@@ -299,28 +293,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setImage(uri: String?) {
-
-       // val name = user.name
-        //val surname = user.surname
-
         val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
-
-        if(uri == null) {
-            println("URI IS NULL")
-            //frame.avatarInitials= "ab"
-            //= name.substring(0, 1) + surname.substring(0, 1)
-            return
-        }
-
-        val imageUri = uri.toUri()
-        /*
-        frame.loadImage(
-            imageUri,
-            onError = { a,b -> println("EDIT Error loading image: $a, $b") },
-            onSuccess = {a,b -> println("EDIT Image loaded: $a, $b") }
-        )
-         */
-
-        frame.setImageURI(imageUri)
+        uri?.let { frame.setImageURI(it.toUri()) }
     }
 }

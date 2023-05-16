@@ -53,7 +53,6 @@ class Browse : Fragment(R.layout.fragment_browse) {
                     selectedFilter = spinner.selectedItem.toString()
 
                     val freeSlots = slots.filter { it.playground.sport_name == selectedFilter }
-                    println(freeSlots)
                     recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
 
                     if(freeSlots.isEmpty()){

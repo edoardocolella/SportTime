@@ -8,25 +8,16 @@ import kotlin.concurrent.thread
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    var user : LiveData<UserWithSkills> = MutableLiveData()
+    lateinit var user : MutableLiveData<UserWithSkills>
     lateinit var chipGroup : LiveData<View>
-
-    private val loaded = MutableLiveData(false)
-
      var imageUri = MutableLiveData<String>(null)
 
     fun getUser(userId: Int): LiveData<UserWithSkills>{
-        if (loaded.value == false) {
-            user = userRepository.userWithSkillsById(userId)
-                .asLiveData() as MutableLiveData<UserWithSkills>
-            loaded.value = true
-            return user;
-        }
+        user = userRepository.userWithSkillsById(userId).asLiveData() as MutableLiveData<UserWithSkills>
         return user
     }
 
     fun updateUser() {
-        println("TEST UPDATE USER ${user.value}")
         thread {
             user.value?.let { userRepository.updateUserWithSkills(it) }
         }
