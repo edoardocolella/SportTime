@@ -292,11 +292,6 @@
             android:text="@string/sport_skills"
             android:textSize="26sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group"
                 style="@style/Widget.MaterialComponents.Chip.Entry"
@@ -304,9 +299,8 @@
                 android:layout_height="100dp"
                 app:chipSpacing = "8dp"
                 app:chipSpacingHorizontal = "8dp"
-                chipSpacingVertical = "8dp"
+                app:chipSpacingVertical = "8dp"
                 android:layout_marginStart="8dp"/>
-        </LinearLayout>
 
     </LinearLayout>
 

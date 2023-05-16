@@ -48,5 +48,5 @@ data class UserWithSkills(
         parentColumn = "user_id",
         entityColumn = "user_id"
     )
-    val skillList: MutableList<Skill>)
+    var skillList: MutableList<Skill>)
 

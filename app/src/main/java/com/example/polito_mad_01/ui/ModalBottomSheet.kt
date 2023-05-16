@@ -1,12 +1,16 @@
 package com.example.polito_mad_01.ui
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.*
+import androidx.core.content.ContextCompat
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputLayout
 
 class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialogFragment() {
@@ -45,25 +49,65 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
 
         val newSkill = Skill(1, sportName, sportLevel)
 
-        val oldList = vm.user.value?.skillList
+        val oldList = vm.user.value?.skillList!!
 
-        for (skill in oldList!!) {
+        for (skill in oldList) {
             if(skill.sport_name == newSkill.sport_name && skill.level != "none"){
                 Toast.makeText(context, "There is already that skill", Toast.LENGTH_SHORT).show()
                 return
             }
-        }
-
-        for (skill in oldList) {
-            if(skill.sport_name == newSkill.sport_name && skill.level == "none"){
-                vm.user.value?.skillList?.remove(skill)
+            if(skill.sport_name == newSkill.sport_name){
+                var skillList = vm.user.value?.skillList!!
+                skillList = skillList.filter { it.sport_name != newSkill.sport_name }.toMutableList()
+                skillList.add(newSkill)
+                vm.user.value?.skillList = skillList
+                addChipToGroup(newSkill)
+                return
             }
         }
+    }
 
+    private fun addChipToGroup(skill: Skill) {
 
-            vm.user.value?.skillList?.add(newSkill)
-        vm.newSkill.value = newSkill
+        val chipGroup = vm.chipGroup.value!! as ChipGroup
 
+        val chip = Chip(context)
+        chip.text = skill.sport_name
+
+        if(skill.level == "none") return
+
+        when (skill.sport_name) {
+            "Basket" -> chip.chipIcon = getIcon(R.drawable.sports_basketball_48px)
+            "Football" -> chip.chipIcon = getIcon(R.drawable.sports_soccer_48px)
+            "Volley" -> chip.chipIcon = getIcon(R.drawable.sports_volleyball_48px)
+            "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px)
+        }
+
+        when (skill.level) {
+            "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
+            "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
+            "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+        }
+
+        chip.isChipIconVisible = true
+        chip.isCloseIconVisible = true
+        // necessary to get single selection working
+        chip.isClickable = true
+        chip.isCheckable = false
+        chipGroup.addView(chip)
+
+        chip.setOnCloseIconClickListener {
+
+            var skillList = vm.user.value?.skillList!!
+
+            skillList = skillList.filter { it.sport_name != skill.sport_name }.toMutableList()
+            skillList.add(Skill(1, skill.sport_name, "none"))
+
+            vm.user.value?.skillList = skillList
+
+            chipGroup.removeView(chip as View)
+
+        }
     }
 
 
@@ -81,20 +125,6 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
 
     }
 
-    /*
-    private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
-        return object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                lambda(position)
-            }
-        }
-    }
-
-     */
+    private fun getIcon(iconCode: Int): Drawable? =
+        ContextCompat.getDrawable(requireContext(), iconCode)
 }

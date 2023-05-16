@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
+import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
@@ -60,31 +61,40 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
             }
 
             val skills = userWithSkills.skillList
-            for(skill in skills){
+            setChipGroup(skills)
 
-                if(skill.level == "none") continue
+        }
+    }
 
-                val chip = Chip(context)
+    private fun setChipGroup(skills: MutableList<Skill>) {
+        val chipGroup = view?.findViewById<ChipGroup>(R.id.chip_group)
+        chipGroup?.removeAllViews()
 
-                chip.text = skill.sport_name
+        println("SKILLS: $skills")
 
-                when(skill.sport_name){
-                    "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
-                    "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
-                    "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
-                    "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
-                }
+        for(skill in skills){
 
-                when(skill.level){
-                    "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
-                    "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
-                    "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
-                }
+            if(skill.level == "none") continue
 
-                chip.isChipIconVisible = true
-                view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
+            val chip = Chip(context)
+
+            chip.text = skill.sport_name
+
+            when(skill.sport_name){
+                "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
+                "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
+                "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
+                "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
             }
 
+            when(skill.level){
+                "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
+                "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
+                "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
+            }
+
+            chip.isChipIconVisible = true
+            chipGroup?.addView(chip)
         }
     }
 
