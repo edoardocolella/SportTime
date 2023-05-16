@@ -3,10 +3,7 @@ package com.example.polito_mad_01.ui
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

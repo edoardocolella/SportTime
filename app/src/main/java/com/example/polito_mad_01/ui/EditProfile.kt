@@ -99,8 +99,11 @@ class EditProfile : Fragment(R.layout.fragment_edit_profile) {
             }
             else if (requestCode == RESULT_LOAD_IMAGE){
                 println("onActivityResult: data?.data = ${data?.data}")
-                if( data?.data != null)
+                if( data?.data != null) {
+
                     vm.user.value?.user?.image_uri = data.data.toString()
+                    vm.imageUri.value = data.data.toString()
+                }
             }
 
         }
