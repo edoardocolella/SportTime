@@ -5,12 +5,10 @@ import android.net.ParseException
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*

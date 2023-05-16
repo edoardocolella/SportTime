@@ -63,12 +63,10 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             setTextView(R.id.slotTime, stringTime)
 
             val services = mutableListOf<String>()
-            println(it.slot)
             if(it.slot.equipment) services.add("- Equipment")
             if(it.slot.heating) services.add("- Heating")
             if(it.slot.lighting) services.add("- Lightning")
             if(it.slot.locker_room) services.add("- Locker room")
-            println(services)
 
             view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)

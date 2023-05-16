@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
@@ -38,6 +39,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        requireActivity().onBackPressedDispatcher
+            .addCallback(this) {}.isEnabled = true
         try {
             setAllView()
         } catch (e: NotImplementedError) {
@@ -119,11 +122,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         val imageUri = user.image_uri?.toUri()
         val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
 
-        println("SHOW imageUri: $imageUri")
-        println("SHOW imageUri == Uri.EMPTY: ${imageUri == Uri.EMPTY}")
-
         if (imageUri != Uri.EMPTY && imageUri != null) {
-            println("SHOW Setting image")
             frame.loadImage(imageUri)
         }
         else frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
