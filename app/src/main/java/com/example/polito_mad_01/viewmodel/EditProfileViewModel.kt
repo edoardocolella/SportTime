@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.view.View
 import androidx.lifecycle.*
 import com.example.polito_mad_01.db.*
 import com.example.polito_mad_01.repositories.UserRepository
@@ -8,8 +9,8 @@ import kotlin.concurrent.thread
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     var user: LiveData<UserWithSkills> = MutableLiveData()
-    var newSkill = MutableLiveData<Skill>()
 
+    lateinit var chipGroup : LiveData<View>
 
     private val loaded = MutableLiveData(false)
 

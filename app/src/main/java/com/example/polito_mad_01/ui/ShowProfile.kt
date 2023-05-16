@@ -112,16 +112,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setImage(user: User) {
-        /*
-        try {
-            val uri = user.image_uri?.toUri()
-            val imageView = view?.findViewById<CircleImageView>(R.id.profileImage_imageView)
-            imageView?.setImageURI(uri)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-         */
 
         view?.findViewById<AvatarView>(R.id.profileImage_imageView)?.loadImage(
             data = user.image_uri,
