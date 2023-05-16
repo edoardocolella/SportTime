@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/playgroundImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/reservationScroll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,15 +36,12 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <EditText
-                android:id="@+id/editPlaygroundName"
+            <TextView
+                android:id="@+id/playgroundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:height="48dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name"
-                android:textSize="30sp" />
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/divider4"
@@ -54,33 +51,27 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <EditText
-                android:id="@+id/editSportName"
+            <TextView
+                android:id="@+id/playgroundSport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Sport Name"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/directions_run_48px" />
 
-            <EditText
-                android:id="@+id/editLocation"
+            <TextView
+                android:id="@+id/playgroundLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Location"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/home_pin_48px" />
 
-            <EditText
-                android:id="@+id/editPrice"
+            <TextView
+                android:id="@+id/reservationTotalPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Price"
                 android:textSize="20sp"
                 app:drawableLeftCompat="@drawable/payments_48px"/>
 
@@ -105,29 +96,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/editDate"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/dateIcon"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Date"
-                    android:textSize="20sp"
-                    app:drawableStartCompat="@drawable/calendar_month_48px" />
+                    app:srcCompat="@drawable/calendar_month_48px" />
 
-                <EditText
-                    android:id="@+id/reservationTime"
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/dateSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
+
+                <ImageView
+                    android:id="@+id/timeIcon"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Hour"
-                    android:textSize="20sp"
-                    app:drawableStartCompat="@drawable/schedule_48px" />
+                    app:srcCompat="@drawable/schedule_48px" />
+
+                <Spinner
+                    android:id="@+id/timeSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4" />
 
             </LinearLayout>
 
@@ -139,18 +135,81 @@
                 android:layout_marginBottom="8dp"
                 android:background="?android:attr/listDivider" />
 
-            <TextView
-                android:id="@+id/additionalServicesLabel"
+            <LinearLayout
+                android:id="@+id/serviceLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Services"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/additionalServicesView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/serviceLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/serviceLabel"
+                    android:padding="4dp"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/reservationLighting"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/lightingService"
+                        android:textSize="20sp" />
+
+                    <CheckBox
+                        android:id="@+id/reservationHeating"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/heatingService"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/reservationEquipment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/equipmentService"
+                        android:textSize="20sp" />
+
+                    <CheckBox
+                        android:id="@+id/reservationLockerRoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/lockerRoomService"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/deleteButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete"
+                    android:backgroundTint="#FF0000" />
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 

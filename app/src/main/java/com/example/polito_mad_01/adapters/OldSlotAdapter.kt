@@ -16,7 +16,7 @@ class OldSlotAdapter(
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OldSlotHolder{
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.oldslot_item_layout ,parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.old_slot_item_layout ,parent, false)
         return OldSlotHolder(v, navController)
     }
 

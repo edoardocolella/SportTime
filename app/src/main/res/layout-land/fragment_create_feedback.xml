@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/newReviewLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".ui.CreateFeedback">
+
+    <TextView
+        android:id="@+id/createReviewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createReview"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/indigo"
+        />
+
+    <View
+        android:id="@+id/createReviewDivider1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        />
+
+    <RatingBar
+        android:id="@+id/createReviewRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:isIndicator="false"
+        android:numStars="5"
+        android:rating="1.0"
+        android:stepSize="1.0" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/createReviewTextField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+
+        android:hint="@string/writeReviewHere"
+        android:textAlignment="textStart"
+        app:boxBackgroundColor="#F4E8C3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createReviewEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:shadowColor="@color/gray"
+            android:minLines="2"
+            android:gravity="top"
+            android:textAlignment="textStart" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/SubmitReviewButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/indigo"
+        android:text="@string/submitReview"
+        />
+
+
+</LinearLayout>

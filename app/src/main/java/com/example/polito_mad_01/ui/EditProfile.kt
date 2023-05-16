@@ -255,11 +255,11 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
         (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
+/*        val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
         val sportArray = resources.getStringArray(R.array.sportArray)
         sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
         sportSpinner?.onItemSelectedListener =
-            setSpinnerListener { user.favouriteSport = sportArray[it] }
+            setSpinnerListener { user.favouriteSport = sportArray[it] }*/
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {

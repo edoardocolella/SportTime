@@ -28,11 +28,6 @@ import java.util.*
 class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
 
-    lateinit var reservationsView: RecyclerView
-    lateinit var freeSlotsView: RecyclerView
-    lateinit var noReservations : TextView
-    lateinit var noFreeSlots : TextView
-
     lateinit var tabLayout : TabLayout
     lateinit var viewPager : ViewPager2
 
@@ -51,15 +46,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         reservationMap = mutableMapOf()
         val selectedDateString = arguments?.getString("selectedDate")
         selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
-
-        noReservations = view.findViewById(R.id.no_reservations)
-        noFreeSlots = view.findViewById(R.id.no_free_slots)
-
-        reservationsView = view.findViewById(R.id.reservationList)
-        reservationsView.layoutManager = LinearLayoutManager(view.context)
-
-        freeSlotsView = view.findViewById(R.id.freeSlotList)
-        freeSlotsView.layoutManager = LinearLayoutManager(view.context)
 
 
         tabLayout =  view.findViewById(R.id.reservationTabLayout)
@@ -95,11 +81,10 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         // Month and weekdays definition
         val currentMonth = YearMonth.now()
-        val startMonth = currentMonth.minusMonths(6)
         val endMonth = currentMonth.plusMonths(6)
 
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
-        calendarView.setup(startMonth, endMonth, daysOfWeek.first())
+        calendarView.setup(currentMonth, endMonth, daysOfWeek.first())
         selectedDate?.let {
             calendarView.scrollToMonth(it.yearMonth)
             calendarView.notifyDateChanged(it)
@@ -150,12 +135,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                             calendarView.notifyDateChanged(currentSelection)
                             setList()
 
-                            reservationsView.visibility = View.GONE
-                            noReservations.visibility = View.VISIBLE
-
-                            freeSlotsView.visibility = View.GONE
-                            noFreeSlots.visibility = View.VISIBLE
-
                         } else {
                             selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
@@ -176,7 +155,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             override fun create(view: View) = MonthViewContainer(view)
             override fun bind(container: MonthViewContainer, data: CalendarMonth) {
 
-                container.monthTextView.text = DateFormatSymbols().months[data.yearMonth.monthValue-1]
+                container.monthTextView.text = DateFormatSymbols().months[data.yearMonth.monthValue-1].mapIndexed {
+                    index, letter -> if(index == 0) letter.uppercaseChar() else letter
+                }.joinToString("")
                 container.yearTextView.text = data.yearMonth.year.toString()
 
                 container.prevMonthButton.setOnClickListener {
@@ -216,25 +197,4 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             }
         }.attach()
     }
-
-/*        val datedList = slotList
-        if(datedList == null || datedList.none { it.slot.user_id == null }){
-            freeSlotsView.visibility = View.GONE
-            noFreeSlots.visibility = View.VISIBLE
-
-        } else {
-            freeSlotsView.visibility = View.VISIBLE
-            noFreeSlots.visibility = View.GONE
-            freeSlotsView.adapter = FreeSlotAdapter(datedList.filter{it.slot.user_id == null})
-        }
-
-        if(datedList == null || datedList.none { it.slot.user_id != null }){
-            reservationsView.visibility = View.GONE
-            noReservations.visibility = View.VISIBLE
-
-        } else {
-            reservationsView.visibility = View.VISIBLE
-            noReservations.visibility = View.GONE
-            reservationsView.adapter = ReservationAdapter(datedList.filter{it.slot.user_id != null}, findNavController())
-        }*/
-    }
+}

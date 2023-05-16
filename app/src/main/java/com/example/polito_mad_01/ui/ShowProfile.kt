@@ -1,6 +1,7 @@
 package com.example.polito_mad_01.ui
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -12,7 +13,6 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.db.User
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
@@ -61,40 +61,31 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
             }
 
             val skills = userWithSkills.skillList
-            setChipGroup(skills)
+            for(skill in skills){
 
-        }
-    }
+                if(skill.level == "none") continue
 
-    private fun setChipGroup(skills: MutableList<Skill>) {
-        val chipGroup = view?.findViewById<ChipGroup>(R.id.chip_group)
-        chipGroup?.removeAllViews()
+                val chip = Chip(context)
 
-        println("SKILLS: $skills")
+                chip.text = skill.sport_name
 
-        for(skill in skills){
+                when(skill.sport_name){
+                    "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
+                    "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
+                    "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
+                    "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
+                }
 
-            if(skill.level == "none") continue
+                when(skill.level){
+                    "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
+                    "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
+                    "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
+                }
 
-            val chip = Chip(context)
-
-            chip.text = skill.sport_name
-
-            when(skill.sport_name){
-                "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
-                "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
-                "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
-                "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
+                chip.isChipIconVisible = true
+                view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
 
-            when(skill.level){
-                "Beginner" -> chip.setChipBackgroundColorResource(R.color.powder_blue)
-                "Intermediate" -> chip.setChipBackgroundColorResource(R.color.gray)
-                "Expert" -> chip.setChipBackgroundColorResource(R.color.red)
-            }
-
-            chip.isChipIconVisible = true
-            chipGroup?.addView(chip)
         }
     }
 
