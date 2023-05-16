@@ -2,6 +2,7 @@ package com.example.polito_mad_01.ui
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
@@ -113,12 +114,19 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
 
     private fun setImage(user: User) {
 
-        view?.findViewById<AvatarView>(R.id.profileImage_imageView)?.loadImage(
-            data = user.image_uri,
-            onError = { _,_ ->
-                requireView().findViewById<AvatarView>(R.id.profileImage_imageView).avatarInitials = user.name.substring(0,1) + user.surname.substring(0,1)
-            }
-        )
+        val name = user.name
+        val surname = user.surname
+        val imageUri = user.image_uri?.toUri()
+        val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
+
+        println("SHOW imageUri: $imageUri")
+        println("SHOW imageUri == Uri.EMPTY: ${imageUri == Uri.EMPTY}")
+
+        if (imageUri != Uri.EMPTY && imageUri != null) {
+            println("SHOW Setting image")
+            frame.loadImage(imageUri)
+        }
+        else frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
     }
 
 

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.net.toUri
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
@@ -26,16 +27,17 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
+import okhttp3.internal.notify
+import java.net.URI
 import java.util.*
 
 
 class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_profile) {
 
-    private var imageUri: Uri? = null
     private val RESULT_LOAD_IMAGE = 123
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
-    private var imageUriString: String? = null
+    private  var imageUriForCamera : Uri? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +50,11 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
-        setAllView(view)
+
+        if(savedInstanceState == null ) {
+            println("onViewCreated: savedInstanceState is null")
+            setAllView(view)
+        }
     }
 
 
@@ -66,33 +72,32 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         val values = ContentValues()
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        imageUri =
+        imageUriForCamera =
             activity?.contentResolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        imageUriString = imageUri.toString()
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriForCamera)
         startActivityForResult(cameraIntent, IMAGE_CAPTURE_CODE)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        println("onActivityResult: requestCode $requestCode, resultCode $resultCode. data $data")
-        var string : String? = ""
+        println("onActivityResult: requestCode = $requestCode")
+
         if(resultCode == AppCompatActivity.RESULT_OK) {
-            if (requestCode == IMAGE_CAPTURE_CODE && imageUri != Uri.EMPTY ) {
-                 string = imageUri.toString()
+            if (requestCode == IMAGE_CAPTURE_CODE
+                && imageUriForCamera != null
+                && imageUriForCamera != Uri.EMPTY ) {
+
+                vm.user.value?.user?.image_uri = imageUriForCamera.toString()
+                vm.imageUri.value = imageUriForCamera.toString()
             }
             else if (requestCode == RESULT_LOAD_IMAGE){
-                imageUri = data?.data
-                string = imageUri.toString()
+                println("onActivityResult: data?.data = ${data?.data}")
+                if( data?.data != null)
+                    vm.user.value?.user?.image_uri = data.data.toString()
             }
-            println("new uriString $string")
-            if(!string.isNullOrEmpty()) {
-                println("SAVING IMAGE URI")
-                vm.user.value?.user?.image_uri = string
-                setImage()
-            }
+
         }
 
     }
@@ -170,22 +175,20 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
-        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
-            val user = userWithSkills.user
-
-            imageUri = try {
-                Uri.parse(user.image_uri)
-            } catch (e: Exception) {
-                Uri.EMPTY
-            }
-
-            setTextViews(view, user)
-            setButtons(user)
-            setImage()
-            setSpinners(user)
-
+        vm.imageUri.observe(viewLifecycleOwner){
+            println("REFRESHED")
+            println("MY URI IS $it")
+            setImage(it)
         }
 
+
+        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
+            val user = userWithSkills.user
+            vm.imageUri.value = user.image_uri
+            setTextViews(view, user)
+            setButtons(user)
+            setSpinners(user)
+        }
     }
 
     private fun setButtons(user: User) {
@@ -249,17 +252,10 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
     }
 
     private fun setSpinners(user: User) {
-
         val textField = requireView().findViewById<TextInputLayout>(R.id.gender)
         val genderArray = resources.getStringArray(R.array.genderArray)
         val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
         (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-
-/*        val sportSpinner = view?.findViewById<Spinner>(R.id.sportSpinner)
-        val sportArray = resources.getStringArray(R.array.sportArray)
-        sportSpinner?.setSelection(sportArray.indexOf(user.favouriteSport))
-        sportSpinner?.onItemSelectedListener =
-            setSpinnerListener { user.favouriteSport = sportArray[it] }*/
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {
@@ -287,21 +283,6 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         }
     }
 
-    private fun setSpinnerListener(lambda: (Int) -> Unit): AdapterView.OnItemSelectedListener {
-        return object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                lambda(position)
-            }
-        }
-    }
-
-
     private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
         val textName = requireView().findViewById<TextInputLayout>(id)
         textName.editText?.setText(field)
@@ -313,21 +294,29 @@ class EditProfile(private val vm: EditProfileViewModel) : Fragment(R.layout.frag
         })
     }
 
-    private fun setImage() {
+    private fun setImage(uri: String?) {
 
-        val name = vm.user.value?.user?.name!!
-        val surname = vm.user.value?.user?.surname!!
+       // val name = user.name
+        //val surname = user.surname
 
-        val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
+        val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
 
-        println("imageUri: $imageUri")
-        println("imageUri == Uri.EMPTY: ${imageUri == Uri.EMPTY}")
-
-        if (imageUri != Uri.EMPTY) {
-            println("Setting image")
-            frame.loadImage(imageUri)
+        if(uri == null) {
+            println("URI IS NULL")
+            //frame.avatarInitials= "ab"
+            //= name.substring(0, 1) + surname.substring(0, 1)
+            return
         }
-        else frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
 
+        val imageUri = uri.toUri()
+        /*
+        frame.loadImage(
+            imageUri,
+            onError = { a,b -> println("EDIT Error loading image: $a, $b") },
+            onSuccess = {a,b -> println("EDIT Image loaded: $a, $b") }
+        )
+         */
+
+        frame.setImageURI(imageUri)
     }
 }
