@@ -47,6 +47,11 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
         val sportLevel =
             view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString()
 
+        if(sportLevel != "Beginner" && sportLevel != "Intermediate" && sportLevel != "Expert"){
+            Toast.makeText(context, "Choose a level", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val newSkill = Skill(1, sportName, sportLevel)
 
         val oldList = vm.user.value?.skillList!!

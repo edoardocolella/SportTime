@@ -25,7 +25,7 @@ data class User(
     var friday_availability: Boolean,
     var saturday_availability: Boolean,
     var sunday_availability: Boolean
-)
+){}
 
 @Entity(tableName = "skill",
     primaryKeys = ["user_id", "sport_name"],
@@ -49,4 +49,20 @@ data class UserWithSkills(
         entityColumn = "user_id"
     )
     var skillList: MutableList<Skill>)
+
+data class FirebaseUser(
+     val name: String,
+     val surname: String,
+     val nickname: String,
+     val birthdate: String,
+     val gender: String,
+     val location: String,
+     val achievements: List<String>,
+     val skills: Map<String, String>
+) {
+    constructor() : this("", "", "", "", "", "", listOf<String>(), mapOf<String, String>())
+    override fun toString(): String =
+        "$name $surname $nickname $birthdate $gender $location $achievements $skills"
+}
+
 

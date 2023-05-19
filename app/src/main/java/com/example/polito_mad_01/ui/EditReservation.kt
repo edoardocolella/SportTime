@@ -253,11 +253,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                     val newSlot = vm.reservation.value?.slot?.copy()!!
                     newSlot.slot_id = reservationWithIdRequested.slot_id
                     vm.updateReservation(newSlot)
-
-                    println("slot di partenza: $oldReservation")
-                    println("slot di arrivo: $newSlot")
-
-                    println("SlotID save: ${newSlot.slot_id}")
                     navigate(newSlot.slot_id)
 
                 }
@@ -283,8 +278,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
     private fun navigate(newSlotID: Int){
         val args = bundleOf("slotID" to newSlotID)
-        println("SlotID move: $newSlotID")
-
         findNavController().navigate(
             R.id.action_editReservationFragment_to_showReservationFragment2,
             args

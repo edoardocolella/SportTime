@@ -20,13 +20,9 @@ import com.example.polito_mad_01.viewmodel.EditProfileViewModelFactory
 import com.google.android.material.chip.*
 
 
-class EditSkill : Fragment(R.layout.fragment_edit_skill) {
+class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_skill) {
 
     private lateinit var mView: View
-
-    private val vm: EditProfileViewModel by viewModels {
-        EditProfileViewModelFactory(((activity?.application) as SportTimeApplication).userRepository)
-    }
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)

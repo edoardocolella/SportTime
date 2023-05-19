@@ -5,15 +5,14 @@ import android.net.ParseException
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
-import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
+import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
 
@@ -54,17 +53,13 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
         showProfilePageAdapter = ShowProfilePageAdapter(requireActivity(), vm)
         viewPager.adapter = showProfilePageAdapter
 
-        tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewPager.currentItem = tab!!.position
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tabLayout.visibility = View.VISIBLE
+            when(position){
+                0 -> tab.text = "Profile"
+                1 -> tab.text = "Skills"
             }
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                // Do nothing
-            }
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                // Do nothing
-            }
-        })
+        }.attach()
 
     }
 

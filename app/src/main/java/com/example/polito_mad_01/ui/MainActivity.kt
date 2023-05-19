@@ -12,7 +12,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -26,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
@@ -42,13 +43,22 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
+        vm.getFirebaseUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(this) {
+            println(it)
+            val view = navView.getHeaderView(0)
+            val nameSurname = "${it.name} ${it.surname}"
+            view.findViewById<TextView>(R.id.nameNav).text = nameSurname
+            view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
+        }
 
+        /*
         vm.getUser(1).observe(this) {
             val view = navView.getHeaderView(0)
             val nameSurname = "${it.name} ${it.surname}"
             view.findViewById<TextView>(R.id.nameNav).text = nameSurname
             view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
         }
+         */
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
