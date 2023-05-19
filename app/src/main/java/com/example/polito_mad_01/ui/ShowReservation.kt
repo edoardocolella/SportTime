@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ServicesAdapter
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -43,9 +44,9 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                 }
                 .isEnabled = true
 
-            setTextView(R.id.playgroundName, it.playground.name)
-            setTextView(R.id.playgroundLocation, it.playground.location)
-            setTextView(R.id.playgroundSport, it.playground.sport_name)
+            setTextView(R.id.playgroundName, it.playground.name, view)
+            setTextView(R.id.playgroundLocation, it.playground.location, view)
+            setTextView(R.id.playgroundSport, it.playground.sport_name, view)
 
             val image : ImageView = view.findViewById(R.id.playgroundImage)
             when(it.playground.sport_name) {
@@ -57,10 +58,10 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             }
 
             val stringPrice = it.playground.price_per_slot.toString() + "€"
-            setTextView(R.id.playgroundPrice, stringPrice)
-            setTextView(R.id.slotDate, it.date)
+            setTextView(R.id.playgroundPrice, stringPrice, view)
+            setTextView(R.id.slotDate, it.date, view)
             val stringTime = "${it.start_time}-${it.end_time}"
-            setTextView(R.id.slotTime, stringTime)
+            setTextView(R.id.slotTime, stringTime, view)
 
             val services = mutableListOf<String>()
             if(it.equipment) services.add("- Equipment")
@@ -97,14 +98,8 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                     args
                 )
             }
-
         }
-
         return true
-    }
-
-    private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<TextView>(viewId)?.text = text
     }
 
 }

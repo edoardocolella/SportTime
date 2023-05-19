@@ -19,8 +19,8 @@ import java.time.LocalDate
 import java.util.Date
 
 class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
-    lateinit var recyclerViewOldRes: RecyclerView
-    lateinit var noOldSlots: TextView
+    private lateinit var recyclerViewOldRes: RecyclerView
+    private lateinit var noOldSlots: TextView
 
     private val vm: ShowOldReservationsViewModel by viewModels{
         ShowOldReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)

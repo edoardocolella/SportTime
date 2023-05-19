@@ -5,16 +5,10 @@ import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.repositories.*
 
 class MainActivityViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun getFirebaseUser(userID: String): LiveData<User> {
-        //return userRepository.firebaseUser(userID)
-        return MutableLiveData<User>()
+    fun getUser(userID: String): LiveData<User> {
+        return userRepository.getUser(userID)
     }
 
-    /*
-    fun getUser(userID: Int): LiveData<User> {
-        return userRepository.userById(userID).asLiveData()
-    }
-     */
 }
 
 class MainActivityViewModelFactory(private val repository: UserRepository) :

@@ -22,6 +22,7 @@ import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
@@ -175,11 +176,11 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         }
 
 
-        vm.getUser(1).observe(viewLifecycleOwner) { user ->
+        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { user ->
             vm.imageUri.value = user.image_uri
             setTextViews(view, user)
             setButtons(user)
-            setSpinners(user)
+            setSpinners()
         }
     }
 
@@ -225,29 +226,29 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setBirthdateView(view: View, user: User) {
-        val birthdateView = view.findViewById<TextInputLayout>(R.id.birthday)
-        birthdateView.editText?.setText(user.birthdate)
+        val birthdateView = UIUtils.findTextInputById(view,R.id.birthday)
+        birthdateView?.editText?.setText(user.birthdate)
 
         val materialDatePicker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select a Date").build()
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-            birthdateView.editText?.setText(date)
+            birthdateView?.editText?.setText(date)
             setValue("birthdate", date)
         }
 
-        birthdateView.editText?.setOnClickListener {
+        birthdateView?.editText?.setOnClickListener {
             materialDatePicker.show(childFragmentManager, "DATE_PICKER")
         }
 
     }
 
-    private fun setSpinners(user: User) {
-        val textField = requireView().findViewById<TextInputLayout>(R.id.gender)
+    private fun setSpinners() {
+        val textField = UIUtils.findTextInputById(view,R.id.gender)
         val genderArray = resources.getStringArray(R.array.genderArray)
         val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
-        (textField.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        (textField?.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {

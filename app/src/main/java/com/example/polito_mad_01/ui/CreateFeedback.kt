@@ -11,8 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.Review
-import com.example.polito_mad_01.viewmodel.ReviewViewModel
-import com.example.polito_mad_01.viewmodel.ReviewViewModelFactory
+import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.textfield.TextInputEditText
 
 

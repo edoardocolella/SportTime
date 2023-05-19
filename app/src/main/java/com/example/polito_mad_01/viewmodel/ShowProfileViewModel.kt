@@ -5,9 +5,8 @@ import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.UserRepository
 
 class ShowProfileViewModel(private val userRepository:  UserRepository): ViewModel() {
-    fun getUser(id: Int): LiveData<User> {
-        //return userRepository.userWithSkillsById(id).asLiveData()
-        return MutableLiveData<User>()
+    fun getUser(id: String): LiveData<User> {
+        return userRepository.getUser(id)
     }
 
 }

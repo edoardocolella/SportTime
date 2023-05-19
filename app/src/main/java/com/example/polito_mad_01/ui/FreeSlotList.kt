@@ -10,7 +10,7 @@ import com.example.polito_mad_01.adapters.FreeSlotAdapter
 import com.example.polito_mad_01.model.*
 
 class FreeSlotList(private val slotList: List<Slot> = listOf()) : Fragment(R.layout.fragment_free_slot_list) {
-    lateinit var freeSlotView: RecyclerView
+    private lateinit var freeSlotView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

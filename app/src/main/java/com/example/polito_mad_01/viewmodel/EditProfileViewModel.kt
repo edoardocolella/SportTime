@@ -12,7 +12,8 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     lateinit var chipGroup : LiveData<View>
      var imageUri = MutableLiveData<String>(null)
 
-    fun getUser(userId: Int): LiveData<User>{
+    fun getUser(userId: String): LiveData<User>{
+        user = userRepository.getUser(userId) as MutableLiveData<User>
         return user
     }
 

@@ -1,11 +1,11 @@
 package com.example.polito_mad_01.ui
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.*
 import android.widget.*
-import androidx.core.content.ContextCompat
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.util.UIUtils.findTextInputById
+import com.example.polito_mad_01.util.UIUtils.getIcon
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.*
@@ -41,9 +41,9 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
     private fun saveAction() {
 
         val sportName =
-            view?.findViewById<TextInputLayout>(R.id.sportName)?.editText?.text.toString()
+            findTextInputById(view,R.id.sportName)?.editText?.text.toString()
         val sportLevel =
-            view?.findViewById<TextInputLayout>(R.id.sportLevel)?.editText?.text.toString()
+            findTextInputById(view,R.id.sportLevel)?.editText?.text.toString()
 
         if(sportLevel != "Beginner" && sportLevel != "Intermediate" && sportLevel != "Expert"){
             Toast.makeText(context, "Choose a level", Toast.LENGTH_SHORT).show()
@@ -69,10 +69,10 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
         chip.text = sportName
 
         when (sportName) {
-            "Basket" -> chip.chipIcon = getIcon(R.drawable.sports_basketball_48px)
-            "Football" -> chip.chipIcon = getIcon(R.drawable.sports_soccer_48px)
-            "Volley" -> chip.chipIcon = getIcon(R.drawable.sports_volleyball_48px)
-            "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px)
+            "Basket" -> chip.chipIcon = getIcon(R.drawable.sports_basketball_48px, requireContext())
+            "Football" -> chip.chipIcon = getIcon(R.drawable.sports_soccer_48px, requireContext())
+            "Volley" -> chip.chipIcon = getIcon(R.drawable.sports_volleyball_48px, requireContext())
+            "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px, requireContext())
         }
 
         when (sportLevel) {
@@ -108,7 +108,4 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
         (textField1.editText as? AutoCompleteTextView)?.setAdapter(adapter1)
 
     }
-
-    private fun getIcon(iconCode: Int): Drawable? =
-        ContextCompat.getDrawable(requireContext(), iconCode)
 }

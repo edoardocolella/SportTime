@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.util.UIUtils
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -44,17 +46,17 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setAllView() {
-        vm.getUser(1).observe(viewLifecycleOwner) {user->
+        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) {user->
             user.let {
                setImage(user)
-                setTextView(R.id.fullname, it.name + " " + it.surname)
-                setTextView(R.id.nickname, it.nickname)
-                setTextView(R.id.description, it.achievements.toString())
-                setTextView(R.id.birthdate, it.birthdate)
-                setTextView(R.id.email_text, it.email)
-                setTextView(R.id.phoneNumber_text, it.phoneNumber)
-                setTextView(R.id.gender, it.gender)
-                setTextView(R.id.location, it.location)
+                setTextView(R.id.fullname, it.name + " " + it.surname, view)
+                setTextView(R.id.nickname, it.nickname,view)
+                setTextView(R.id.description, it.achievements.toString(),view)
+                setTextView(R.id.birthdate, it.birthdate,view)
+                setTextView(R.id.email_text, it.email,view)
+                setTextView(R.id.phoneNumber_text, it.phoneNumber,view)
+                setTextView(R.id.gender, it.gender,view)
+                setTextView(R.id.location, it.location,view)
                 setAllButtons(it)
             }
 
@@ -123,9 +125,11 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
 
+    /*
     private fun setTextView(id: Int, field: String?) {
         field?.let { view?.findViewById<TextView>(id)?.text = field }
     }
+     */
 
 
     @Deprecated("Deprecated in Java")

@@ -37,7 +37,7 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView() {
-        vm.getUser(1).observe(viewLifecycleOwner) {
+        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) {
             val skills = it.skills
             addAllChipToGroup(skills)
         }

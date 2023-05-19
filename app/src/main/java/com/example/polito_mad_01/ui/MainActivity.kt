@@ -4,12 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.*
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
+import com.example.polito_mad_01.util.UIUtils.findTextViewById
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity() {
@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
@@ -43,22 +41,12 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
-        vm.getFirebaseUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(this) {
+        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(this) {
             val view = navView.getHeaderView(0)
             val nameSurname = "${it.name} ${it.surname}"
-            view.findViewById<TextView>(R.id.nameNav).text = nameSurname
-            view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
+            findTextViewById(view,R.id.nameNav)?.text = nameSurname
+            findTextViewById(view,R.id.usernameNav)?.text = it.nickname
         }
-
-        /*
-        vm.getUser(1).observe(this) {
-            val view = navView.getHeaderView(0)
-            val nameSurname = "${it.name} ${it.surname}"
-            view.findViewById<TextView>(R.id.nameNav).text = nameSurname
-            view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
-        }
-         */
-
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -87,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
-            true
+            return true
         }
 
         return super.onOptionsItemSelected(item)

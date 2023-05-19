@@ -10,6 +10,7 @@ import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.*
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
@@ -151,14 +152,13 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
 
     private fun setAllTextViews(slot:Slot) {
-        val reservation = slot
         val playground = slot.playground
-        setTextView(R.id.playgroundName, playground.name)
-        setTextView(R.id.playgroundLocation, playground.location)
-        setTextView(R.id.playgroundSport, playground.sport_name)
-        setTextView(R.id.reservationDate, reservation.date)
-        setTextView(R.id.reservationTime, "${reservation.start_time}-${reservation.end_time}")
-        setTextView(R.id.reservationTotalPrice, reservation.total_price.toString())
+        setTextView(R.id.playgroundName, playground.name,view)
+        setTextView(R.id.playgroundLocation, playground.location,view)
+        setTextView(R.id.playgroundSport, playground.sport_name,view)
+        setTextView(R.id.reservationDate, slot.date,view)
+        setTextView(R.id.reservationTime, "${slot.start_time}-${slot.end_time}",view)
+        setTextView(R.id.reservationTotalPrice, slot.total_price.toString(),view)
     }
 
     private fun setAllCheckBoxes(slot: Slot) {
@@ -195,10 +195,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
 
-    private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<TextView>(viewId)?.text = text
-    }
-
     private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
         val checkBox = view?.findViewById<CheckBox>(id)
         checkBox?.isChecked = availability
@@ -206,7 +202,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             setExtra(attribute, isChecked)
         }
     }
-
     private fun setExtra(attribute: String, checked: Boolean) {
         when (attribute) {
             "heating" -> vm.reservation.value?.heating = checked
