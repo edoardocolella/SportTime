@@ -37,7 +37,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             requireActivity().onBackPressedDispatcher
                 .addCallback(this) {
                     val args = bundleOf(
-                        "selectedDate" to it.slot.date
+                        "selectedDate" to it.date
                     )
                     findNavController().navigate(R.id.action_showReservationFragment2_to_reservationsFragment, args)
                 }
@@ -58,15 +58,15 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
 
             val stringPrice = it.playground.price_per_slot.toString() + "€"
             setTextView(R.id.playgroundPrice, stringPrice)
-            setTextView(R.id.slotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
+            setTextView(R.id.slotDate, it.date)
+            val stringTime = "${it.start_time}-${it.end_time}"
             setTextView(R.id.slotTime, stringTime)
 
             val services = mutableListOf<String>()
-            if(it.slot.equipment) services.add("- Equipment")
-            if(it.slot.heating) services.add("- Heating")
-            if(it.slot.lighting) services.add("- Lightning")
-            if(it.slot.locker_room) services.add("- Locker room")
+            if(it.equipment) services.add("- Equipment")
+            if(it.heating) services.add("- Heating")
+            if(it.lighting) services.add("- Lightning")
+            if(it.locker_room) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)
@@ -89,7 +89,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
 
         if (item.itemId == R.id.action_edit_reservation){
             if(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) >
-                vm.slot.value?.slot?.date!! ) {
+                vm.slot.value?.date!! ) {
                 Toast.makeText(requireContext(), "You cannot edit past reservations", Toast.LENGTH_SHORT).show()
             } else {
                 findNavController().navigate(

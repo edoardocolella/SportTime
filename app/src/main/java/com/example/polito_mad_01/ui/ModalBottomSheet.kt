@@ -6,11 +6,9 @@ import android.view.*
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import com.google.android.material.chip.*
 import com.google.android.material.textfield.TextInputLayout
 
 class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialogFragment() {
@@ -51,44 +49,33 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
             Toast.makeText(context, "Choose a level", Toast.LENGTH_SHORT).show()
             return
         }
+        val oldList = vm.user.value?.skills!!
 
-        val newSkill = Skill(1, sportName, sportLevel)
-
-        val oldList = vm.user.value?.skillList!!
-
-        for (skill in oldList) {
-            if(skill.sport_name == newSkill.sport_name && skill.level != "none"){
-                Toast.makeText(context, "There is already that skill", Toast.LENGTH_SHORT).show()
-                return
-            }
-            if(skill.sport_name == newSkill.sport_name){
-                var skillList = vm.user.value?.skillList!!
-                skillList = skillList.filter { it.sport_name != newSkill.sport_name }.toMutableList()
-                skillList.add(newSkill)
-                vm.user.value?.skillList = skillList
-                addChipToGroup(newSkill)
-                return
-            }
+        if(oldList.containsKey(sportName)){
+            Toast.makeText(context, "There is already that skill", Toast.LENGTH_SHORT).show()
+            return
+        }
+        else{
+            vm.user.value?.skills?.put(sportName, sportLevel)
+            addChipToGroup(sportName, sportLevel)
         }
     }
 
-    private fun addChipToGroup(skill: Skill) {
+    private fun addChipToGroup(sportName: String, sportLevel: String) {
 
         val chipGroup = vm.chipGroup.value!! as ChipGroup
 
         val chip = Chip(context)
-        chip.text = skill.sport_name
+        chip.text = sportName
 
-        if(skill.level == "none") return
-
-        when (skill.sport_name) {
+        when (sportName) {
             "Basket" -> chip.chipIcon = getIcon(R.drawable.sports_basketball_48px)
             "Football" -> chip.chipIcon = getIcon(R.drawable.sports_soccer_48px)
             "Volley" -> chip.chipIcon = getIcon(R.drawable.sports_volleyball_48px)
             "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px)
         }
 
-        when (skill.level) {
+        when (sportLevel) {
             "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
             "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
             "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
@@ -102,16 +89,8 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
         chipGroup.addView(chip)
 
         chip.setOnCloseIconClickListener {
-
-            var skillList = vm.user.value?.skillList!!
-
-            skillList = skillList.filter { it.sport_name != skill.sport_name }.toMutableList()
-            skillList.add(Skill(1, skill.sport_name, "none"))
-
-            vm.user.value?.skillList = skillList
-
+            vm.user.value?.skills?.remove(chip.text.toString())
             chipGroup.removeView(chip as View)
-
         }
     }
 

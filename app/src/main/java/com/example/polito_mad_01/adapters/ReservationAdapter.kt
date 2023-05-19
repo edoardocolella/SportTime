@@ -6,10 +6,10 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.*
+import com.example.polito_mad_01.model.*
 
 class ReservationAdapter(
-    private val data: List<SlotWithPlayground>,
+    private val data: List<Slot>,
     private val navController: NavController
 ) :
     RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
@@ -42,9 +42,8 @@ class ReservationAdapter(
             return itemView.findViewById(id)
         }
 
-        fun bind(r: SlotWithPlayground) {
-            val slot = r.slot
-            val playground = r.playground
+        fun bind(slot: Slot) {
+            val playground = slot.playground
 
             reservationItem.setOnClickListener {
                 navController.navigate(

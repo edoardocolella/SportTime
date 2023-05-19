@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
         vm.getFirebaseUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(this) {
-            println(it)
             val view = navView.getHeaderView(0)
             val nameSurname = "${it.name} ${it.surname}"
             view.findViewById<TextView>(R.id.nameNav).text = nameSurname

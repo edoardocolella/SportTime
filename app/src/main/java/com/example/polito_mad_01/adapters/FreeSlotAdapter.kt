@@ -4,10 +4,10 @@ import android.view.*
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.SlotWithPlayground
+import com.example.polito_mad_01.model.Slot
 
 
-class FreeSlotAdapter(val data:List<SlotWithPlayground>): RecyclerView.Adapter<FreeSlotAdapter.FreeSlotHolder>(){
+class FreeSlotAdapter(val data:List<Slot>): RecyclerView.Adapter<FreeSlotAdapter.FreeSlotHolder>(){
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FreeSlotHolder{
@@ -26,10 +26,10 @@ class FreeSlotAdapter(val data:List<SlotWithPlayground>): RecyclerView.Adapter<F
         private val time = findTextById(R.id.reservationTime, v)
         private val sportImage : ImageView = v.findViewById(R.id.reservationSportImage)
 
-        fun bind(fs: SlotWithPlayground){
+        fun bind(fs: Slot){
             playgroundName.text = fs.playground.name
-            date.text = fs.slot.date
-            val startToEnd = "${fs.slot.start_time} - ${fs.slot.end_time}"
+            date.text = fs.date
+            val startToEnd = "${fs.start_time} - ${fs.end_time}"
             time.text = startToEnd
 
             sportImage.setImageResource(when(fs.playground.sport_name){
@@ -42,7 +42,7 @@ class FreeSlotAdapter(val data:List<SlotWithPlayground>): RecyclerView.Adapter<F
         }
 
         private fun findTextById(id: Int, v: View): TextView {
-            return v.findViewById<TextView>(id)
+            return v.findViewById(id)
         }
     }
 

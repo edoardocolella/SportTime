@@ -21,14 +21,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.db.User
+import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
-import io.getstream.avatarview.AvatarView
-import io.getstream.avatarview.coil.loadImage
-import okhttp3.internal.notify
-import java.net.URI
 import java.util.*
 
 
@@ -87,12 +83,12 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         if(resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == IMAGE_CAPTURE_CODE
                 && imageUriForCamera != null  && imageUriForCamera != Uri.EMPTY ) {
-                vm.user.value?.user?.image_uri = imageUriForCamera.toString()
+                vm.user.value?.image_uri = imageUriForCamera.toString()
                 vm.imageUri.value = imageUriForCamera.toString()
             }
             else if (requestCode == RESULT_LOAD_IMAGE){
                 if( data?.data != null) {
-                    vm.user.value?.user?.image_uri = data.data.toString()
+                    vm.user.value?.image_uri = data.data.toString()
                     vm.imageUri.value = data.data.toString()
                 }
             }
@@ -161,15 +157,14 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
     private fun setValue(attribute: String, newValue: String) {
         when (attribute) {
-            "name" -> vm.user.value?.user?.name = newValue
-            "surname" -> vm.user.value?.user?.surname = newValue
-            "nickname" -> vm.user.value?.user?.nickname = newValue
-            "description" -> vm.user.value?.user?.description = newValue
-            "email" -> vm.user.value?.user?.email = newValue
-            "phoneNumber" -> vm.user.value?.user?.phoneNumber = newValue
-            "location" -> vm.user.value?.user?.location = newValue
-            "birthdate" -> vm.user.value?.user?.birthdate = newValue
-            "favouriteSport" -> vm.user.value?.user?.favouriteSport = newValue
+            "name" -> vm.user.value?.name = newValue
+            "surname" -> vm.user.value?.surname = newValue
+            "nickname" -> vm.user.value?.nickname = newValue
+            "description" -> vm.user.value?.achievements = listOf(newValue)
+            "email" -> vm.user.value?.email = newValue
+            "phoneNumber" -> vm.user.value?.phoneNumber = newValue
+            "location" -> vm.user.value?.location = newValue
+            "birthdate" -> vm.user.value?.birthdate = newValue
         }
     }
 
@@ -180,8 +175,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         }
 
 
-        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
-            val user = userWithSkills.user
+        vm.getUser(1).observe(viewLifecycleOwner) { user ->
             vm.imageUri.value = user.image_uri
             setTextViews(view, user)
             setButtons(user)
@@ -223,7 +217,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
-        setEditTextViewAndListener(R.id.achievements_value, user.description, "description")
+        setEditTextViewAndListener(R.id.achievements_value, user.achievements.toString(), "description")
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
@@ -258,25 +252,25 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
     private fun setAvailability(attribute: String, checked: Boolean) {
         when (attribute) {
-            "monday" -> vm.user.value?.user?.monday_availability = checked
-            "tuesday" -> vm.user.value?.user?.tuesday_availability = checked
-            "wednesday" -> vm.user.value?.user?.wednesday_availability = checked
-            "thursday" -> vm.user.value?.user?.thursday_availability = checked
-            "friday" -> vm.user.value?.user?.friday_availability = checked
-            "saturday" -> vm.user.value?.user?.saturday_availability = checked
-            "sunday" -> vm.user.value?.user?.sunday_availability = checked
+            "monday" -> vm.user.value?.monday_availability = checked
+            "tuesday" -> vm.user.value?.tuesday_availability = checked
+            "wednesday" -> vm.user.value?.wednesday_availability = checked
+            "thursday" -> vm.user.value?.thursday_availability = checked
+            "friday" -> vm.user.value?.friday_availability = checked
+            "saturday" -> vm.user.value?.saturday_availability = checked
+            "sunday" -> vm.user.value?.sunday_availability = checked
         }
     }
 
     private fun getAvailability(attribute: String): Boolean {
         return when (attribute) {
-            "monday" -> vm.user.value?.user?.monday_availability!!
-            "tuesday" -> vm.user.value?.user?.tuesday_availability!!
-            "wednesday" -> vm.user.value?.user?.wednesday_availability!!
-            "thursday" -> vm.user.value?.user?.thursday_availability!!
-            "friday" -> vm.user.value?.user?.friday_availability!!
-            "saturday" -> vm.user.value?.user?.saturday_availability!!
-            "sunday" -> vm.user.value?.user?.sunday_availability!!
+            "monday" -> vm.user.value?.monday_availability!!
+            "tuesday" -> vm.user.value?.tuesday_availability!!
+            "wednesday" -> vm.user.value?.wednesday_availability!!
+            "thursday" -> vm.user.value?.thursday_availability!!
+            "friday" -> vm.user.value?.friday_availability!!
+            "saturday" -> vm.user.value?.saturday_availability!!
+            "sunday" -> vm.user.value?.sunday_availability!!
             else -> false
         }
     }

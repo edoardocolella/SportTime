@@ -4,18 +4,16 @@ import android.os.*
 import android.view.*
 import android.widget.Button
 import android.widget.RatingBar
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.db.Review
+import com.example.polito_mad_01.model.Review
 import com.example.polito_mad_01.viewmodel.ReviewViewModel
 import com.example.polito_mad_01.viewmodel.ReviewViewModelFactory
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 
 
 class CreateFeedback : Fragment(R.layout.fragment_create_feedback) {

@@ -3,7 +3,7 @@ package com.example.polito_mad_01.viewmodel
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
-import com.example.polito_mad_01.db.*
+import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -11,7 +11,7 @@ import kotlin.concurrent.thread
 
 class EditReservationViewModel(private val repository: ReservationRepository) : ViewModel() {
 
-    lateinit var reservation: LiveData<SlotWithPlayground>
+    lateinit var reservation: LiveData<Slot>
     lateinit var originalStartTime: LiveData<String>
     lateinit var originalEndTime: LiveData<String>
     lateinit var originalDate: LiveData<String>
@@ -22,34 +22,30 @@ class EditReservationViewModel(private val repository: ReservationRepository) : 
     }
 
     fun setActualTime(date: String, start: String, end: String) {
-        reservation.value?.slot?.date = date
-        reservation.value?.slot?.start_time = start
-        reservation.value?.slot?.end_time = end
+        reservation.value?.date = date
+        reservation.value?.start_time = start
+        reservation.value?.end_time = end
     }
 
-    fun getReservation(id: Int): LiveData<SlotWithPlayground> {
-        reservation = repository.getReservationById(id).asLiveData()
+    fun getReservation(id: Int): LiveData<Slot> {
+        //reservation = repository.getReservationById(id).asLiveData()
 
         return reservation
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getSlotsByPlayground(playgroundID: Int): LiveData<List<SlotWithPlayground>> {
-        return repository.getFreeSlotsByPlayground(
-            playgroundID, LocalDate.now().format(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            )
-        ).asLiveData()
+    fun getSlotsByPlayground(playgroundID: Int): LiveData<List<Slot>> {
+        return MutableLiveData<List<Slot>>()
     }
 
     fun updateReservation(slot: Slot) {
         thread {
-            repository.updateReservation(slot)
+            //repository.updateReservation(slot)
         }
     }
 
     fun deleteReservation() {
-        thread {
+        /*thread {
             val slot = reservation.value?.slot!!
             slot.user_id = null
             slot.heating = false
@@ -58,6 +54,7 @@ class EditReservationViewModel(private val repository: ReservationRepository) : 
             slot.equipment = false
             repository.updateReservation(slot)
         }
+         */
 
     }
 
@@ -67,7 +64,8 @@ class EditReservationViewModel(private val repository: ReservationRepository) : 
         date: String,
         playgroundID: Int
     ): LiveData<Slot> {
-        return repository.getSlotByStartEndTime(startTime, endTime,date, playgroundID).asLiveData()
+        //return repository.getSlotByStartEndTime(startTime, endTime,date, playgroundID).asLiveData()
+        return MutableLiveData<Slot>()
     }
 
 

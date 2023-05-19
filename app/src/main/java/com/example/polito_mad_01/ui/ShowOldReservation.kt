@@ -72,8 +72,8 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             setTextView(R.id.oldResPlaygroundSport, it.playground.sport_name)
             val stringPrice = it.playground.price_per_slot.toString() + "€"
             setTextView(R.id.oldResPlaygroundPrice, stringPrice)
-            setTextView(R.id.oldResSlotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
+            setTextView(R.id.oldResSlotDate, it.date)
+            val stringTime = "${it.start_time}-${it.end_time}"
             setTextView(R.id.oldResSlotTime, stringTime)
 
             val image : ImageView = view.findViewById(R.id.oldResSportImage)
@@ -86,10 +86,10 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             }
 
             val services = mutableListOf<String>()
-            if(it.slot.equipment) services.add("- Equipment")
-            if(it.slot.heating) services.add("- Heating")
-            if(it.slot.lighting) services.add("- Lightning")
-            if(it.slot.locker_room) services.add("- Locker room")
+            if(it.equipment) services.add("- Equipment")
+            if(it.heating) services.add("- Heating")
+            if(it.lighting) services.add("- Lightning")
+            if(it.locker_room) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)

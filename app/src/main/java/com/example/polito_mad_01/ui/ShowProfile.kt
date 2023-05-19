@@ -1,12 +1,9 @@
 package com.example.polito_mad_01.ui
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Button
-import android.widget.CheckBox
 import androidx.fragment.app.Fragment
 import android.widget.TextView
 import androidx.activity.addCallback
@@ -15,12 +12,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.db.User
+import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.textfield.TextInputLayout
-import de.hdodenhof.circleimageview.CircleImageView
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
@@ -49,13 +44,12 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setAllView() {
-        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
-            val user = userWithSkills.user
+        vm.getUser(1).observe(viewLifecycleOwner) {user->
             user.let {
                setImage(user)
                 setTextView(R.id.fullname, it.name + " " + it.surname)
                 setTextView(R.id.nickname, it.nickname)
-                setTextView(R.id.description, it.description)
+                setTextView(R.id.description, it.achievements.toString())
                 setTextView(R.id.birthdate, it.birthdate)
                 setTextView(R.id.email_text, it.email)
                 setTextView(R.id.phoneNumber_text, it.phoneNumber)
@@ -64,23 +58,23 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 setAllButtons(it)
             }
 
-            val skills = userWithSkills.skillList
+            val skills = user.skills
             for(skill in skills){
 
-                if(skill.level == "none") continue
+                //if(skill.level == "none") continue
 
                 val chip = Chip(context)
 
-                chip.text = skill.sport_name
+                chip.text = skill.key
 
-                when(skill.sport_name){
+                when(skill.key){
                     "Basket" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_basketball_48px)
                     "Football" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_soccer_48px)
                     "Volley" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_volleyball_48px)
                     "Ping Pong" -> chip.chipIcon = ContextCompat.getDrawable(requireContext(), R.drawable.sports_tennis_48px)
                 }
 
-                when(skill.level){
+                when(skill.value){
                     "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
                     "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
                     "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)

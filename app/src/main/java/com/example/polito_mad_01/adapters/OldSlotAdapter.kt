@@ -6,11 +6,11 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.SlotWithPlayground
+import com.example.polito_mad_01.model.Slot
 
 
 class OldSlotAdapter(
-    private val data:List<SlotWithPlayground>,
+    private val data:List<Slot>,
     private val navController: NavController
 ): RecyclerView.Adapter<OldSlotAdapter.OldSlotHolder>(){
     override fun getItemCount() = data.size
@@ -34,19 +34,19 @@ class OldSlotAdapter(
 
         private val oldSlotItem: View = v.findViewById(R.id.internalLayout)
 
-        fun bind(fs: SlotWithPlayground){
+        fun bind(fs: Slot){
             //price.text = fs.playground.price_per_slot.toString()
             playgroundName.text = fs.playground.name
-            date.text = fs.slot.date
-            val startToEnd = "${fs.slot.start_time} - ${fs.slot.end_time}"
+            date.text = fs.date
+            val startToEnd = "${fs.start_time} - ${fs.end_time}"
             time.text = startToEnd
 
             oldSlotItem.setOnClickListener{
                 navController.navigate(
                     R.id.action_showOldReservations_to_showOldReservation, bundleOf(
-                        "slotId" to fs.slot.slot_id,
-                        "userId" to fs.slot.user_id,
-                        "playgroundId" to fs.slot.playground_id
+                        "slotId" to fs.slot_id,
+                        "userId" to fs.user_id,
+                        "playgroundId" to fs.playground_id
                     )
                 )
             }
@@ -61,7 +61,7 @@ class OldSlotAdapter(
         }
 
         private fun findTextById(id: Int, v: View): TextView {
-            return v.findViewById<TextView>(id)
+            return v.findViewById(id)
         }
     }
 
