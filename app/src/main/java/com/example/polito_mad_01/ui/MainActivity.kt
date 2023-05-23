@@ -12,6 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -26,39 +28,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-            || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-        ) {
-            val permission =
-                arrayOf(Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
-            requestPermissions(permission, 112)
-        }
-
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
-        vm.getFirebaseUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(this) {
-            println(it)
-            val view = navView.getHeaderView(0)
-            val nameSurname = "${it.name} ${it.surname}"
-            view.findViewById<TextView>(R.id.nameNav).text = nameSurname
-            view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
-        }
+        val userId = intent.getStringExtra("userId") ?: ""
 
-        /*
-        vm.getUser(1).observe(this) {
-            val view = navView.getHeaderView(0)
-            val nameSurname = "${it.name} ${it.surname}"
-            view.findViewById<TextView>(R.id.nameNav).text = nameSurname
-            view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
+        if(userId.isNotBlank()){
+            vm.getFirebaseUser(userId).observe(this) {
+                val view = navView.getHeaderView(0)
+                val nameSurname = "${it.name} ${it.surname}"
+                view.findViewById<TextView>(R.id.nameNav).text = nameSurname
+                view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
+            }
         }
-         */
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

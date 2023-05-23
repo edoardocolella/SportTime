@@ -1,21 +1,18 @@
 package com.example.polito_mad_01
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
+import com.example.polito_mad_01.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-
+import com.google.firebase.auth.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -25,8 +22,39 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+            || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
+        ) {
+            val permission =
+                arrayOf(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)
+            requestPermissions(permission, 112)
+        }
+
         setupGoogleSignIn()
         setupEmailSignIn()
+    }
+
+    private fun loginSuccess(){
+        val userId = auth.currentUser?.uid
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("userId", userId)
+        startActivity(intent)
+    }
+
+    private fun navigateRegister(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun setupRegister(){
+        findViewById<Button>(R.id.registerButton).setOnClickListener {
+            navigateRegister()
+        }
     }
 
     private fun setupEmailSignIn(){
@@ -34,19 +62,27 @@ class LoginActivity : AppCompatActivity() {
             val email = findViewById<EditText>(R.id.loginUsernameEditText).text.toString()
             val password = findViewById<EditText>(R.id.loginPasswordEditText).text.toString()
 
+            // TODO: validation email e password
+
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user = auth.currentUser
-
+                        loginSuccess()
                     } else {
-                        // If sign in fails, display a message to the user.
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        try {
+                            throw task.exception!!
+                        } catch (e: FirebaseAuthException) {
+                            val errorMessage = when(e){
+                                is FirebaseAuthInvalidCredentialsException -> "Invalid password"
+                                is FirebaseAuthInvalidUserException -> "No user found"
+                                else -> "Some error occured: ${e.errorCode}"
+                            }
+
+                            Toast.makeText(applicationContext,
+                                errorMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
 
                     }
                 }
@@ -54,14 +90,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupGoogleSignIn(){
-
-
         val signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract(),
         ) { res ->
             this.onSignInResult(res)
         }
-
 
         // Choose authentication providers
         val providers = arrayListOf(
@@ -74,8 +107,6 @@ class LoginActivity : AppCompatActivity() {
             .setAvailableProviders(providers)
             .build()
 
-        // QUESTO VA NELL ONCLICK DEL NOSTRO LAYOUT
-
         findViewById<Button>(R.id.googleButton).setOnClickListener {
             signInLauncher.launch(signInIntent)
         }
@@ -84,18 +115,11 @@ class LoginActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            // passsa a main activity con user come parametro
-            Toast.makeText(this, user?.email, LENGTH_LONG).show()
-
+            // TODO: if user collections contains userId then go login, else create
+            loginSuccess()
         } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // gestione errore nel layout di luca
             if (response != null) {
-                Toast.makeText(this, response.error?.message.toString(), LENGTH_LONG).show()
+                Toast.makeText(this, response.error?.message.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
