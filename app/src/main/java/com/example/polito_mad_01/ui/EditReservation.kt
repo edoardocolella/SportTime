@@ -162,10 +162,10 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     }
 
     private fun setAllCheckBoxes(slot: Slot) {
-        setCheckedBoxViewAndListener(R.id.reservationEquipment, slot.equipment, "equipment")
-        setCheckedBoxViewAndListener(R.id.reservationHeating, slot.heating, "heating")
-        setCheckedBoxViewAndListener(R.id.reservationLighting, slot.lighting, "lighting")
-        setCheckedBoxViewAndListener(R.id.reservationLockerRoom, slot.locker_room, "locker_room")
+        setCheckedBoxViewAndListener(R.id.reservationEquipment, slot.services.getOrDefault("equipment",false), "equipment")
+        setCheckedBoxViewAndListener(R.id.reservationHeating, slot.services.getOrDefault("heating", false), "heating")
+        setCheckedBoxViewAndListener(R.id.reservationLighting, slot.services.getOrDefault("lighting",false), "lighting")
+        setCheckedBoxViewAndListener(R.id.reservationLockerRoom, slot.services.getOrDefault("locker_room",false), "locker_room")
     }
 
     private fun setButtonListener() {
@@ -204,10 +204,10 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     }
     private fun setExtra(attribute: String, checked: Boolean) {
         when (attribute) {
-            "heating" -> vm.reservation.value?.heating = checked
-            "equipment" -> vm.reservation.value?.equipment = checked
-            "locker_room" -> vm.reservation.value?.locker_room = checked
-            "lighting" -> vm.reservation.value?.lighting = checked
+            "heating" -> vm.reservation.value?.services?.put("heating", checked)
+            "equipment" -> vm.reservation.value?.services?.put("equipment", checked)
+            "locker_room" -> vm.reservation.value?.services?.put("locker_room", checked)
+            "lighting" -> vm.reservation.value?.services?.put("lighting", checked)
         }
     }
 
@@ -225,10 +225,10 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             if (actualStartTime != originalStartTime || actualEndTime != originalEndTime || originalDate != actualDate) {
                 //orario cambiato, necessario aggiornare sia lo slot precedentre che quello nuovo
                 val oldReservation = vm.reservation.value?.copy()!!
-                oldReservation.heating = false
-                oldReservation.equipment = false
-                oldReservation.locker_room = false
-                oldReservation.lighting = false
+                oldReservation.services.remove("heating")
+                oldReservation.services.remove("equipment")
+                oldReservation.services.remove("locker_room")
+                oldReservation.services.remove("lighting")
                 oldReservation.user_id = null
                 oldReservation.start_time = originalStartTime
                 oldReservation.end_time = originalEndTime

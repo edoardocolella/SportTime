@@ -61,7 +61,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupList(){
-        vm.getUserSlots(1).observe(viewLifecycleOwner){ list ->
+        vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner){ list ->
             list.forEach {
                 val date = it.date
                 val reservations = reservationMap.getOrDefault(date, listOf())
@@ -100,9 +100,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
 
-                vm.getUserSlots(1).observe(viewLifecycleOwner) { list ->
+                vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { list ->
                     // Reset badges
                     container.hideBadges()
+
+                    println("LIST: $list")
 
                     if(list.filter{ it.user_id == null }.any{ it.date == data.date.toString()}){
                         container.showFreeBadge()

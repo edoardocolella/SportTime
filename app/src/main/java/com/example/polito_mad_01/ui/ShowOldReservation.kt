@@ -87,10 +87,10 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             }
 
             val services = mutableListOf<String>()
-            if(it.equipment) services.add("- Equipment")
-            if(it.heating) services.add("- Heating")
-            if(it.lighting) services.add("- Lightning")
-            if(it.locker_room) services.add("- Locker room")
+            if(it.services.containsKey("equipment")) services.add("- Equipment")
+            if(it.services.containsKey("heating")) services.add("- Heating")
+            if(it.services.containsKey("lighting")) services.add("- Lightning")
+            if(it.services.containsKey("locker_room")) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)
