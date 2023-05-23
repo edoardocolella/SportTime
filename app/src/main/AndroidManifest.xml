@@ -18,7 +18,7 @@
         android:theme="@style/Theme.PolitoMAD01"
         tools:targetApi="33">
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegistrationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

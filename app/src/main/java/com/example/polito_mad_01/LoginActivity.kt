@@ -3,18 +3,13 @@ package com.example.polito_mad_01
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 
 class LoginActivity : AppCompatActivity() {
@@ -30,9 +25,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupEmailSignIn(){
-        findViewById<Button>(R.id.loginButton).setOnClickListener {
-            val email = findViewById<EditText>(R.id.loginUsernameEditText).text.toString()
-            val password = findViewById<EditText>(R.id.loginPasswordEditText).text.toString()
+        findViewById<Button>(R.id.registrationButton).setOnClickListener {
+            val email = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
+            val password = findViewById<EditText>(R.id.registrationPasswordEditText).text.toString()
 
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
