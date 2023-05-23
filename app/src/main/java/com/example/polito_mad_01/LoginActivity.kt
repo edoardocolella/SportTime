@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -53,6 +54,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupGoogleSignIn(){
+
+
         val signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract(),
         ) { res ->
@@ -84,6 +87,8 @@ class LoginActivity : AppCompatActivity() {
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser
             // passsa a main activity con user come parametro
+            Toast.makeText(this, user?.email, LENGTH_LONG).show()
+
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
