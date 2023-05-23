@@ -28,8 +28,7 @@ class EditReservationViewModel(private val repository: ReservationRepository) : 
     }
 
     fun getReservation(id: Int): LiveData<Slot> {
-        //reservation = repository.getReservationById(id).asLiveData()
-
+        reservation = repository.getReservationById(id)
         return reservation
     }
 

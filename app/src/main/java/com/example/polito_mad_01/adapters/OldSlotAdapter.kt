@@ -36,7 +36,7 @@ class OldSlotAdapter(
 
         fun bind(fs: Slot){
             //price.text = fs.playground.price_per_slot.toString()
-            playgroundName.text = fs.playground.name
+            playgroundName.text = fs.playgroundName
             date.text = fs.date
             val startToEnd = "${fs.start_time} - ${fs.end_time}"
             time.text = startToEnd
@@ -51,7 +51,7 @@ class OldSlotAdapter(
                 )
             }
 
-            sportImage.setImageResource(when(fs.playground.sport_name){
+            sportImage.setImageResource(when(fs.sport){
                 "Football" -> R.drawable.sports_soccer_48px
                 "Volley" -> R.drawable.sports_volleyball_48px
                 "Ping Pong" -> R.drawable.sports_tennis_48px

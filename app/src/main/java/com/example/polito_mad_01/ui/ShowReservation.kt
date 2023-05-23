@@ -44,12 +44,12 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                 }
                 .isEnabled = true
 
-            setTextView(R.id.playgroundName, it.playground.name, view)
-            setTextView(R.id.playgroundLocation, it.playground.location, view)
-            setTextView(R.id.playgroundSport, it.playground.sport_name, view)
+            setTextView(R.id.playgroundName, it.playgroundName, view)
+            setTextView(R.id.playgroundLocation, it.location, view)
+            setTextView(R.id.playgroundSport, it.sport, view)
 
             val image : ImageView = view.findViewById(R.id.playgroundImage)
-            when(it.playground.sport_name) {
+            when(it.sport) {
                 "Football" -> image.setImageResource(R.drawable.football_photo)
                 "Basket" -> image.setImageResource(R.drawable.basketball_photo)
                 "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
@@ -57,8 +57,8 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                 else -> image.setImageResource(R.drawable.sport_photo)
             }
 
-            val stringPrice = it.playground.price_per_slot.toString() + "€"
-            setTextView(R.id.playgroundPrice, stringPrice, view)
+            //val stringPrice = it.playground.price_per_slot.toString() + "€"
+            //setTextView(R.id.playgroundPrice, stringPrice, view)
             setTextView(R.id.slotDate, it.date, view)
             val stringTime = "${it.start_time}-${it.end_time}"
             setTextView(R.id.slotTime, stringTime, view)

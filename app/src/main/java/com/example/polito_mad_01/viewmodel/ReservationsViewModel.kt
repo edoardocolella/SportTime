@@ -6,13 +6,16 @@ import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
 
+    lateinit var reservations: LiveData<List<Slot>>
+
    fun getUserReservations(userID: String) : LiveData<List<Slot>> {
         //return reservationsRepository.getReservationByUserId(userID)
         return MutableLiveData<List<Slot>>()
     }
 
-    fun getUserSlots(userID: String) : LiveData<List<Slot>> {
-        return reservationsRepository.getSlotsByUserId(userID)
+    fun getUserSlots(userID: String): LiveData<List<Slot>> {
+        reservations = reservationsRepository.getSlotsByUserId(userID)
+        return reservations
     }
 
     fun getAllReservations() : LiveData<List<Slot>>{

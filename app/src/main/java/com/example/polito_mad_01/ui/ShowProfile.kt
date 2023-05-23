@@ -91,13 +91,13 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
 
 
     private fun setAllButtons(user: User) {
-        setButtonColor(R.id.mondayButton, user.monday_availability, "monday")
-        setButtonColor(R.id.tuesdayButton, user.tuesday_availability, "tuesday")
-        setButtonColor(R.id.wednesdayButton, user.wednesday_availability, "wednesday")
-        setButtonColor(R.id.thursdayButton, user.thursday_availability, "thursday")
-        setButtonColor(R.id.fridayButton, user.friday_availability, "friday")
-        setButtonColor(R.id.saturdayButton, user.saturday_availability, "saturday")
-        setButtonColor(R.id.sundayButton, user.sunday_availability, "sunday")
+        setButtonColor(R.id.mondayButton, user.availability["monday"]!!, "monday")
+        setButtonColor(R.id.tuesdayButton, user.availability["tuesday"]!!, "tuesday")
+        setButtonColor(R.id.wednesdayButton, user.availability["wednesday"]!!, "wednesday")
+        setButtonColor(R.id.thursdayButton, user.availability["thursday"]!!, "thursday")
+        setButtonColor(R.id.fridayButton, user.availability["friday"]!!, "friday")
+        setButtonColor(R.id.saturdayButton, user.availability["saturday"]!!, "saturday")
+        setButtonColor(R.id.sundayButton, user.availability["sunday"]!!, "sunday")
     }
 
     private fun setButtonColor(id: Int, value: Boolean, attribute: String) {
