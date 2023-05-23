@@ -185,13 +185,13 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setButtons(user: User) {
-        setButtonAndListener(R.id.mondayButton, user.monday_availability, "monday")
-        setButtonAndListener(R.id.tuesdayButton, user.tuesday_availability, "tuesday")
-        setButtonAndListener(R.id.wednesdayButton, user.wednesday_availability, "wednesday")
-        setButtonAndListener(R.id.thursdayButton, user.thursday_availability, "thursday")
-        setButtonAndListener(R.id.fridayButton, user.friday_availability, "friday")
-        setButtonAndListener(R.id.saturdayButton, user.saturday_availability, "saturday")
-        setButtonAndListener(R.id.sundayButton, user.sunday_availability, "sunday")
+        setButtonAndListener(R.id.mondayButton, user.availability["monday"]!!, "monday")
+        setButtonAndListener(R.id.tuesdayButton, user.availability["tuesday"]!!, "tuesday")
+        setButtonAndListener(R.id.wednesdayButton, user.availability["wednesday"]!!, "wednesday")
+        setButtonAndListener(R.id.thursdayButton, user.availability["thursday"]!!, "thursday")
+        setButtonAndListener(R.id.fridayButton, user.availability["friday"]!!, "friday")
+        setButtonAndListener(R.id.saturdayButton, user.availability["saturday"]!!, "saturday")
+        setButtonAndListener(R.id.sundayButton, user.availability["sunday"]!!, "sunday")
     }
 
     private fun setButtonAndListener(id: Int, value: Boolean, attribute: String) {
@@ -252,28 +252,11 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setAvailability(attribute: String, checked: Boolean) {
-        when (attribute) {
-            "monday" -> vm.user.value?.monday_availability = checked
-            "tuesday" -> vm.user.value?.tuesday_availability = checked
-            "wednesday" -> vm.user.value?.wednesday_availability = checked
-            "thursday" -> vm.user.value?.thursday_availability = checked
-            "friday" -> vm.user.value?.friday_availability = checked
-            "saturday" -> vm.user.value?.saturday_availability = checked
-            "sunday" -> vm.user.value?.sunday_availability = checked
-        }
+        vm.user.value?.availability?.put(attribute, checked)
     }
 
     private fun getAvailability(attribute: String): Boolean {
-        return when (attribute) {
-            "monday" -> vm.user.value?.monday_availability!!
-            "tuesday" -> vm.user.value?.tuesday_availability!!
-            "wednesday" -> vm.user.value?.wednesday_availability!!
-            "thursday" -> vm.user.value?.thursday_availability!!
-            "friday" -> vm.user.value?.friday_availability!!
-            "saturday" -> vm.user.value?.saturday_availability!!
-            "sunday" -> vm.user.value?.sunday_availability!!
-            else -> false
-        }
+        return vm.user.value?.availability?.get(attribute)!!
     }
 
     private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {

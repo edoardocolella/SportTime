@@ -5,8 +5,12 @@ import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ShowFreeSlotsViewModel(private val repository: ReservationRepository) : ViewModel() {
+
+    lateinit var freeSlots: LiveData<List<Slot>>
+
     fun getFreeSlots(date:String): LiveData<List<Slot>>{
-        return MutableLiveData<List<Slot>>()
+        freeSlots = repository.getFutureFreeSlots(date)
+        return freeSlots
     }
 }
 

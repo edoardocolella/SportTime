@@ -12,20 +12,23 @@ data class User(
     var image_uri : String?,
     var email : String,
     var phoneNumber : String,
-    var monday_availability : Boolean,
-    var tuesday_availability : Boolean,
-    var wednesday_availability : Boolean,
-    var thursday_availability : Boolean,
-    var friday_availability : Boolean,
-    var saturday_availability : Boolean,
-    var sunday_availability : Boolean,
+    val availability : MutableMap<String,Boolean>
 ) {
 
-    constructor() :
-            this("", "", "", "", "", "",
-                listOf<String>(), mutableMapOf<String, String>(), "", "",
-                "", false, false,
-                false, false, false, false, false)
+    constructor() : this(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        listOf(),
+        mutableMapOf(),
+        null,
+        "",
+        "",
+        mutableMapOf()
+    )
     override fun toString(): String =
         "$name $surname $nickname $birthdate $gender $location $achievements $skills"
 }

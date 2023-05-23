@@ -43,7 +43,7 @@ class ReservationAdapter(
         }
 
         fun bind(slot: Slot) {
-            val playground = slot.playground
+
 
             reservationItem.setOnClickListener {
                 navController.navigate(
@@ -54,12 +54,12 @@ class ReservationAdapter(
 
             }
 
-            playgroundName.text = playground.name
+            playgroundName.text = slot.playgroundName
             slotDate.text = slot.date
             val timeString = "${slot.start_time}-${slot.end_time}"
             slotTime.text = timeString
             sportImage.setImageResource(
-                when (playground.sport_name) {
+                when (slot.sport) {
                     "Football" -> R.drawable.sports_soccer_48px
                     "Volley" -> R.drawable.sports_volleyball_48px
                     "Ping Pong" -> R.drawable.sports_tennis_48px

@@ -63,6 +63,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     private fun setupList(){
         vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner){ list ->
             list.forEach {
+
                 val date = it.date
                 val reservations = reservationMap.getOrDefault(date, listOf())
 
@@ -104,13 +105,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                     // Reset badges
                     container.hideBadges()
 
-                    println("LIST: $list")
-
-                    if(list.filter{ it.user_id == null }.any{ it.date == data.date.toString()}){
+                    if(list.filter{ !it.reserved }.any{ it.date == data.date.toString()}){
                         container.showFreeBadge()
                     }
 
-                    if(list.filter{ it.user_id != null }.any{ it.date == data.date.toString()}){
+                    if(list.filter{ it.reserved }.any{ it.date == data.date.toString()}){
                         container.showReservationBadge()
                     }
 

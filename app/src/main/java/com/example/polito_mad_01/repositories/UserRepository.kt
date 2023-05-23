@@ -8,9 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class UserRepository() {
 
-    private var user = MutableLiveData<User>()
-
     fun getUser(userID : String): LiveData<User> {
+        val user = MutableLiveData<User>()
         FirebaseFirestore.getInstance().collection("users")
             .document(userID)
             .addSnapshotListener { r, _ ->

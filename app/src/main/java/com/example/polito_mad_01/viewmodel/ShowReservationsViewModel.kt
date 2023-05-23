@@ -8,8 +8,7 @@ class ShowReservationsViewModel(private val reservationsRepository: ReservationR
 
     lateinit var slot : LiveData<Slot>
     fun getReservation(slotID: Int) : LiveData<Slot> {
-        //slot = reservationsRepository.getReservationById(slotID).asLiveData()
-
+        slot = reservationsRepository.getReservationById(slotID)
         return slot
     }
 }

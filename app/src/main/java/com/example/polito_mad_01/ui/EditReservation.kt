@@ -46,7 +46,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             vm.setOriginalTime(it.start_time, it.end_time, it.date)
 
             setSpinners(it)
-            setImage(it.playground.sport_name)
+            setImage(it.sport)
             setAllTextViews(it)
             setAllCheckBoxes(it)
             setButtonListener()
@@ -56,9 +56,8 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setSpinners(slot: Slot) {
-        val playground = slot.playground
 
-        vm.getSlotsByPlayground(playground.playground_id).observe(viewLifecycleOwner) { list ->
+        vm.getSlotsByPlayground(slot.playground_id).observe(viewLifecycleOwner) { list ->
             val dateTimeMap = sortedMapOf<String, List<String>>()
 
             val dateSpinner = view?.findViewById<Spinner>(R.id.dateSpinner)!!
@@ -152,10 +151,10 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
 
     private fun setAllTextViews(slot:Slot) {
-        val playground = slot.playground
-        setTextView(R.id.playgroundName, playground.name,view)
-        setTextView(R.id.playgroundLocation, playground.location,view)
-        setTextView(R.id.playgroundSport, playground.sport_name,view)
+
+        setTextView(R.id.playgroundName, slot.playgroundName,view)
+        setTextView(R.id.playgroundLocation, slot.location,view)
+        setTextView(R.id.playgroundSport, slot.sport,view)
         setTextView(R.id.reservationDate, slot.date,view)
         setTextView(R.id.reservationTime, "${slot.start_time}-${slot.end_time}",view)
         setTextView(R.id.reservationTotalPrice, slot.total_price.toString(),view)
