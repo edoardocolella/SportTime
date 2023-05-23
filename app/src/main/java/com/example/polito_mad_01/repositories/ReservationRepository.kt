@@ -8,16 +8,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 
 class ReservationRepository() {
-    fun getReservationByUserId(userID : String): LiveData<List<Slot>> {
-        val reservations = MutableLiveData<List<Slot>>()
-        FirebaseFirestore.getInstance().collection("users")
-            .document(userID)
-            .addSnapshotListener { r, _ ->
-                //r?.toObject(List<Slot>::class.java)
-                println("TEST $r")
-            }
-        return reservations
-    }
 
     fun getSlotsByUserId(userID : String): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
@@ -45,6 +35,25 @@ class ReservationRepository() {
                 slot.value = r?.toObject(Slot::class.java)
             }
         return slot
+    }
+
+    fun getFutureFreeSlots(date: String): LiveData<List<Slot>> {
+        println("DATE $date")
+        val liveDataList = MutableLiveData<List<Slot>>()
+        FirebaseFirestore.getInstance().collection("reservations")
+            .where(Filter.and(
+                Filter.greaterThan("date", date),
+                Filter.equalTo("reserved", false)))
+            .addSnapshotListener { r, _ ->
+                val list = mutableListOf<Slot>()
+                r?.forEach {
+                    list += it.toObject(Slot::class.java)
+                    liveDataList.value = list
+                    println("TEST $it")
+                }
+
+            }
+        return liveDataList
     }
 
 }
