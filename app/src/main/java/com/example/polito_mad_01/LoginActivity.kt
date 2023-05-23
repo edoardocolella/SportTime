@@ -12,6 +12,8 @@ import com.example.polito_mad_01.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.google.android.gms.common.SignInButton
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.*
 
 class LoginActivity : AppCompatActivity() {
@@ -36,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
         setupGoogleSignIn()
         setupEmailSignIn()
+        setupRegister()
     }
 
     private fun loginSuccess(){
@@ -47,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateRegister(){
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, RegistrationActivity::class.java)
         startActivity(intent)
     }
 
@@ -58,34 +61,56 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupEmailSignIn(){
+        val emailField = findViewById<TextInputLayout>(R.id.loginUsername)
+        val passwordField = findViewById<TextInputLayout>(R.id.loginPassword)
+
+        emailField.setOnFocusChangeListener { view, b ->
+            emailField.error = ""
+        }
+
+        passwordField.setOnFocusChangeListener { view, b ->
+            passwordField.error = ""
+        }
+
         findViewById<Button>(R.id.loginButton).setOnClickListener {
-            val email = findViewById<EditText>(R.id.loginUsernameEditText).text.toString()
-            val password = findViewById<EditText>(R.id.loginPasswordEditText).text.toString()
+            emailField.error = ""
+            passwordField.error = ""
 
-            // TODO: validation email e password
+            val email = emailField.editText?.text.toString()
+            val password = passwordField.editText?.text.toString()
 
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        loginSuccess()
-                    } else {
-                        try {
-                            throw task.exception!!
-                        } catch (e: FirebaseAuthException) {
-                            val errorMessage = when(e){
-                                is FirebaseAuthInvalidCredentialsException -> "Invalid password"
-                                is FirebaseAuthInvalidUserException -> "No user found"
-                                else -> "Some error occured: ${e.errorCode}"
+
+            if(email.isNotBlank() && password.isNotBlank()){
+                auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this) { task ->
+                        if (task.isSuccessful) {
+                            loginSuccess()
+                        } else {
+                            try {
+                                throw task.exception!!
+                            } catch (e: FirebaseAuthException) {
+                                val errorMessage = when(e){
+                                    is FirebaseAuthInvalidCredentialsException -> {
+                                        passwordField.error = "Invalid password"
+                                        "Invalid password"
+                                    }
+                                    is FirebaseAuthInvalidUserException -> "No user found"
+                                    else -> "Some error occured: ${e.errorCode}"
+                                }
+
+                                Toast.makeText(applicationContext,
+                                    errorMessage,
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-
-                            Toast.makeText(applicationContext,
-                                errorMessage,
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
-
                     }
-                }
+            } else {
+                if(email.isBlank())
+                    emailField.error = "Insert valid email"
+                if(password.isBlank())
+                    passwordField.error = "Insert valid password"
+            }
         }
     }
 
@@ -107,19 +132,21 @@ class LoginActivity : AppCompatActivity() {
             .setAvailableProviders(providers)
             .build()
 
-        findViewById<Button>(R.id.googleButton).setOnClickListener {
+        findViewById<SignInButton>(R.id.googleButton).setOnClickListener {
             signInLauncher.launch(signInIntent)
         }
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
-        if (result.resultCode == RESULT_OK) {
-            // TODO: if user collections contains userId then go login, else create
-            loginSuccess()
-        } else {
-            if (response != null) {
-                Toast.makeText(this, response.error?.message.toString(), Toast.LENGTH_LONG).show()
+        result.idpResponse?.let {
+            if(result.resultCode == RESULT_OK){
+                // TODO: change to if user collections contains userId then go login, else create
+                if(it.isNewUser)
+                    navigateRegister()
+                else
+                    loginSuccess()
+            } else {
+                Toast.makeText(this, it.error?.message.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
