@@ -2,6 +2,7 @@ package com.example.polito_mad_01
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
@@ -28,25 +29,27 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupEmailSignIn(){
-        val email = findViewById<TextInputLayout>(R.id.loginUsername).editText?.text
-        val password = findViewById<TextInputLayout>(R.id.loginPassword).editText?.text
+        findViewById<Button>(R.id.loginButton).setOnClickListener {
+            val email = findViewById<EditText>(R.id.loginUsernameEditText).text.toString()
+            val password = findViewById<EditText>(R.id.loginPasswordEditText).text.toString()
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val user = auth.currentUser
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        val user = auth.currentUser
 
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(
-                        baseContext,
-                        "Authentication failed.",
-                        Toast.LENGTH_SHORT,
-                    ).show()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Toast.makeText(
+                            baseContext,
+                            "Authentication failed.",
+                            Toast.LENGTH_SHORT,
+                        ).show()
 
+                    }
                 }
-            }
+        }
     }
 
     private fun setupGoogleSignIn(){
@@ -86,7 +89,9 @@ class LoginActivity : AppCompatActivity() {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
             // gestione errore nel layout di luca
-            Toast.makeText(this, "LOGIN FAILED", LENGTH_LONG).show()
+            if (response != null) {
+                Toast.makeText(this, response.error?.message.toString(), LENGTH_LONG).show()
+            }
         }
     }
 
