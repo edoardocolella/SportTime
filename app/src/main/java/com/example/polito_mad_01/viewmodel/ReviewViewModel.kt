@@ -13,14 +13,14 @@ import kotlinx.coroutines.launch
 class ReviewViewModel(private val repository: ReviewRepository): ViewModel(){
     lateinit var review: LiveData<Review>
 
-    fun getSingleReview(user_id: Int, playground_id: Int): LiveData<Review>{
-        //review = repository.getSingleReview(user_id, playground_id).asLiveData()
+    fun getSingleReview(user_id: String, playground_id: Int): LiveData<Review>{
+        review = repository.getSingleReview(user_id, playground_id)//.asLiveData()
         return review
     }
 
     fun addReview(reviewToAdd: Review){
         viewModelScope.launch(Dispatchers.IO){
-        //repository.addReview(reviewToAdd)
+            repository.addReview(reviewToAdd)
         }
     }
 }
