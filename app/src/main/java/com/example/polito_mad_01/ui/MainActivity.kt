@@ -34,14 +34,15 @@ class MainActivity : AppCompatActivity() {
 
         val userId = intent.getStringExtra("userId") ?: ""
 
-        if(userId.isNotBlank()){
+        // TODO: uncomment
+/*        if(userId.isNotBlank()){
             vm.getFirebaseUser(userId).observe(this) {
                 val view = navView.getHeaderView(0)
                 val nameSurname = "${it.name} ${it.surname}"
                 view.findViewById<TextView>(R.id.nameNav).text = nameSurname
                 view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
             }
-        }
+        }*/
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()

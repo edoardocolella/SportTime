@@ -1,5 +1,6 @@
 package com.example.polito_mad_01
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -17,6 +18,11 @@ class RegistrationActivity: AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        findViewById<Button>(R.id.registrationBackButton).setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         findViewById<Button>(R.id.registrationButton).setOnClickListener{
 
             val userEmail = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
@@ -28,7 +34,13 @@ class RegistrationActivity: AppCompatActivity() {
                     if (task.isSuccessful) {
                         // TODO: add user to collection
                     } else {
-                        // TODO: navigate to login and message
+                        Toast.makeText(applicationContext,
+                            "Registration error",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
                     }
                 }
         }
