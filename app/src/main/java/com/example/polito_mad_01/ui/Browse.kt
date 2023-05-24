@@ -31,8 +31,6 @@ class Browse : Fragment(R.layout.fragment_browse) {
         recyclerViewBrowse =view.findViewById(R.id.recyclerViewBrowse)
         recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
 
-        activity?.actionBar?.title = "Browse"
-
         val spinner = view.findViewById<Spinner>(R.id.spinnerBrowse)
         var selectedFilter: String
 

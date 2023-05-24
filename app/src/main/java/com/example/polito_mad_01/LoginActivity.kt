@@ -39,16 +39,17 @@ class LoginActivity : AppCompatActivity() {
             requestPermissions(permission, 112)
         }
 
+        auth.currentUser?.let {
+            loginSuccess()
+        }
+
         setupGoogleSignIn()
         setupEmailSignIn()
         setupRegister()
     }
 
     private fun loginSuccess(){
-        val userId = auth.currentUser?.uid
-
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("userId", userId)
         startActivity(intent)
     }
 
@@ -67,11 +68,11 @@ class LoginActivity : AppCompatActivity() {
         val emailField = findViewById<TextInputLayout>(R.id.loginUsername)
         val passwordField = findViewById<TextInputLayout>(R.id.loginPassword)
 
-        emailField.setOnFocusChangeListener { view, b ->
+        emailField.setOnFocusChangeListener { _, _ ->
             emailField.error = ""
         }
 
-        passwordField.setOnFocusChangeListener { view, b ->
+        passwordField.setOnFocusChangeListener { _, _ ->
             passwordField.error = ""
         }
 
@@ -81,7 +82,6 @@ class LoginActivity : AppCompatActivity() {
 
             val email = emailField.editText?.text.toString()
             val password = passwordField.editText?.text.toString()
-
 
             if(email.isNotBlank() && password.isNotBlank()){
                 auth.signInWithEmailAndPassword(email, password)
@@ -143,13 +143,12 @@ class LoginActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         result.idpResponse?.let { idpResponse ->
             if(result.resultCode == RESULT_OK){
-                // TODO: change to if user collections contains userId then go login, else create
-
                 userRepository.getUser(auth.currentUser?.uid ?: "").observe(this) {
                     if(it == null)
                         navigateRegister()
-                    else {}
-                        //loginSuccess()
+                    else
+                        loginSuccess()
+
                 }
             } else {
                 Toast.makeText(this, idpResponse.error?.message.toString(), Toast.LENGTH_LONG).show()

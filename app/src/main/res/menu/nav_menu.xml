@@ -24,7 +24,7 @@
             <!-- Elementi nella parte inferiore dello schermo -->
             <item
                 android:id="@+id/logout"
-                android:icon="@drawable/history_48px"
+                android:icon="@drawable/logout_48px"
                 android:title="@string/logout" />
         </group>
 </menu>

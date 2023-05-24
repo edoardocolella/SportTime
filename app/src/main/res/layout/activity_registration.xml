@@ -188,6 +188,15 @@
                 android:textSize="20sp"
                 app:cornerRadius="10dp" />
 
+            <Button
+                android:id="@+id/registrationBackButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/back"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:cornerRadius="10dp" />
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

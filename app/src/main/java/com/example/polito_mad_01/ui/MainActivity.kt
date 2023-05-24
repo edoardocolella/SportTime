@@ -1,6 +1,7 @@
 package com.example.polito_mad_01.ui
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,6 +11,7 @@ import androidx.appcompat.app.*
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
+import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +21,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
+
+    private val auth = FirebaseAuth.getInstance()
+    private val userRepository = UserRepository()
 
     private val vm: MainActivityViewModel by viewModels {
         MainActivityViewModelFactory((application as SportTimeApplication).userRepository)
@@ -32,17 +37,17 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
-        val userId = intent.getStringExtra("userId") ?: ""
+        // NOTE: currentUser deve esistere a questo punto, altrimenti qualcosa non va
+        auth.currentUser?.let {
+            userRepository.getUser(it.uid).observe(this) { user ->
+                if(user == null) return@observe // TODO: replace
 
-        // TODO: uncomment
-/*        if(userId.isNotBlank()){
-            vm.getFirebaseUser(userId).observe(this) {
                 val view = navView.getHeaderView(0)
-                val nameSurname = "${it.name} ${it.surname}"
+                val nameSurname = "${user.name} ${user.surname}"
                 view.findViewById<TextView>(R.id.nameNav).text = nameSurname
-                view.findViewById<TextView>(R.id.usernameNav).text = it.nickname
+                view.findViewById<TextView>(R.id.usernameNav).text = user.nickname
             }
-        }*/
+        }
 
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
@@ -64,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.oldReservations -> {
                     navController.navigate(R.id.showOldReservations)
                 }
+                R.id.logout -> {
+                    auth.signOut()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
             }
             drawerLayout.closeDrawers()
             true
@@ -72,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)){
-            true
+            return true
         }
 
         return super.onOptionsItemSelected(item)
