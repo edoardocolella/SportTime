@@ -18,7 +18,7 @@ import com.google.android.material.textfield.TextInputEditText
 class CreateFeedback : Fragment(R.layout.fragment_create_feedback) {
     private var slotId = 0
     private var playgroundId = 0
-    private var userId = 0
+    private var userId = ""
 
     private val reviewVm: ReviewViewModel by viewModels {
         ReviewViewModelFactory((activity?.application as SportTimeApplication).reviewRepository)
@@ -28,7 +28,7 @@ class CreateFeedback : Fragment(R.layout.fragment_create_feedback) {
         super.onViewCreated(view, savedInstanceState)
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")
-        userId = requireArguments().getInt("userId")
+        userId = requireArguments().getString("userId").orEmpty()
 
         val createReviewButton = view.findViewById<Button>(R.id.SubmitReviewButton)
         val ratingBar = view.findViewById<RatingBar>(R.id.createReviewRatingBar)

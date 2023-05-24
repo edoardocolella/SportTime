@@ -1,11 +1,9 @@
 package com.example.polito_mad_01.repositories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.google.firebase.firestore.Filter
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 
 class ReservationRepository(val fs:FirebaseFirestore){
 

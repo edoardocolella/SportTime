@@ -17,7 +17,7 @@ import com.example.polito_mad_01.viewmodel.*
 
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     private var slotId = 0
-    private var userId = 0
+    private var userId = ""
     private var playgroundId = 0
 
     private val oldResVm: ShowOldReservationViewModel by viewModels {
@@ -32,7 +32,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userId = requireArguments().getInt("userId")
+        userId = requireArguments().getString("userId").orEmpty()
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")
 
