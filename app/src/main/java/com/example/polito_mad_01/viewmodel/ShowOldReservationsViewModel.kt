@@ -1,15 +1,15 @@
 package com.example.polito_mad_01.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
-import com.example.polito_mad_01.db.SlotWithPlayground
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.*
+import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ShowOldReservationsViewModel(private val repository: ReservationRepository) : ViewModel() {
-    fun getOldReservations(u_id: Int, date: String): LiveData<List<SlotWithPlayground>> {
-        return repository.getOldReservationsByUserId(u_id, date).asLiveData()
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getOldReservations(u_id: String, date: String): LiveData<List<Slot>> {
+        return repository.getOldReservationsByUserId(u_id, date)
     }
 }
 

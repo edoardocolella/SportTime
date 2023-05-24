@@ -19,8 +19,8 @@ import java.time.LocalDate
 import java.util.Date
 
 class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
-    lateinit var recyclerViewOldRes: RecyclerView
-    lateinit var noOldSlots: TextView
+    private lateinit var recyclerViewOldRes: RecyclerView
+    private lateinit var noOldSlots: TextView
 
     private val vm: ShowOldReservationsViewModel by viewModels{
         ShowOldReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
@@ -35,7 +35,8 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
         recyclerViewOldRes =view.findViewById(R.id.oldResRecyclerView)
         recyclerViewOldRes.layoutManager = LinearLayoutManager(view.context)
 
-        vm.getOldReservations(1, LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
+        vm.getOldReservations("1", LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
+            println("----Old slots: $oldSlots, size: ${oldSlots.size}")
             recyclerViewOldRes.adapter= OldSlotAdapter(oldSlots, findNavController())
             if(oldSlots.isEmpty()){
                 recyclerViewOldRes.visibility=View.GONE

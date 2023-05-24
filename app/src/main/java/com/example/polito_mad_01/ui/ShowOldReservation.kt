@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ServicesAdapter
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 
 
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     private var slotId = 0
-    private var userId = 0
+    private var userId = ""
     private var playgroundId = 0
 
     private val oldResVm: ShowOldReservationViewModel by viewModels {
@@ -31,7 +32,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userId = requireArguments().getInt("userId")
+        userId = requireArguments().getString("userId").orEmpty()
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")
 
@@ -67,17 +68,17 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
                 }
                 .isEnabled = true
 
-            setTextView(R.id.oldResPlaygroundName, it.playground.name)
-            setTextView(R.id.oldResPlaygroundLocation, it.playground.location)
-            setTextView(R.id.oldResPlaygroundSport, it.playground.sport_name)
-            val stringPrice = it.playground.price_per_slot.toString() + "€"
-            setTextView(R.id.oldResPlaygroundPrice, stringPrice)
-            setTextView(R.id.oldResSlotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
-            setTextView(R.id.oldResSlotTime, stringTime)
+            setTextView(R.id.oldResPlaygroundName, it.playgroundName, view)
+            setTextView(R.id.oldResPlaygroundLocation, it.location, view)
+            setTextView(R.id.oldResPlaygroundSport, it.sport, view)
+            //val stringPrice = it.playground.price_per_slot.toString() + "€"
+            //setTextView(R.id.oldResPlaygroundPrice, stringPrice, view)
+            setTextView(R.id.oldResSlotDate, it.date, view)
+            val stringTime = "${it.start_time}-${it.end_time}"
+            setTextView(R.id.oldResSlotTime, stringTime, view)
 
             val image : ImageView = view.findViewById(R.id.oldResSportImage)
-            when(it.playground.sport_name) {
+            when(it.sport) {
                 "Football" -> image.setImageResource(R.drawable.football_photo)
                 "Basket" -> image.setImageResource(R.drawable.basketball_photo)
                 "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
@@ -86,20 +87,16 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             }
 
             val services = mutableListOf<String>()
-            if(it.slot.equipment) services.add("- Equipment")
-            if(it.slot.heating) services.add("- Heating")
-            if(it.slot.lighting) services.add("- Lightning")
-            if(it.slot.locker_room) services.add("- Locker room")
+            if(it.services.containsKey("equipment")) services.add("- Equipment")
+            if(it.services.containsKey("heating")) services.add("- Heating")
+            if(it.services.containsKey("lighting")) services.add("- Lightning")
+            if(it.services.containsKey("locker_room")) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)
                 list.adapter = ServicesAdapter(services)
             }
         }
-    }
-
-    private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<TextView>(viewId)?.text = text
     }
 
 }

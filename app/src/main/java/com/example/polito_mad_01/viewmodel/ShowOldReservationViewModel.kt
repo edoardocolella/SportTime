@@ -4,14 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
-import com.example.polito_mad_01.db.Review
-import com.example.polito_mad_01.db.SlotWithPlayground
+import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ShowOldReservationViewModel(private val repository: ReservationRepository) : ViewModel() {
-    lateinit var slot: LiveData<SlotWithPlayground>
-    fun getOldReservationById(id: Int): LiveData<SlotWithPlayground> {
-        slot = repository.getOldReservationById(id).asLiveData()
+    lateinit var slot: LiveData<Slot>
+    fun getOldReservationById(id: Int): LiveData<Slot> {
+        //slot = repository.getOldReservationById(id).asLiveData()
         return slot
     }
 }

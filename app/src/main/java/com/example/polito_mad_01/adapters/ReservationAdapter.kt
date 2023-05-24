@@ -6,10 +6,10 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.db.*
+import com.example.polito_mad_01.model.*
 
 class ReservationAdapter(
-    private val data: List<SlotWithPlayground>,
+    private val data: List<Slot>,
     private val navController: NavController
 ) :
     RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder>() {
@@ -42,9 +42,8 @@ class ReservationAdapter(
             return itemView.findViewById(id)
         }
 
-        fun bind(r: SlotWithPlayground) {
-            val slot = r.slot
-            val playground = r.playground
+        fun bind(slot: Slot) {
+
 
             reservationItem.setOnClickListener {
                 navController.navigate(
@@ -55,12 +54,12 @@ class ReservationAdapter(
 
             }
 
-            playgroundName.text = playground.name
+            playgroundName.text = slot.playgroundName
             slotDate.text = slot.date
             val timeString = "${slot.start_time}-${slot.end_time}"
             slotTime.text = timeString
             sportImage.setImageResource(
-                when (playground.sport_name) {
+                when (slot.sport) {
                     "Football" -> R.drawable.sports_soccer_48px
                     "Volley" -> R.drawable.sports_volleyball_48px
                     "Ping Pong" -> R.drawable.sports_tennis_48px

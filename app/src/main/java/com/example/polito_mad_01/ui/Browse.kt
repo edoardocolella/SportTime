@@ -10,13 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.FreeSlotAdapter
+import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
 
 class Browse : Fragment(R.layout.fragment_browse) {
 
     lateinit var recyclerViewBrowse: RecyclerView
-    lateinit var noFreeSlots : TextView
+    var noFreeSlots : TextView? = null
 
     private val vm: ShowFreeSlotsViewModel by viewModels{
         ShowFreeSlotsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
@@ -25,8 +26,8 @@ class Browse : Fragment(R.layout.fragment_browse) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        noFreeSlots = view.findViewById(R.id.no_free_slots)
-        noFreeSlots.visibility = View.GONE
+        noFreeSlots = UIUtils.findTextViewById(view, R.id.no_free_slots)
+        noFreeSlots?.visibility = View.GONE
         recyclerViewBrowse =view.findViewById(R.id.recyclerViewBrowse)
         recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
 
@@ -52,15 +53,15 @@ class Browse : Fragment(R.layout.fragment_browse) {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     selectedFilter = spinner.selectedItem.toString()
 
-                    val freeSlots = slots.filter { it.playground.sport_name == selectedFilter }
+                    val freeSlots = slots.filter { it.sport == selectedFilter }
                     recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
 
                     if(freeSlots.isEmpty()){
                         recyclerViewBrowse.visibility = View.GONE
-                        noFreeSlots.visibility = View.VISIBLE
+                        noFreeSlots?.visibility = View.VISIBLE
                     }else{
                         recyclerViewBrowse.visibility = View.VISIBLE
-                        noFreeSlots.visibility = View.GONE
+                        noFreeSlots?.visibility = View.GONE
                     }
                 }
             }

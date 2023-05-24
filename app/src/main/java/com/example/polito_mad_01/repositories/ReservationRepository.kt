@@ -1,43 +1,78 @@
 package com.example.polito_mad_01.repositories
 
-import com.example.polito_mad_01.db.ReservationDao
-import com.example.polito_mad_01.db.*
-import kotlinx.coroutines.flow.Flow
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.example.polito_mad_01.model.*
+import com.google.firebase.firestore.Filter
+import com.google.firebase.firestore.FirebaseFirestore
+import java.io.File
+import java.time.LocalDate
 
-class ReservationRepository(private val reservationDao: ReservationDao) {
+class ReservationRepository() {
 
-    fun getAllReservations(): Flow<List<Slot>> = reservationDao.getAllReservations()
+    fun getSlotsByUserId(userID : String): LiveData<List<Slot>> {
+        val liveDataList = MutableLiveData<List<Slot>>()
+        FirebaseFirestore.getInstance().collection("reservations")
+            .where(Filter.or(
+                    Filter.equalTo("user_id", userID),
+                    Filter.equalTo("reserved", false)))
+            .addSnapshotListener { r, _ ->
+                val list = mutableListOf<Slot>()
+                r?.forEach {
+                    list += it.toObject(Slot::class.java)
+                    liveDataList.value = list
+                    println("TEST $it")
+                }
 
-    fun getReservationByUserId(userID: Int) : Flow<List<SlotWithPlayground>> {
-        return reservationDao.getReservationByUserId(userID)
+            }
+        return liveDataList
     }
 
-    fun getSlotsByUserId(userID: Int) : Flow<List<SlotWithPlayground>> {
-        return reservationDao.getSlotsByUserId(userID)
+    fun getReservationById(slotID: Int): LiveData<Slot> {
+        val slot = MutableLiveData<Slot>()
+        FirebaseFirestore.getInstance().collection("reservations")
+            .document(slotID.toString())
+            .addSnapshotListener { r, _ ->
+                slot.value = r?.toObject(Slot::class.java)
+            }
+        return slot
     }
 
-    fun getOldReservationsByUserId(user_id: Int, date: String): Flow<List<SlotWithPlayground>>{
-        return reservationDao.getOldReservationsByUserId(user_id, date)
+    fun getFutureFreeSlots(date: String): LiveData<List<Slot>> {
+        println("DATE $date")
+        val liveDataList = MutableLiveData<List<Slot>>()
+        FirebaseFirestore.getInstance().collection("reservations")
+            .where(Filter.and(
+                Filter.greaterThan("date", date),
+                Filter.equalTo("reserved", false)))
+            .addSnapshotListener { r, _ ->
+                val list = mutableListOf<Slot>()
+                r?.forEach {
+                    list += it.toObject(Slot::class.java)
+                    liveDataList.value = list
+                    println("TEST $it")
+                }
+
+            }
+        return liveDataList
     }
 
-    fun getOldReservationById(id: Int): Flow<SlotWithPlayground>{
-        return reservationDao.getOldReservationById(id)
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getOldReservationsByUserId(user_id: String, date: String): LiveData<List<Slot>>{
+        val oldReservations = MutableLiveData<List<Slot>>()
+        val l = mutableListOf<Slot>()
+        FirebaseFirestore.getInstance().collection("reservations")
+            .whereLessThan("date",date).addSnapshotListener { documents, _ ->
+                println("----date: $date, size: ${documents?.documents?.size}----")
+                documents?.forEach { document ->
+                    println("------------${document.toObject(Slot::class.java)}------------")
+                    l.add(document.toObject(Slot::class.java))
+                }
+                oldReservations.value = l
+            }
+        return oldReservations
     }
 
-    fun getReservationById(id: Int): Flow<SlotWithPlayground> {
-        return reservationDao.getReservationById(id)
-    }
-
-    fun getFreeSlots(date: String): Flow<List<SlotWithPlayground>>{
-        return reservationDao.getFreeSlots(date)
-    }
-
-    fun updateReservation(slot: Slot) = reservationDao.updateReservation(slot)
-    fun getFreeSlotsByPlayground(playgroundID: Int, today: String): Flow<List<SlotWithPlayground>> {
-        return reservationDao.getPlaygroundFreeSlots(playgroundID, today)
-    }
-
-    fun getSlotByStartEndTime(originalStartTime: String, originalEndTime: String, date:String, playgroundID: Int): Flow<Slot> {
-        return reservationDao.getSlotByStartEndTime(originalStartTime, originalEndTime,date, playgroundID)
-    }
 }

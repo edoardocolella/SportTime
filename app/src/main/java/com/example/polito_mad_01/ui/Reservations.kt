@@ -6,14 +6,12 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.view.children
 import androidx.fragment.app.*
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.*
-import com.example.polito_mad_01.db.SlotWithPlayground
+import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.ui.calendar.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.tabs.TabLayout
@@ -28,10 +26,10 @@ import java.util.*
 class Reservations : Fragment(R.layout.fragment_reservations) {
     private var selectedDate: LocalDate? = null
 
-    lateinit var tabLayout : TabLayout
-    lateinit var viewPager : ViewPager2
+    private lateinit var tabLayout : TabLayout
+    private lateinit var viewPager : ViewPager2
 
-    private var reservationMap : MutableMap<String, List<SlotWithPlayground>> = mutableMapOf()
+    private var reservationMap : MutableMap<String, List<Slot>> = mutableMapOf()
 
     // TODO: Today button, arrow button for months, padding, text color changes, badge on top, list of events for each day
 
@@ -63,9 +61,10 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupList(){
-        vm.getUserSlots(1).observe(viewLifecycleOwner){ list ->
+        vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner){ list ->
             list.forEach {
-                val date = it.slot.date
+
+                val date = it.date
                 val reservations = reservationMap.getOrDefault(date, listOf())
 
                 reservationMap[date] = reservations.plus(it)
@@ -102,15 +101,15 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
 
-                vm.getUserSlots(1).observe(viewLifecycleOwner) { list ->
+                vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { list ->
                     // Reset badges
                     container.hideBadges()
 
-                    if(list.filter{ it.slot.user_id == null }.any{ it.slot.date == data.date.toString()}){
+                    if(list.filter{ !it.reserved }.any{ it.date == data.date.toString()}){
                         container.showFreeBadge()
                     }
 
-                    if(list.filter{ it.slot.user_id != null }.any{ it.slot.date == data.date.toString()}){
+                    if(list.filter{ it.reserved }.any{ it.date == data.date.toString()}){
                         container.showReservationBadge()
                     }
 
@@ -192,8 +191,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             tabLayout.visibility = View.VISIBLE
             when {
                 slotList.isEmpty() -> tabLayout.visibility = View.INVISIBLE
-                slotList.none { it.slot.user_id == null } -> tab.text ="Reservations"
-                slotList.none { it.slot.user_id != null } -> tab.text ="Free slots"
+                slotList.none { it.user_id == null } -> tab.text ="Reservations"
+                slotList.none { it.user_id != null } -> tab.text ="Free slots"
                 else -> when(position){
                     0 -> tab.text = "Reservations"
                     1 -> tab.text = "Free slots"

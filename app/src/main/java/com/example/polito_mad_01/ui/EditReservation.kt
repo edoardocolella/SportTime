@@ -9,7 +9,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.db.*
+import com.example.polito_mad_01.model.*
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
@@ -42,33 +43,30 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
 
-            vm.setOriginalTime(it.slot.start_time, it.slot.end_time, it.slot.date)
+            vm.setOriginalTime(it.start_time, it.end_time, it.date)
 
             setSpinners(it)
-            setImage(it.playground.sport_name)
+            setImage(it.sport)
             setAllTextViews(it)
-            setAllCheckBoxes(it.slot)
+            setAllCheckBoxes(it)
             setButtonListener()
 
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setSpinners(slotWithPlayground: SlotWithPlayground) {
+    private fun setSpinners(slot: Slot) {
 
-        val slot = slotWithPlayground.slot
-        val playground = slotWithPlayground.playground
-
-        vm.getSlotsByPlayground(playground.playground_id).observe(viewLifecycleOwner) { list ->
+        vm.getSlotsByPlayground(slot.playground_id).observe(viewLifecycleOwner) { list ->
             val dateTimeMap = sortedMapOf<String, List<String>>()
 
             val dateSpinner = view?.findViewById<Spinner>(R.id.dateSpinner)!!
             val timeSpinner = view?.findViewById<Spinner>(R.id.timeSpinner)!!
 
-            list.forEach { sp ->
-                val date = sp.slot.date
+            list.forEach { s ->
+                val date = s.date
                 val times = dateTimeMap.getOrDefault(date, listOf())
-                dateTimeMap[sp.slot.date] = times.plus("${sp.slot.start_time}-${sp.slot.end_time}")
+                dateTimeMap[s.date] = times.plus("${s.start_time}-${s.end_time}")
             }
 
             val date = slot.date
@@ -152,22 +150,21 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     }
 
 
-    private fun setAllTextViews(slotWithPlayground: SlotWithPlayground) {
-        val reservation = slotWithPlayground.slot
-        val playground = slotWithPlayground.playground
-        setTextView(R.id.playgroundName, playground.name)
-        setTextView(R.id.playgroundLocation, playground.location)
-        setTextView(R.id.playgroundSport, playground.sport_name)
-        setTextView(R.id.reservationDate, reservation.date)
-        setTextView(R.id.reservationTime, "${reservation.start_time}-${reservation.end_time}")
-        setTextView(R.id.reservationTotalPrice, reservation.total_price.toString())
+    private fun setAllTextViews(slot:Slot) {
+
+        setTextView(R.id.playgroundName, slot.playgroundName,view)
+        setTextView(R.id.playgroundLocation, slot.location,view)
+        setTextView(R.id.playgroundSport, slot.sport,view)
+        setTextView(R.id.reservationDate, slot.date,view)
+        setTextView(R.id.reservationTime, "${slot.start_time}-${slot.end_time}",view)
+        setTextView(R.id.reservationTotalPrice, slot.total_price.toString(),view)
     }
 
     private fun setAllCheckBoxes(slot: Slot) {
-        setCheckedBoxViewAndListener(R.id.reservationEquipment, slot.equipment, "equipment")
-        setCheckedBoxViewAndListener(R.id.reservationHeating, slot.heating, "heating")
-        setCheckedBoxViewAndListener(R.id.reservationLighting, slot.lighting, "lighting")
-        setCheckedBoxViewAndListener(R.id.reservationLockerRoom, slot.locker_room, "locker_room")
+        setCheckedBoxViewAndListener(R.id.reservationEquipment, slot.services.getOrDefault("equipment",false), "equipment")
+        setCheckedBoxViewAndListener(R.id.reservationHeating, slot.services.getOrDefault("heating", false), "heating")
+        setCheckedBoxViewAndListener(R.id.reservationLighting, slot.services.getOrDefault("lighting",false), "lighting")
+        setCheckedBoxViewAndListener(R.id.reservationLockerRoom, slot.services.getOrDefault("locker_room",false), "locker_room")
     }
 
     private fun setButtonListener() {
@@ -197,10 +194,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
 
-    private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<TextView>(viewId)?.text = text
-    }
-
     private fun setCheckedBoxViewAndListener(id: Int, availability: Boolean, attribute: String) {
         val checkBox = view?.findViewById<CheckBox>(id)
         checkBox?.isChecked = availability
@@ -208,13 +201,12 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             setExtra(attribute, isChecked)
         }
     }
-
     private fun setExtra(attribute: String, checked: Boolean) {
         when (attribute) {
-            "heating" -> vm.reservation.value?.slot?.heating = checked
-            "equipment" -> vm.reservation.value?.slot?.equipment = checked
-            "locker_room" -> vm.reservation.value?.slot?.locker_room = checked
-            "lighting" -> vm.reservation.value?.slot?.lighting = checked
+            "heating" -> vm.reservation.value?.services?.put("heating", checked)
+            "equipment" -> vm.reservation.value?.services?.put("equipment", checked)
+            "locker_room" -> vm.reservation.value?.services?.put("locker_room", checked)
+            "lighting" -> vm.reservation.value?.services?.put("lighting", checked)
         }
     }
 
@@ -222,20 +214,20 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
         try {
 
-            val actualStartTime = vm.reservation.value?.slot?.start_time!!
-            val actualEndTime = vm.reservation.value?.slot?.end_time!!
-            val actualDate = vm.reservation.value?.slot?.date!!
+            val actualStartTime = vm.reservation.value?.start_time!!
+            val actualEndTime = vm.reservation.value?.end_time!!
+            val actualDate = vm.reservation.value?.date!!
             val originalStartTime = vm.originalStartTime.value!!
             val originalEndTime = vm.originalEndTime.value!!
             val originalDate = vm.originalDate.value!!
 
             if (actualStartTime != originalStartTime || actualEndTime != originalEndTime || originalDate != actualDate) {
                 //orario cambiato, necessario aggiornare sia lo slot precedentre che quello nuovo
-                val oldReservation = vm.reservation.value?.slot?.copy()!!
-                oldReservation.heating = false
-                oldReservation.equipment = false
-                oldReservation.locker_room = false
-                oldReservation.lighting = false
+                val oldReservation = vm.reservation.value?.copy()!!
+                oldReservation.services.remove("heating")
+                oldReservation.services.remove("equipment")
+                oldReservation.services.remove("locker_room")
+                oldReservation.services.remove("lighting")
                 oldReservation.user_id = null
                 oldReservation.start_time = originalStartTime
                 oldReservation.end_time = originalEndTime
@@ -250,7 +242,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                     oldReservation.playground_id
                 ).observe(viewLifecycleOwner) {
                     val reservationWithIdRequested = it.copy()
-                    val newSlot = vm.reservation.value?.slot?.copy()!!
+                    val newSlot = vm.reservation.value?.copy()!!
                     newSlot.slot_id = reservationWithIdRequested.slot_id
                     vm.updateReservation(newSlot)
                     navigate(newSlot.slot_id)
@@ -258,8 +250,8 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
                 }
 
             } else {
-                vm.updateReservation(vm.reservation.value?.slot?.copy()!!)
-                navigate(vm.reservation.value?.slot?.slot_id!!)
+                vm.updateReservation(vm.reservation.value?.copy()!!)
+                navigate(vm.reservation.value?.slot_id!!)
             }
 
         } catch (e: Exception) {

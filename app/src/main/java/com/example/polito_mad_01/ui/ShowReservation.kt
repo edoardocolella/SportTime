@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ServicesAdapter
+import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -37,18 +38,18 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             requireActivity().onBackPressedDispatcher
                 .addCallback(this) {
                     val args = bundleOf(
-                        "selectedDate" to it.slot.date
+                        "selectedDate" to it.date
                     )
                     findNavController().navigate(R.id.action_showReservationFragment2_to_reservationsFragment, args)
                 }
                 .isEnabled = true
 
-            setTextView(R.id.playgroundName, it.playground.name)
-            setTextView(R.id.playgroundLocation, it.playground.location)
-            setTextView(R.id.playgroundSport, it.playground.sport_name)
+            setTextView(R.id.playgroundName, it.playgroundName, view)
+            setTextView(R.id.playgroundLocation, it.location, view)
+            setTextView(R.id.playgroundSport, it.sport, view)
 
             val image : ImageView = view.findViewById(R.id.playgroundImage)
-            when(it.playground.sport_name) {
+            when(it.sport) {
                 "Football" -> image.setImageResource(R.drawable.football_photo)
                 "Basket" -> image.setImageResource(R.drawable.basketball_photo)
                 "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
@@ -56,17 +57,17 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                 else -> image.setImageResource(R.drawable.sport_photo)
             }
 
-            val stringPrice = it.playground.price_per_slot.toString() + "€"
-            setTextView(R.id.playgroundPrice, stringPrice)
-            setTextView(R.id.slotDate, it.slot.date)
-            val stringTime = "${it.slot.start_time}-${it.slot.end_time}"
-            setTextView(R.id.slotTime, stringTime)
+            //val stringPrice = it.playground.price_per_slot.toString() + "€"
+            //setTextView(R.id.playgroundPrice, stringPrice, view)
+            setTextView(R.id.slotDate, it.date, view)
+            val stringTime = "${it.start_time}-${it.end_time}"
+            setTextView(R.id.slotTime, stringTime, view)
 
             val services = mutableListOf<String>()
-            if(it.slot.equipment) services.add("- Equipment")
-            if(it.slot.heating) services.add("- Heating")
-            if(it.slot.lighting) services.add("- Lightning")
-            if(it.slot.locker_room) services.add("- Locker room")
+            if(it.services.containsKey("equipment")) services.add("- Equipment")
+            if(it.services.containsKey("heating")) services.add("- Heating")
+            if(it.services.containsKey("lighting")) services.add("- Lightning")
+            if(it.services.containsKey("locker_room")) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)
@@ -89,7 +90,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
 
         if (item.itemId == R.id.action_edit_reservation){
             if(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) >
-                vm.slot.value?.slot?.date!! ) {
+                vm.slot.value?.date!! ) {
                 Toast.makeText(requireContext(), "You cannot edit past reservations", Toast.LENGTH_SHORT).show()
             } else {
                 findNavController().navigate(
@@ -97,14 +98,8 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
                     args
                 )
             }
-
         }
-
         return true
-    }
-
-    private fun setTextView(viewId: Int, text: String) {
-        view?.findViewById<TextView>(viewId)?.text = text
     }
 
 }

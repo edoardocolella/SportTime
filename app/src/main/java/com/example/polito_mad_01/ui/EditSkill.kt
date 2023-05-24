@@ -9,14 +9,9 @@ import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.SportTimeApplication
-import com.example.polito_mad_01.db.Skill
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
-import com.example.polito_mad_01.viewmodel.EditProfileViewModelFactory
 import com.google.android.material.chip.*
 
 
@@ -42,8 +37,8 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView() {
-        vm.getUser(1).observe(viewLifecycleOwner) { userWithSkills ->
-            val skills = userWithSkills.skillList
+        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) {
+            val skills = it.skills
             addAllChipToGroup(skills)
         }
 
@@ -52,30 +47,30 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
 
     }
 
-    private fun addAllChipToGroup(value: List<Skill>) {
+    private fun addAllChipToGroup(value: Map<String, String>) {
         value.forEach { addChipToGroup(it) }
     }
 
     private fun getIcon(iconCode: Int): Drawable? =
         ContextCompat.getDrawable(requireContext(), iconCode)
 
-    private fun addChipToGroup(skill: Skill) {
+    private fun addChipToGroup(skill: Map.Entry<String, String>) {
 
         val chipGroup = mView.findViewById<ChipGroup>(R.id.chip_group1)
 
         val chip = Chip(context)
-        chip.text = skill.sport_name
+        chip.text = skill.key
 
-        if(skill.level == "none") return
+        //if(skill.value == "none") return
 
-        when (skill.sport_name) {
+        when (skill.key) {
             "Basket" -> chip.chipIcon = getIcon(R.drawable.sports_basketball_48px)
             "Football" -> chip.chipIcon = getIcon(R.drawable.sports_soccer_48px)
             "Volley" -> chip.chipIcon = getIcon(R.drawable.sports_volleyball_48px)
             "Ping Pong" -> chip.chipIcon = getIcon(R.drawable.sports_tennis_48px)
         }
 
-        when(skill.level){
+        when(skill.value){
             "Beginner" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_48px)
             "Intermediate" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_double)
             "Expert" -> chip.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, 0, R.drawable.stars_triple)
@@ -89,16 +84,8 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
         chipGroup.addView(chip)
 
         chip.setOnCloseIconClickListener {
-
-            var skillList = vm.user.value?.skillList!!
-
-            skillList = skillList.filter { it.sport_name != skill.sport_name }.toMutableList()
-            skillList.add(Skill(1, skill.sport_name, "none"))
-
-            vm.user.value?.skillList = skillList
-
+            vm.user.value?.skills?.remove(chip.text.toString())
             chipGroup.removeView(chip as View)
-
         }
     }
 
