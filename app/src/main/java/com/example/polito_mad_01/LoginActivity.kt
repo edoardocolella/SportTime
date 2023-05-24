@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -18,6 +19,8 @@ import com.google.firebase.auth.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+
+    val userRepository = UserRepository()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -138,15 +141,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        result.idpResponse?.let {
+        result.idpResponse?.let { idpResponse ->
             if(result.resultCode == RESULT_OK){
                 // TODO: change to if user collections contains userId then go login, else create
-                if(it.isNewUser)
-                    navigateRegister()
-                else
-                    loginSuccess()
+
+                userRepository.getUser(auth.currentUser?.uid ?: "").observe(this) {
+                    if(it == null)
+                        navigateRegister()
+                    else {}
+                        //loginSuccess()
+                }
             } else {
-                Toast.makeText(this, it.error?.message.toString(), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, idpResponse.error?.message.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
