@@ -1,5 +1,7 @@
 package com.example.polito_mad_01.repositories
 
-class ReviewRepository() {
+import com.google.firebase.firestore.FirebaseFirestore
+
+class ReviewRepository(private val fs: FirebaseFirestore) {
 
 }

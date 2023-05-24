@@ -51,6 +51,10 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         viewPager.adapter = DaySlotAdapter(this, listOf())
 
 
+        //only to populate db
+        //vm.createSlots()
+
+
         // p1
         setupList()
 
@@ -101,6 +105,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
 
+
+
                 vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { list ->
                     // Reset badges
                     container.hideBadges()
@@ -113,7 +119,11 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                         container.showReservationBadge()
                     }
 
+
                 }
+
+
+
 
                 // Hide days of other months
                 if (data.position != DayPosition.MonthDate) {

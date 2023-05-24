@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.model.User
 import com.google.firebase.firestore.FirebaseFirestore
 
-class UserRepository() {
+class UserRepository(private val fs: FirebaseFirestore) {
 
     fun getUser(userID : String): LiveData<User> {
         val user = MutableLiveData<User>()
-        FirebaseFirestore.getInstance().collection("users")
+        fs.collection("users")
             .document(userID)
             .addSnapshotListener { r, _ ->
                 user.value =  r?.toObject(User::class.java)
