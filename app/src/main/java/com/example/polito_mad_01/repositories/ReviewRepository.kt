@@ -6,6 +6,8 @@ import com.example.polito_mad_01.model.Review
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ReviewRepository() {
+
+    private val fs = FirebaseFirestore.getInstance()
     fun getSingleReview(userId: String, playgroundId: Int): LiveData<Review> {
         val toReturn = MutableLiveData<Review>()
         FirebaseFirestore.getInstance().collection("reviews")

@@ -7,25 +7,36 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
+import com.example.polito_mad_01.viewmodel.MainActivityViewModel
+import com.example.polito_mad_01.viewmodel.MainActivityViewModelFactory
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.gms.common.SignInButton
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var fs : FirebaseFirestore
 
-    val userRepository = UserRepository()
+    private val vm: MainActivityViewModel by viewModels {
+        MainActivityViewModelFactory((application as SportTimeApplication).userRepository)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        FirebaseApp.initializeApp(this)
+
         auth = FirebaseAuth.getInstance()
+        fs = FirebaseFirestore.getInstance()
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
@@ -143,7 +154,7 @@ class LoginActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         result.idpResponse?.let { idpResponse ->
             if(result.resultCode == RESULT_OK){
-                userRepository.getUser(auth.currentUser?.uid ?: "").observe(this) {
+                vm.getUser(auth.currentUser?.uid ?: "").observe(this) {
                     if(it == null)
                         navigateRegister()
                     else

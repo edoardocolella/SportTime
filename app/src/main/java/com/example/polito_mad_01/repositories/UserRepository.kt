@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.model.User
 import com.google.firebase.firestore.FirebaseFirestore
 
-class UserRepository(private val fs: FirebaseFirestore) {
+class UserRepository() {
+
+    private val fs = FirebaseFirestore.getInstance()
 
     fun getUser(userID : String): LiveData<User> {
         val user = MutableLiveData<User>()

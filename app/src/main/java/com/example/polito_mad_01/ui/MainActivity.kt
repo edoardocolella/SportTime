@@ -14,7 +14,9 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,7 +25,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navView: NavigationView
 
     private val auth = FirebaseAuth.getInstance()
-    private val userRepository = UserRepository()
 
     private val vm: MainActivityViewModel by viewModels {
         MainActivityViewModelFactory((application as SportTimeApplication).userRepository)
@@ -37,9 +38,11 @@ class MainActivity : AppCompatActivity() {
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
 
+        FirebaseApp.initializeApp(this)
+
         // NOTE: currentUser deve esistere a questo punto, altrimenti qualcosa non va
         auth.currentUser?.let {
-            userRepository.getUser(it.uid).observe(this) { user ->
+            vm.getUser(it.uid).observe(this) { user ->
                 if(user == null) return@observe // TODO: replace
 
                 val view = navView.getHeaderView(0)

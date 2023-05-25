@@ -5,11 +5,12 @@ import com.example.polito_mad_01.model.*
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.*
 
-class ReservationRepository(val fs:FirebaseFirestore){
+class ReservationRepository(){
+    private val fs = FirebaseFirestore.getInstance()
 
     fun getSlotsByUserId(userID : String): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
-        fs.collection("reservations")
+        FirebaseFirestore.getInstance().collection("reservations")
             .where(Filter.or(
                     Filter.equalTo("user_id", userID),
                     Filter.equalTo("reserved", false)))
@@ -74,5 +75,8 @@ class ReservationRepository(val fs:FirebaseFirestore){
         return liveDataList
     }
 
+    fun getOldReservationsByUserId(u_id: String, date: String): LiveData<List<Slot>> {
+        return TODO()
+    }
 
 }

@@ -5,16 +5,26 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.polito_mad_01.viewmodel.MainActivityViewModel
+import com.example.polito_mad_01.viewmodel.MainActivityViewModelFactory
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
 
 class RegistrationActivity: AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
+    private val vm: MainActivityViewModel by viewModels {
+        MainActivityViewModelFactory((application as SportTimeApplication).userRepository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
+
+        FirebaseApp.initializeApp(this)
 
         auth = FirebaseAuth.getInstance()
 
