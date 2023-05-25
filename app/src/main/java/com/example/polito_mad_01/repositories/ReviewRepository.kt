@@ -15,7 +15,7 @@ class ReviewRepository() {
             .whereEqualTo("playground_id", playgroundId)
             .get()
             .addOnSuccessListener { returnedReviews, ->
-                toReturn.value = returnedReviews.documents[0].toObject(Review::class.java) ?: Review()
+                toReturn.value = returnedReviews.documents.firstOrNull()?.toObject(Review::class.java) ?: Review()
             }
         return toReturn
     }

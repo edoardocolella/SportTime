@@ -28,8 +28,9 @@ class ReservationRepository(){
 
     fun getReservationById(slotID: Int): LiveData<Slot> {
         val slot = MutableLiveData<Slot>()
+        val idFormatted = slotID.toString().padStart(3, '0')
         fs.collection("reservations")
-            .document(slotID.toString())
+            .document(idFormatted)
             .addSnapshotListener { r, _ ->
                 slot.value = r?.toObject(Slot::class.java)
             }
@@ -76,7 +77,22 @@ class ReservationRepository(){
     }
 
     fun getOldReservationsByUserId(u_id: String, date: String): LiveData<List<Slot>> {
-        return TODO()
+        val liveDataList = MutableLiveData<List<Slot>>()
+        fs.collection("reservations")
+            .where(Filter.and(
+/*                Filter.equalTo("user_id", u_id),*/
+                Filter.lessThan("date", date),
+                Filter.equalTo("reserved", true)))
+            .addSnapshotListener { r, _ ->
+                val list = mutableListOf<Slot>()
+                r?.forEach {
+                    list += it.toObject(Slot::class.java)
+                    liveDataList.value = list
+                    //println("TEST $it")
+                }
+
+            }
+        return liveDataList
     }
 
 }
