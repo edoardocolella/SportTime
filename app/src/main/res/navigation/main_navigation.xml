@@ -5,6 +5,8 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/reservationsFragment">
 
+
+
     <fragment
         android:id="@+id/reservationsFragment"
         android:name="com.example.polito_mad_01.ui.Reservations"
