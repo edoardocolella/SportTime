@@ -3,6 +3,7 @@ package com.example.polito_mad_01.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
@@ -17,6 +18,6 @@ class FreeSlotList(private val slotList: List<Slot> = listOf()) : Fragment(R.lay
 
         freeSlotView = view.findViewById(R.id.freeSlotList)
         freeSlotView.layoutManager = LinearLayoutManager(view.context)
-        freeSlotView.adapter = FreeSlotAdapter(slotList)
+        freeSlotView.adapter = FreeSlotAdapter(slotList, findNavController())
     }
 }
