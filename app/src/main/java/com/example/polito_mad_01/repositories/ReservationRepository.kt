@@ -2,15 +2,14 @@ package com.example.polito_mad_01.repositories
 
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
-import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.*
 
-class ReservationRepository(){
+class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
 
     fun getSlotsByUserId(userID : String): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
-        FirebaseFirestore.getInstance().collection("reservations")
+        fs.collection("reservations")
             .where(Filter.or(
                     Filter.equalTo("user_id", userID),
                     Filter.equalTo("reserved", false)))
@@ -19,7 +18,6 @@ class ReservationRepository(){
                 r?.forEach {
                     list += it.toObject(Slot::class.java)
                     liveDataList.value = list
-                    //println("TEST $it")
                 }
 
             }
@@ -38,7 +36,6 @@ class ReservationRepository(){
     }
 
     fun getFutureFreeSlots(date: String): LiveData<List<Slot>> {
-        //println("DATE $date")
         val liveDataList = MutableLiveData<List<Slot>>()
         fs.collection("reservations")
             .where(Filter.and(
@@ -49,7 +46,6 @@ class ReservationRepository(){
                 r?.forEach {
                     list += it.toObject(Slot::class.java)
                     liveDataList.value = list
-                    //println("TEST $it")
                 }
 
             }
@@ -80,7 +76,7 @@ class ReservationRepository(){
         val liveDataList = MutableLiveData<List<Slot>>()
         fs.collection("reservations")
             .where(Filter.and(
-/*                Filter.equalTo("user_id", u_id),*/
+                Filter.equalTo("user_id", u_id),
                 Filter.lessThan("date", date),
                 Filter.equalTo("reserved", true)))
             .addSnapshotListener { r, _ ->
@@ -88,9 +84,7 @@ class ReservationRepository(){
                 r?.forEach {
                     list += it.toObject(Slot::class.java)
                     liveDataList.value = list
-                    //println("TEST $it")
                 }
-
             }
         return liveDataList
     }

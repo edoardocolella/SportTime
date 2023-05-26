@@ -18,12 +18,19 @@
         <action
             android:id="@+id/action_reservationsFragment_to_browseFragment"
             app:destination="@id/browseFragment" />
+        <action
+            android:id="@+id/action_reservationsFragment_to_createReservation"
+            app:destination="@id/createReservation" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
         android:name="com.example.polito_mad_01.ui.Browse"
         android:label="fragment_browse"
-        tools:layout="@layout/fragment_browse" />
+        tools:layout="@layout/fragment_browse" >
+        <action
+            android:id="@+id/action_browseFragment_to_createReservation"
+            app:destination="@id/createReservation" />
+    </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.polito_mad_01.ui.EditProfile"
@@ -129,4 +136,14 @@
         android:name="com.example.polito_mad_01.ui.ShowSkill"
         android:label="fragment_show_skill"
         tools:layout="@layout/fragment_show_skill" />
+    <fragment
+        android:id="@+id/createReservation"
+        android:name="com.example.polito_mad_01.ui.CreateReservation"
+        android:label="fragment_create_reservation"
+        tools:layout="@layout/fragment_create_reservation" />
+    <fragment android:id="@+id/placeholder2" >
+        <action
+            android:id="@+id/action_placeholder2_to_createReservation"
+            app:destination="@id/createReservation" />
+    </fragment>
 </navigation>

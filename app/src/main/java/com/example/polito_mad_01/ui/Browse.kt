@@ -7,6 +7,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.FreeSlotAdapter
@@ -52,7 +53,7 @@ class Browse : Fragment(R.layout.fragment_browse) {
                     selectedFilter = spinner.selectedItem.toString()
 
                     val freeSlots = slots.filter { it.sport == selectedFilter }
-                    recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
+                    recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots, findNavController())
 
                     if(freeSlots.isEmpty()){
                         recyclerViewBrowse.visibility = View.GONE
