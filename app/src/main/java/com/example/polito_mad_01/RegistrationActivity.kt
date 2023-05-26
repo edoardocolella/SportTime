@@ -29,12 +29,12 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         }*/
 
         // TODO: hide or skip email/password part when user logs in with google
-        auth.currentUser?.let {
+/*        auth.currentUser?.let {
             findViewById<EditText>(R.id.registrationUsernameEditText).setText(it.email)
             findViewById<EditText>(R.id.registrationUsernameEditText).isEnabled = false
             findViewById<EditText>(R.id.registrationPasswordEditText).isEnabled = false
             findViewById<EditText>(R.id.loginConfirmPasswordEditText).isEnabled = false
-        }
+        }*/
 
         findViewById<Button>(R.id.registrationButton).setOnClickListener{
         val stepper = findViewById<StepperNavigationView>(R.id.stepper)
