@@ -80,7 +80,6 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
         val user = vm.user.value!!
         fieldIsValid(user.name, "Full Name")
         fieldIsValid(user.nickname, "Nickname")
-        //fieldIsValid(user.description, "Description")
         fieldIsValid(user.email, "Email")
         fieldIsValid(user.phoneNumber, "Phone Number")
         fieldIsValid(user.location, "Location")

@@ -202,18 +202,11 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
     private fun setExtra(attribute: String, checked: Boolean) {
-        when (attribute) {
-            "heating" -> vm.reservation.value?.services?.put("heating", checked)
-            "equipment" -> vm.reservation.value?.services?.put("equipment", checked)
-            "locker_room" -> vm.reservation.value?.services?.put("locker_room", checked)
-            "lighting" -> vm.reservation.value?.services?.put("lighting", checked)
-        }
+        vm.reservation.value?.services?.put(attribute, checked)
     }
 
     private fun trySaveData(){
-
         try {
-
             val actualStartTime = vm.reservation.value?.start_time!!
             val actualEndTime = vm.reservation.value?.end_time!!
             val actualDate = vm.reservation.value?.date!!

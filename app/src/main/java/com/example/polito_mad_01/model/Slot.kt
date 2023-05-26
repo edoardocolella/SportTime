@@ -1,7 +1,5 @@
 package com.example.polito_mad_01.model
 
-import android.location.Location
-
 data class Slot(
     var slot_id: Int = 0,
     var user_id: String?,
@@ -14,9 +12,11 @@ data class Slot(
     val playgroundName: String,
     val sport: String,
     val playground_id: Int,
-    val location: String
+    val location: String,
+    val attendants: List<String>,
+    val maxNumber: Int
 ){
-    constructor(): this(0, "", "", "", "", 0.0, false, mutableMapOf(), "", "", 0, "")
+    constructor(): this(0, "", "", "", "", 0.0, false, mutableMapOf(), "", "", 0, "", listOf(), 0)
 }
 
 

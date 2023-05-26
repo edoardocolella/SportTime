@@ -41,7 +41,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
         reviewLayout.visibility = View.GONE
         reviewButton.visibility = View.GONE
 
-        reviewVm.getSingleReview(userId, playgroundId).observe(viewLifecycleOwner){
+        reviewVm.getSingleReview(playgroundId).observe(viewLifecycleOwner){
             if(it==null){
                 reviewLayout.visibility = View.GONE
                 reviewButton.visibility = View.VISIBLE

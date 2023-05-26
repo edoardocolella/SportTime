@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         result.idpResponse?.let { idpResponse ->
             if(result.resultCode == RESULT_OK){
-                vm.getUser(auth.currentUser?.uid ?: "").observe(this) {
+                vm.getUser().observe(this) {
                     if(it == null)
                         navigateRegister()
                     else

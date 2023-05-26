@@ -16,7 +16,6 @@ import com.example.polito_mad_01.ui.calendar.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.firebase.auth.FirebaseAuth
 import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.*
 import java.text.DateFormatSymbols
@@ -50,6 +49,10 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         viewPager.adapter = DaySlotAdapter(this, listOf())
 
 
+        // serve solo a creare un dataset
+        //vm.createSlots()
+
+
         // p1
         setupList(view)
     }
@@ -57,8 +60,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupList(view: View){
-        val userID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-        vm.getUserSlots(userID).observe(viewLifecycleOwner){ list ->
+        vm.getUserSlots().observe(viewLifecycleOwner){ list ->
             reservationMap = mutableMapOf()
             list.forEach {
 

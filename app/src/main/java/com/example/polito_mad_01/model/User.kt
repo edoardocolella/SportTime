@@ -12,7 +12,8 @@ data class User(
     var image_uri : String?,
     var email : String,
     var phoneNumber : String,
-    val availability : MutableMap<String,Boolean>
+    val availability : MutableMap<String,Boolean>,
+    val friends : List<String>
 ) {
 
     constructor() : this(
@@ -27,7 +28,8 @@ data class User(
         null,
         "",
         "",
-        mutableMapOf()
+        mutableMapOf(),
+        listOf()
     )
     override fun toString(): String =
         "$name $surname $nickname $birthdate $gender $location $achievements $skills"
