@@ -64,6 +64,9 @@ dependencies{
     //custom calendar
     implementation 'com.kizitonwose.calendar:view:2.3.0'
 
+    implementation 'com.github.acefalobi:android-stepper:0.3.0'
+
+
     //navigation
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
@@ -73,6 +76,10 @@ dependencies{
     //lifecycle components
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+
+
+    implementation 'com.github.acefalobi:android-stepper:0.3.0'
+
 
     //room components
     implementation "androidx.room:room-runtime:2.5.1"

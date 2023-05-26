@@ -98,6 +98,8 @@
     <string name="prompt_confirm_password">Confirm Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_up">Sign up</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
     <string name="action_register">Register</string>
     <string name="or">or</string>
     <string name="welcome">Welcome!</string>
