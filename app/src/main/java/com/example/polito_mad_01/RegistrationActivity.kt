@@ -20,7 +20,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
-
         auth = FirebaseAuth.getInstance()
 
 /*        findViewById<Button>(R.id.registrationBackButton).setOnClickListener {
@@ -46,11 +45,11 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 
 
-
         findViewById<Button>(R.id.registrationButton).setOnClickListener {
 
             stepper.goToNextStep()
-            onStepChanged(stepper.currentStep + 1)
+            onStepChanged(stepper.currentStep)
+            println("STEPPER NUMBER : ${stepper.currentStep}")
 
             findViewById<Button>(R.id.registrationButton2).visibility = View.VISIBLE
 
@@ -76,10 +75,11 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
         findViewById<Button>(R.id.registrationButton2).setOnClickListener {
 
-            stepper.goToPreviousStep()
-            onStepChanged(stepper.currentStep + 1)
-
-
+            if(stepper.currentStep == 1) {
+                stepper.goToPreviousStep()
+                onStepChanged(stepper.currentStep)
+                findViewById<Button>(R.id.registrationButton2).visibility = View.INVISIBLE
+            }
         }
     }
 

@@ -6,24 +6,6 @@
     android:orientation="vertical"
     tools:context=".ui.ShowOldReservations">
 
-    <TextView
-        android:id="@+id/old_reservations_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="@string/oldReservations"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <View
-        android:id="@+id/divider_old_reservations"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="?android:attr/listDivider"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/oldResRecyclerView"
         android:layout_width="match_parent"

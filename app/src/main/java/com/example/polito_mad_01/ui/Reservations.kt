@@ -16,6 +16,7 @@ import com.example.polito_mad_01.ui.calendar.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
 import com.kizitonwose.calendar.core.*
 import com.kizitonwose.calendar.view.*
 import java.text.DateFormatSymbols
@@ -56,7 +57,9 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupList(view: View){
-        vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner){ list ->
+        val userID = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        vm.getUserSlots(userID).observe(viewLifecycleOwner){ list ->
+            reservationMap = mutableMapOf()
             list.forEach {
 
                 val date = it.date
@@ -66,7 +69,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             }
 
             setList()
-            // p3
             setupCalendar(view)
         }
     }
