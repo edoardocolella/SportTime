@@ -6,8 +6,7 @@
         <item name="colorPrimaryVariant">@color/persian_green_light</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/saffron_light</item>
-        <item name="colorSecondaryVariant">@color/saffron_light</item>
+        <item name="colorSecondary">@color/burnt_sienna</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/charcoal_dark</item>

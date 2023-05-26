@@ -61,15 +61,19 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.profilePage -> {
+                    supportActionBar?.title = "Profile"
                     navController.navigate(R.id.profileFragment)
                 }
                 R.id.reservationsPage -> {
+                    supportActionBar?.title = "Reservations"
                     navController.navigate(R.id.reservationsFragment)
                 }
                 R.id.browsePage -> {
+                    supportActionBar?.title = "Free slots"
                     navController.navigate(R.id.browseFragment)
                 }
                 R.id.oldReservations -> {
+                    supportActionBar?.title = "Past Reservations"
                     navController.navigate(R.id.showOldReservations)
                 }
                 R.id.logout -> {

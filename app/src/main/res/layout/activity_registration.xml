@@ -67,9 +67,10 @@
                     android:layout_height="wrap_content"
                     app:stepperIconSize="25dp"
                     app:stepperItems="@menu/menu_stepper"
+                    app:stepperTextColor="@color/material_on_primary_emphasis_high_type"
                     app:stepperTextSize="13dp"
                     app:stepperType="tab_numbered"
-                    app:stepperWidgetColor="@color/charcoal_dark" />
+                    app:stepperWidgetColor="@color/persian_green" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/frame_stepper"

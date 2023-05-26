@@ -20,7 +20,6 @@
             android:layout_gravity="center"
             android:text="Let's get started!"
             android:textAlignment="center"
-            android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/cardViewRegistration"
             app:layout_constraintEnd_toEndOf="parent"
