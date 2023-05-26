@@ -46,7 +46,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setAllView() {
-        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) {user->
+        vm.getUser().observe(viewLifecycleOwner) {user->
             user.let {
                setImage(user)
                 setTextView(R.id.fullname, it.name + " " + it.surname, view)

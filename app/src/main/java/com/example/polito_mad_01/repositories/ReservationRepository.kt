@@ -2,13 +2,17 @@ package com.example.polito_mad_01.repositories
 
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 
 class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
+    private val fAuth = FirebaseAuth.getInstance()
 
-    fun getSlotsByUserId(userID : String): LiveData<List<Slot>> {
+
+    fun getSlotsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
+        val userID = fAuth.currentUser?.uid ?: ""
         fs.collection("reservations")
             .where(Filter.or(
                     Filter.equalTo("user_id", userID),
@@ -72,11 +76,12 @@ class ReservationRepository{
         return liveDataList
     }
 
-    fun getOldReservationsByUserId(u_id: String, date: String): LiveData<List<Slot>> {
+    fun getOldReservationsByUserId(date: String): LiveData<List<Slot>> {
+        val userID = fAuth.currentUser?.uid ?: ""
         val liveDataList = MutableLiveData<List<Slot>>()
         fs.collection("reservations")
             .where(Filter.and(
-                Filter.equalTo("user_id", u_id),
+                Filter.equalTo("user_id", userID),
                 Filter.lessThan("date", date),
                 Filter.equalTo("reserved", true)))
             .addSnapshotListener { r, _ ->

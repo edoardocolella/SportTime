@@ -5,8 +5,8 @@ import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.repositories.*
 
 class MainActivityViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun getUser(userID: String): LiveData<User> {
-        return userRepository.getUser(userID)
+    fun getUser(): LiveData<User> {
+        return userRepository.getUser()
     }
 
 }

@@ -35,8 +35,7 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
         recyclerViewOldRes =view.findViewById(R.id.oldResRecyclerView)
         recyclerViewOldRes.layoutManager = LinearLayoutManager(view.context)
 
-        vm.getOldReservations("1", LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
-            println("----Old slots: $oldSlots, size: ${oldSlots.size}")
+        vm.getOldReservations(LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
             recyclerViewOldRes.adapter= OldSlotAdapter(oldSlots, findNavController())
             if(oldSlots.isEmpty()){
                 recyclerViewOldRes.visibility=View.GONE

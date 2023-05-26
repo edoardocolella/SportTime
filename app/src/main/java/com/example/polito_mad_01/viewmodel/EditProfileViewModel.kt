@@ -12,14 +12,15 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     lateinit var chipGroup : LiveData<View>
      var imageUri = MutableLiveData<String>(null)
 
-    fun getUser(userId: String): LiveData<User>{
-        user = userRepository.getUser(userId) as MutableLiveData<User>
+    fun getUser(): LiveData<User>{
+        user = userRepository.getUser() as MutableLiveData<User>
         return user
     }
 
     fun updateUser() {
         thread {
-            //user.value?.let { userRepository.updateUserWithSkills(it) }
+            println("UPDATE updateUser")
+            user.value?.let { userRepository.updateUser(it) }
         }
     }
 

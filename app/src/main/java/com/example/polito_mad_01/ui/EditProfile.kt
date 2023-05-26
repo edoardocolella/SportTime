@@ -176,7 +176,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         }
 
 
-        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { user ->
+        vm.getUser().observe(viewLifecycleOwner) { user ->
             vm.imageUri.value = user.image_uri
             setTextViews(view, user)
             setButtons(user)

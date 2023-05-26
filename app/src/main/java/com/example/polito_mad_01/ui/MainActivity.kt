@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // NOTE: currentUser deve esistere a questo punto, altrimenti qualcosa non va
         auth.currentUser?.let {
-            vm.getUser(it.uid).observe(this) { user ->
+            vm.getUser().observe(this) { user ->
                 if(user == null) return@observe // TODO: replace
 
                 val view = navView.getHeaderView(0)
