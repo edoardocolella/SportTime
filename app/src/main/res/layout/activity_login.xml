@@ -117,26 +117,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:layout_marginTop="40dp"
                 android:text="@string/action_sign_in"
                 android:textAllCaps="false"
-                android:layout_marginTop="40dp"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                app:cornerRadius="10dp"/>
-
-            <Button
-                android:id="@+id/registerButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:text="@string/action_register"
-                android:textAllCaps="false"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                app:cornerRadius="10dp"
-                />
-
+                android:textSize="24sp"
+                app:cornerRadius="10dp" />
 
 
             <TextView

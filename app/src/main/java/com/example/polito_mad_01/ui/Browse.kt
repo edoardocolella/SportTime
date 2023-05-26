@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.FreeSlotAdapter
+import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
@@ -18,6 +19,8 @@ class Browse : Fragment(R.layout.fragment_browse) {
 
     lateinit var recyclerViewBrowse: RecyclerView
     var noFreeSlots : TextView? = null
+
+    var slots : List<Slot> = listOf()
 
     private val vm: ShowFreeSlotsViewModel by viewModels{
         ShowFreeSlotsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
@@ -32,7 +35,7 @@ class Browse : Fragment(R.layout.fragment_browse) {
         recyclerViewBrowse.layoutManager = LinearLayoutManager(view.context)
 
         val spinner = view.findViewById<Spinner>(R.id.spinnerBrowse)
-        var selectedFilter: String
+        var selectedFilter = resources.getStringArray(R.array.sportArray)[0]
 
         val adapter = ArrayAdapter.createFromResource(
             view.context,
@@ -41,27 +44,33 @@ class Browse : Fragment(R.layout.fragment_browse) {
         )
         spinner.adapter=adapter
 
-        vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner) { slots ->
+        fun updateList(){
+            val freeSlots = slots.filter { it.sport == selectedFilter }
+            recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
 
-            spinner.onItemSelectedListener = object : OnItemSelectedListener {
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    selectedFilter = resources.getStringArray(R.array.sportArray)[0]
-                }
+            if(freeSlots.isEmpty()){
+                recyclerViewBrowse.visibility = View.GONE
+                noFreeSlots?.visibility = View.VISIBLE
+            }else{
+                recyclerViewBrowse.visibility = View.VISIBLE
+                noFreeSlots?.visibility = View.GONE
+            }
+        }
 
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    selectedFilter = spinner.selectedItem.toString()
+        vm.getFreeSlots(LocalDate.now().toString()).observe(viewLifecycleOwner) {
+            slots = it
+            updateList()
+        }
 
-                    val freeSlots = slots.filter { it.sport == selectedFilter }
-                    recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots)
+        spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                selectedFilter = resources.getStringArray(R.array.sportArray)[0]
+            }
 
-                    if(freeSlots.isEmpty()){
-                        recyclerViewBrowse.visibility = View.GONE
-                        noFreeSlots?.visibility = View.VISIBLE
-                    }else{
-                        recyclerViewBrowse.visibility = View.VISIBLE
-                        noFreeSlots?.visibility = View.GONE
-                    }
-                }
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                selectedFilter = spinner.selectedItem.toString()
+
+                updateList()
             }
         }
 

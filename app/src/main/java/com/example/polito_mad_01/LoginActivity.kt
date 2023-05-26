@@ -1,15 +1,11 @@
 package com.example.polito_mad_01
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.MainActivityViewModel
 import com.example.polito_mad_01.viewmodel.MainActivityViewModelFactory
@@ -38,25 +34,12 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         fs = FirebaseFirestore.getInstance()
 
-        if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
-            || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-            || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED
-        ) {
-            val permission =
-                arrayOf(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)
-            requestPermissions(permission, 112)
-        }
-
         auth.currentUser?.let {
             loginSuccess()
         }
 
         setupGoogleSignIn()
         setupEmailSignIn()
-        setupRegister()
     }
 
     private fun loginSuccess(){
@@ -67,12 +50,6 @@ class LoginActivity : AppCompatActivity() {
     private fun navigateRegister(){
         val intent = Intent(this, RegistrationActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun setupRegister(){
-        findViewById<Button>(R.id.registerButton).setOnClickListener {
-            navigateRegister()
-        }
     }
 
     private fun setupEmailSignIn(){
