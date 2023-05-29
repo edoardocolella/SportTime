@@ -17,5 +17,17 @@
         android:label="Step 2"
         tools:layout="@layout/step2fragment"/>
 
+    <fragment
+        android:id="@+id/step_3_dest"
+        android:name="com.example.polito_mad_01.ui.Step3Fragment"
+        android:label="Step 3"
+        tools:layout="@layout/step3fragment"/>
+
+    <fragment
+        android:id="@+id/step_4_dest"
+        android:name="com.example.polito_mad_01.ui.Step4Fragment"
+        android:label="Step 4"
+        tools:layout="@layout/step4fragment"/>
+
 
 </navigation>

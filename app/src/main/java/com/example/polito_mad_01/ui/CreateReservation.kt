@@ -3,15 +3,19 @@ package com.example.polito_mad_01.ui
 import android.os.*
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
+import kotlin.concurrent.thread
 
 class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
 
@@ -36,12 +40,21 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         slotID = requireArguments().getInt("slotID")
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
-
-            //vm.setOriginalTime(it.start_time, it.end_time, it.date)
-            //setSpinners(it)
             setImage(it.sport)
             setAllTextViews(it)
             setAllCheckBoxes(it)
+            setAllButtons()
+        }
+    }
+
+    private fun setAllButtons() {
+        view?.findViewById<Button>(R.id.createReservation)?.setOnClickListener{
+            thread {
+                vm.createReservation()
+                Toast.makeText(requireContext(), "Reservation created", Toast.LENGTH_SHORT).show()
+            }
+            findNavController().navigate(R.id.reservationsFragment)
+
         }
     }
 
@@ -61,9 +74,10 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         UIUtils.setTextView(R.id.playgroundName, slot.playgroundName, view)
         UIUtils.setTextView(R.id.playgroundLocation, slot.location, view)
         UIUtils.setTextView(R.id.playgroundSport, slot.sport, view)
-        UIUtils.setTextView(R.id.reservationDate, slot.date, view)
-        UIUtils.setTextView(R.id.reservationTime, "${slot.start_time}-${slot.end_time}", view)
+        UIUtils.setTextView(R.id.dateText, slot.date, view)
+        UIUtils.setTextView(R.id.timeText, "${slot.start_time}-${slot.end_time}", view)
         UIUtils.setTextView(R.id.reservationTotalPrice, slot.total_price.toString(), view)
+
     }
 
     private fun setAllCheckBoxes(slot: Slot) {
@@ -84,5 +98,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
     private fun setExtra(attribute: String, checked: Boolean) {
         vm.reservation.value?.services?.put(attribute, checked)
     }
+
+
 
 }

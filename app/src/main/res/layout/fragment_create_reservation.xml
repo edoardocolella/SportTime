@@ -106,8 +106,8 @@ android:layout_height="match_parent">
                 android:layout_weight="1"
                 app:srcCompat="@drawable/calendar_month_48px" />
 
-            <Spinner
-                android:id="@+id/dateSpinner"
+            <TextView
+                android:id="@+id/dateText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4" />
@@ -119,8 +119,8 @@ android:layout_height="match_parent">
                 android:layout_weight="1"
                 app:srcCompat="@drawable/schedule_48px" />
 
-            <Spinner
-                android:id="@+id/timeSpinner"
+            <TextView
+                android:id="@+id/timeText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4" />
@@ -205,8 +205,8 @@ android:layout_height="match_parent">
                 android:id="@+id/deleteButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/delete"
-                android:backgroundTint="#FF0000" />
+                android:backgroundTint="@color/glaucos"
+                android:text="@string/reserve" />
         </LinearLayout>
 
 

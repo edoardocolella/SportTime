@@ -36,7 +36,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             findViewById<EditText>(R.id.loginConfirmPasswordEditText).isEnabled = false
         }*/
 
-        findViewById<Button>(R.id.registrationButton).setOnClickListener{
         val stepper = findViewById<StepperNavigationView>(R.id.stepper)
         val navController =
             (supportFragmentManager.findFragmentById(R.id.frame_stepper) as NavHostFragment).navController
@@ -45,13 +44,17 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 
 
-        findViewById<Button>(R.id.registrationButton).setOnClickListener {
+        findViewById<Button>(R.id.nextButton).setOnClickListener {
 
             stepper.goToNextStep()
-            onStepChanged(stepper.currentStep)
+            //onStepChanged(stepper.currentStep)
             println("STEPPER NUMBER : ${stepper.currentStep}")
 
-            findViewById<Button>(R.id.registrationButton2).visibility = View.VISIBLE
+            findViewById<Button>(R.id.backButton).visibility = View.VISIBLE
+
+            if(stepper.currentStep == 3){
+                findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
+            }
 
             /*val userEmail = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
             val userPassword = findViewById<EditText>(R.id.registrationPasswordEditText).text.toString()
@@ -73,15 +76,22 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
                 }*/
         }
 
-        findViewById<Button>(R.id.registrationButton2).setOnClickListener {
+        findViewById<Button>(R.id.backButton).setOnClickListener {
 
             if(stepper.currentStep == 1) {
                 stepper.goToPreviousStep()
                 onStepChanged(stepper.currentStep)
-                findViewById<Button>(R.id.registrationButton2).visibility = View.INVISIBLE
+                findViewById<Button>(R.id.backButton).visibility = View.INVISIBLE
+            }else{
+                stepper.goToPreviousStep()
+                onStepChanged(stepper.currentStep)
             }
+
+            if(stepper.currentStep == 2){
+                findViewById<Button>(R.id.nextButton).visibility = View.VISIBLE
+            }
+
         }
-    }
 
 }
 

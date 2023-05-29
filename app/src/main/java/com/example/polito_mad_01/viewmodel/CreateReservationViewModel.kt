@@ -1,9 +1,11 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.repositories.*
+import kotlin.concurrent.thread
 
 class CreateReservationViewModel(private val reservationRepository: ReservationRepository) : ViewModel() {
 
@@ -13,6 +15,12 @@ class CreateReservationViewModel(private val reservationRepository: ReservationR
     fun getReservation(slotID: Int): LiveData<Slot> {
         reservation = reservationRepository.getReservationById(slotID) as MutableLiveData<Slot>
         return reservation
+    }
+
+    fun createReservation() {
+        thread {
+            reservationRepository.createOrUpdateReservation(reservation.value!!)
+        }
     }
 
 
