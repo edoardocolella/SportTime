@@ -91,4 +91,18 @@
     <string name="submitReview">Submit review</string>
     <string name="add_skill">Add Skill</string>
     <string name="sport_skills">Sport skills</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_fullname">Full Name</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_register">Register</string>
+    <string name="or">or</string>
+    <string name="welcome">Welcome!</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
