@@ -20,6 +20,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
+import java.net.URI
 
 class ShowProfile : Fragment(R.layout.fragment_profile) {
 
@@ -48,7 +49,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
     private fun setAllView() {
         vm.getUser().observe(viewLifecycleOwner) {user->
             user.let {
-               setImage(user)
                 setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 setTextView(R.id.nickname, it.nickname,view)
                 setTextView(R.id.description, it.achievements.toString(),view)
@@ -87,6 +87,10 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
             }
 
         }
+
+        vm.getUserImage().observe(viewLifecycleOwner) { image ->
+            setImage(image)
+        }
     }
 
 
@@ -111,26 +115,22 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         else button.setBackgroundColor(colorFalse)
     }
 
-    private fun setImage(user: User) {
-
-        val name = user.name
-        val surname = user.surname
-        val imageUri = user.image_uri?.toUri()
+    private fun setImage(image: URI?) {
+        println("IMAGE: $image")
         val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
-
-        if (imageUri != Uri.EMPTY && imageUri != null) {
-            frame.loadImage(imageUri)
+        if (image == null) {
+            val user = vm.user.value!!
+            val name = user.name
+            val surname = user.surname
+            frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
         }
-        else frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
+        else{
+            val imageUri = Uri.parse(image.toString())
+            if (imageUri != Uri.EMPTY && imageUri != null) {
+                frame.loadImage(imageUri)
+            }
+        }
     }
-
-
-    /*
-    private fun setTextView(id: Int, field: String?) {
-        field?.let { view?.findViewById<TextView>(id)?.text = field }
-    }
-     */
-
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
