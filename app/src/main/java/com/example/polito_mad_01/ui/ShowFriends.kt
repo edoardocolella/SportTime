@@ -29,20 +29,14 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
 
         vm.getUser().observe(viewLifecycleOwner){ user ->
 
-            val friends = mutableMapOf<String, String>()
+            val friends = user.friends
 
-            val friendsId = user.friends
-            friendsId.forEach{id->
-                println("FRIENDID $id")
-                vm.getFriend(id).observe(viewLifecycleOwner){ friendProfile->
-                    println("FRIENDPROFILE $friendProfile")
-                    friends[id]=friendProfile
-                    recyclerViewFriends.adapter= FriendsAdapter(friends.values.toList())
-                }
+            vm.getFriends(friends).observe(viewLifecycleOwner){ friendsNick ->
+                recyclerViewFriends.adapter= FriendsAdapter(friendsNick)
+
             }
 
-
-            if(friends.values.isEmpty()){
+            if(friends.isEmpty()){
                 recyclerViewFriends.visibility=View.GONE
                 noFriends.visibility=View.VISIBLE
             }else{

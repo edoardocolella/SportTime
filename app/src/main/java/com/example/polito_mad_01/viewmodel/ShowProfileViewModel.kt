@@ -18,8 +18,9 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
         return userRepository.getProfileImage()
     }
 
-    fun getFriend(id: String): LiveData<String> {
-        return userRepository.getFriendNickname(id)
+
+    fun getFriends(idList: List<String>): LiveData<List<String>> {
+        return userRepository.getFriendsNickname(idList)
     }
 }
 

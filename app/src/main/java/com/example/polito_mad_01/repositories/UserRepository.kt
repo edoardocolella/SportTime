@@ -63,14 +63,16 @@ class UserRepository{
         }
     }
 
-    fun getFriendNickname(id: String): LiveData<String> {
-        val user = MutableLiveData<String>()
+    fun getFriendsNickname(idList: List<String>): LiveData<List<String>> {
+        val nicknameList = MutableLiveData<List<String>>()
         fs.collection("users")
-            .document(id)
-            .addSnapshotListener { r, _ ->
-                user.value =  r?.get("nickname").toString()
+            .get()
+            .addOnSuccessListener { result ->
+                nicknameList.value = result.documents
+                    .filter { idList.contains(it.id) }
+                    .map { it["nickname"].toString() }
             }
-        return user
+        return nicknameList
     }
 
 }
