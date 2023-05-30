@@ -81,30 +81,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/loginConfirmPassword"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:hint="@string/prompt_confirm_password"
-            android:maxLines="1"
-            android:minLines="1"
-            android:textAlignment="textStart"
-            app:endIconMode="password_toggle">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/loginConfirmPasswordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:minLines="1"
-                android:shadowColor="@color/gray"
-                android:textAlignment="textStart" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
 
     </LinearLayout>

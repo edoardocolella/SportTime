@@ -71,53 +71,61 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nickName_value"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:autofillHints="username"
+            android:hint="@string/nickname"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="italic">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registrationGenderInputLayout"
-                style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationNicknameEditText"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingRight="10dp"
-                android:hint="@string/genderLabel">
+                android:layout_height="wrap_content" />
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="none"
-                    tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registrationGenderInputLayout"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:hint="@string/genderLabel">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registrationBirthdayInputLayout"
-                style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/birthdate"
-                android:textSize="20sp"
-                android:paddingLeft="10dp"
-                app:endIconDrawable="@drawable/cake_48px">
+                android:layout_height="50dp"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="none"
-                    tools:ignore="LabelFor"
-                     />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registrationBirthdayInputLayout"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/birthdate"
+            android:layout_marginTop="10dp"
+            android:textSize="10sp">
 
-        </LinearLayout>
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -137,27 +145,6 @@
                 android:id="@+id/registrationLocationEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nickName_value"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="username"
-                android:hint="@string/nickname"
-                android:layout_marginTop="10dp"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                android:textStyle="italic">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/registrationNicknameEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

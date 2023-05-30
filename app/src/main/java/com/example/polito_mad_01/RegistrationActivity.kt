@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
 import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.model.UserData
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
@@ -85,22 +86,40 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 }
     private fun register() {
-        if(auth.currentUser != null){
-
-        }
 
         vm.user.observe(this) {
-            auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
-                .addOnCompleteListener(this
-                ) { task ->
-                    if (task.isSuccessful) {
-                        vm.createUser(auth.currentUser!!.uid)
+            if(isValid(it)) {
+                auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
+                    .addOnCompleteListener(
+                        this
+                    ) { task ->
+                        if (task.isSuccessful) {
 
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                            vm.createUser(auth.currentUser!!.uid)
+
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
-                }
-        }
+            }
+            }
+
+    }
+
+    private fun isValid(user: UserData):Boolean{
+
+        if(user.name.isEmpty()) return false
+        if(user.surname.isEmpty()) return false
+        if(user.nickname.isEmpty()) return false
+        if(user.birthdate.isEmpty()) return false
+        if(user.gender.isEmpty()) return false
+        if(user.location.isEmpty()) return false
+        //if(user.achievements.isEmpty()) return false
+        if(user.email.isEmpty()) return false
+        if(user.password.isEmpty()) return false
+        if(user.phoneNumber.isEmpty() || user.phoneNumber.length<10) return false
+
+        return true
     }
 
     override fun onStepChanged(step: Int) {
