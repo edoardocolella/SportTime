@@ -28,6 +28,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
+import okhttp3.internal.indexOf
 import java.net.URI
 import java.util.*
 
@@ -168,6 +169,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             "email" -> vm.user.value?.email = newValue
             "phoneNumber" -> vm.user.value?.phoneNumber = newValue
             "location" -> vm.user.value?.location = newValue
+            "gender" -> vm.user.value?.gender = newValue
             "birthdate" -> vm.user.value?.birthdate = newValue
         }
     }
@@ -225,6 +227,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
+        setGenderView(view, user)
         setBirthdateView(view, user)
     }
 
@@ -245,6 +248,15 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             materialDatePicker.show(childFragmentManager, "DATE_PICKER")
         }
 
+    }
+
+    private fun setGenderView(view: View, user: User){
+        view.findViewById<AutoCompleteTextView>(R.id.genderSelector)?.let {
+            it.setText(user.gender)
+            it.setOnItemClickListener {  parent, _, position, _ ->
+                setValue("gender", parent.getItemAtPosition(position).toString())
+            }
+        }
     }
 
     private fun setSpinners() {
