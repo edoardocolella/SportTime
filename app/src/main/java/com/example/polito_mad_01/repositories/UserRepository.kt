@@ -34,7 +34,7 @@ class UserRepository{
         fs.collection("users")
             .document(userID)
             .set(user, SetOptions.merge())
-            .addOnSuccessListener { println("UPDATE User updated") }
+            //.addOnSuccessListener { println("UPDATE User updated") }
     }
 
     fun getProfileImage(): LiveData<Uri?> {
@@ -46,7 +46,6 @@ class UserRepository{
         imageRef.getFile(localFile).addOnSuccessListener {
             image.value = localFile.toUri()
         }.addOnFailureListener {
-            println("Error while downloading image")
             image.value = null
         }
         return image
@@ -56,9 +55,9 @@ class UserRepository{
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
-        imageRef.putFile(imageUri).addOnSuccessListener {
-            println("Image uploaded")
-        }.addOnFailureListener {
+        imageRef.putFile(imageUri)
+            //.addOnSuccessListener { println("Image uploaded") }
+        .addOnFailureListener {
             throw Exception("Error while uploading image")
         }
     }
@@ -73,6 +72,13 @@ class UserRepository{
                     .map { it["nickname"].toString() }
             }
         return nicknameList
+    }
+
+    fun createUser(user: User, uuid: String){
+        fs.collection("users")
+            .document(uuid)
+            .set(user)
+            .addOnSuccessListener { println("User created") }
     }
 
 }

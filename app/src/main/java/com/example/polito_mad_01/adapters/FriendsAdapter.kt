@@ -12,8 +12,6 @@ class FriendsAdapter ( private val data:List<String>): RecyclerView.Adapter<Frie
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsHolder{
-        println("FRIENDSADAPTER $data")
-
         val v = LayoutInflater.from(parent.context).inflate(R.layout.friend_item_layout ,parent, false)
         return FriendsHolder(v)
     }
@@ -26,7 +24,6 @@ class FriendsAdapter ( private val data:List<String>): RecyclerView.Adapter<Frie
     class FriendsHolder(v: View): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
         fun bind(friend: String){
-            println("BIND $friend")
             friendId.text = friend
         }
     }

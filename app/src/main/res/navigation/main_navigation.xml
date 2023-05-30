@@ -85,6 +85,9 @@
         <action
             android:id="@+id/action_placeholder_to_showProfileContainer"
             app:destination="@id/showProfileContainer" />
+        <action
+            android:id="@+id/action_placeholder_to_gameInvitation"
+            app:destination="@id/gameInvitation" />
     </fragment>
     <fragment
         android:id="@+id/showOldReservation"
@@ -166,5 +169,18 @@
         <action
             android:id="@+id/action_showProfileContainer_to_editProfileContainer"
             app:destination="@id/editProfileContainer" />
+        <action
+            android:id="@+id/action_showProfileContainer_to_friendRequest"
+            app:destination="@id/friendRequest" />
     </fragment>
+    <fragment
+        android:id="@+id/friendRequest"
+        android:name="com.example.polito_mad_01.ui.FriendRequest"
+        android:label="fragment_friend_request"
+        tools:layout="@layout/fragment_friend_request" />
+    <fragment
+        android:id="@+id/gameInvitation"
+        android:name="com.example.polito_mad_01.ui.GameInvitation"
+        android:label="fragment_game_invitation"
+        tools:layout="@layout/fragment_game_invitation" />
 </navigation>

@@ -56,6 +56,7 @@ class ShowProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
                 when(position){
                     0 -> tab.text = "Profile"
                     1 -> tab.text = "Friends"
+                    2 -> tab.text = "Requests"
                 }
             }.attach()
 

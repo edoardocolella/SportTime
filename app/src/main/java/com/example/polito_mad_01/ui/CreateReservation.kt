@@ -49,7 +49,6 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
 
     private fun setAllButtons() {
         view?.findViewById<Button>(R.id.createReservation)?.setOnClickListener{
-            println("Button pressed")
             vm.createReservation()
             findNavController().navigate(R.id.reservationsFragment)
         }

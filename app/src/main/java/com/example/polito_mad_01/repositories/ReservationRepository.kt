@@ -1,6 +1,8 @@
 package com.example.polito_mad_01.repositories
 
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
@@ -8,19 +10,28 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
+import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
     private val fAuth = FirebaseAuth.getInstance()
     private val storage = FirebaseStorage.getInstance()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getSlotsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
         val userID = fAuth.currentUser?.uid ?: ""
         fs.collection("reservations")
             .where(Filter.or(
                     Filter.equalTo("user_id", userID),
-                    Filter.equalTo("reserved", false)))
+                    Filter.and(
+                        Filter.equalTo("reserved", false),
+                        Filter.greaterThanOrEqualTo("date", LocalDate.now().toString()),
+                        Filter.greaterThan("start_time", LocalTime.now().toString())
+                        )
+                    )
+            )
             .addSnapshotListener { r, _ ->
                 val list = mutableListOf<Slot>()
                 r?.forEach {
@@ -60,18 +71,21 @@ class ReservationRepository{
         return liveDataList
     }
 
-    fun createOrUpdateReservation(slot: Slot) {
-
-        val userID = fAuth.currentUser?.uid ?: throw Exception("No user found")
-        slot.user_id = userID
-        slot.reserved = true
-
-        println("UPDATE: $slot")
-
+    fun populateSlot(slot: Slot){
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
-            .addOnSuccessListener { println("$slot created") }
+            //.addOnSuccessListener { println("$slot created") }
+    }
+
+    fun createOrUpdateReservation(slot: Slot) {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("No user found")
+        slot.user_id = userID
+        slot.reserved = true
+        fs.collection("reservations")
+            .document(String.format("%03d",slot.slot_id))
+            .set(slot, SetOptions.merge())
+            //.addOnSuccessListener { println("$slot created") }
     }
 
     fun deleteReservation(slot: Slot){
@@ -83,7 +97,7 @@ class ReservationRepository{
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
-            .addOnSuccessListener { println("$slot created") }
+            //.addOnSuccessListener { println("$slot created") }
     }
 
     fun getAllReservations(): LiveData<List<Slot>> {
@@ -125,7 +139,7 @@ class ReservationRepository{
         imageRef.getFile(localFile).addOnSuccessListener {
             image.value = localFile.toUri()
         }.addOnFailureListener {
-            println("Error while downloading image")
+            //println("Error while downloading image")
             image.value = null
         }
         return image
