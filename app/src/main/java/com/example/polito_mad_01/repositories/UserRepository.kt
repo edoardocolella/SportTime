@@ -2,6 +2,7 @@ package com.example.polito_mad_01.repositories
 
 
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -36,14 +37,14 @@ class UserRepository{
             .addOnSuccessListener { println("UPDATE User updated") }
     }
 
-    fun getProfileImage(): LiveData<URI?> {
+    fun getProfileImage(): LiveData<Uri?> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
         val localFile = File.createTempFile("images", "jpg")
-        val image = MutableLiveData<URI?>()
+        val image = MutableLiveData<Uri?>()
         imageRef.getFile(localFile).addOnSuccessListener {
-            image.value = localFile.toURI()
+            image.value = localFile.toUri()
         }.addOnFailureListener {
             println("Error while downloading image")
             image.value = null
@@ -52,6 +53,7 @@ class UserRepository{
     }
 
     fun updateProfileImage(imageUri: Uri) {
+        var flag = true
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
