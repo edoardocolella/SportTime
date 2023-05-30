@@ -25,6 +25,7 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 import okhttp3.internal.indexOf
@@ -213,12 +214,13 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setTextViews(view: View, user: User) {
+        val currUser = FirebaseAuth.getInstance().currentUser
 
         setEditTextViewAndListener(R.id.name, user.name, "name")
         setEditTextViewAndListener(R.id.surname, user.surname, "surname")
         setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
         setEditTextViewAndListener(R.id.achievements_value, user.achievements.toString(), "description")
-        setEditTextViewAndListener(R.id.mail_value, user.email, "email")
+        setEditTextViewAndListener(R.id.mail_value, currUser?.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
         setGenderView(view, user)
