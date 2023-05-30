@@ -104,14 +104,15 @@
                 android:layout_weight="1"
                 android:hint="@string/birthdate"
                 android:textSize="20sp"
-                android:padding="10dp"
+                android:paddingLeft="10dp"
                 app:endIconDrawable="@drawable/cake_48px">
 
                 <AutoCompleteTextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:inputType="none"
-                    tools:ignore="LabelFor" />
+                    tools:ignore="LabelFor"
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 

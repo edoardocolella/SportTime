@@ -70,11 +70,9 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
-            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/mondayButton"
@@ -84,9 +82,9 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/mondayInitials"
+                android:text="@string/mondayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
 
             <Button
@@ -97,10 +95,16 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/tuesdayInitials"
+                android:text="@string/tuesdayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/wednesdayButton"
@@ -110,9 +114,9 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/wednesdayInitials"
+                android:text="@string/wednesdayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
 
             <Button
@@ -123,10 +127,18 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/thursdayInitials"
+                android:text="@string/thursdayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/fridayButton"
@@ -136,9 +148,9 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/fridayInitials"
+                android:text="@string/fridayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
 
             <Button
@@ -149,25 +161,24 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/saturdayInitials"
+                android:text="@string/saturdayLabel"
                 android:textColor="#000"
-                android:textSize="8sp"
-                tools:ignore="SmallSp" />
-
-            <Button
-                android:id="@+id/sundayButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/sundayInitials"
-                android:textColor="#000"
-                android:textSize="8sp"
+                android:textSize="12sp"
                 tools:ignore="SmallSp" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/sundayButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="4dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/sundayLabel"
+            android:textColor="#000"
+            android:textSize="12sp"
+            tools:ignore="SmallSp" />
 
 
     </LinearLayout>
