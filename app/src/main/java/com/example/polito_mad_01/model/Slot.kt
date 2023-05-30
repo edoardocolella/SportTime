@@ -7,7 +7,7 @@ data class Slot(
     var start_time: String,
     var end_time: String,
     val total_price: Double,
-    val reserved: Boolean,
+    var reserved: Boolean,
     var services: MutableMap<String,Boolean>,
     val playgroundName: String,
     val sport: String,

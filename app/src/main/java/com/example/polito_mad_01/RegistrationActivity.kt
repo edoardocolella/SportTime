@@ -25,7 +25,17 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
 
+        val stepper = findViewById<StepperNavigationView>(R.id.stepper)
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.frame_stepper) as NavHostFragment).navController
+
+        stepper.setupWithNavController(navController)
+
         auth = FirebaseAuth.getInstance()
+
+        if(auth.currentUser != null){
+            stepper.goToNextStep()
+        }
 
 /*        findViewById<Button>(R.id.registrationBackButton).setOnClickListener {
             auth.signOut()
@@ -40,12 +50,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             findViewById<EditText>(R.id.registrationPasswordEditText).isEnabled = false
             findViewById<EditText>(R.id.loginConfirmPasswordEditText).isEnabled = false
         }*/
-
-        val stepper = findViewById<StepperNavigationView>(R.id.stepper)
-        val navController =
-            (supportFragmentManager.findFragmentById(R.id.frame_stepper) as NavHostFragment).navController
-
-        stepper.setupWithNavController(navController)
 
 
 

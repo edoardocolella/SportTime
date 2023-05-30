@@ -151,7 +151,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         AlertDialog.Builder(activity)
             .setTitle("Are you sure?").setMessage("All changes will be lost")
             .setPositiveButton("YES")
-            { _, _ -> findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment) }
+            { _, _ -> findNavController().navigate(R.id.showProfileContainer) }
             .setNegativeButton("NO") { _, _ -> }.show()
         return true
     }

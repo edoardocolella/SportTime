@@ -1,269 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TableLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:stretchColumns="0,1">
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp">
 
-        <TableRow
+        <TextView
+            android:id="@+id/textViewCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/skills"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <CheckBox
+            android:id="@+id/checkBoxBasket"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/basket"
+            android:textSize="20sp" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardBasket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <!-- Media -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/basketball_photo" />
-
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Basket"
-                        android:paddingStart="5dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sportLevelBasket"
-                        style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:hint="Select a sport level">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/sportLevelBasketMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:enabled="false"
-                            android:inputType="none"
-                            tools:ignore="LabelFor" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <CheckBox
-                        android:id="@+id/checkBoxBasket"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardFootball"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <!-- Media -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/football_photo" />
-
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Football"
-                        android:paddingStart="5dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sportLevelFootball"
-                        style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:hint="Select a sport level">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/sportLevelFootballMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:inputType="none"
-                            android:enabled="false"
-                            tools:ignore="LabelFor" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <CheckBox
-                        android:id="@+id/checkBoxFootball"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-
-
-        </TableRow>
-
-        <TableRow
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sportLevelBasket"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:enabled="false"
+            android:hint="@string/skill_level_select">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardVolleyball"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+            <AutoCompleteTextView
+                android:id="@+id/sportLevelBasketMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+        </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Media -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/volleyball_photo" />
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider" />
 
+        <CheckBox
+            android:id="@+id/checkBoxFootball"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/football"
+            android:textSize="20sp" />
 
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Volleyball"
-                        android:paddingStart="5dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sportLevelFootball"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:enabled="false"
+            android:hint="@string/skill_level_select">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sportLevelVolleyball"
-                        style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:hint="Select a sport level">
+            <AutoCompleteTextView
+                android:id="@+id/sportLevelFootballMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                        <AutoCompleteTextView
-                            android:id="@+id/sportLevelVolleyballMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:inputType="none"
-                            android:enabled="false"
-                            tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider" />
 
-                    <CheckBox
-                        android:id="@+id/checkBoxVolleyball"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"/>
+        <CheckBox
+            android:id="@+id/checkBoxPingPong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/pingpong"
+            android:textSize="20sp" />
 
-                </LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sportLevelPingPong"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:enabled="false"
+            android:hint="@string/skill_level_select">
 
-            </com.google.android.material.card.MaterialCardView>
+            <AutoCompleteTextView
+                android:id="@+id/sportLevelPingPongMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPingPong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+        <View
+            android:id="@+id/divider8"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider" />
 
-                    <!-- Media -->
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/pingpong_photo" />
+        <CheckBox
+            android:id="@+id/checkBoxVolleyball"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/volleyball"
+            android:textSize="20sp" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sportLevelVolleyball"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:enabled="false"
+            android:hint="@string/skill_level_select">
 
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ping Pong"
-                        android:paddingStart="5dp"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
+            <AutoCompleteTextView
+                android:id="@+id/sportLevelVolleyballMenu"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:enabled="false"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sportLevelPingPong"
-                        style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_margin="5dp"
-                        android:hint="Select a sport level">
+        </com.google.android.material.textfield.TextInputLayout>
 
-                        <AutoCompleteTextView
-                            android:id="@+id/sportLevelPingPongMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:inputType="none"
-                            android:enabled="false"
-                            tools:ignore="LabelFor" />
+    </LinearLayout>
 
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <CheckBox
-                        android:id="@+id/checkBoxPingPong"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-
-
-
-        </TableRow>
-
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -53,7 +53,6 @@ class UserRepository{
     }
 
     fun updateProfileImage(imageUri: Uri) {
-        var flag = true
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
@@ -62,6 +61,16 @@ class UserRepository{
         }.addOnFailureListener {
             throw Exception("Error while uploading image")
         }
+    }
+
+    fun getFriendNickname(id: String): LiveData<String> {
+        val user = MutableLiveData<String>()
+        fs.collection("users")
+            .document(id)
+            .addSnapshotListener { r, _ ->
+                user.value =  r?.get("nickname").toString()
+            }
+        return user
     }
 
 }

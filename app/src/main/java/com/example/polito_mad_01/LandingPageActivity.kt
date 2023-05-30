@@ -6,11 +6,19 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.polito_mad_01.ui.MainActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class LandingPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page)
+
+        val auth = FirebaseAuth.getInstance()
+        if(auth.currentUser != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED
             || checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED

@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.profilePage -> {
                     supportActionBar?.title = "Profile"
-                    navController.navigate(R.id.profileFragment)
+                    navController.navigate(R.id.showProfileContainer)
                 }
                 R.id.reservationsPage -> {
                     supportActionBar?.title = "Reservations"

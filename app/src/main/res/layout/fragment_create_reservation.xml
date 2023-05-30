@@ -202,10 +202,9 @@ android:layout_height="match_parent">
             </LinearLayout>
 
             <Button
-                android:id="@+id/deleteButton"
+                android:id="@+id/createReservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/glaucos"
                 android:text="@string/reserve" />
         </LinearLayout>
 

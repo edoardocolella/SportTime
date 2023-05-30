@@ -1,14 +1,18 @@
 package com.example.polito_mad_01.repositories
 
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
     private val fAuth = FirebaseAuth.getInstance()
-
+    private val storage = FirebaseStorage.getInstance()
 
     fun getSlotsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
@@ -43,7 +47,7 @@ class ReservationRepository{
         val liveDataList = MutableLiveData<List<Slot>>()
         fs.collection("reservations")
             .where(Filter.and(
-                Filter.greaterThan("date", date),
+                Filter.greaterThanOrEqualTo("date", date),
                 Filter.equalTo("reserved", false)))
             .addSnapshotListener { r, _ ->
                 val list = mutableListOf<Slot>()
@@ -57,6 +61,25 @@ class ReservationRepository{
     }
 
     fun createOrUpdateReservation(slot: Slot) {
+
+        val userID = fAuth.currentUser?.uid ?: throw Exception("No user found")
+        slot.user_id = userID
+        slot.reserved = true
+
+        println("UPDATE: $slot")
+
+        fs.collection("reservations")
+            .document(String.format("%03d",slot.slot_id))
+            .set(slot, SetOptions.merge())
+            .addOnSuccessListener { println("$slot created") }
+    }
+
+    fun deleteReservation(slot: Slot){
+        slot.user_id = null
+        slot.reserved = false
+        slot.services.forEach{
+            slot.services[it.key] = false
+        }
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
@@ -92,6 +115,20 @@ class ReservationRepository{
                 }
             }
         return liveDataList
+    }
+
+    fun getSportImage(playgroundId: Int): LiveData<Uri?> {
+        val storageReference = storage.reference
+        val imageRef = storageReference.child("playgroundImages/$playgroundId.jpg")
+        val localFile = File.createTempFile("images", "jpg")
+        val image = MutableLiveData<Uri?>()
+        imageRef.getFile(localFile).addOnSuccessListener {
+            image.value = localFile.toUri()
+        }.addOnFailureListener {
+            println("Error while downloading image")
+            image.value = null
+        }
+        return image
     }
 
 }
