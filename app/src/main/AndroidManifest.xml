@@ -12,7 +12,7 @@
         android:name=".SportTimeApplication"
         android:allowBackup="true"
         android:enableOnBackInvokedCallback="true"
-        android:icon="@mipmap/sport_launcher"
+        android:icon="@drawable/sporttime_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.PolitoMAD01"
