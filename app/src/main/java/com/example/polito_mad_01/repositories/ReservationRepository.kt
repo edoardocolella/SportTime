@@ -47,7 +47,7 @@ class ReservationRepository{
         val liveDataList = MutableLiveData<List<Slot>>()
         fs.collection("reservations")
             .where(Filter.and(
-                Filter.greaterThan("date", date),
+                Filter.greaterThanOrEqualTo("date", date),
                 Filter.equalTo("reserved", false)))
             .addSnapshotListener { r, _ ->
                 val list = mutableListOf<Slot>()
@@ -61,6 +61,25 @@ class ReservationRepository{
     }
 
     fun createOrUpdateReservation(slot: Slot) {
+
+        val userID = fAuth.currentUser?.uid ?: throw Exception("No user found")
+        slot.user_id = userID
+        slot.reserved = true
+
+        println("UPDATE: $slot")
+
+        fs.collection("reservations")
+            .document(String.format("%03d",slot.slot_id))
+            .set(slot, SetOptions.merge())
+            .addOnSuccessListener { println("$slot created") }
+    }
+
+    fun deleteReservation(slot: Slot){
+        slot.user_id = null
+        slot.reserved = false
+        slot.services.forEach{
+            slot.services[it.key] = false
+        }
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())

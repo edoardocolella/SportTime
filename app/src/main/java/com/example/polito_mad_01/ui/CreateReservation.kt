@@ -49,12 +49,9 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
 
     private fun setAllButtons() {
         view?.findViewById<Button>(R.id.createReservation)?.setOnClickListener{
-            thread {
-                vm.createReservation()
-                Toast.makeText(requireContext(), "Reservation created", Toast.LENGTH_SHORT).show()
-            }
+            println("Button pressed")
+            vm.createReservation()
             findNavController().navigate(R.id.reservationsFragment)
-
         }
     }
 

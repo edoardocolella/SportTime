@@ -52,17 +52,17 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             vm.getPlaygroundImage(it.playground_id).observe(viewLifecycleOwner)
             {imageUri -> imageUri?.let { image.setImageURI(imageUri) } }
 
-            //val stringPrice = it.playground.price_per_slot.toString() + "€"
-            //setTextView(R.id.playgroundPrice, stringPrice, view)
+            val stringPrice = it.total_price.toString() + "€"
+            setTextView(R.id.playgroundPrice, stringPrice, view)
             setTextView(R.id.slotDate, it.date, view)
             val stringTime = "${it.start_time}-${it.end_time}"
             setTextView(R.id.slotTime, stringTime, view)
 
             val services = mutableListOf<String>()
-            if(it.services.containsKey("equipment")) services.add("- Equipment")
-            if(it.services.containsKey("heating")) services.add("- Heating")
-            if(it.services.containsKey("lighting")) services.add("- Lightning")
-            if(it.services.containsKey("locker_room")) services.add("- Locker room")
+            if(it.services.getOrDefault("equipment",false)) services.add("- Equipment")
+            if(it.services.getOrDefault("heating",false)) services.add("- Heating")
+            if(it.services.getOrDefault("lighting",false)) services.add("- Lightning")
+            if(it.services.getOrDefault("locker_room",false)) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.servicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)

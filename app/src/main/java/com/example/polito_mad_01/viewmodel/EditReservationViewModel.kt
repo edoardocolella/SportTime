@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
@@ -21,50 +22,27 @@ class EditReservationViewModel(private val repository: ReservationRepository) : 
         originalDate = MutableLiveData(date)
     }
 
-    fun setActualTime(date: String, start: String, end: String) {
-        reservation.value?.date = date
-        reservation.value?.start_time = start
-        reservation.value?.end_time = end
-    }
-
     fun getReservation(id: Int): LiveData<Slot> {
         reservation = repository.getReservationById(id)
         return reservation
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getSlotsByPlayground(playgroundID: Int): LiveData<List<Slot>> {
-        return MutableLiveData<List<Slot>>()
-    }
-
-    fun updateReservation(slot: Slot) {
+    fun updateReservation() {
         thread {
-            //repository.updateReservation(slot)
+            val slot = reservation.value!!
+            repository.createOrUpdateReservation(slot)
         }
     }
 
     fun deleteReservation() {
-        /*thread {
-            val slot = reservation.value?.slot!!
-            slot.user_id = null
-            slot.heating = false
-            slot.lighting = false
-            slot.locker_room = false
-            slot.equipment = false
-            repository.updateReservation(slot)
+        thread {
+            val slot = reservation.value!!
+            repository.deleteReservation(slot)
         }
-         */
-
     }
 
-    fun getSlotByStartEndTimeDatePlayground(
-        startTime: String,
-        endTime: String,
-        date: String,
-        playgroundID: Int
-    ): LiveData<Slot> {
-        //return repository.getSlotByStartEndTime(startTime, endTime,date, playgroundID).asLiveData()
-        return MutableLiveData<Slot>()
+    fun getPlaygroundImage(playgroundId: Int): LiveData<Uri?> {
+        return repository.getSportImage(playgroundId)
     }
 
 

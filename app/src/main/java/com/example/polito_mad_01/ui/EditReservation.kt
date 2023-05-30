@@ -45,8 +45,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
             vm.setOriginalTime(it.start_time, it.end_time, it.date)
 
-            setSpinners(it)
-            setImage(it.sport)
+            setImage(it.playground_id)
             setAllTextViews(it)
             setAllCheckBoxes(it)
             setButtonListener()
@@ -54,104 +53,17 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setSpinners(slot: Slot) {
-
-        vm.getSlotsByPlayground(slot.playground_id).observe(viewLifecycleOwner) { list ->
-            val dateTimeMap = sortedMapOf<String, List<String>>()
-
-            val dateSpinner = view?.findViewById<Spinner>(R.id.dateSpinner)!!
-            val timeSpinner = view?.findViewById<Spinner>(R.id.timeSpinner)!!
-
-            list.forEach { s ->
-                val date = s.date
-                val times = dateTimeMap.getOrDefault(date, listOf())
-                dateTimeMap[s.date] = times.plus("${s.start_time}-${s.end_time}")
-            }
-
-            val date = slot.date
-            val times = dateTimeMap.getOrDefault(date, listOf())
-
-            val reservationTime = "${slot.start_time}-${slot.end_time}"
-            dateTimeMap[date] = times.plus(reservationTime)
-
-            val dateAdapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                dateTimeMap.keys.toList()
-            )
-
-            dateSpinner.adapter = dateAdapter
-            dateSpinner.setSelection(dateTimeMap.keys.toList().indexOf(date))
-            dateSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-
-                    val chosenDate: String = dateTimeMap.keys.toList()[p2]
-                    val timeAdapter = ArrayAdapter(
-                        requireContext(), android.R.layout.simple_spinner_dropdown_item,
-                        dateTimeMap[chosenDate]!!.toMutableList(),
-                    )
-                    timeSpinner.adapter = timeAdapter
-                    val timeList = dateTimeMap[chosenDate]!!
-                    timeSpinner.setSelection(timeList.indexOf(reservationTime))
-
-                    //setNewTime(chosenDate, reservationTime)
-
-                    timeSpinner.onItemSelectedListener =
-                        object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                p0: AdapterView<*>?,
-                                p1: View?,
-                                p2: Int,
-                                p3: Long
-                            ) {
-                                val chosenTime = timeList[p2]
-                                setNewTime(chosenDate, chosenTime)
-                            }
-
-                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-                        }
-
-
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-                    disableSpinner(timeSpinner)
-                }
-
-            }
-
-        }
-    }
-
-    private fun setNewTime(chosenDate: String, chosenTime: String) {
-        val start = chosenTime.split("-")[0]
-        val end = chosenTime.split("-")[1]
-        vm.setActualTime(chosenDate, start, end)
-    }
-
-    private fun disableSpinner(timeSpinner: Spinner) {
-        timeSpinner.isEnabled = false
-        timeSpinner.isClickable = false
-        timeSpinner.adapter = null
-    }
-
-    private fun setImage(sportName: String) {
+    private fun setImage(playground_id: Int) {
         val image: ImageView = requireView().findViewById(R.id.playgroundImage)
-        when (sportName) {
-            "Football" -> image.setImageResource(R.drawable.football_photo)
-            "Basket" -> image.setImageResource(R.drawable.basketball_photo)
-            "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-            "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
-            else -> image.setImageResource(R.drawable.sport_photo)
-        }
+        vm.getPlaygroundImage(playground_id).observe(viewLifecycleOwner)
+        {imageUri -> imageUri?.let { image.setImageURI(it) } }
     }
 
 
     private fun setAllTextViews(slot:Slot) {
 
+        setTextView(R.id.time, "${slot.start_time}-${slot.end_time}",view)
+        setTextView(R.id.date, slot.date,view)
         setTextView(R.id.playgroundName, slot.playgroundName,view)
         setTextView(R.id.playgroundLocation, slot.location,view)
         setTextView(R.id.playgroundSport, slot.sport,view)
@@ -207,48 +119,11 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
     private fun trySaveData(){
         try {
-            val actualStartTime = vm.reservation.value?.start_time!!
-            val actualEndTime = vm.reservation.value?.end_time!!
-            val actualDate = vm.reservation.value?.date!!
-            val originalStartTime = vm.originalStartTime.value!!
-            val originalEndTime = vm.originalEndTime.value!!
-            val originalDate = vm.originalDate.value!!
-
-            if (actualStartTime != originalStartTime || actualEndTime != originalEndTime || originalDate != actualDate) {
-                //orario cambiato, necessario aggiornare sia lo slot precedentre che quello nuovo
-                val oldReservation = vm.reservation.value?.copy()!!
-                oldReservation.services.remove("heating")
-                oldReservation.services.remove("equipment")
-                oldReservation.services.remove("locker_room")
-                oldReservation.services.remove("lighting")
-                oldReservation.user_id = null
-                oldReservation.start_time = originalStartTime
-                oldReservation.end_time = originalEndTime
-                oldReservation.date = originalDate
-
-                vm.updateReservation(oldReservation)
-
-                vm.getSlotByStartEndTimeDatePlayground(
-                    actualStartTime,
-                    actualEndTime,
-                    actualDate,
-                    oldReservation.playground_id
-                ).observe(viewLifecycleOwner) {
-                    val reservationWithIdRequested = it.copy()
-                    val newSlot = vm.reservation.value?.copy()!!
-                    newSlot.slot_id = reservationWithIdRequested.slot_id
-                    vm.updateReservation(newSlot)
-                    navigate(newSlot.slot_id)
-
-                }
-
-            } else {
-                vm.updateReservation(vm.reservation.value?.copy()!!)
-                navigate(vm.reservation.value?.slot_id!!)
-            }
-
+            vm.updateReservation()
+            navigate(vm.reservation.value?.slot_id!!)
         } catch (e: Exception) {
             e.printStackTrace()
+            Toast.makeText(requireContext(), "Error while saving data", Toast.LENGTH_SHORT).show()
         }
     }
 
