@@ -85,16 +85,20 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 }
     private fun register() {
-        if(auth.currentUser != null){
-
-        }
-
         vm.user.observe(this) {
+            if(auth.currentUser != null){
+                UserRepository().createUser(it.toUser(), auth.currentUser!!.uid)
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+
+                return@observe
+            }
+
             auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
                 .addOnCompleteListener(this
                 ) { task ->
                     if (task.isSuccessful) {
-                        // TODO: add user to collection
                         UserRepository().createUser(it.toUser(), auth.currentUser!!.uid)
 
                         val intent = Intent(this, MainActivity::class.java)
