@@ -204,6 +204,7 @@
                     android:padding="10dp">
 
                     <AutoCompleteTextView
+                        android:id="@+id/genderSelector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"

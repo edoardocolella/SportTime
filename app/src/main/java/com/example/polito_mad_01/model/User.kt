@@ -5,7 +5,7 @@ data class User(
     var surname: String,
     var nickname: String,
     var birthdate: String,
-    val gender: String,
+    var gender: String,
     var location: String,
     var achievements: List<String>,
     var skills: MutableMap<String, String>,
