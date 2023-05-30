@@ -82,8 +82,8 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
 
         registrationViewModel.user.value?.name = name.editableText.toString()
         registrationViewModel.user.value?.surname = surname.editableText.toString()
-        registrationViewModel.user.value?.gender = gender.editText.toString()
-        registrationViewModel.user.value?.birthdate = birthdate.editText.toString()
+        registrationViewModel.user.value?.gender = gender.editText?.text.toString()
+        registrationViewModel.user.value?.birthdate = birthdate.editText?.text.toString()
         registrationViewModel.user.value?.location = location.editableText.toString()
         registrationViewModel.user.value?.nickname = nickname.editableText.toString()
 

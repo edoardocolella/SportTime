@@ -76,18 +76,22 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
 
     override fun onStop() {
         super.onStop()
-        val basketSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelBasketMenu)
-        val footballSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelFootballMenu)
-        val pingPongSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelPingPongMenu)
-        val volleyballSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelVolleyballMenu)
+        val basketSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelBasketMenu)
+        val footballSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelFootballMenu)
+        val pingPongSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelPingPongMenu)
+        val volleyballSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelVolleyballMenu)
 
+        val map = mutableMapOf<String,String>()
+        if(basketSkillView.text.toString().isNotEmpty())
+            map["Basket"] = basketSkillView.text.toString()
+        if(footballSkillView.text.toString().isNotEmpty())
+            map["Football"] = footballSkillView.text.toString()
+        if(pingPongSkillView.text.toString().isNotEmpty())
+            map["Ping Pong"] = pingPongSkillView.text.toString()
+        if(volleyballSkillView.text.toString().isNotEmpty())
+            map["Volley"] = volleyballSkillView.text.toString()
 
-        registrationViewModel.user.value?.skills = mutableMapOf(
-            "Basket" to basketSkill.text.toString(),
-            "Football" to footballSkill.text.toString(),
-            "PingPong" to pingPongSkill.text.toString(),
-            "Volleyball" to volleyballSkill.text.toString(),
-        )
+        registrationViewModel.user.value?.skills =map
 
     }
 
