@@ -13,6 +13,7 @@ import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
@@ -31,13 +32,15 @@ class ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pro
     }
 
     private fun setAllView() {
+        val currUser = FirebaseAuth.getInstance().currentUser
+
         vm.getUser().observe(viewLifecycleOwner) {user->
             user.let {
                 setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 setTextView(R.id.nickname, it.nickname,view)
                 setTextView(R.id.description, it.achievements.toString(),view)
                 setTextView(R.id.birthdate, it.birthdate,view)
-                setTextView(R.id.email_text, it.email,view)
+                setTextView(R.id.email_text, currUser?.email ,view)
                 setTextView(R.id.phoneNumber_text, it.phoneNumber,view)
                 setTextView(R.id.gender, it.gender,view)
                 setTextView(R.id.location, it.location,view)

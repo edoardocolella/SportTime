@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     private lateinit var auth: FirebaseAuth
-    //private val vm : RegistrationViewModel by activityViewModels()
 
     private lateinit var vm : RegistrationViewModel
     override fun onStart() {
@@ -28,9 +27,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
 
         if(auth.currentUser != null){
-            vm.user.value?.email = auth.currentUser!!.email!!
-            println("USER EMAIL = ${auth.currentUser!!.email!!}")
-            vm.user.value?.password = auth.currentUser!!.uid
             findViewById<StepperNavigationView>(R.id.stepper).goToNextStep()
         }
     }
@@ -85,11 +81,16 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 }
     private fun register() {
-        if(auth.currentUser != null){
-
-        }
-
         vm.user.observe(this) {
+            if(auth.currentUser != null){
+                vm.createUser(auth.currentUser!!.uid)
+
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+
+                return@observe
+            }
+
             auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
                 .addOnCompleteListener(this
                 ) { task ->

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.model.UserData
 import com.example.polito_mad_01.repositories.UserRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlin.concurrent.thread
 
 class RegistrationViewModel : ViewModel(){
@@ -16,5 +17,7 @@ class RegistrationViewModel : ViewModel(){
         }
     }
 
-    val user = MutableLiveData<UserData>().apply { value = UserData() }
+    val user = MutableLiveData<UserData>().apply {
+        value = UserData()
+    }
 }
