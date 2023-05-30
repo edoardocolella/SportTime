@@ -18,6 +18,11 @@
         android:icon="@drawable/history_48px"
         android:title="@string/oldReservations" />
 
+    <!--<item
+        android:id="@+id/gameInvitation"
+        android:icon="@drawable/mail_48px"
+        android:title="@string/gameInvitation" />-->
+
         <!-- Altri elementi del menu... -->
 
         <group android:id="@+id/bottom_group">

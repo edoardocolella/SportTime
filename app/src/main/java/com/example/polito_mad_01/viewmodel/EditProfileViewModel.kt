@@ -19,7 +19,6 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
 
     fun updateUser() {
         thread {
-            println("UPDATE updateUser")
             user.value?.let { userRepository.updateUser(it) }
         }
     }

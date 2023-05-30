@@ -5,22 +5,16 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
-import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
-import java.net.URI
 
 class ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_profile) {
 
@@ -106,7 +100,6 @@ class ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pro
     }
 
     private fun setImage(image: Uri?) {
-        println("IMAGE: $image")
         val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
         if (image == null) {
             val user = vm.user.value!!

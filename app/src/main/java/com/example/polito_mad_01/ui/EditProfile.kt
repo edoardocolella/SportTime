@@ -280,7 +280,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setImage(image: Uri?) {
-        println("IMAGE: $image")
+        //println("IMAGE: $image")
         val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
         if (image!= null && image != Uri.EMPTY)
             frame.setImageURI(image)
