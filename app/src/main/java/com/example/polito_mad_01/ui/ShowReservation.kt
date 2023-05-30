@@ -21,7 +21,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
     private var slotID = 0
 
     private val vm: ShowReservationsViewModel by viewModels {
-        ShowReservationsViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
+        ShowReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

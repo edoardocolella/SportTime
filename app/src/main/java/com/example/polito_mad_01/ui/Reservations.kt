@@ -31,8 +31,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
     private var reservationMap : MutableMap<String, List<Slot>> = mutableMapOf()
 
-    // TODO: Today button, arrow button for months, padding, text color changes, badge on top, list of events for each day
-
     private val vm: ReservationsViewModel by viewModels {
         ReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
     }
@@ -51,17 +49,19 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         viewPager.adapter = DaySlotAdapter(this, listOf())
 
 
-        // p1
-        setupList()
+        // serve solo a creare un dataset
+        //vm.createSlots()
 
-        // p3
-        setupCalendar(view)
+
+        // p1
+        setupList(view)
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setupList(){
-        vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner){ list ->
+    private fun setupList(view: View){
+        vm.getUserSlots().observe(viewLifecycleOwner){ list ->
+            reservationMap = mutableMapOf()
             list.forEach {
 
                 val date = it.date
@@ -71,6 +71,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
             }
 
             setList()
+            setupCalendar(view)
         }
     }
 
@@ -101,19 +102,14 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 textView.text = data.date.dayOfMonth.toString()
                 container.day = data
 
-                vm.getUserSlots("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { list ->
-                    // Reset badges
-                    container.hideBadges()
+                container.hideBadges()
+                val slots = reservationMap[data.date.toString()]
 
-                    if(list.filter{ !it.reserved }.any{ it.date == data.date.toString()}){
-                        container.showFreeBadge()
-                    }
+                if(slots?.any { it.reserved } == true)
+                    container.showFreeBadge()
 
-                    if(list.filter{ it.reserved }.any{ it.date == data.date.toString()}){
-                        container.showReservationBadge()
-                    }
-
-                }
+                if(slots?.any { !it.reserved } == true)
+                    container.showReservationBadge()
 
                 // Hide days of other months
                 if (data.position != DayPosition.MonthDate) {

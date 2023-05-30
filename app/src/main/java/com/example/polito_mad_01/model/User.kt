@@ -5,14 +5,15 @@ data class User(
     var surname: String,
     var nickname: String,
     var birthdate: String,
-    val gender: String,
+    var gender: String,
     var location: String,
     var achievements: List<String>,
     var skills: MutableMap<String, String>,
     var image_uri : String?,
     var email : String,
     var phoneNumber : String,
-    val availability : MutableMap<String,Boolean>
+    val availability : MutableMap<String,Boolean>,
+    val friends : List<String>
 ) {
 
     constructor() : this(
@@ -27,7 +28,8 @@ data class User(
         null,
         "",
         "",
-        mutableMapOf()
+        mutableMapOf(),
+        listOf()
     )
     override fun toString(): String =
         "$name $surname $nickname $birthdate $gender $location $achievements $skills"

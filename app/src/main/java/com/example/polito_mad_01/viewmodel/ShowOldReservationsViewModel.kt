@@ -8,8 +8,8 @@ import com.example.polito_mad_01.repositories.ReservationRepository
 
 class ShowOldReservationsViewModel(private val repository: ReservationRepository) : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getOldReservations(u_id: String, date: String): LiveData<List<Slot>> {
-        return repository.getOldReservationsByUserId(u_id, date)
+    fun getOldReservations(date: String): LiveData<List<Slot>> {
+        return repository.getOldReservationsByUserId(date)
     }
 }
 

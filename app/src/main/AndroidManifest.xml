@@ -18,8 +18,8 @@
         android:theme="@style/Theme.PolitoMAD01"
         tools:targetApi="33">
         <activity
-            android:name=".RegistrationActivity"
-            android:exported="true">
+            android:name=".LandingPageActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +27,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".LoginActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".RegistrationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

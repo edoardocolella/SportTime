@@ -1,14 +1,22 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.UserRepository
+import java.net.URI
 
 class ShowProfileViewModel(private val userRepository:  UserRepository): ViewModel() {
-    fun getUser(id: String): LiveData<User> {
-        return userRepository.getUser(id)
+
+    var user = MutableLiveData<User>()
+    fun getUser(): LiveData<User> {
+        user = userRepository.getUser() as MutableLiveData<User>
+        return user
     }
 
+    fun getUserImage(): LiveData<Uri?> {
+        return userRepository.getProfileImage()
+    }
 }
 
 class ShowProfileViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

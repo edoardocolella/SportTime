@@ -36,6 +36,9 @@
     <string name="heatingService">Heating</string>
     <string name="equipmentService">Equipment</string>
     <string name="lockerRoomService">Locker Room</string>
+    <string name="credentials">Credentials</string>
+    <string name="personalInformation">Personal Information</string>
+    <string name="contacts">Contacts</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -96,8 +99,10 @@
     <string name="prompt_fullname">Full Name</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_confirm_password">Confirm Password</string>
-    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in">Log in</string>
     <string name="action_sign_up">Sign up</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
     <string name="action_register">Register</string>
     <string name="or">or</string>
     <string name="welcome">Welcome!</string>
@@ -105,4 +110,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="logout">Logout</string>
+    <string name="free_slots">Free Slots</string>
+    <string name="reserve">Reserve this slot</string>
+    <string name="SportTime">SportTime</string>
+    <string name="catchphrase">Plan easy Play more</string>
 </resources>

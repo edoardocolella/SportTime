@@ -21,7 +21,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     private var playgroundId = 0
 
     private val oldResVm: ShowOldReservationViewModel by viewModels {
-        ShowOldReservationViewModelFactory((activity?.application as SportTimeApplication).showReservationsRepository)
+        ShowOldReservationViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
     }
 
     private val reviewVm: ReviewViewModel by viewModels{
@@ -41,7 +41,7 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
         reviewLayout.visibility = View.GONE
         reviewButton.visibility = View.GONE
 
-        reviewVm.getSingleReview(userId, playgroundId).observe(viewLifecycleOwner){
+        reviewVm.getSingleReview(playgroundId).observe(viewLifecycleOwner){
             if(it==null){
                 reviewLayout.visibility = View.GONE
                 reviewButton.visibility = View.VISIBLE

@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import android.view.View
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
@@ -10,19 +11,28 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
 
     lateinit var user : MutableLiveData<User>
     lateinit var chipGroup : LiveData<View>
-     var imageUri = MutableLiveData<String>(null)
 
-    fun getUser(userId: String): LiveData<User>{
-        user = userRepository.getUser(userId) as MutableLiveData<User>
+    fun getUser(): LiveData<User>{
+        user = userRepository.getUser() as MutableLiveData<User>
         return user
     }
 
     fun updateUser() {
         thread {
-            //user.value?.let { userRepository.updateUserWithSkills(it) }
+            println("UPDATE updateUser")
+            user.value?.let { userRepository.updateUser(it) }
         }
     }
 
+    fun updateUserImage(image: Uri) {
+        thread {
+            userRepository.updateProfileImage(image)
+        }
+    }
+
+    fun getUserImage(): LiveData<Uri?> {
+        return userRepository.getProfileImage()
+    }
 
 }
 

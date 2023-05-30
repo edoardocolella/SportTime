@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.net.toUri
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
@@ -26,6 +25,10 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
+import okhttp3.internal.indexOf
+import java.net.URI
 import java.util.*
 
 
@@ -84,19 +87,16 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         if(resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == IMAGE_CAPTURE_CODE
                 && imageUriForCamera != null  && imageUriForCamera != Uri.EMPTY ) {
-                vm.user.value?.image_uri = imageUriForCamera.toString()
-                vm.imageUri.value = imageUriForCamera.toString()
+                vm.updateUserImage(imageUriForCamera!!)
+                setImage(imageUriForCamera)
             }
-            else if (requestCode == RESULT_LOAD_IMAGE){
-                if( data?.data != null) {
-                    vm.user.value?.image_uri = data.data.toString()
-                    vm.imageUri.value = data.data.toString()
+            else if (requestCode == RESULT_LOAD_IMAGE && data?.data != null) {
+                    vm.updateUserImage(data.data!!)
+                    setImage(data.data)
                 }
             }
 
         }
-
-    }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -165,23 +165,22 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             "email" -> vm.user.value?.email = newValue
             "phoneNumber" -> vm.user.value?.phoneNumber = newValue
             "location" -> vm.user.value?.location = newValue
+            "gender" -> vm.user.value?.gender = newValue
             "birthdate" -> vm.user.value?.birthdate = newValue
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
-        vm.imageUri.observe(viewLifecycleOwner){
-            setImage(it)
-        }
 
-
-        vm.getUser("HnA8Ri0zdJfRWZEAbma7eRtWUjW2").observe(viewLifecycleOwner) { user ->
-            vm.imageUri.value = user.image_uri
+        vm.getUser().observe(viewLifecycleOwner) { user ->
             setTextViews(view, user)
             setButtons(user)
             setSpinners()
         }
+
+        vm.getUserImage().observe(viewLifecycleOwner){ setImage(it) }
+
     }
 
     private fun setButtons(user: User) {
@@ -222,6 +221,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         setEditTextViewAndListener(R.id.mail_value, user.email, "email")
         setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
         setEditTextViewAndListener(R.id.location_value, user.location, "location")
+        setGenderView(view, user)
         setBirthdateView(view, user)
     }
 
@@ -242,6 +242,15 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             materialDatePicker.show(childFragmentManager, "DATE_PICKER")
         }
 
+    }
+
+    private fun setGenderView(view: View, user: User){
+        view.findViewById<AutoCompleteTextView>(R.id.genderSelector)?.let {
+            it.setText(user.gender)
+            it.setOnItemClickListener {  parent, _, position, _ ->
+                setValue("gender", parent.getItemAtPosition(position).toString())
+            }
+        }
     }
 
     private fun setSpinners() {
@@ -270,8 +279,10 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         })
     }
 
-    private fun setImage(uri: String?) {
+    private fun setImage(image: Uri?) {
+        println("IMAGE: $image")
         val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
-        uri?.let { frame.setImageURI(it.toUri()) }
+        if (image!= null && image != Uri.EMPTY)
+            frame.setImageURI(image)
     }
 }

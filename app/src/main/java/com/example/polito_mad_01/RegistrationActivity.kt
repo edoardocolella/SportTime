@@ -1,19 +1,20 @@
 package com.example.polito_mad_01
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.polito_mad_01.ui.MainActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
+import androidx.navigation.fragment.NavHostFragment
+import com.aceinteract.android.stepper.StepperNavListener
+import com.aceinteract.android.stepper.StepperNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 
-class RegistrationActivity: AppCompatActivity() {
+class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     private lateinit var auth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,30 +22,86 @@ class RegistrationActivity: AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        findViewById<Button>(R.id.registrationButton).setOnClickListener{
+/*        findViewById<Button>(R.id.registrationBackButton).setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }*/
 
-            var userEmail = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
-            var userPassword = findViewById<EditText>(R.id.registrationPasswordEditText).text.toString()
+        // TODO: hide or skip email/password part when user logs in with google
+/*        auth.currentUser?.let {
+            findViewById<EditText>(R.id.registrationUsernameEditText).setText(it.email)
+            findViewById<EditText>(R.id.registrationUsernameEditText).isEnabled = false
+            findViewById<EditText>(R.id.registrationPasswordEditText).isEnabled = false
+            findViewById<EditText>(R.id.loginConfirmPasswordEditText).isEnabled = false
+        }*/
 
+        val stepper = findViewById<StepperNavigationView>(R.id.stepper)
+        val navController =
+            (supportFragmentManager.findFragmentById(R.id.frame_stepper) as NavHostFragment).navController
+
+        stepper.setupWithNavController(navController)
+
+
+
+        findViewById<Button>(R.id.nextButton).setOnClickListener {
+
+            stepper.goToNextStep()
+            //onStepChanged(stepper.currentStep)
+            println("STEPPER NUMBER : ${stepper.currentStep}")
+
+            findViewById<Button>(R.id.backButton).visibility = View.VISIBLE
+
+            if(stepper.currentStep == 3){
+                findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
+            }
+
+            /*val userEmail = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
+            val userPassword = findViewById<EditText>(R.id.registrationPasswordEditText).text.toString()
 
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(this,
-                    OnCompleteListener<AuthResult?> { task ->
-                        if (!task.isSuccessful) {
-                            Toast.makeText(
-                                baseContext,
-                                "Registration failed.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                baseContext,
-                                "Registration ok.",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                    })
+                .addOnCompleteListener(this
+                ) { task ->
+                    if (task.isSuccessful) {
+                        // TODO: add user to collection
+                    } else {
+                        Toast.makeText(applicationContext,
+                            "Registration error",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                }*/
         }
 
+        findViewById<Button>(R.id.backButton).setOnClickListener {
+
+            if(stepper.currentStep == 1) {
+                stepper.goToPreviousStep()
+                onStepChanged(stepper.currentStep)
+                findViewById<Button>(R.id.backButton).visibility = View.INVISIBLE
+            }else{
+                stepper.goToPreviousStep()
+                onStepChanged(stepper.currentStep)
+            }
+
+            if(stepper.currentStep == 2){
+                findViewById<Button>(R.id.nextButton).visibility = View.VISIBLE
+            }
+
+        }
+
+}
+
+    override fun onStepChanged(step: Int) {
+        Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()
     }
+
+    override fun onCompleted() {
+        Toast.makeText(this, "Stepper completed", Toast.LENGTH_SHORT).show()
+    }
+
+    //stepperNavListener = this
 }
