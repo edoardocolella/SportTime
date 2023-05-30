@@ -30,7 +30,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/name"
+                android:id="@+id/registrationNameInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,14 +43,15 @@
                 android:textSize="38sp">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:id="@+id/registrationNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/surname"
+                android:id="@+id/registrationSurnameInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,8 +64,9 @@
                 android:textSize="38sp">
 
             <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:id="@+id/registrationSurnameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +80,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/gender43"
+                android:id="@+id/registrationGenderInputLayout"
                 style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +97,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/birthday"
+                android:id="@+id/registrationBirthdayInputLayout"
                 style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,9 +133,10 @@
                 android:inputType="text"
                 android:textSize="24sp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationLocationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -152,6 +155,7 @@
                 android:textStyle="italic">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/registrationNicknameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 

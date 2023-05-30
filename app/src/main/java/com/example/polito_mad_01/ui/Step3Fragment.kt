@@ -12,12 +12,22 @@ import android.widget.Button
 import android.widget.CheckBox
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class Step3Fragment: Fragment(R.layout.step3fragment) {
     private lateinit var mView: View
+    private lateinit var registrationViewModel : RegistrationViewModel
 
+    override fun onStart() {
+        super.onStart()
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
+    }
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -25,10 +35,10 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
         mView = inflater.inflate(R.layout.step3fragment, container, false)
 
 
-        setupSkill(mView, R.id.checkBoxBasket, R.id.sportLevelBasket)
-        setupSkill(mView, R.id.checkBoxFootball, R.id.sportLevelFootball)
-        setupSkill(mView, R.id.checkBoxPingPong, R.id.sportLevelPingPong)
-        setupSkill(mView, R.id.checkBoxVolleyball, R.id.sportLevelVolleyball)
+        setupSkill(R.id.checkBoxBasket, R.id.sportLevelBasket)
+        setupSkill(R.id.checkBoxFootball, R.id.sportLevelFootball)
+        setupSkill(R.id.checkBoxPingPong, R.id.sportLevelPingPong)
+        setupSkill(R.id.checkBoxVolleyball, R.id.sportLevelVolleyball)
 
 
 
@@ -46,7 +56,7 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
     }
 
 
-    private fun setupSkill(view: View, checkboxId: Int, textInputId: Int){
+    private fun setupSkill(checkboxId: Int, textInputId: Int){
         mView.findViewById<CheckBox>(checkboxId).let { checkbox ->
             checkbox.setOnClickListener {
                 mView.findViewById<TextInputLayout>(textInputId).isEnabled = checkbox.isChecked
@@ -64,6 +74,21 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
     }
 
 
+    override fun onStop() {
+        super.onStop()
+        val basketSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelBasketMenu)
+        val footballSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelFootballMenu)
+        val pingPongSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelPingPongMenu)
+        val volleyballSkill = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelVolleyballMenu)
 
+
+        registrationViewModel.user.value?.skills = mutableMapOf(
+            "Basket" to basketSkill.text.toString(),
+            "Football" to footballSkill.text.toString(),
+            "PingPong" to pingPongSkill.text.toString(),
+            "Volleyball" to volleyballSkill.text.toString(),
+        )
+
+    }
 
 }
