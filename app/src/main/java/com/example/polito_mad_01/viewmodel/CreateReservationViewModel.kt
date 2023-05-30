@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.Slot
@@ -21,6 +22,10 @@ class CreateReservationViewModel(private val reservationRepository: ReservationR
         thread {
             reservationRepository.createOrUpdateReservation(reservation.value!!)
         }
+    }
+
+    fun getPlaygroundImage(playgroundId: Int): LiveData<Uri?> {
+        return reservationRepository.getSportImage(playgroundId)
     }
 
 
