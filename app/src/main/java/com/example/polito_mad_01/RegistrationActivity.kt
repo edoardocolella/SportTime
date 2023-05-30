@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -102,22 +103,47 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
                         }
                     }
             }
+
             }
 
     }
 
     private fun isValid(user: UserData):Boolean{
 
-        if(user.name.isEmpty()) return false
-        if(user.surname.isEmpty()) return false
-        if(user.nickname.isEmpty()) return false
-        if(user.birthdate.isEmpty()) return false
-        if(user.gender.isEmpty()) return false
-        if(user.location.isEmpty()) return false
-        //if(user.achievements.isEmpty()) return false
-        if(user.email.isEmpty()) return false
-        if(user.password.isEmpty()) return false
-        if(user.phoneNumber.isEmpty() || user.phoneNumber.length<10) return false
+        if(user.name.isEmpty()) {
+            Toast.makeText(this, "Insert your name", Toast.LENGTH_SHORT).show()
+            return false }
+        if(user.surname.isEmpty()) {
+            Toast.makeText(this, "Insert your surname", Toast.LENGTH_SHORT).show()
+            return false }
+        if(user.nickname.isEmpty()) {
+            Toast.makeText(this, "Insert your nickname", Toast.LENGTH_SHORT).show()
+            return false }
+        if(user.birthdate.isEmpty()) {
+            Toast.makeText(this, "Insert your birthdate", Toast.LENGTH_SHORT).show()
+            return false        }
+        if(user.gender.isEmpty()) {
+            Toast.makeText(this, "Insert your gender", Toast.LENGTH_SHORT).show()
+            return false }
+        if(user.location.isEmpty()) {
+            Toast.makeText(this, "Insert your location", Toast.LENGTH_SHORT).show()
+            return false}
+
+        if(user.email.isEmpty()) {
+            Toast.makeText(this, "Insert your email", Toast.LENGTH_SHORT).show()
+            return false }
+
+        if(user.password.isEmpty() || user.password.length<6){
+            Toast.makeText(this, "Insert a password longer than 6 characters", Toast.LENGTH_SHORT).show()
+            return false}
+
+        if(user.phoneNumber.isEmpty()){
+            Toast.makeText(this, "Insert a phone number", Toast.LENGTH_SHORT).show()
+            return false}
+
+        if(user.phoneNumber.length<10) {
+            Toast.makeText(this, "Phone number must have at least 10 digits", Toast.LENGTH_SHORT).show()
+            return false }
 
         return true
     }
