@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,10 @@ class ShowOldReservationViewModel(private val repository: ReservationRepository)
 
     fun getOldReservationById(id: Int): LiveData<Slot> {
         return repository.getReservationById(id)
+    }
+
+    fun getSportImage(playgroundId: Int): LiveData<Uri?> {
+        return repository.getSportImage(playgroundId)
     }
 }
 

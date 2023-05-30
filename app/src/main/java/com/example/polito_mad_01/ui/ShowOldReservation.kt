@@ -17,7 +17,7 @@ import com.example.polito_mad_01.viewmodel.*
 
 class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
     private var slotId = 0
-    private var userId = ""
+    private lateinit var userId : String
     private var playgroundId = 0
 
     private val oldResVm: ShowOldReservationViewModel by viewModels {
@@ -71,26 +71,22 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
             setTextView(R.id.oldResPlaygroundName, it.playgroundName, view)
             setTextView(R.id.oldResPlaygroundLocation, it.location, view)
             setTextView(R.id.oldResPlaygroundSport, it.sport, view)
-            //val stringPrice = it.playground.price_per_slot.toString() + "€"
-            //setTextView(R.id.oldResPlaygroundPrice, stringPrice, view)
+            val stringPrice = it.total_price.toString() + "€"
+            setTextView(R.id.oldResPlaygroundPrice, stringPrice, view)
             setTextView(R.id.oldResSlotDate, it.date, view)
             val stringTime = "${it.start_time}-${it.end_time}"
             setTextView(R.id.oldResSlotTime, stringTime, view)
 
             val image : ImageView = view.findViewById(R.id.oldResSportImage)
-            when(it.sport) {
-                "Football" -> image.setImageResource(R.drawable.football_photo)
-                "Basket" -> image.setImageResource(R.drawable.basketball_photo)
-                "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-                "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
-                else -> image.setImageResource(R.drawable.sport_photo)
-            }
+
+            oldResVm.getSportImage(playgroundId).observe(viewLifecycleOwner){imageUri ->
+                imageUri?.let{image.setImageURI(imageUri)} }
 
             val services = mutableListOf<String>()
-            if(it.services.containsKey("equipment")) services.add("- Equipment")
-            if(it.services.containsKey("heating")) services.add("- Heating")
-            if(it.services.containsKey("lighting")) services.add("- Lightning")
-            if(it.services.containsKey("locker_room")) services.add("- Locker room")
+            if(it.services.getOrDefault("equipment",false)) services.add("- Equipment")
+            if(it.services.getOrDefault("heating",false)) services.add("- Heating")
+            if(it.services.getOrDefault("lighting",false)) services.add("- Lightning")
+            if(it.services.getOrDefault("locker_room",false)) services.add("- Locker room")
 
             view.findViewById<RecyclerView>(R.id.oldResServicesView).let{list ->
                 list.layoutManager = LinearLayoutManager(view.context)

@@ -1,14 +1,18 @@
 package com.example.polito_mad_01.repositories
 
+import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import java.io.File
 
 class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
     private val fAuth = FirebaseAuth.getInstance()
-
+    private val storage = FirebaseStorage.getInstance()
 
     fun getSlotsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
@@ -92,6 +96,20 @@ class ReservationRepository{
                 }
             }
         return liveDataList
+    }
+
+    fun getSportImage(playgroundId: Int): LiveData<Uri?> {
+        val storageReference = storage.reference
+        val imageRef = storageReference.child("playgroundImages/$playgroundId.jpg")
+        val localFile = File.createTempFile("images", "jpg")
+        val image = MutableLiveData<Uri?>()
+        imageRef.getFile(localFile).addOnSuccessListener {
+            image.value = localFile.toUri()
+        }.addOnFailureListener {
+            println("Error while downloading image")
+            image.value = null
+        }
+        return image
     }
 
 }

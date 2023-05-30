@@ -40,7 +40,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         slotID = requireArguments().getInt("slotID")
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
-            setImage(it.sport)
+            setImage(it.playground_id)
             setAllTextViews(it)
             setAllCheckBoxes(it)
             setAllButtons()
@@ -58,16 +58,12 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         }
     }
 
-    private fun setImage(sportName: String) {
+    private fun setImage(playground_id: Int) {
         val image: ImageView = requireView().findViewById(R.id.playgroundImage)
-        when (sportName) {
-            "Football" -> image.setImageResource(R.drawable.football_photo)
-            "Basket" -> image.setImageResource(R.drawable.basketball_photo)
-            "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-            "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
-            else -> image.setImageResource(R.drawable.sport_photo)
-        }
+        vm.getPlaygroundImage(playground_id).observe(viewLifecycleOwner)
+        {imageUri -> imageUri?.let { image.setImageURI(it) } }
     }
+
 
     private fun setAllTextViews(slot: Slot) {
 

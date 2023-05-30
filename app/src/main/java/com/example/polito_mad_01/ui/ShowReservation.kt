@@ -49,13 +49,8 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
             setTextView(R.id.playgroundSport, it.sport, view)
 
             val image : ImageView = view.findViewById(R.id.playgroundImage)
-            when(it.sport) {
-                "Football" -> image.setImageResource(R.drawable.football_photo)
-                "Basket" -> image.setImageResource(R.drawable.basketball_photo)
-                "Volley" -> image.setImageResource(R.drawable.volleyball_photo)
-                "Ping Pong" -> image.setImageResource(R.drawable.pingpong_photo)
-                else -> image.setImageResource(R.drawable.sport_photo)
-            }
+            vm.getPlaygroundImage(it.playground_id).observe(viewLifecycleOwner)
+            {imageUri -> imageUri?.let { image.setImageURI(imageUri) } }
 
             //val stringPrice = it.playground.price_per_slot.toString() + "€"
             //setTextView(R.id.playgroundPrice, stringPrice, view)

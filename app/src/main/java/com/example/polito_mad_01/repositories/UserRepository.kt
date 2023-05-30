@@ -53,7 +53,6 @@ class UserRepository{
     }
 
     fun updateProfileImage(imageUri: Uri) {
-        var flag = true
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")

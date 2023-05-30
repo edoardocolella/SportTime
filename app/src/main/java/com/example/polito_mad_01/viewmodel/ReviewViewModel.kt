@@ -14,7 +14,7 @@ class ReviewViewModel(private val repository: ReviewRepository): ViewModel(){
     lateinit var review: LiveData<Review>
 
     fun getSingleReview(playground_id: Int): LiveData<Review>{
-        review = repository.getSingleReview(playground_id)//.asLiveData()
+        review = repository.getSingleReview(playground_id)
         return review
     }
 
