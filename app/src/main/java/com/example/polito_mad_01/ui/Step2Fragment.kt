@@ -1,6 +1,7 @@
 package com.example.polito_mad_01.ui
 
 import android.annotation.SuppressLint
+import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,9 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import java.util.*
 
 class Step2Fragment: Fragment(R.layout.step2fragment) {
     private lateinit var mView: View
@@ -30,7 +35,27 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.step2fragment, container, false)
 
+        setBirthdateView(mView)
         return mView
+    }
+
+    private fun setBirthdateView(view: View) {
+        val birthdateView = UIUtils.findTextInputById(view,R.id.registrationBirthdayInputLayout)
+       //birthdateView?.editText?.setText(user.birthdate)
+
+        val materialDatePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date").build()
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
+            birthdateView?.editText?.setText(date)
+            //setValue("birthdate", date)
+        }
+
+        birthdateView?.editText?.setOnClickListener {
+            materialDatePicker.show(childFragmentManager, "DATE_PICKER")
+        }
+
     }
 
     override fun onStop() {
