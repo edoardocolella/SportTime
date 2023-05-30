@@ -32,6 +32,8 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
+
         slotID = requireArguments().getInt("slotID")
 
         vm.getReservation(slotID).observe(viewLifecycleOwner) {

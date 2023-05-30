@@ -3,6 +3,7 @@ package com.example.polito_mad_01.ui
 import android.os.*
 import android.view.*
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
@@ -28,6 +29,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
         setAllView()
     }
 

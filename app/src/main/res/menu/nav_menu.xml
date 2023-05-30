@@ -18,10 +18,10 @@
         android:icon="@drawable/history_48px"
         android:title="@string/oldReservations" />
 
-    <!--<item
+    <item
         android:id="@+id/gameInvitation"
         android:icon="@drawable/mail_48px"
-        android:title="@string/gameInvitation" />-->
+        android:title="@string/gameInvitation" />
 
         <!-- Altri elementi del menu... -->
 

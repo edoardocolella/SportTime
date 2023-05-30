@@ -2,6 +2,7 @@ package com.example.polito_mad_01.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,8 @@ class ReservationList(private val slotList: List<Slot> = listOf()) : Fragment(R.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
+
 
         reservationsView = view.findViewById(R.id.reservationList)
         reservationsView.layoutManager = LinearLayoutManager(view.context)

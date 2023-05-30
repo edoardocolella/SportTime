@@ -23,6 +23,7 @@ class FriendsAdapter ( private val data:List<String>): RecyclerView.Adapter<Frie
 
     class FriendsHolder(v: View): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
+
         fun bind(friend: String){
             friendId.text = friend
         }

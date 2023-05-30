@@ -1,11 +1,13 @@
 package com.example.polito_mad_01.ui
 
 import android.os.*
-import androidx.fragment.app.Fragment
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
@@ -15,6 +17,7 @@ import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
+
 
 class Browse : Fragment(R.layout.fragment_browse) {
 
@@ -29,6 +32,12 @@ class Browse : Fragment(R.layout.fragment_browse) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        super.onCreate(savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
+
+
 
         noFreeSlots = UIUtils.findTextViewById(view, R.id.no_free_slots)
         noFreeSlots?.visibility = View.GONE

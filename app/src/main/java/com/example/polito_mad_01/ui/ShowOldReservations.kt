@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,6 +30,8 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
+
 
         noOldSlots = view.findViewById(R.id.no_old_res_tv)
         noOldSlots.visibility=View.GONE

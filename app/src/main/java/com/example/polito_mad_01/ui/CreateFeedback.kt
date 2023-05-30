@@ -4,6 +4,7 @@ import android.os.*
 import android.view.*
 import android.widget.Button
 import android.widget.RatingBar
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +27,10 @@ class CreateFeedback : Fragment(R.layout.fragment_create_feedback) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
+
+
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")
         userId = requireArguments().getString("userId").orEmpty()

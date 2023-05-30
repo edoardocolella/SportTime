@@ -2,6 +2,7 @@ package com.example.polito_mad_01.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ class FreeSlotList(private val slotList: List<Slot> = listOf()) : Fragment(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
         freeSlotView = view.findViewById(R.id.freeSlotList)
         freeSlotView.layoutManager = LinearLayoutManager(view.context)

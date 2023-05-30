@@ -76,10 +76,10 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.title = "Past Reservations"
                     navController.navigate(R.id.showOldReservations)
                 }
-                //R.id.gameInvitation -> {
-                //    supportActionBar?.title = "Game invitation"
-                //    navController.navigate(R.id.gameInvitation)
-                //}
+                R.id.gameInvitation -> {
+                    supportActionBar?.title = "Game invitation"
+                    navController.navigate(R.id.gameInvitation)
+                }
                 R.id.logout -> {
                     auth.signOut()
                     val intent = Intent(this, LandingPageActivity::class.java)

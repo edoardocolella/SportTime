@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.*
 import android.view.*
 import android.widget.Button
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -29,6 +30,11 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
 
         setAllView()
         return mView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
     }
 
     private fun showBottomSheetDialogFragment() {
