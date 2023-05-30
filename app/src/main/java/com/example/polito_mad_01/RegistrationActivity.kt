@@ -1,5 +1,6 @@
 package com.example.polito_mad_01
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -8,10 +9,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
+import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +22,14 @@ import com.google.firebase.auth.FirebaseAuth
 
 class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     private lateinit var auth: FirebaseAuth
-    private val registrationViewModel : RegistrationViewModel by viewModels()
+    //private val vm : RegistrationViewModel by activityViewModels()
+
+    private lateinit var vm : RegistrationViewModel
+    override fun onStart() {
+        super.onStart()
+        vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,37 +47,11 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             stepper.goToNextStep()
         }
 
-/*        findViewById<Button>(R.id.registrationBackButton).setOnClickListener {
-            auth.signOut()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }*/
-
-        // TODO: hide or skip email/password part when user logs in with google
-/*        auth.currentUser?.let {
-            findViewById<EditText>(R.id.registrationUsernameEditText).setText(it.email)
-            findViewById<EditText>(R.id.registrationUsernameEditText).isEnabled = false
-            findViewById<EditText>(R.id.registrationPasswordEditText).isEnabled = false
-            findViewById<EditText>(R.id.loginConfirmPasswordEditText).isEnabled = false
-        }*/
-
-
+        findViewById<Button>(R.id.registerButton).setOnClickListener {
+            register()
+        }
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
-
-            when(stepper.currentStep){
-                0 -> {
-                    val email = findViewById<TextInputEditText>(R.id.registrationUsernameEditText)
-                    findViewById<Button>(R.id.nextButton).setOnClickListener {
-                        registrationViewModel.user.value?.email = email.editableText.toString()
-                        Log.v("step1","-----------------------${registrationViewModel.user.value?.email}-----------------------")
-                    }
-                }
-                1 -> {}
-                2 -> {}
-                3 -> {}
-            }
-
             stepper.goToNextStep()
             //onStepChanged(stepper.currentStep)
             println("STEPPER NUMBER : ${stepper.currentStep}")
@@ -76,26 +60,8 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
             if(stepper.currentStep == 3){
                 findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
+                findViewById<Button>(R.id.registerButton).visibility = View.VISIBLE
             }
-
-            /*val userEmail = findViewById<EditText>(R.id.registrationUsernameEditText).text.toString()
-            val userPassword = findViewById<EditText>(R.id.registrationPasswordEditText).text.toString()
-
-            auth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(this
-                ) { task ->
-                    if (task.isSuccessful) {
-                        // TODO: add user to collection
-                    } else {
-                        Toast.makeText(applicationContext,
-                            "Registration error",
-                            Toast.LENGTH_LONG
-                        ).show()
-
-                        val intent = Intent(this, LoginActivity::class.java)
-                        startActivity(intent)
-                    }
-                }*/
         }
 
         findViewById<Button>(R.id.backButton).setOnClickListener {
@@ -111,11 +77,27 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
             if(stepper.currentStep == 2){
                 findViewById<Button>(R.id.nextButton).visibility = View.VISIBLE
+                findViewById<Button>(R.id.registerButton).visibility = View.INVISIBLE
             }
 
         }
 
 }
+    private fun register() {
+        vm.user.observe(this) {
+            auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
+                .addOnCompleteListener(this
+                ) { task ->
+                    if (task.isSuccessful) {
+                        // TODO: add user to collection
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        println("ERROREERRORE")
+                    }
+                }
+        }
+    }
 
     override fun onStepChanged(step: Int) {
         Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()

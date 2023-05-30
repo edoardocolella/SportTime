@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.chip.ChipGroup
@@ -19,8 +20,13 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class Step1Fragment(): Fragment(R.layout.step1fragment) {
-
     private lateinit var mView: View
+    private lateinit var registrationViewModel : RegistrationViewModel
+
+    override fun onStart() {
+        super.onStart()
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
+    }
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -30,19 +36,14 @@ class Step1Fragment(): Fragment(R.layout.step1fragment) {
         return mView
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-/*    override fun onStop() {
+    override fun onStop() {
         super.onStop()
         val email = mView.findViewById<TextInputEditText>(R.id.registrationUsernameEditText)
-        mView.findViewById<Button>(R.id.nextButton).setOnClickListener {
-            registrationViewModel.user.value?.email = email.editableText.toString()
-            Log.v("step1","-----------------------${registrationViewModel.user.value?.email}-----------------------")
-        }
+        val password = mView.findViewById<TextInputEditText>(R.id.registrationPasswordEditText)
+
+        // AUTH parameters
+        registrationViewModel.user.value?.email = email.editableText.toString()
+        registrationViewModel.user.value?.password = password.editableText.toString()
+
     }
- */
 }
