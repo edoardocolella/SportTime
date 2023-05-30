@@ -1,20 +1,25 @@
 package com.example.polito_mad_01
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
+import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 
 
 class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     private lateinit var auth: FirebaseAuth
-
+    private val registrationViewModel : RegistrationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +54,19 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
+
+            when(stepper.currentStep){
+                0 -> {
+                    val email = findViewById<TextInputEditText>(R.id.registrationUsernameEditText)
+                    findViewById<Button>(R.id.nextButton).setOnClickListener {
+                        registrationViewModel.user.value?.email = email.editableText.toString()
+                        Log.v("step1","-----------------------${registrationViewModel.user.value?.email}-----------------------")
+                    }
+                }
+                1 -> {}
+                2 -> {}
+                3 -> {}
+            }
 
             stepper.goToNextStep()
             //onStepChanged(stepper.currentStep)
