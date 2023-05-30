@@ -71,54 +71,55 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <View
+            android:id="@+id/divider9"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/listDivider" />
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registrationBirthdayInputLayout"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="16dp"
+            android:hint="@string/birthdate"
+            android:textSize="20sp"
+            app:endIconDrawable="@drawable/cake_48px">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registrationGenderInputLayout"
-                style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingRight="10dp"
-                android:hint="@string/genderLabel">
+                android:layout_height="50dp"
+                android:includeFontPadding="false"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="none"
-                    tools:ignore="LabelFor" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registrationGenderInputLayout"
+            style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/genderLabel">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/registrationBirthdayInputLayout"
-                style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <AutoCompleteTextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/birthdate"
-                android:textSize="20sp"
-                android:paddingLeft="10dp"
-                app:endIconDrawable="@drawable/cake_48px">
+                android:layout_height="50dp"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
 
-                <AutoCompleteTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="none"
-                    tools:ignore="LabelFor"
-                     />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="?android:attr/listDivider" />
 
         <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/location_value"
