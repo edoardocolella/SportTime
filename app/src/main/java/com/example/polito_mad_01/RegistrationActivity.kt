@@ -94,8 +94,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
                 .addOnCompleteListener(this
                 ) { task ->
                     if (task.isSuccessful) {
-                        // TODO: add user to collection
-                        UserRepository().createUser(it.toUser(), auth.currentUser!!.uid)
+                        vm.createUser(auth.currentUser!!.uid)
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
