@@ -20,18 +20,24 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SportTime"
+        android:fontFamily="@font/lilita_one"
+        android:text="@string/SportTime"
         android:textAlignment="center"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textAllCaps="false"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        android:typeface="normal" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="vincere e vinceremo"
+        android:fontFamily="sans-serif-thin"
+        android:text="@string/catchphrase"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
     <LinearLayout
         android:layout_width="match_parent"
