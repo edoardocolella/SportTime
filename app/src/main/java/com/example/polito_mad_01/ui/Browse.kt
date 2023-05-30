@@ -47,8 +47,7 @@ class Browse : Fragment(R.layout.fragment_browse) {
 
         fun updateList(){
             val freeSlots = slots.filter { it.sport == selectedFilter }
-            val navController = findNavController()
-            recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots, navController)
+            recyclerViewBrowse.adapter = FreeSlotAdapter(freeSlots, findNavController())
 
             if(freeSlots.isEmpty()){
                 recyclerViewBrowse.visibility = View.GONE

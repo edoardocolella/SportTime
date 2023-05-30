@@ -26,6 +26,9 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
+import io.getstream.avatarview.AvatarView
+import io.getstream.avatarview.coil.loadImage
+import java.net.URI
 import java.util.*
 
 
@@ -85,12 +88,12 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             if (requestCode == IMAGE_CAPTURE_CODE
                 && imageUriForCamera != null  && imageUriForCamera != Uri.EMPTY ) {
                 vm.user.value?.image_uri = imageUriForCamera.toString()
-                vm.imageUri.value = imageUriForCamera.toString()
+                vm.updateUserImage(imageUriForCamera!!)
             }
             else if (requestCode == RESULT_LOAD_IMAGE){
                 if( data?.data != null) {
                     vm.user.value?.image_uri = data.data.toString()
-                    vm.imageUri.value = data.data.toString()
+                    vm.updateUserImage(data.data!!)
                 }
             }
 
@@ -171,17 +174,17 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView(view: View) {
-        vm.imageUri.observe(viewLifecycleOwner){
-            setImage(it)
-        }
-
 
         vm.getUser().observe(viewLifecycleOwner) { user ->
-            vm.imageUri.value = user.image_uri
             setTextViews(view, user)
             setButtons(user)
             setSpinners()
         }
+
+        vm.getUserImage().observe(viewLifecycleOwner){image ->
+            setImage(image)
+        }
+
     }
 
     private fun setButtons(user: User) {
@@ -269,9 +272,16 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
                 setValue(attribute, s.toString())
         })
     }
+    private fun setImage(image: URI?) {
 
-    private fun setImage(uri: String?) {
+        println("IMAGE: $image")
+
         val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
-        uri?.let { frame.setImageURI(it.toUri()) }
+        image?.let {
+            val imageUri = Uri.parse(image.toString())
+            if (imageUri != Uri.EMPTY && imageUri != null) {
+                frame.setImageURI(imageUri)
+            }
+        }
     }
 }

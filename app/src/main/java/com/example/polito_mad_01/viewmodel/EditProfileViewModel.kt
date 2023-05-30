@@ -5,14 +5,13 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.UserRepository
-import com.google.firebase.storage.FirebaseStorage
+import java.net.URI
 import kotlin.concurrent.thread
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     lateinit var user : MutableLiveData<User>
     lateinit var chipGroup : LiveData<View>
-     var imageUri = MutableLiveData<String>(null)
 
     fun getUser(): LiveData<User>{
         user = userRepository.getUser() as MutableLiveData<User>
@@ -21,30 +20,21 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
 
     fun updateUser() {
         thread {
-            println("UPDATE updateUser ${imageUri.value}")
-/*            val storage = FirebaseStorage.getInstance()
-            val storageRef = storage.reference.child("storage/test/user.jpeg")
-            val uploadTask = storageRef.putFile(Uri.parse(imageUri.value))*/
-
-/*            uploadTask.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // L'immagine è stata caricata con successo
-                    // Puoi accedere all'URL di download tramite task.result
-                    val downloadUrl = task.result?.storage?.downloadUrl
-                    println("DOWNLOAD AVAILABLE AT $downloadUrl")
-                    // ...fai qualcos'altro con l'URL di download
-                } else {
-                    // Si è verificato un errore durante il caricamento dell'immagine
-                    val exception = task.exception
-                    // ...gestisci l'errore
-                }
-            }*/
-
+            println("UPDATE updateUser")
             user.value?.let { userRepository.updateUser(it) }
-
         }
     }
 
+    fun updateUserImage(data: Uri) {
+        thread {
+            println("UPDATE updateUserImage")
+            userRepository.updateProfileImage(data)
+        }
+    }
+
+    fun getUserImage(): LiveData<URI?> {
+        return userRepository.getProfileImage()
+    }
 
 }
 
