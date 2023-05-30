@@ -14,29 +14,29 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="132dp"
-        android:layout_height="108dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sport_launcher_foreground" />
+        app:srcCompat="@drawable/sporttimelogo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="@string/welcome"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="36sp"
-        android:layout_marginBottom="8dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/cardViewLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewLogin"
