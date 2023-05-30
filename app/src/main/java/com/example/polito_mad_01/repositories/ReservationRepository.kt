@@ -25,11 +25,7 @@ class ReservationRepository{
         fs.collection("reservations")
             .where(Filter.or(
                     Filter.equalTo("user_id", userID),
-                    Filter.and(
-                        Filter.equalTo("reserved", false),
-                        Filter.greaterThanOrEqualTo("date", LocalDate.now().toString())
-                        //,Filter.greaterThan("start_time", LocalTime.now().toString())
-                        )
+                Filter.equalTo("reserved", false)
                     )
             )
             .addSnapshotListener { r, _ ->

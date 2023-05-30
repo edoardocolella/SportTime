@@ -71,9 +71,14 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_show_reservation, menu)
+        vm.slot.observe(viewLifecycleOwner) {
+            if (LocalDate.now().toString() < it.date) {
+                inflater.inflate(R.menu.menu_show_reservation, menu)
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -84,15 +89,7 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
         )
 
         if (item.itemId == R.id.action_edit_reservation){
-            if(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) >
-                vm.slot.value?.date!! ) {
-                Toast.makeText(requireContext(), "You cannot edit past reservations", Toast.LENGTH_SHORT).show()
-            } else {
-                findNavController().navigate(
-                    R.id.action_showReservationFragment2_to_editReservationFragment,
-                    args
-                )
-            }
+                findNavController().navigate(R.id.editReservationFragment, args)
         }
         return true
     }

@@ -3,10 +3,7 @@ package com.example.polito_mad_01.ui
 import android.os.*
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,10 +12,9 @@ import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
-import kotlin.concurrent.thread
+import java.time.*
 
 class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
-
     private var slotID = 0
     private val vm: CreateReservationViewModel by viewModels {
         CreateReservationViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
@@ -47,10 +43,21 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllButtons() {
-        view?.findViewById<Button>(R.id.createReservation)?.setOnClickListener{
-            vm.createReservation()
-            findNavController().navigate(R.id.reservationsFragment)
+
+        val button = view?.findViewById<Button>(R.id.createReservation)
+        val res = vm.reservation.value!!
+        if(res.date >= LocalDate.now().toString() && res.start_time > LocalTime.now().toString()) {
+            button?.setOnClickListener {
+                vm.createReservation()
+                findNavController().navigate(R.id.reservationsFragment)
+            }
+        }
+        else{
+            button?.text = "You cannot reserve a slot in the past"
+            button?.isClickable = false
+            button?.isEnabled = false
         }
     }
 
