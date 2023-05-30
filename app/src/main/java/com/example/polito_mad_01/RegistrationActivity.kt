@@ -5,15 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.aceinteract.android.stepper.StepperNavListener
 import com.aceinteract.android.stepper.StepperNavigationView
 import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -28,6 +26,13 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     override fun onStart() {
         super.onStart()
         vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
+
+        if(auth.currentUser != null){
+            vm.user.value?.email = auth.currentUser!!.email!!
+            println("USER EMAIL = ${auth.currentUser!!.email!!}")
+            vm.user.value?.password = auth.currentUser!!.uid
+            findViewById<StepperNavigationView>(R.id.stepper).goToNextStep()
+        }
     }
 
 
@@ -42,10 +47,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         stepper.setupWithNavController(navController)
 
         auth = FirebaseAuth.getInstance()
-
-        if(auth.currentUser != null){
-            stepper.goToNextStep()
-        }
 
         findViewById<Button>(R.id.registerButton).setOnClickListener {
             register()
@@ -84,27 +85,31 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
 }
     private fun register() {
+        if(auth.currentUser != null){
+
+        }
+
         vm.user.observe(this) {
             auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
                 .addOnCompleteListener(this
                 ) { task ->
                     if (task.isSuccessful) {
                         // TODO: add user to collection
+                        UserRepository().createUser(it.toUser(), auth.currentUser!!.uid)
+
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
-                    } else {
-                        println("ERROREERRORE")
                     }
                 }
         }
     }
 
     override fun onStepChanged(step: Int) {
-        Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCompleted() {
-        Toast.makeText(this, "Stepper completed", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Stepper completed", Toast.LENGTH_SHORT).show()
     }
 
     //stepperNavListener = this

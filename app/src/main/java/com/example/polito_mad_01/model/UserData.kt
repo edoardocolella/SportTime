@@ -1,7 +1,6 @@
 package com.example.polito_mad_01.model
 
 class UserData(
-    var id:String?,
     var name: String,
     var surname: String,
     var nickname: String,
@@ -18,7 +17,6 @@ class UserData(
     var password : String,
 ) {
     constructor() : this(
-        id=null,
         name="",
         surname="",
         nickname="",
@@ -34,4 +32,22 @@ class UserData(
         availability=mutableMapOf(),
         friends=listOf()
     )
+
+    fun toUser() : User {
+        return User(
+            name="",
+            surname="",
+            nickname="",
+            birthdate="",
+            gender="",
+            location="",
+            achievements=listOf(),
+            skills=mutableMapOf(),
+            image_uri=null,
+            email="",
+            phoneNumber="",
+            availability=mutableMapOf(),
+            friends=listOf()
+        )
+    }
 }
