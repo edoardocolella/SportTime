@@ -16,8 +16,6 @@ import com.example.polito_mad_01.R
 import com.google.android.material.textfield.TextInputLayout
 
 class Step3Fragment: Fragment(R.layout.step3fragment) {
-
-
     private lateinit var mView: View
 
 
@@ -27,21 +25,10 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
         mView = inflater.inflate(R.layout.step3fragment, container, false)
 
 
-       mView.findViewById<CheckBox>(R.id.checkBoxBasket).setOnClickListener {
-            mView.findViewById<AutoCompleteTextView>(R.id.sportLevelBasketMenu).isEnabled = true
-        }
-
-        mView.findViewById<CheckBox>(R.id.checkBoxFootball).setOnClickListener {
-            mView.findViewById<AutoCompleteTextView>(R.id.sportLevelFootballMenu).isEnabled = true
-        }
-
-        mView.findViewById<CheckBox>(R.id.checkBoxVolleyball).setOnClickListener {
-            mView.findViewById<AutoCompleteTextView>(R.id.sportLevelVolleyballMenu).isEnabled = true
-        }
-
-        mView.findViewById<CheckBox>(R.id.checkBoxPingPong).setOnClickListener {
-            mView.findViewById<AutoCompleteTextView>(R.id.sportLevelPingPongMenu).isEnabled = true
-        }
+        setupSkill(mView, R.id.checkBoxBasket, R.id.sportLevelBasket)
+        setupSkill(mView, R.id.checkBoxFootball, R.id.sportLevelFootball)
+        setupSkill(mView, R.id.checkBoxPingPong, R.id.sportLevelPingPong)
+        setupSkill(mView, R.id.checkBoxVolleyball, R.id.sportLevelVolleyball)
 
 
 
@@ -59,10 +46,16 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
     }
 
 
+    private fun setupSkill(view: View, checkboxId: Int, textInputId: Int){
+        mView.findViewById<CheckBox>(checkboxId).let { checkbox ->
+            checkbox.setOnClickListener {
+                mView.findViewById<TextInputLayout>(textInputId).isEnabled = checkbox.isChecked
+            }
+        }
+    }
 
 
     private fun setSpinners(id: Int) {
-
         val textField1 = requireView().findViewById<TextInputLayout>(id)
         val sportLevelArray = resources.getStringArray(R.array.sportLevelArray)
         val adapter1 = ArrayAdapter(requireContext(), R.layout.sport_list_item, sportLevelArray)
