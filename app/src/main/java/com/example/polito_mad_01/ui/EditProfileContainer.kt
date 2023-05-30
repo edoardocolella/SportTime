@@ -9,18 +9,18 @@ import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.adapters.ShowProfilePageAdapter
+import com.example.polito_mad_01.adapters.EditProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
 
-class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) {
+class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) {
 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager2
-    lateinit var showProfilePageAdapter: ShowProfilePageAdapter
+    lateinit var editProfilePageAdapter: EditProfilePageAdapter
 
     private val vm: EditProfileViewModel by viewModels {
         EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
@@ -50,8 +50,8 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
 
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.reservationsViewPager)
-        showProfilePageAdapter = ShowProfilePageAdapter(requireActivity(), vm)
-        viewPager.adapter = showProfilePageAdapter
+        editProfilePageAdapter = EditProfilePageAdapter(requireActivity(), vm)
+        viewPager.adapter = editProfilePageAdapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tabLayout.visibility = View.VISIBLE
@@ -67,7 +67,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
         return try {
             isNotValid()
             vm.updateUser()
-            findNavController().navigate(R.id.action_editProfileContainer_to_profileFragment)
+            findNavController().navigate(R.id.showProfileContainer)
             true
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()

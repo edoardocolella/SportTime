@@ -63,4 +63,14 @@ class UserRepository{
         }
     }
 
+    fun getFriendNickname(id: String): LiveData<String> {
+        val user = MutableLiveData<String>()
+        fs.collection("users")
+            .document(id)
+            .addSnapshotListener { r, _ ->
+                user.value =  r?.get("nickname").toString()
+            }
+        return user
+    }
+
 }

@@ -22,17 +22,7 @@ import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 import java.net.URI
 
-class ShowProfile : Fragment(R.layout.fragment_profile) {
-
-    private val vm: ShowProfileViewModel by viewModels {
-        ShowProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        if(savedInstanceState == null)
-            setHasOptionsMenu(true)
-    }
+class ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -129,21 +119,6 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
                 frame.loadImage(image)
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_show_profile, menu)
-    }
-
-
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_save_profile)
-            findNavController().navigate(R.id.action_profileFragment_to_editProfileContainer)
-        return true
     }
 
 }

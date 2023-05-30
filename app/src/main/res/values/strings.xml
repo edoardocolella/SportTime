@@ -115,4 +115,6 @@
     <string name="reserve">Reserve this slot</string>
     <string name="SportTime">SportTime</string>
     <string name="catchphrase">Plan easy Play more</string>
+    <string name="friends">Friends</string>
+    <string name="noFriends">You don\'t have any friends</string>
 </resources>
