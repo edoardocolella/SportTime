@@ -35,19 +35,19 @@ class UserData(
 
     fun toUser() : User {
         return User(
-            name="",
-            surname="",
-            nickname="",
-            birthdate="",
-            gender="",
-            location="",
-            achievements=listOf(),
-            skills=mutableMapOf(),
-            image_uri=null,
-            email="",
-            phoneNumber="",
-            availability=mutableMapOf(),
-            friends=listOf()
+            name,
+            surname,
+            nickname,
+            birthdate,
+            gender,
+            location,
+            achievements,
+            skills,
+            image_uri,
+            email,
+            phoneNumber,
+            availability,
+            friends
         )
     }
 }
