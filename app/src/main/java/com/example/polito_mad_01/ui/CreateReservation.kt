@@ -48,13 +48,15 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
 
         val button = view?.findViewById<Button>(R.id.createReservation)
         val res = vm.reservation.value!!
-        if(res.date >= LocalDate.now().toString() && res.start_time > LocalTime.now().toString()) {
+        if(res.date > LocalDate.now().toString() || (res.date == LocalDate.now().toString() && res.start_time > LocalTime.now().toString())) {
             button?.setOnClickListener {
                 vm.createReservation()
                 findNavController().navigate(R.id.reservationsFragment)
             }
         }
         else{
+            println("resDate ${res.date} now ${LocalDate.now()}")
+            println("resTime ${res.start_time} now ${LocalTime.now()}")
             button?.text = "You cannot reserve a slot in the past"
             button?.isClickable = false
             button?.isEnabled = false

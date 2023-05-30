@@ -1,11 +1,13 @@
 package com.example.polito_mad_01
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -18,6 +20,7 @@ import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import java.time.LocalDate
 
 
 class RegistrationActivity: AppCompatActivity(), StepperNavListener {
@@ -115,6 +118,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun isValid(user: UserData):Boolean{
         if(user.name.isEmpty()) {
             Toast.makeText(this, "Insert your name", Toast.LENGTH_SHORT).show()
@@ -128,6 +132,12 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         if(user.birthdate.isEmpty()) {
             Toast.makeText(this, "Insert your birthdate", Toast.LENGTH_SHORT).show()
             return false        }
+
+        if(user.birthdate > LocalDate.now().toString()) {
+            Toast.makeText(this, "Insert a birthdate in the past", Toast.LENGTH_SHORT).show()
+            return false }
+
+
         if(user.gender.isEmpty()) {
             Toast.makeText(this, "Insert your gender", Toast.LENGTH_SHORT).show()
             return false }
