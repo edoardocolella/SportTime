@@ -1,5 +1,6 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.net.Uri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.UserRepository
@@ -13,7 +14,7 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
         return user
     }
 
-    fun getUserImage(): LiveData<URI?> {
+    fun getUserImage(): LiveData<Uri?> {
         return userRepository.getProfileImage()
     }
 }

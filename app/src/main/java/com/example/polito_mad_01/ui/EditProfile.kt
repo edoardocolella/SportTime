@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
-import androidx.core.net.toUri
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.*
@@ -26,9 +25,6 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
-import io.getstream.avatarview.AvatarView
-import io.getstream.avatarview.coil.loadImage
-import java.net.URI
 import java.util.*
 
 
@@ -87,19 +83,16 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         if(resultCode == AppCompatActivity.RESULT_OK) {
             if (requestCode == IMAGE_CAPTURE_CODE
                 && imageUriForCamera != null  && imageUriForCamera != Uri.EMPTY ) {
-                vm.user.value?.image_uri = imageUriForCamera.toString()
                 vm.updateUserImage(imageUriForCamera!!)
+                setImage(imageUriForCamera)
             }
-            else if (requestCode == RESULT_LOAD_IMAGE){
-                if( data?.data != null) {
-                    vm.user.value?.image_uri = data.data.toString()
+            else if (requestCode == RESULT_LOAD_IMAGE && data?.data != null) {
                     vm.updateUserImage(data.data!!)
+                    setImage(data.data)
                 }
             }
 
         }
-
-    }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
@@ -181,9 +174,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             setSpinners()
         }
 
-        vm.getUserImage().observe(viewLifecycleOwner){image ->
-            setImage(image)
-        }
+        vm.getUserImage().observe(viewLifecycleOwner){ setImage(it) }
 
     }
 
@@ -272,16 +263,11 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
                 setValue(attribute, s.toString())
         })
     }
-    private fun setImage(image: URI?) {
 
+    private fun setImage(image: Uri?) {
         println("IMAGE: $image")
-
         val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
-        image?.let {
-            val imageUri = Uri.parse(image.toString())
-            if (imageUri != Uri.EMPTY && imageUri != null) {
-                frame.setImageURI(imageUri)
-            }
-        }
+        if (image!= null && image != Uri.EMPTY)
+            frame.setImageURI(image)
     }
 }

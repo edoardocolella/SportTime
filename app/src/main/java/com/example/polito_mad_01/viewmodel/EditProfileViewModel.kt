@@ -5,7 +5,6 @@ import android.view.View
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.UserRepository
-import java.net.URI
 import kotlin.concurrent.thread
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -25,14 +24,13 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
         }
     }
 
-    fun updateUserImage(data: Uri) {
+    fun updateUserImage(image: Uri) {
         thread {
-            println("UPDATE updateUserImage")
-            userRepository.updateProfileImage(data)
+            userRepository.updateProfileImage(image)
         }
     }
 
-    fun getUserImage(): LiveData<URI?> {
+    fun getUserImage(): LiveData<Uri?> {
         return userRepository.getProfileImage()
     }
 

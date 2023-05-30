@@ -115,7 +115,7 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
         else button.setBackgroundColor(colorFalse)
     }
 
-    private fun setImage(image: URI?) {
+    private fun setImage(image: Uri?) {
         println("IMAGE: $image")
         val frame = view?.findViewById<AvatarView>(R.id.profileImage_imageView)!!
         if (image == null) {
@@ -125,9 +125,8 @@ class ShowProfile : Fragment(R.layout.fragment_profile) {
             frame.avatarInitials = name.substring(0, 1) + surname.substring(0, 1)
         }
         else{
-            val imageUri = Uri.parse(image.toString())
-            if (imageUri != Uri.EMPTY && imageUri != null) {
-                frame.loadImage(imageUri)
+            if (image != Uri.EMPTY) {
+                frame.loadImage(image)
             }
         }
     }
