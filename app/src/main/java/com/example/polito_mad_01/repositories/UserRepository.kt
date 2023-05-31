@@ -6,6 +6,8 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.notifications.APIManager
+import com.example.polito_mad_01.notifications.PushNotification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
@@ -141,5 +143,11 @@ class UserRepository{
             .document("$senderUUID-$userID")
             .delete()
             .addOnSuccessListener { println("Request deleted") }
+    }
+
+    private val apiManager = APIManager()
+
+    suspend fun sendNotification(notification: PushNotification) {
+        apiManager.postNotification(notification)
     }
 }
