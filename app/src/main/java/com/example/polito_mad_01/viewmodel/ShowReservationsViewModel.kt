@@ -4,8 +4,9 @@ import android.net.Uri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
+import com.example.polito_mad_01.repositories.UserRepository
 
-class ShowReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
+class ShowReservationsViewModel(private val reservationsRepository: ReservationRepository, val userRepository: UserRepository) : ViewModel() {
 
     lateinit var slot : LiveData<Slot>
     fun getReservation(slotID: Int) : LiveData<Slot> {
@@ -20,14 +21,18 @@ class ShowReservationsViewModel(private val reservationsRepository: ReservationR
     fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
         return reservationsRepository.getReservationParticipants(slotID)
     }
+
+    fun getUserFriends() : LiveData<List<User>> {
+        return userRepository.getUserFriends()
+    }
 }
 
-class ShowReservationsViewModelFactory(private val repository: ReservationRepository) :
+class ShowReservationsViewModelFactory(private val repository: ReservationRepository, private val userRepository: UserRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ShowReservationsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return ShowReservationsViewModel(repository) as T
+            return ShowReservationsViewModel(repository, userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

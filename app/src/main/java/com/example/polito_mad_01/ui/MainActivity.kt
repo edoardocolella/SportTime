@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.gameInvitation)
                 }
                 R.id.logout -> {
-                    auth.signOut()
                     vm.logout()
+                    auth.signOut()
                     val intent = Intent(this, LandingPageActivity::class.java)
                     startActivity(intent)
                 }

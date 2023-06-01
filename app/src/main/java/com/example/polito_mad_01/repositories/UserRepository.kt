@@ -74,6 +74,32 @@ class UserRepository{
         }
     }
 
+    fun getUserFriends() : LiveData<List<User>>{
+        val userID = fAuth.currentUser?.uid ?: ""
+        val liveDataList = MutableLiveData<List<User>>()
+
+        fs.collection("users")
+            .document(userID)
+            .addSnapshotListener { r, _ ->
+                val friendsIds = r?.toObject(User::class.java)?.friends
+
+                if (friendsIds != null && friendsIds.isNotEmpty()) {
+                    fs.collection("users")
+                        .get()
+                        .addOnSuccessListener { query ->
+                            val list = query.documents
+                                .filter { friendsIds.contains(it.id) }
+                                .map {
+                                    it.toObject(User::class.java)!!
+                                }
+                            liveDataList.value = list
+                        }
+                }
+            }
+
+        return liveDataList
+    }
+
     fun getFriendsNickname(idList: List<String>): LiveData<List<Pair<String,String>>> {
         val nicknameList = MutableLiveData<List<Pair<String,String>>>()
         fs.collection("users")

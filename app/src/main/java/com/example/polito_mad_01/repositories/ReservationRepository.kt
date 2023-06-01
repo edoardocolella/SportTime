@@ -54,7 +54,6 @@ class ReservationRepository{
     }
 
     fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
-        // TODO: query per ottenere attendants nella collection
         val idFormatted = slotID.toString().padStart(3, '0')
         val reservationQuery = fs.collection("reservations").document(idFormatted)
 

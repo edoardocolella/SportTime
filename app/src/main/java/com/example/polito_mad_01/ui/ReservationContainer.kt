@@ -20,7 +20,10 @@ class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
     lateinit var reservationPageAdapter: ReservationPageAdapter
 
     private val vm: ShowReservationsViewModel by viewModels {
-        ShowReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
+        ShowReservationsViewModelFactory(
+            (activity?.application as SportTimeApplication).reservationRepository,
+            (activity?.application as SportTimeApplication).userRepository
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
