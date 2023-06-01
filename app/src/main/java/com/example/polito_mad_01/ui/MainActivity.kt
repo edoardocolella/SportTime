@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         // NOTE: currentUser deve esistere a questo punto, altrimenti qualcosa non va
         auth.currentUser?.let {
+            vm.subscribeToNotifications()
             vm.getUser().observe(this) { user ->
                 if(user == null) return@observe // TODO: replace
 

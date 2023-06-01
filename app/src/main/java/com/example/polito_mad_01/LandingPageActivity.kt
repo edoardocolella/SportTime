@@ -3,6 +3,7 @@ package com.example.polito_mad_01
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -30,6 +31,14 @@ class LandingPageActivity : AppCompatActivity() {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE)
             requestPermissions(permission, 112)
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                val permission =
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS)
+                requestPermissions(permission, 112)
+            }
         }
 
 

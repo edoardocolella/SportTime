@@ -9,6 +9,10 @@ class MainActivityViewModel(private val userRepository: UserRepository) : ViewMo
         return userRepository.getUser()
     }
 
+    fun subscribeToNotifications() {
+        userRepository.subscribeToNotifications()
+    }
+
 }
 
 class MainActivityViewModelFactory(private val repository: UserRepository) :
