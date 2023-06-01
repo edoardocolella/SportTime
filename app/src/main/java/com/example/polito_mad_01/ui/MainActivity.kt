@@ -1,8 +1,6 @@
 package com.example.polito_mad_01.ui
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -12,12 +10,10 @@ import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
-import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
@@ -83,9 +79,9 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.title = "Past Reservations"
                     navController.navigate(R.id.showOldReservations)
                 }
-                R.id.gameInvitation -> {
-                    supportActionBar?.title = "Game invitation"
-                    navController.navigate(R.id.gameInvitation)
+                R.id.invitations -> {
+                    supportActionBar?.title = "Invitations"
+                    navController.navigate(R.id.invitationContainer)
                 }
                 R.id.logout -> {
                     vm.logout()

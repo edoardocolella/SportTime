@@ -2,6 +2,7 @@ package com.example.polito_mad_01
 
 import android.app.Application
 import android.content.Context
+import com.example.polito_mad_01.repositories.InvitationRepository
 import com.example.polito_mad_01.repositories.ReservationRepository
 import com.example.polito_mad_01.repositories.ReviewRepository
 import com.example.polito_mad_01.repositories.UserRepository
@@ -16,5 +17,6 @@ class SportTimeApplication : Application() {
     //private val database by lazy { SportTimeDatabase.getDatabase(this) }\
     val userRepository by lazy { UserRepository() }
     val reservationRepository by lazy { ReservationRepository() }
-    val reviewRepository by lazy { ReviewRepository() }
+    val reviewRepository by lazy { ReviewRepository()    }
+    val invitationRepository by lazy { InvitationRepository() }
 }

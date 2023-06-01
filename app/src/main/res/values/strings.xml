@@ -123,7 +123,8 @@
     <string name="skill_level_select">Select your skill level</string>
     <string name="friends">Friends</string>
     <string name="noFriends">You don\'t have any friends</string>
-    <string name="gameInvitation">Game Invitation</string>
+    <string name="invitations">Invitations</string>
+    <string name="games">Games</string>
     <string name="addFriend">Add a friend</string>
     <string name="reservation">Reservation</string>
     <string name="participants">Participants</string>

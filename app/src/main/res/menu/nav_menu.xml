@@ -19,9 +19,9 @@
         android:title="@string/oldReservations" />
 
     <item
-        android:id="@+id/gameInvitation"
+        android:id="@+id/invitations"
         android:icon="@drawable/mail_48px"
-        android:title="@string/gameInvitation" />
+        android:title="@string/invitations" />
 
         <!-- Altri elementi del menu... -->
 
