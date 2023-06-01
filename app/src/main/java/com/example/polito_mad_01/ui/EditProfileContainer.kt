@@ -12,6 +12,7 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.EditProfilePageAdapter
 import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
 
@@ -68,6 +69,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
             isNotValid()
             vm.updateUser()
             findNavController().navigate(R.id.showProfileContainer)
+            Snackbar.make(requireView(), "Profile updated successfully.", Snackbar.LENGTH_LONG).show()
             true
         } catch (e: Exception) {
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()

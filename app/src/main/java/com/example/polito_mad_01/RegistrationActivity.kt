@@ -18,6 +18,7 @@ import com.example.polito_mad_01.model.UserData
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
