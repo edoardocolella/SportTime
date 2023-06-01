@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -18,7 +19,9 @@ import com.example.polito_mad_01.model.UserData
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 
@@ -41,6 +44,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -54,19 +58,39 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         auth = FirebaseAuth.getInstance()
 
         findViewById<Button>(R.id.registerButton).setOnClickListener {
-            register()
+            if (stepper.currentStep == 3) {
+                println("STEP 3")
+                if (validateStep3())
+                    register()
+            }
         }
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
-            stepper.goToNextStep()
-            //onStepChanged(stepper.currentStep)
-            println("STEPPER NUMBER : ${stepper.currentStep}")
+            var validFlag = true
+            if(stepper.currentStep == 0) {
+                println("STEP 0")
+                validFlag = validateStep0()
+            }
+            else if(stepper.currentStep == 1){
+                println("STEP 1")
+                validFlag = validateStep1()
+            }
+            else if(stepper.currentStep ==2){
+                println("STEP 2")
+                validFlag = validateStep2()
+            }
 
-            findViewById<Button>(R.id.backButton).visibility = View.VISIBLE
+            if(validFlag) {
+                stepper.goToNextStep()
+                //onStepChanged(stepper.currentStep)
+                println("STEPPER NUMBER : ${stepper.currentStep}")
 
-            if(stepper.currentStep == 3){
-                findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
-                findViewById<Button>(R.id.registerButton).visibility = View.VISIBLE
+                findViewById<Button>(R.id.backButton).visibility = View.VISIBLE
+
+                if (stepper.currentStep == 3) {
+                    findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
+                    findViewById<Button>(R.id.registerButton).visibility = View.VISIBLE
+                }
             }
         }
 
@@ -89,6 +113,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         }
 
 }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun register() {
 
         vm.user.observe(this) {
@@ -100,8 +125,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
                 return@observe
             }
-            if(isValid(it)) {
-                auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
+            auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
                     .addOnCompleteListener(
                         this
                     ) { task ->
@@ -113,14 +137,14 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
                             startActivity(intent)
                         }
                     }
-            }
+
             }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun isValid(user: UserData):Boolean{
-        if(user.name.isEmpty()) {
+        /*if(user.name.isEmpty()) {
             Toast.makeText(this, "Insert your name", Toast.LENGTH_SHORT).show()
             return false }
         if(user.surname.isEmpty()) {
@@ -161,6 +185,8 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             Toast.makeText(this, "Phone number must have at least 10 digits", Toast.LENGTH_SHORT).show()
             return false }
 
+         */
+
         return true
     }
 
@@ -173,4 +199,91 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     }
 
     //stepperNavListener = this
+
+
+    private fun validateStep0() : Boolean{
+        val emailInput = findViewById<TextInputLayout>(R.id.registrationUsername)
+        val passwordInput = findViewById<TextInputLayout>(R.id.loginPassword)
+        if(emailInput.editText?.text!!.isEmpty()){
+            emailInput.error = "Email is empty"
+            return false
+        }else if(
+            !Patterns.EMAIL_ADDRESS.matcher(emailInput.editText?.text!!).matches()){
+            emailInput.error = "Email is not valid"
+            return false
+        } else{ emailInput.error = null }
+
+        if(passwordInput.editText?.text!!.length < 6) {
+            passwordInput.error = "Password must have at least 6 characters"
+            return false
+        }else{ passwordInput.error = null }
+        return true
+    }
+
+    private fun validateStep1(): Boolean{
+        val nameInput = findViewById<TextInputLayout>(R.id.registrationNameInputLayout)
+        if(nameInput.editText?.text!!.isEmpty()){
+            nameInput.error = "Name is empty"
+            return false
+        }else{ nameInput.error = null }
+
+
+
+        val surnameInput = findViewById<TextInputLayout>(R.id.registrationSurnameInputLayout)
+        if(surnameInput.editText?.text!!.isEmpty()){
+            surnameInput.error = "Surname is empty"
+            return false
+        }else{ surnameInput.error = null}
+
+        val nicknameInput = findViewById<TextInputLayout>(R.id.registrationNicknameInputLayout)
+        if (nicknameInput.editText?.text!!.isEmpty()){
+            nicknameInput.error = "Nickname is empty"
+            return false
+        }else{ nicknameInput.error = null }
+
+        val genderInput = findViewById<TextInputLayout>(R.id.registrationGenderInputLayout)
+        if (genderInput.editText?.text!!.isEmpty()){
+            genderInput.error = "Choose an option"
+            return false
+        }else { genderInput.error = null }
+
+        val birthdateInput = findViewById<TextInputLayout>(R.id.registrationBirthdayInputLayout)
+        if(birthdateInput.editText?.text!!.isEmpty()) {
+            birthdateInput.error = "Insert your birthdate"
+            return false
+        }else{ birthdateInput.error = null }
+
+        val locationInput = findViewById<TextInputLayout>(R.id.registrationLocationInputLayout)
+        if(locationInput.editText?.text!!.isEmpty()){
+            locationInput.error = "Insert your location"
+            return false
+        } else{ locationInput.error = null }
+
+        return true
+    }
+
+    private fun validateStep2():Boolean{
+        var validFlag = true
+
+        return validFlag
+    }
+
+    private fun validateStep3():Boolean{
+
+        val phonenumberInput = findViewById<TextInputLayout>(R.id.registrationPhoneNumberEditText)
+        if(phonenumberInput.editText?.text!!.isEmpty()){
+            phonenumberInput.error = "Insert your phone number"
+            println("${phonenumberInput.editText?.text!!}")
+            return false
+        }else{ phonenumberInput.error = null }
+
+        val values = vm.user.value?.availability?.values!!
+        if(!values.contains(true)){
+            Toast.makeText(this, "Select at least one day", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
+    }
+
 }
