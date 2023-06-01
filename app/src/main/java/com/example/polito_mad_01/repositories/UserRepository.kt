@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.notifications.APIManager
+import com.example.polito_mad_01.notifications.NotificationData
 import com.example.polito_mad_01.notifications.PushNotification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -15,6 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
 import kotlin.concurrent.thread
@@ -88,6 +93,7 @@ class UserRepository{
             .addOnSuccessListener { println("User created") }
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun addFriend(email: String): LiveData<String> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val toBeReturned = MutableLiveData<String>()
@@ -104,8 +110,11 @@ class UserRepository{
                         .set(mapOf("sender" to userID, "receiver" to result.documents[0].id))
                         .addOnSuccessListener {
                             println("Friend request sent")
-
-                                //sendNotification(result.documents[0].id)
+                            GlobalScope.launch (Dispatchers.IO){
+                                val data = NotificationData("Friend request", "You have a new friend request from ${fAuth.currentUser?.email}", "FriendRequest")
+                                val push = PushNotification(data, "/topics/${result.documents[0].id}")
+                                sendNotification(push)
+                            }
 
                         }
                     toBeReturned.value = result.documents[0].id
