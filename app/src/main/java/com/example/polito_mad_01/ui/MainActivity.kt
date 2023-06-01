@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.logout -> {
                     auth.signOut()
+                    vm.logout()
                     val intent = Intent(this, LandingPageActivity::class.java)
                     startActivity(intent)
                 }

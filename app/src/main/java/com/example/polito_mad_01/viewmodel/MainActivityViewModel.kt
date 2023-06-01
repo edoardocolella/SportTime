@@ -13,6 +13,10 @@ class MainActivityViewModel(private val userRepository: UserRepository) : ViewMo
         userRepository.subscribeToNotifications()
     }
 
+    fun logout() {
+        userRepository.logout()
+    }
+
 }
 
 class MainActivityViewModelFactory(private val repository: UserRepository) :
