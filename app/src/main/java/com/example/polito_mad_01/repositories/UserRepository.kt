@@ -169,6 +169,7 @@ class UserRepository{
 
     fun subscribeToNotifications() {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+
         println("SUB Subscribing to notifications")
         FirebaseMessaging.getInstance().subscribeToTopic(userID)
             .addOnCompleteListener {
@@ -184,5 +185,16 @@ class UserRepository{
                 else if (it.isCanceled)
                     println("Error while subscribing to game requests notifications ${it.exception}")
             }*/
+    }
+
+    fun logout() {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(userID)
+            .addOnCompleteListener {
+                if(it.isSuccessful)
+                    println("Unsubscribed from friend requests notifications")
+                else
+                    println("Error while unsubscribing from friend requests notifications ${it.exception}")
+            }
     }
 }
