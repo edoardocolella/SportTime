@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class Step1Fragment: Fragment(R.layout.step1fragment) {
     private lateinit var mView: View
@@ -19,15 +20,20 @@ class Step1Fragment: Fragment(R.layout.step1fragment) {
 
     override fun onStart() {
         super.onStart()
-        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
     }
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.step1fragment, container, false)
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
 
         return mView
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setView()
     }
 
     override fun onStop() {
@@ -39,5 +45,14 @@ class Step1Fragment: Fragment(R.layout.step1fragment) {
         registrationViewModel.user.value?.email = email.editableText.toString()
         registrationViewModel.user.value?.password = password.editableText.toString()
 
+    }
+
+    private fun setView(){
+        mView.findViewById<TextInputLayout>(R.id.registrationUsername).editText?.setText(
+            registrationViewModel.user.value?.email ?: ""
+        )
+        mView.findViewById<TextInputLayout>(R.id.loginPassword).editText?.setText(
+            registrationViewModel.user.value?.password ?: ""
+        )
     }
 }

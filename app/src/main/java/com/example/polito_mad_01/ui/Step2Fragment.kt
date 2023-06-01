@@ -26,7 +26,6 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
 
     override fun onStart() {
         super.onStart()
-        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
     }
 
 
@@ -34,6 +33,7 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.step2fragment, container, false)
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
 
         setBirthdateView(mView)
         return mView
@@ -70,6 +70,11 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        setView()
+    }
+
     override fun onStop() {
         super.onStop()
 
@@ -86,6 +91,25 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
         registrationViewModel.user.value?.birthdate = birthdate.editText?.text.toString()
         registrationViewModel.user.value?.location = location.editableText.toString()
         registrationViewModel.user.value?.nickname = nickname.editableText.toString()
+
+    }
+
+    private fun setView(){
+
+        val name = mView.findViewById<TextInputEditText>(R.id.registrationNameEditText)
+        val surname = mView.findViewById<TextInputEditText>(R.id.registrationSurnameEditText)
+        val nickname = mView.findViewById<TextInputEditText>(R.id.registrationNicknameEditText)
+        val gender = mView.findViewById<TextInputLayout>(R.id.registrationGenderInputLayout)
+        val birthdate = mView.findViewById<TextInputLayout>(R.id.registrationBirthdayInputLayout)
+        val location = mView.findViewById<TextInputEditText>(R.id.registrationLocationEditText)
+
+        name.setText(registrationViewModel.user.value?.name ?: "")
+        surname.setText(registrationViewModel.user.value?.surname ?: "")
+        nickname.setText(registrationViewModel.user.value?.nickname ?: "")
+        gender.editText?.setText(registrationViewModel.user.value?.gender ?: "")
+        birthdate.editText?.setText(registrationViewModel.user.value?.birthdate ?: "")
+        location.setText(registrationViewModel.user.value?.location ?: "")
+
 
     }
 }
