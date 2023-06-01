@@ -37,8 +37,17 @@ class FirebaseService : FirebaseMessagingService() {
             // Create a notification
             val intent = Intent(this, MainActivity::class.java)
 
-            //solo per le friend requests
-            intent.putExtra("goto", "friendRequests")
+            println("This is the message: ${message.data}")
+
+            val type = message.data["type"]
+            if(type == "friendRequests"){
+                intent.putExtra("friendRequests", true)
+                println("PUT EXTRA: friendRequests")
+            }
+            else if(type == "gameRequests") {
+                intent.putExtra("gameRequests", true)
+                println("PUT EXTRA: gameRequests")
+            }
 
 
             val notificationManager =

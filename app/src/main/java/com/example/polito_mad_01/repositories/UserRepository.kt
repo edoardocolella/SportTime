@@ -144,7 +144,7 @@ class UserRepository{
                                         GlobalScope.launch (Dispatchers.IO){
                                             val data = NotificationData("Friend request",
                                                 "You have a new friend request from ${fAuth.currentUser?.email}",
-                                                "FriendRequest")
+                                                "friendRequests")
                                             val push = PushNotification(data, "/topics/${result.documents[0].id}")
                                             sendNotification(push)
                                         }
@@ -252,9 +252,9 @@ class UserRepository{
                         .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slotID))
                         .addOnSuccessListener{
                             GlobalScope.launch (Dispatchers.IO){
-                                val data = NotificationData("Friend request",
+                                val data = NotificationData("Game request",
                                     "You have a new game request from ${fAuth.currentUser?.email}",
-                                    "GameRequest")
+                                    "gameRequests")
                                 val push = PushNotification(data, "/topics/${result.documents[0].id}")
                                 sendNotification(push)
                             }

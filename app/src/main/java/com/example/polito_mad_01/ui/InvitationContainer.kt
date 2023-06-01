@@ -33,6 +33,9 @@ class InvitationContainer : Fragment(R.layout.fragment_invitation_container) {
         invitationPageAdapter = InvitationsPageAdapter(requireActivity(), vm)
         viewPager.adapter = invitationPageAdapter
 
+        if(arguments?.getString("goto") == "gameRequests")
+            viewPager.setCurrentItem(1, true)
+
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tabLayout.visibility = View.VISIBLE
             when(position){

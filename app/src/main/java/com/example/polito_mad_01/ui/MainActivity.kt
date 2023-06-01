@@ -33,10 +33,21 @@ class MainActivity : AppCompatActivity() {
 
         val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
-        if(intent.hasExtra("goto"))
-            if(intent.getStringExtra("goto") == "friendRequests") {
+        println("FRIEND-CHECK: ${intent.getBooleanExtra("friendRequests", false)}")
+        println("GAME-CHECK: ${intent.getBooleanExtra("gameRequests", false)}")
+
+        println(intent.extras)
+
+        if(intent.getBooleanExtra("friendRequests", false)){
+            println("GOTO: friendRequests")
                 navController.navigate(R.id.showProfileContainer, bundleOf("goto" to "friendRequests"))
             }
+        else if (intent.getBooleanExtra("gameRequests", false)) {
+            println("GOTO: gameRequests")
+            navController.navigate(R.id.invitationContainer, bundleOf("goto" to "gameRequests"))
+            }
+
+
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
