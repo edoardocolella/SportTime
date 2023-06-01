@@ -60,8 +60,15 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
                     val email = (dialog as AlertDialog).findViewById<TextView>(R.id.emailEditText)?.text.toString()
                     vm.addFriend(email).observe(viewLifecycleOwner){ result ->
                         println("RESULT $result")
-                        if(result.isEmpty()){
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        if(result == "noAccount") {
+                            Toast.makeText(
+                                requireContext(),
+                                "There is no profile linked to that address",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else if(result == "alreadyFriend"){
+                            Toast.makeText(requireContext(), "You are already friends", Toast.LENGTH_SHORT).show()
                         }else{
                             Toast.makeText(requireContext(), "Request sent", Toast.LENGTH_SHORT).show()
                         }

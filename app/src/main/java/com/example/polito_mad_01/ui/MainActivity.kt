@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.*
+import androidx.core.os.bundleOf
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
@@ -34,7 +35,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
+        if(intent.hasExtra("goto"))
+            if(intent.getStringExtra("goto") == "friendRequests") {
+                navController.navigate(R.id.showProfileContainer, bundleOf("goto" to "friendRequests"))
+            }
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
@@ -58,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -83,8 +88,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.gameInvitation)
                 }
                 R.id.logout -> {
-                    auth.signOut()
                     vm.logout()
+                    auth.signOut()
                     val intent = Intent(this, LandingPageActivity::class.java)
                     startActivity(intent)
                 }

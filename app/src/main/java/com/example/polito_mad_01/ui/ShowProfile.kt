@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
-class ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_profile) {
+class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

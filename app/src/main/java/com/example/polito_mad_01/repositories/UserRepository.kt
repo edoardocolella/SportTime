@@ -102,22 +102,33 @@ class UserRepository{
             .get()
             .addOnSuccessListener { result ->
                 if (result.isEmpty) {
-                    toBeReturned.value = ""
+                    toBeReturned.value = "noAccount"
                 } else {
                     println("User found ${result.documents[0].id}")
-                    fs.collection("friendRequests")
-                        .document("${userID}-${result.documents[0].id}")
-                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id))
-                        .addOnSuccessListener {
-                            println("Friend request sent")
-                            GlobalScope.launch (Dispatchers.IO){
-                                val data = NotificationData("Friend request", "You have a new friend request from ${fAuth.currentUser?.email}", "FriendRequest")
-                                val push = PushNotification(data, "/topics/${result.documents[0].id}")
-                                sendNotification(push)
-                            }
 
+                    fs.collection("users")
+                        .document(userID).get()
+                        .addOnSuccessListener {
+                            if (!it["friends"].toString().contains(result.documents[0].id)) {
+                                fs.collection("friendRequests")
+                                    .document("${userID}-${result.documents[0].id}")
+                                    .set(mapOf("sender" to userID, "receiver" to result.documents[0].id))
+                                    .addOnSuccessListener {
+                                        println("Friend request sent")
+                                        GlobalScope.launch (Dispatchers.IO){
+                                            val data = NotificationData("Friend request",
+                                                "You have a new friend request from ${fAuth.currentUser?.email}",
+                                                "FriendRequest")
+                                            val push = PushNotification(data, "/topics/${result.documents[0].id}")
+                                            sendNotification(push)
+                                        }
+                                    }
+                                toBeReturned.value = result.documents[0].id
+                            }
+                            else {
+                                toBeReturned.value = "alreadyFriend"
+                            }
                         }
-                    toBeReturned.value = result.documents[0].id
                 }
             }
         return toBeReturned

@@ -51,6 +51,9 @@ class ShowProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
             showProfilePageAdapter = ShowProfilePageAdapter(requireActivity(), vm)
             viewPager.adapter = showProfilePageAdapter
 
+            if(arguments?.getString("goto") == "friendRequests")
+                viewPager.setCurrentItem(2, true)
+
             TabLayoutMediator(tabLayout, viewPager) { tab, position ->
                 tabLayout.visibility = View.VISIBLE
                 when(position){
