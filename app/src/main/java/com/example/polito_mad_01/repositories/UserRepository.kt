@@ -234,4 +234,31 @@ class UserRepository{
                     println("Error while unsubscribing from friend requests notifications ${it.exception}")
             }
     }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun sendGameRequest(email: String, slotID: Int) {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+
+        println("email: $email, slotID: $slotID")
+
+        fs.collection("users")
+            .whereEqualTo("email", email)
+            .get()
+            .addOnSuccessListener { result ->
+                    println("User found ${result.documents[0].id}")
+
+                    fs.collection("gameRequests")
+                        .document("${userID}-${result.documents[0].id}-${slotID}")
+                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slotID))
+                        .addOnSuccessListener{
+                            GlobalScope.launch (Dispatchers.IO){
+                                val data = NotificationData("Friend request",
+                                    "You have a new game request from ${fAuth.currentUser?.email}",
+                                    "GameRequest")
+                                val push = PushNotification(data, "/topics/${result.documents[0].id}")
+                                sendNotification(push)
+                            }
+                        }
+            }
+    }
 }

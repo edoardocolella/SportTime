@@ -25,6 +25,10 @@ class ShowReservationsViewModel(private val reservationsRepository: ReservationR
     fun getUserFriends() : LiveData<List<User>> {
         return userRepository.getUserFriends()
     }
+
+    fun sendGameRequest(invitedMail: String, slotID: Int) {
+        userRepository.sendGameRequest(invitedMail, slotID)
+    }
 }
 
 class ShowReservationsViewModelFactory(private val repository: ReservationRepository, private val userRepository: UserRepository) :
