@@ -6,8 +6,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.time.LocalDate
@@ -48,6 +51,36 @@ class ReservationRepository{
                 slot.value = r?.toObject(Slot::class.java)
             }
         return slot
+    }
+
+    fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
+        // TODO: query per ottenere attendants nella collection
+        val idFormatted = slotID.toString().padStart(3, '0')
+
+        val reservationQuery = fs.collection("reservations").document(idFormatted)
+
+        val liveDataList = MutableLiveData<List<User>>()
+
+        reservationQuery.addSnapshotListener { r, _ ->
+            val attendants = r?.toObject(Slot::class.java)?.attendants
+
+            if(attendants != null && attendants.isNotEmpty()){
+                val usersQuery = fs.collection("users").whereIn("id", attendants).get()
+
+                usersQuery.addOnSuccessListener { query ->
+                    val list = query.documents.map {
+                        it.toObject(User::class.java)
+                    }
+
+                    println("LISTA $list")
+                }
+            } else {
+                println("VUOTO")
+            }
+
+        }
+
+        return liveDataList
     }
 
     fun getFutureFreeSlots(date: String): LiveData<List<Slot>> {

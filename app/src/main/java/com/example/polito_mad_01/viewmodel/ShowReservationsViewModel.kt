@@ -16,6 +16,10 @@ class ShowReservationsViewModel(private val reservationsRepository: ReservationR
     fun getPlaygroundImage(playgroundId: Int): LiveData<Uri?> {
         return reservationsRepository.getSportImage(playgroundId)
     }
+
+    fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
+        return reservationsRepository.getReservationParticipants(slotID)
+    }
 }
 
 class ShowReservationsViewModelFactory(private val repository: ReservationRepository) :
