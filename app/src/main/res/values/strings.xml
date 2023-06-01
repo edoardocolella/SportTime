@@ -127,4 +127,5 @@
     <string name="addFriend">Add a friend</string>
     <string name="reservation">Reservation</string>
     <string name="participants">Participants</string>
+    <string name="noRequests">You have no friend requests</string>
 </resources>

@@ -12,6 +12,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.ui.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -35,6 +36,11 @@ class FirebaseService : FirebaseMessagingService() {
         if (tiramisuPermissionsCheck()) {
             // Create a notification
             val intent = Intent(this, MainActivity::class.java)
+
+            //solo per le friend requests
+            intent.putExtra("goto", "friendRequests")
+
+
             val notificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val notificationID = Random.nextInt()
@@ -64,13 +70,13 @@ class FirebaseService : FirebaseMessagingService() {
 
     private fun tiramisuPermissionsCheck(): Boolean {
         // If we are above level 33, check permissions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return ContextCompat.checkSelfPermission(
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.POST_NOTIFICATIONS
             ) == PackageManager.PERMISSION_GRANTED
         } else {
-            return true
+            true
         }
     }
 

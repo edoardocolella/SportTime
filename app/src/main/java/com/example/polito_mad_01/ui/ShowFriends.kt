@@ -2,7 +2,8 @@ package com.example.polito_mad_01.ui
 
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.*
 import android.widget.Button
 import android.widget.TextView
@@ -10,12 +11,14 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.*
-import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.*
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
+import com.google.android.material.snackbar.Snackbar
+
 
 class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.fragment_show_friends) {
 
@@ -60,10 +63,14 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
                     val email = (dialog as AlertDialog).findViewById<TextView>(R.id.emailEditText)?.text.toString()
                     vm.addFriend(email).observe(viewLifecycleOwner){ result ->
                         println("RESULT $result")
-                        if(result.isEmpty()){
-                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        if(isValidEmail(email)){
+                            when(result) {
+                                "noAccount" -> Snackbar.make(requireView(), "There is no profile linked to that address", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
+                                "alreadyFriend" -> Snackbar.make(requireView(), "You are already friends.", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
+                                else -> Snackbar.make(requireView(), "Request sent successfully.", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
+                            }
                         }else{
-                            Toast.makeText(requireContext(), "Request sent", Toast.LENGTH_SHORT).show()
+                            Snackbar.make(requireView(), "Email not valid!", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
                         }
                     }
                     dialog.dismiss()
@@ -74,5 +81,13 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
                 .show()
         }
 
+    }
+}
+
+fun isValidEmail(target: CharSequence?): Boolean {
+    return if (TextUtils.isEmpty(target)) {
+        false
+    } else {
+        Patterns.EMAIL_ADDRESS.matcher(target).matches()
     }
 }
