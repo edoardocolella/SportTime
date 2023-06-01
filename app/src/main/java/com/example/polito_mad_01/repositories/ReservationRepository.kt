@@ -56,7 +56,6 @@ class ReservationRepository{
     fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
         // TODO: query per ottenere attendants nella collection
         val idFormatted = slotID.toString().padStart(3, '0')
-
         val reservationQuery = fs.collection("reservations").document(idFormatted)
 
         val liveDataList = MutableLiveData<List<User>>()
@@ -71,8 +70,7 @@ class ReservationRepository{
                     val list = query.documents.map {
                         it.toObject(User::class.java)
                     }
-
-                    println("LISTA $list")
+                    println("LISTA ${query.documents.size}")
                 }
             } else {
                 println("VUOTO")
