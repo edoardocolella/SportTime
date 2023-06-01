@@ -125,4 +125,6 @@
     <string name="noFriends">You don\'t have any friends</string>
     <string name="gameInvitation">Game Invitation</string>
     <string name="addFriend">Add a friend</string>
+    <string name="reservation">Reservation</string>
+    <string name="participants">Participants</string>
 </resources>

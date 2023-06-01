@@ -17,13 +17,7 @@ import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
-    private var slotID = 0
-
-    private val vm: ShowReservationsViewModel by viewModels {
-        ShowReservationsViewModelFactory((activity?.application as SportTimeApplication).reservationRepository)
-    }
-
+class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) : Fragment(R.layout.fragment_show_reservation) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,8 +27,6 @@ class ShowReservation : Fragment(R.layout.fragment_show_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
-        slotID = requireArguments().getInt("slotID")
 
         vm.getReservation(slotID).observe(viewLifecycleOwner) {
             requireActivity().onBackPressedDispatcher
