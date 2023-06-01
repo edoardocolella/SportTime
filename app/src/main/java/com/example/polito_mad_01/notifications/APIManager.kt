@@ -1,7 +1,7 @@
 package com.example.polito_mad_01.notifications
 
 class APIManager() {
-    suspend fun postNotification(notification: PushNotification) {
+     suspend fun postNotification(notification: PushNotification) {
         try {
             val response = RetrofitInstance.api.postNotification(notification)
             if (response.isSuccessful){

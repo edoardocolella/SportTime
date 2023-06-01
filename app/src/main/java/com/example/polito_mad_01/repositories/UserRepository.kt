@@ -13,9 +13,11 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 import java.net.URI
+import kotlin.concurrent.thread
 
 class UserRepository{
 
@@ -100,7 +102,12 @@ class UserRepository{
                     fs.collection("friendRequests")
                         .document("${userID}-${result.documents[0].id}")
                         .set(mapOf("sender" to userID, "receiver" to result.documents[0].id))
-                        .addOnSuccessListener { println("Friend request sent") }
+                        .addOnSuccessListener {
+                            println("Friend request sent")
+
+                                //sendNotification(result.documents[0].id)
+
+                        }
                     toBeReturned.value = result.documents[0].id
                 }
             }
@@ -147,7 +154,26 @@ class UserRepository{
 
     private val apiManager = APIManager()
 
-    suspend fun sendNotification(notification: PushNotification) {
+     private suspend fun sendNotification(notification: PushNotification) {
         apiManager.postNotification(notification)
+    }
+
+    fun subscribeToNotifications() {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        println("SUB Subscribing to notifications")
+        FirebaseMessaging.getInstance().subscribeToTopic(userID)
+            .addOnCompleteListener {
+                if(it.isSuccessful)
+                    println("Subscribed to friend requests notifications")
+                else
+                    println("Error while subscribing to friend requests notifications ${it.exception}")
+            }
+        /*FirebaseMessaging.getInstance().subscribeToTopic("$userID")
+            .addOnCompleteListener {
+                if(it.isSuccessful)
+                    println("Subscribed to game requests notifications")
+                else if (it.isCanceled)
+                    println("Error while subscribing to game requests notifications ${it.exception}")
+            }*/
     }
 }
