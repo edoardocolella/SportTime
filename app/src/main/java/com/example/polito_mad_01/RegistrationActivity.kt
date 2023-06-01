@@ -33,14 +33,12 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
 
         if(auth.currentUser != null){
-            vm.user.value?.email = auth.currentUser!!.email!!
-            println("USER EMAIL = ${auth.currentUser!!.email!!}")
-            vm.user.value?.password = auth.currentUser!!.uid
             findViewById<StepperNavigationView>(R.id.stepper).goToNextStep()
         }
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
@@ -89,10 +87,13 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         }
 
 }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun register() {
 
         vm.user.observe(this) {
             if(auth.currentUser != null){
+                println("USER MAIL ")
+                it.email = auth.currentUser!!.email!!
                 vm.createUser(auth.currentUser!!.uid)
 
                 val intent = Intent(this, MainActivity::class.java)

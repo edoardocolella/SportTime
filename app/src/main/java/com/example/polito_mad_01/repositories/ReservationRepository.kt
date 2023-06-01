@@ -64,13 +64,13 @@ class ReservationRepository{
             val attendants = r?.toObject(Slot::class.java)?.attendants
 
             if(attendants != null && attendants.isNotEmpty()){
-                val usersQuery = fs.collection("users").whereIn("id", attendants).get()
+                val usersQuery = fs.collection("users").get()
 
                 usersQuery.addOnSuccessListener { query ->
-                    val list = query.documents.map {
-                        it.toObject(User::class.java)
+                    val list = query.documents.filter { attendants.contains(it.id) }.map {
+                        it.toObject(User::class.java)!!
                     }
-                    println("LISTA ${query.documents.size}")
+                    liveDataList.value = list
                 }
             } else {
                 println("VUOTO")
