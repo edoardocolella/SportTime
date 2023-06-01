@@ -15,12 +15,13 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class InvitationContainer : Fragment(R.layout.fragment_invitation_container) {
     lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager2
+    private lateinit var viewPager: ViewPager2
     lateinit var invitationPageAdapter: InvitationsPageAdapter
 
     private val vm: InvitationsViewModel by viewModels {
         InvitationsViewModelFactory(
-            (activity?.application as SportTimeApplication).invitationRepository
+            (activity?.application as SportTimeApplication).invitationRepository,
+            (activity?.application as SportTimeApplication).reservationRepository
         )
     }
 

@@ -12,8 +12,8 @@ class InvitationsPageAdapter(fragmentActivity: FragmentActivity, val vm: Invitat
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            0 -> ShowGames()
-            1 -> ShowInvitations()
+            0 -> ShowGames(vm)
+            1 -> ShowInvitations(vm)
             else -> throw (Exception("Invalid position"))}
     }
 }

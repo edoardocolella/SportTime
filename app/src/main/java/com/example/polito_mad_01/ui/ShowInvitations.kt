@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.polito_mad_01.R
-class ShowInvitations : Fragment(R.layout.fragment_show_invitations) {
+import com.example.polito_mad_01.viewmodel.InvitationsViewModel
+
+class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment_show_invitations) {
 
 }
