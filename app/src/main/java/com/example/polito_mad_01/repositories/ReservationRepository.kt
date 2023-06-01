@@ -54,9 +54,7 @@ class ReservationRepository{
     }
 
     fun getReservationParticipants(slotID: Int) : LiveData<List<User>>{
-        // TODO: query per ottenere attendants nella collection
         val idFormatted = slotID.toString().padStart(3, '0')
-
         val reservationQuery = fs.collection("reservations").document(idFormatted)
 
         val liveDataList = MutableLiveData<List<User>>()
@@ -65,14 +63,13 @@ class ReservationRepository{
             val attendants = r?.toObject(Slot::class.java)?.attendants
 
             if(attendants != null && attendants.isNotEmpty()){
-                val usersQuery = fs.collection("users").whereIn("id", attendants).get()
+                val usersQuery = fs.collection("users").get()
 
                 usersQuery.addOnSuccessListener { query ->
-                    val list = query.documents.map {
-                        it.toObject(User::class.java)
+                    val list = query.documents.filter { attendants.contains(it.id) }.map {
+                        it.toObject(User::class.java)!!
                     }
-
-                    println("LISTA $list")
+                    liveDataList.value = list
                 }
             } else {
                 println("VUOTO")

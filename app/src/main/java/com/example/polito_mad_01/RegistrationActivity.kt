@@ -36,9 +36,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
 
         if(auth.currentUser != null){
-            vm.user.value?.email = auth.currentUser!!.email!!
-            println("USER EMAIL = ${auth.currentUser!!.email!!}")
-            vm.user.value?.password = auth.currentUser!!.uid
             findViewById<StepperNavigationView>(R.id.stepper).goToNextStep()
         }
     }
@@ -118,6 +115,8 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
         vm.user.observe(this) {
             if(auth.currentUser != null){
+                println("USER MAIL ")
+                it.email = auth.currentUser!!.email!!
                 vm.createUser(auth.currentUser!!.uid)
 
                 val intent = Intent(this, MainActivity::class.java)
