@@ -42,6 +42,26 @@ class ReservationRepository{
         return liveDataList
     }
 
+    fun getReservationsByUserId(): LiveData<List<Slot>> {
+        val liveDataList = MutableLiveData<List<Slot>>()
+        val userID = fAuth.currentUser?.uid ?: ""
+        fs.collection("reservations")
+            .where(Filter.and(
+                Filter.arrayContains("attendants", userID),
+                Filter.equalTo("reserved", true)
+            )
+            )
+            .addSnapshotListener { r, _ ->
+                val list = mutableListOf<Slot>()
+                r?.forEach {
+                    list += it.toObject(Slot::class.java)
+                    liveDataList.value = list
+                }
+
+            }
+        return liveDataList
+    }
+
     fun getReservationById(slotID: Int): LiveData<Slot> {
         val slot = MutableLiveData<Slot>()
         val idFormatted = slotID.toString().padStart(3, '0')

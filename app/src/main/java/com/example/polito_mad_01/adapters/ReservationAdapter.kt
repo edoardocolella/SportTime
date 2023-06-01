@@ -47,7 +47,7 @@ class ReservationAdapter(
 
             reservationItem.setOnClickListener {
                 navController.navigate(
-                    R.id.action_reservationsFragment_to_reservationContainer, bundleOf(
+                    R.id.reservationContainer, bundleOf(
                         "slotID" to slot.slot_id
                     )
                 )
