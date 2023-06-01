@@ -1,5 +1,7 @@
 package com.example.polito_mad_01.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
@@ -10,6 +12,7 @@ class ReservationsViewModel(private val reservationsRepository: ReservationRepos
 
     lateinit var reservations: LiveData<List<Slot>>
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getUserSlots(): LiveData<List<Slot>> {
         reservations = reservationsRepository.getSlotsByUserId()
         return reservations
@@ -46,22 +49,22 @@ class ReservationsViewModel(private val reservationsRepository: ReservationRepos
         val falseMap = mutableMapOf(Pair("heating", false), Pair("equipment", false), Pair("locker_room", false), Pair("lighting", false))
 
         var map = if(myList[0] != null) randomMap else falseMap
-        var attendants = if(myList[0] != null) listOf(myList[0]!!) else listOf()
+        var attendants = if(myList[0] != null) mutableListOf(myList[0]!!) else mutableListOf()
         val slot1 =  Slot(index, myList[0], date, myHourList[0].first, myHourList[0].second, Random.nextDouble(1.0,10.0), myList[0] != null, map, "Mana Beach", "Volley", 1, "Turin", attendants, 8)
         reservationsRepository.populateSlot(slot1)
 
         map = if(myList[1] != null) randomMap else falseMap
-        attendants = if(myList[1] != null) listOf(myList[1]!!) else listOf()
+        attendants = if(myList[1] != null) mutableListOf(myList[1]!!) else mutableListOf()
         val slot2 =  Slot(index+1, myList[1], date, myHourList[1].first, myHourList[1].second, Random.nextDouble(1.0,10.0), myList[1] != null, map,   "Centro sociale Comala", "Ping Pong", 2, "Turin", attendants, 4)
         reservationsRepository.populateSlot(slot2)
 
         map = if(myList[2] != null) randomMap else falseMap
-        attendants = if(myList[2] != null) listOf(myList[2]!!) else listOf()
+        attendants = if(myList[2] != null) mutableListOf(myList[2]!!) else mutableListOf()
         val slot3= Slot(index+2, myList[2], date, myHourList[2].first, myHourList[2].second, Random.nextDouble(1.0,10.0), myList[2] != null, map, "Campo da Canestro Braccini", "Basket", 3,"Turin", attendants, 10)
         reservationsRepository.populateSlot(slot3)
 
         map = if(myList[3] != null) randomMap else falseMap
-        attendants = if(myList[3] != null) listOf(myList[3]!!) else listOf()
+        attendants = if(myList[3] != null) mutableListOf(myList[3]!!) else mutableListOf()
         val slot4 =  Slot(index+3, myList[3], date, myHourList[3].first, myHourList[3].second, Random.nextDouble(1.0,10.0), myList[3] != null, map, "Campo Sportivo Carmagnola", "Football", 4, "Turin", attendants, 10)
         reservationsRepository.populateSlot(slot4)
         return index+4

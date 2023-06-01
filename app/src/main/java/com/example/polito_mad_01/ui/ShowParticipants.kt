@@ -42,30 +42,28 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         }
 
         view.findViewById<Button>(R.id.addParticipantsButton).setOnClickListener{
-            vm.getUserFriends().observe(viewLifecycleOwner) {friends ->
-                val friendsMails = friends.map { "${it.nickname} (${it.name} ${it.surname})" }.sorted().toTypedArray()
-                val selectedFriendsMails = mutableListOf<String>()
+            val friendsMails = vm.getUserFriends().value!!.map { "${it.nickname} (${it.name} ${it.surname})" }.sorted().toTypedArray()
+            val selectedFriendsMails = mutableListOf<String>()
 
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Invite Friends")
-                    .setMultiChoiceItems(
-                        friendsMails, null
-                    ) { _, which, isChecked ->
-                        if (isChecked) {
-                            selectedFriendsMails += friendsMails[which]
-                        } else if (selectedFriendsMails.contains(friendsMails[which])) {
-                            selectedFriendsMails.remove(friendsMails[which])
-                        }
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Invite Friends")
+                .setMultiChoiceItems(
+                    friendsMails, null
+                ) { _, which, isChecked ->
+                    if (isChecked) {
+                        selectedFriendsMails += friendsMails[which]
+                    } else if (selectedFriendsMails.contains(friendsMails[which])) {
+                        selectedFriendsMails.remove(friendsMails[which])
                     }
-                    .setPositiveButton("Invite"){ dialog, _ ->
-                        // TODO: INVITI a selectedFriendsMail
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton("Cancel"){ dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-            }
+                }
+                .setPositiveButton("Invite"){ dialog, _ ->
+                    // TODO: INVITI a selectedFriendsMail
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Cancel"){ dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
     }
 }

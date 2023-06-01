@@ -13,10 +13,10 @@ data class Slot(
     val sport: String,
     val playground_id: Int,
     val location: String,
-    val attendants: List<String>,
+    val attendants: MutableList<String>,
     val maxNumber: Int
 ){
-    constructor(): this(0, "", "", "", "", 0.0, false, mutableMapOf(), "", "", 0, "", listOf(), 0)
+    constructor(): this(0, "", "", "", "", 0.0, false, mutableMapOf(), "", "", 0, "", mutableListOf(), 0)
 }
 
 

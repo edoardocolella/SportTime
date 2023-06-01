@@ -27,7 +27,7 @@ class ReservationRepository{
         val userID = fAuth.currentUser?.uid ?: ""
         fs.collection("reservations")
             .where(Filter.or(
-                    Filter.equalTo("user_id", userID),
+                    Filter.arrayContains("attendants", userID),
                 Filter.equalTo("reserved", false)
                     )
             )
@@ -108,6 +108,7 @@ class ReservationRepository{
         val userID = fAuth.currentUser?.uid ?: throw Exception("No user found")
         slot.user_id = userID
         slot.reserved = true
+        slot.attendants.add(userID)
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
@@ -120,6 +121,7 @@ class ReservationRepository{
         slot.services.forEach{
             slot.services[it.key] = false
         }
+        slot.attendants.clear()
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())

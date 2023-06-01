@@ -18,12 +18,6 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) : Fragment(R.layout.fragment_show_reservation) {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
@@ -63,29 +57,6 @@ class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) 
                 list.adapter = ServicesAdapter(services)
             }
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @Deprecated("Deprecated in Java")
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        vm.slot.observe(viewLifecycleOwner) {
-            if (LocalDate.now().toString() < it.date) {
-                inflater.inflate(R.menu.menu_show_reservation, menu)
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    @Deprecated("Deprecated in Java")
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val args = bundleOf(
-            "slotID" to slotID
-        )
-
-        if (item.itemId == R.id.action_edit_reservation){
-                findNavController().navigate(R.id.editReservationFragment, args)
-        }
-        return true
     }
 
 }

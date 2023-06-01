@@ -141,7 +141,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     private fun navigate(newSlotID: Int){
         val args = bundleOf("slotID" to newSlotID)
         findNavController().navigate(
-            R.id.action_editReservationFragment_to_showReservationFragment2,
+            R.id.reservationContainer,
             args
         )
     }
