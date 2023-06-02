@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,36 +26,32 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
     private lateinit var mView: View
     private lateinit var registrationViewModel : RegistrationViewModel
 
-    override fun onStart() {
-        super.onStart()
-        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
-    }
-
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mView = inflater.inflate(R.layout.step2fragment, container, false)
-
-        setBirthdateView(mView)
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
         return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setBirthdateView(mView)
+        setAllView()
         setSpinners()
     }
+
     private fun setSpinners() {
         val textField = UIUtils.findTextInputById(requireView(),R.id.registrationGenderInputLayout)
         val genderArray = resources.getStringArray(R.array.genderArray)
-        println("VALUE ${textField}")
+        println("VALUE $textField")
         val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
         (textField?.editText as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     private fun setBirthdateView(view: View) {
         val birthdateView = UIUtils.findTextInputById(view,R.id.registrationBirthdayInputLayout)
-       //birthdateView?.editText?.setText(user.birthdate)
 
         val materialDatePicker =
             MaterialDatePicker.Builder.datePicker()
@@ -61,7 +59,6 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
             birthdateView?.editText?.setText(date)
-            //setValue("birthdate", date)
         }
 
         birthdateView?.editText?.setOnClickListener {
@@ -70,22 +67,65 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
 
     }
 
-    override fun onStop() {
-        super.onStop()
+    private fun setAllView(){
+        val name = mView.findViewById<TextInputLayout>(R.id.registrationNameInputLayout)
+        name.editText?.setText(registrationViewModel.user.value?.name)
+        name.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.name = s.toString()
+            }
+        })
 
-        val name = mView.findViewById<TextInputEditText>(R.id.registrationNameEditText)
-        val surname = mView.findViewById<TextInputEditText>(R.id.registrationSurnameEditText)
+        val surname = mView.findViewById<TextInputLayout>(R.id.registrationSurnameInputLayout)
+        surname.editText?.setText(registrationViewModel.user.value?.surname)
+        surname.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.surname = s.toString()
+            }
+        })
+
         val gender = mView.findViewById<TextInputLayout>(R.id.registrationGenderInputLayout)
+        gender.editText?.setText(registrationViewModel.user.value?.gender)
+        gender.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.gender = s.toString()
+            }
+        })
+
         val birthdate = mView.findViewById<TextInputLayout>(R.id.registrationBirthdayInputLayout)
-        val location = mView.findViewById<TextInputEditText>(R.id.registrationLocationEditText)
-        val nickname = mView.findViewById<TextInputEditText>(R.id.registrationNicknameEditText)
+        birthdate.editText?.setText(registrationViewModel.user.value?.birthdate)
+        birthdate.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.birthdate = s.toString()
+            }
+        })
 
-        registrationViewModel.user.value?.name = name.editableText.toString()
-        registrationViewModel.user.value?.surname = surname.editableText.toString()
-        registrationViewModel.user.value?.gender = gender.editText?.text.toString()
-        registrationViewModel.user.value?.birthdate = birthdate.editText?.text.toString()
-        registrationViewModel.user.value?.location = location.editableText.toString()
-        registrationViewModel.user.value?.nickname = nickname.editableText.toString()
+        val location = mView.findViewById<TextInputLayout>(R.id.registrationLocationInputLayout)
+        location.editText?.setText(registrationViewModel.user.value?.location)
+        location.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.location = s.toString()
+            }
+        })
 
+        val nickname = mView.findViewById<TextInputLayout>(R.id.registrationNicknameInputLayout)
+                nickname.editText?.setText(registrationViewModel.user.value?.surname)
+                nickname.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                registrationViewModel.user.value?.nickname = s.toString()
+            }
+        })
     }
 }

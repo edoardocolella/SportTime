@@ -24,31 +24,22 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
     private lateinit var mView: View
     private lateinit var registrationViewModel : RegistrationViewModel
 
-    override fun onStart() {
-        super.onStart()
-        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
-    }
-
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.step3fragment, container, false)
-
+        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
 
         setupSkill(R.id.checkBoxBasket, R.id.sportLevelBasket)
         setupSkill(R.id.checkBoxFootball, R.id.sportLevelFootball)
         setupSkill(R.id.checkBoxPingPong, R.id.sportLevelPingPong)
         setupSkill(R.id.checkBoxVolleyball, R.id.sportLevelVolleyball)
 
-
-
         return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         setSpinners(R.id.sportLevelBasket)
         setSpinners(R.id.sportLevelFootball)
         setSpinners(R.id.sportLevelVolleyball)

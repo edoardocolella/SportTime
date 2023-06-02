@@ -9,25 +9,29 @@
         android:id="@+id/step_1_dest"
         android:name="com.example.polito_mad_01.ui.Step1Fragment"
         android:label="Step 1"
-        tools:layout="@layout/step1fragment"/>
+        tools:layout="@layout/step1fragment">
+    </fragment>
 
     <fragment
         android:id="@+id/step_2_dest"
         android:name="com.example.polito_mad_01.ui.Step2Fragment"
         android:label="Step 2"
-        tools:layout="@layout/step2fragment"/>
+        tools:layout="@layout/step2fragment">
+    </fragment>
 
     <fragment
         android:id="@+id/step_3_dest"
         android:name="com.example.polito_mad_01.ui.Step3Fragment"
         android:label="Step 3"
-        tools:layout="@layout/step3fragment"/>
+        tools:layout="@layout/step3fragment">
+    </fragment>
 
     <fragment
         android:id="@+id/step_4_dest"
         android:name="com.example.polito_mad_01.ui.Step4Fragment"
         android:label="Step 4"
-        tools:layout="@layout/step4fragment"/>
+        tools:layout="@layout/step4fragment">
+    </fragment>
 
 
 </navigation>
