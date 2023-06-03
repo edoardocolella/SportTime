@@ -1,28 +1,18 @@
 package com.example.polito_mad_01.repositories
 
 
-import android.accessibilityservice.GestureDescription.StrokeDescription
 import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.User
-import com.example.polito_mad_01.notifications.APIManager
-import com.example.polito_mad_01.notifications.NotificationData
-import com.example.polito_mad_01.notifications.PushNotification
+import com.example.polito_mad_01.notifications.*
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.Filter
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.File
-import java.net.URI
-import kotlin.concurrent.thread
+
 
 class UserRepository{
 
@@ -31,7 +21,7 @@ class UserRepository{
     private val storage = FirebaseStorage.getInstance()
 
     fun getUser(): LiveData<User> {
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val user = MutableLiveData<User>()
         fs.collection("users")
             .document(userID)
@@ -42,11 +32,10 @@ class UserRepository{
     }
 
     fun updateUser(user: User) {
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
             .document(userID)
             .set(user, SetOptions.merge())
-            //.addOnSuccessListener { println("UPDATE User updated") }
     }
 
     fun getProfileImage(): LiveData<Uri?> {
@@ -75,7 +64,7 @@ class UserRepository{
     }
 
     fun getUserFriends() : LiveData<List<User>>{
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val liveDataList = MutableLiveData<List<User>>()
 
         fs.collection("users")
@@ -198,10 +187,9 @@ class UserRepository{
             .addOnSuccessListener { println("Request deleted") }
     }
 
-    private val apiManager = APIManager()
 
      private suspend fun sendNotification(notification: PushNotification) {
-        apiManager.postNotification(notification)
+         APIManager().postNotification(notification)
     }
 
     fun subscribeToNotifications() {
@@ -215,13 +203,6 @@ class UserRepository{
                 else
                     println("Error while subscribing to friend requests notifications ${it.exception}")
             }
-        /*FirebaseMessaging.getInstance().subscribeToTopic("$userID")
-            .addOnCompleteListener {
-                if(it.isSuccessful)
-                    println("Subscribed to game requests notifications")
-                else if (it.isCanceled)
-                    println("Error while subscribing to game requests notifications ${it.exception}")
-            }*/
     }
 
     fun logout() {

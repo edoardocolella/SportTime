@@ -1,9 +1,7 @@
 package com.example.polito_mad_01.repositories
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.example.polito_mad_01.model.Review
-import com.example.polito_mad_01.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -13,7 +11,7 @@ class ReviewRepository {
     private val fAuth = FirebaseAuth.getInstance()
     fun getSingleReview(playgroundId: Int): LiveData<Review> {
         val toReturn = MutableLiveData<Review>()
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
 
         fs.collection("reviews")
             .whereEqualTo("user_id",userID)

@@ -1,22 +1,17 @@
 package com.example.polito_mad_01.notifications
 
 import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
+import android.app.*
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.ui.MainActivity
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.*
 import kotlin.random.Random
 
 private const val CHANNEL_ID = "defaultChannelName"

@@ -1,13 +1,10 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.text.TextUtils
 import android.util.Patterns
 import android.view.*
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -82,12 +79,13 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
         }
 
     }
-}
 
-fun isValidEmail(target: CharSequence?): Boolean {
-    return if (TextUtils.isEmpty(target)) {
-        false
-    } else {
-        Patterns.EMAIL_ADDRESS.matcher(target).matches()
+    private fun isValidEmail(target: CharSequence): Boolean {
+        return if (TextUtils.isEmpty(target)) {
+            false
+        } else {
+            Patterns.EMAIL_ADDRESS.matcher(target).matches()
+        }
     }
 }
+

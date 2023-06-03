@@ -6,15 +6,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
-import java.time.LocalDate
-import java.time.LocalTime
 
 class ReservationRepository{
     private val fs = FirebaseFirestore.getInstance()
@@ -24,7 +19,7 @@ class ReservationRepository{
     @RequiresApi(Build.VERSION_CODES.O)
     fun getSlotsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("reservations")
             .where(Filter.or(
                     Filter.arrayContains("attendants", userID),
@@ -44,7 +39,7 @@ class ReservationRepository{
 
     fun getReservationsByUserId(): LiveData<List<Slot>> {
         val liveDataList = MutableLiveData<List<Slot>>()
-        val userID = fAuth.currentUser?.uid ?: ""
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("reservations")
             .where(Filter.and(
                 Filter.arrayContains("attendants", userID),
@@ -121,7 +116,6 @@ class ReservationRepository{
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
-            //.addOnSuccessListener { println("$slot created") }
     }
 
     fun createOrUpdateReservation(slot: Slot) {
@@ -132,7 +126,6 @@ class ReservationRepository{
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
-            //.addOnSuccessListener { println("$slot created") }
     }
 
     fun deleteReservation(slot: Slot){
@@ -145,20 +138,6 @@ class ReservationRepository{
         fs.collection("reservations")
             .document(String.format("%03d",slot.slot_id))
             .set(slot, SetOptions.merge())
-            //.addOnSuccessListener { println("$slot created") }
-    }
-
-    fun getAllReservations(): LiveData<List<Slot>> {
-        val liveDataList = MutableLiveData<List<Slot>>()
-        fs.collection("reservations")
-            .addSnapshotListener { r, _ ->
-                val list = mutableListOf<Slot>()
-                r?.forEach {
-                    list += it.toObject(Slot::class.java)
-                    liveDataList.value = list
-                }
-            }
-        return liveDataList
     }
 
     fun getOldReservationsByUserId(date: String): LiveData<List<Slot>> {
@@ -187,7 +166,6 @@ class ReservationRepository{
         imageRef.getFile(localFile).addOnSuccessListener {
             image.value = localFile.toUri()
         }.addOnFailureListener {
-            //println("Error while downloading image")
             image.value = null
         }
         return image

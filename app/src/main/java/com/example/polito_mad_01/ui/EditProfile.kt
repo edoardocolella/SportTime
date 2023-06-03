@@ -25,11 +25,6 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
-import io.getstream.avatarview.AvatarView
-import io.getstream.avatarview.coil.loadImage
-import okhttp3.internal.indexOf
-import java.net.URI
 import java.util.*
 
 

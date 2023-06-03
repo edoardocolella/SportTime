@@ -1,19 +1,13 @@
 package com.example.polito_mad_01.ui
 
 import android.annotation.SuppressLint
-import android.os.Build
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.*
+import android.view.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 class Step1Fragment: Fragment(R.layout.step1fragment) {

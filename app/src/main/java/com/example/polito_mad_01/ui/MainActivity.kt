@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         FirebaseApp.initializeApp(this)
 
-        // NOTE: currentUser deve esistere a questo punto, altrimenti qualcosa non va
         auth.currentUser?.let {
             vm.subscribeToNotifications()
             vm.getUser().observe(this) { user ->
