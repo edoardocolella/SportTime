@@ -23,6 +23,11 @@
         android:icon="@drawable/mail_48px"
         android:title="@string/invitations" />
 
+    <item
+        android:id="@+id/findFriends"
+        android:icon="@drawable/stars_48px"
+        android:title="Find Friends" />
+
         <!-- Altri elementi del menu... -->
 
         <group android:id="@+id/bottom_group">

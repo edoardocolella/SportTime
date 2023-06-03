@@ -20,6 +20,7 @@ class InvitationContainer : Fragment(R.layout.fragment_invitation_container) {
 
     private val vm: InvitationsViewModel by viewModels {
         InvitationsViewModelFactory(
+            (activity?.application as SportTimeApplication).invitationRepository,
             (activity?.application as SportTimeApplication).reservationRepository
         )
     }

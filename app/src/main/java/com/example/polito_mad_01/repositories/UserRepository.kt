@@ -242,4 +242,20 @@ class UserRepository{
                         }
             }
     }
+
+    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
+        val liveDataList = MutableLiveData<List<User>>()
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        fs.collection("users")
+            .whereEqualTo("skills.$skillName", skillValue)
+            .whereEqualTo("location", location)
+            .get()
+            .addOnSuccessListener { query ->
+                liveDataList.value = query.documents.filter { it.id != userID }.map {
+                    it.toObject(User::class.java)!!
+                }
+            }
+        return liveDataList
+    }
+
 }
