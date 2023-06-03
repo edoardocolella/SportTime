@@ -12,26 +12,24 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.getField
 import java.time.LocalDateTime
 
 class InvitationRepository {
     private val fs = FirebaseFirestore.getInstance()
-    private val userId = FirebaseAuth.getInstance().currentUser!!.uid
+    private val fAuth = FirebaseAuth.getInstance()
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getUserInvitations() : LiveData<List<Invitation>> {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+
         val invitationList = MutableLiveData<List<Invitation>>().apply { value = listOf() }
 
         fs.collection("gameRequests")
-            .where(
-                Filter.or(
-                    Filter.equalTo("receiver", userId),
-                    Filter.greaterThanOrEqualTo("date", LocalDateTime.now())
-                )
-            )
-            .get()
-            .addOnSuccessListener { result ->
-                val requests = result.documents
+            .whereEqualTo("receiver", userID)
+            .addSnapshotListener{ result, _ ->
+                val requests = result!!.documents
+                    .filter { it.getField<String>("date")!! > LocalDateTime.now().toString() }
                     .map { it.toObject(InvitationInfo::class.java)!! }
 
                 requests.forEach {
@@ -66,9 +64,11 @@ class InvitationRepository {
 
 
     fun acceptInvitation(invitation: InvitationInfo){
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+
         fs.collection("reservations")
             .document(invitation.slotID.toString().padStart(3, '0'))
-            .update("attendants", FieldValue.arrayUnion(userId))
+            .update("attendants", FieldValue.arrayUnion(userID))
             .addOnSuccessListener {
                 fs.collection("gameRequests")
                     .document("${invitation.sender}-${invitation.receiver}-${invitation.slotID}")
