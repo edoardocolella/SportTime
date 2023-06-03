@@ -1,6 +1,14 @@
 package com.example.polito_mad_01
 
 import android.app.Application
+import android.content.Context
+import com.example.polito_mad_01.repositories.ReservationRepository
+import com.example.polito_mad_01.repositories.ReviewRepository
+import com.example.polito_mad_01.repositories.UserRepository
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import com.example.polito_mad_01.repositories.*
 
 class SportTimeApplication : Application() {
@@ -10,4 +18,5 @@ class SportTimeApplication : Application() {
     val userRepository by lazy { UserRepository() }
     val reservationRepository by lazy { ReservationRepository() }
     val reviewRepository by lazy { ReviewRepository()    }
+    val invitationRepository by lazy { InvitationRepository() }
 }

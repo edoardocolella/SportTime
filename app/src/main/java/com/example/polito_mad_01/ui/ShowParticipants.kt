@@ -10,14 +10,18 @@ import com.example.polito_mad_01.adapters.FriendsAdapter
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowReservationsViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 
 class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fragment(R.layout.fragment_show_participants) {
 
     private lateinit var recyclerViewParticipants: RecyclerView
     private lateinit var noParticipants: TextView
+    private lateinit var plusButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val fAuth = FirebaseAuth.getInstance()
 
         noParticipants = UIUtils.findTextViewById(view, R.id.noParticipantsTextView)!!
         noParticipants.visibility=View.GONE
@@ -36,38 +40,49 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
             }
         }
 
-        view.findViewById<Button>(R.id.addParticipantsButton).setOnClickListener{
-            vm.getUserFriends().observe(viewLifecycleOwner) {p ->
-                val friends = p
-                    //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                    .map { it.email }
-                    .sorted()
-                    .toTypedArray()
-                val selectedFriends = mutableListOf<String>()
+        vm.getReservation(slotID).observe(viewLifecycleOwner){
+            plusButton = view.findViewById<Button>(R.id.addParticipantsButton)
+            println("slot_user: ${it.user_id}")
+            println("current_user: ${fAuth.currentUser?.uid}")
+            if(it.user_id == fAuth.currentUser?.uid){
+                plusButton.visibility=View.VISIBLE
+                plusButton.setOnClickListener{
+                    vm.getUserFriends().observe(viewLifecycleOwner) {p ->
+                        val friends = p
+                            //.map { "${it.nickname} (${it.name} ${it.surname})" }
+                            .map { it.email }
+                            .sorted()
+                            .toTypedArray()
+                        val selectedFriends = mutableListOf<String>()
 
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle("Invite Friends")
-                    .setMultiChoiceItems(
-                        friends, null
-                    ) { _, which, isChecked ->
-                        if (isChecked) {
-                            selectedFriends += friends[which]
-                        } else if (selectedFriends.contains(friends[which])) {
-                            selectedFriends.remove(friends[which])
-                        }
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Invite Friends")
+                            .setMultiChoiceItems(
+                                friends, null
+                            ) { _, which, isChecked ->
+                                if (isChecked) {
+                                    selectedFriends += friends[which]
+                                } else if (selectedFriends.contains(friends[which])) {
+                                    selectedFriends.remove(friends[which])
+                                }
+                            }
+                            .setPositiveButton("Invite"){ dialog, _ ->
+                                selectedFriends.forEach {
+                                    vm.sendGameRequest(it, slotID)
+                                }
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("Cancel"){ dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                        return@observe
                     }
-                    .setPositiveButton("Invite"){ dialog, _ ->
-                        selectedFriends.forEach {
-                            vm.sendGameRequest(it, slotID)
-                        }
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton("Cancel"){ dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .show()
-                return@observe
+                }
+            }else{
+                plusButton.visibility=View.GONE
             }
         }
+
     }
 }
