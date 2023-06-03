@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.FriendRequestAdapter
+import com.example.polito_mad_01.adapters.InvitationAdapter
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.InvitationsViewModel
 
@@ -18,10 +19,10 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //noInvitations = UIUtils.findTextViewById(view, R.id.noRequestsTextView)!!
-        //noInvitations.visibility= View.GONE
-        //recyclerViewGameInvitations =view.findViewById(R.id.friendRequestsRecyclerView)
-        //recyclerViewGameInvitations.layoutManager = LinearLayoutManager(view.context)
+/*        noInvitations = UIUtils.findTextViewById(view, R.id.noInvitationTextView)!!
+        noInvitations.visibility= View.GONE*/
+        recyclerViewGameInvitations =view.findViewById(R.id.invitationList)
+        recyclerViewGameInvitations.layoutManager = LinearLayoutManager(view.context)
 
 
         setAllView()
@@ -29,16 +30,15 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
 
     private fun setAllView() {
         vm.getUserInvitations().observe(viewLifecycleOwner) { invitations ->
-            println("INVITATIONS ${invitations.map { it.sender.name }}")
-/*            recyclerViewGameInvitations.adapter= FriendRequestAdapter(friendRequestsNickname, vm)
+            recyclerViewGameInvitations.adapter= InvitationAdapter(invitations)
 
-            if (friendRequestsNickname.isEmpty()) {
+            if (invitations.isEmpty()) {
                 recyclerViewGameInvitations.visibility = View.GONE
-                noInvitations.visibility = View.VISIBLE
+                //noInvitations.visibility = View.VISIBLE
             } else {
                 recyclerViewGameInvitations.visibility = View.VISIBLE
-                noInvitations.visibility = View.GONE
-            }*/
+                //noInvitations.visibility = View.GONE
+            }
         }
     }
 }
