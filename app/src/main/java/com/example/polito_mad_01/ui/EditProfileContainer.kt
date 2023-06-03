@@ -20,10 +20,10 @@ import java.util.*
 
 class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) {
 
-    lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager2
-    lateinit var editProfilePageAdapter: EditProfilePageAdapter
-    lateinit var mView: View
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+    private lateinit var editProfilePageAdapter: EditProfilePageAdapter
+    private lateinit var mView: View
 
     private val vm: EditProfileViewModel by viewModels {
         EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
@@ -124,7 +124,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
         val achievementsInputLayout = mView.findViewById<TextInputLayout>(R.id.achievementsInputLayout)
         val genderInputLayout = mView.findViewById<TextInputLayout>(R.id.genderInputLayout)
         val birthdayInputLayout = mView.findViewById<TextInputLayout>(R.id.birthdayInputLayout)
-        val phonenumberInputLayout = mView.findViewById<TextInputLayout>(R.id.phonenumberInputLayout)
+        val phoneNumberInputLayout = mView.findViewById<TextInputLayout>(R.id.phonenumberInputLayout)
         val emailInputLayout = mView.findViewById<TextInputLayout>(R.id.emailInputLayout)
         vm.user.value?.name = nameInputLayout.editText?.text.toString()
         vm.user.value?.surname = surnameInputLayout.editText?.text.toString()
@@ -133,7 +133,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
         vm.user.value?.location = locationInputLayout.editText?.text.toString()
         vm.user.value?.achievements = listOf( achievementsInputLayout.editText?.text.toString() )
         vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
-        vm.user.value?.phoneNumber = phonenumberInputLayout.editText?.text.toString()
+        vm.user.value?.phoneNumber = phoneNumberInputLayout.editText?.text.toString()
         vm.user.value?.email = emailInputLayout.editText?.text.toString()
     }
 }

@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class InvitationContainer : Fragment(R.layout.fragment_invitation_container) {
     lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
-    lateinit var invitationPageAdapter: InvitationsPageAdapter
+    private lateinit var invitationPageAdapter: InvitationsPageAdapter
 
     private val vm: InvitationsViewModel by viewModels {
         InvitationsViewModelFactory(

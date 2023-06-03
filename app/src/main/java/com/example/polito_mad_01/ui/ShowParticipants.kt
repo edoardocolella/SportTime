@@ -1,15 +1,10 @@
 package com.example.polito_mad_01.ui
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.FriendsAdapter
 import com.example.polito_mad_01.util.UIUtils

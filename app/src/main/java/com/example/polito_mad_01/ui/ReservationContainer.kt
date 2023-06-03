@@ -23,9 +23,9 @@ import java.time.LocalDate
 
 class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
 
-    lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager2
-    lateinit var reservationPageAdapter: ReservationPageAdapter
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+    private lateinit var reservationPageAdapter: ReservationPageAdapter
 
     private val vm: ShowReservationsViewModel by viewModels {
         ShowReservationsViewModelFactory(

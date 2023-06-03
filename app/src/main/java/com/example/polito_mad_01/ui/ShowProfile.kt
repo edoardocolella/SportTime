@@ -11,8 +11,7 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import com.google.android.material.chip.*
 import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage

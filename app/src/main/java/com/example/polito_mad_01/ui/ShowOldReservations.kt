@@ -1,23 +1,18 @@
 package com.example.polito_mad_01.ui
 
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.View
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.adapters.OldSlotAdapter
-import com.example.polito_mad_01.viewmodel.ShowOldReservationsViewModel
-import com.example.polito_mad_01.viewmodel.ShowOldReservationsViewModelFactory
+import com.example.polito_mad_01.viewmodel.*
 import java.time.LocalDate
-import java.util.Date
 
 class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
     private lateinit var recyclerViewOldRes: RecyclerView

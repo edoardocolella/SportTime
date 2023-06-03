@@ -1,30 +1,17 @@
 package com.example.polito_mad_01.ui
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.AutoCompleteTextView
+import android.os.*
+import android.text.*
+import android.view.*
 import android.widget.Button
-import android.widget.CheckBox
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.example.polito_mad_01.LoginActivity
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.auth.FirebaseAuth
 
 class Step4Fragment: Fragment(R.layout.step4fragment) {
     private lateinit var mView: View

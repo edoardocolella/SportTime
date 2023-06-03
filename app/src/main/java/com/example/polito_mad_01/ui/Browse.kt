@@ -4,11 +4,9 @@ import android.os.*
 import android.view.*
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.*

@@ -1,10 +1,7 @@
 package com.example.polito_mad_01.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2

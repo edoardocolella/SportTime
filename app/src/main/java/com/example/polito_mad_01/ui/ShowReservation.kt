@@ -4,7 +4,6 @@ import android.os.*
 import android.view.*
 import android.widget.*
 import androidx.activity.addCallback
-import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
@@ -14,8 +13,6 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.ServicesAdapter
 import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) : Fragment(R.layout.fragment_show_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

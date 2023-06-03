@@ -59,7 +59,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         else{
             println("resDate ${res.date} now ${LocalDate.now()}")
             println("resTime ${res.start_time} now ${LocalTime.now()}")
-            button?.text = "You cannot reserve a slot in the past"
+            button?.text = getString(R.string.cannotReserve)
             button?.isClickable = false
             button?.isEnabled = false
         }
