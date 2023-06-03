@@ -4,6 +4,7 @@ package com.example.polito_mad_01.repositories
 import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.*
+import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.notifications.*
 import com.google.firebase.auth.FirebaseAuth
@@ -217,10 +218,10 @@ class UserRepository{
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun sendGameRequest(email: String, slotID: Int) {
+    fun sendGameRequest(email: String, slot: Slot) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        println("email: $email, slotID: $slotID")
+        println("email: $email, slotID: ${slot.slot_id}")
 
         fs.collection("users")
             .whereEqualTo("email", email)
@@ -229,8 +230,8 @@ class UserRepository{
                     println("User found ${result.documents[0].id}")
 
                     fs.collection("gameRequests")
-                        .document("${userID}-${result.documents[0].id}-${slotID}")
-                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slotID))
+                        .document("${userID}-${result.documents[0].id}-${slot.slot_id}")
+                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slot.slot_id, "date" to slot.date))
                         .addOnSuccessListener{
                             GlobalScope.launch (Dispatchers.IO){
                                 val data = NotificationData("Game request",
@@ -242,4 +243,20 @@ class UserRepository{
                         }
             }
     }
+
+    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
+        val liveDataList = MutableLiveData<List<User>>()
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        fs.collection("users")
+            .whereEqualTo("skills.$skillName", skillValue)
+            .whereEqualTo("location", location)
+            .get()
+            .addOnSuccessListener { query ->
+                liveDataList.value = query.documents.filter { it.id != userID }.map {
+                    it.toObject(User::class.java)!!
+                }
+            }
+        return liveDataList
+    }
+
 }

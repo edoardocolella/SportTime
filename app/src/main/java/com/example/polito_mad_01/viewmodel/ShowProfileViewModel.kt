@@ -41,6 +41,7 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
     fun declineRequest(first: String) {
         userRepository.declineRequest(first)
     }
+
 }
 
 class ShowProfileViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {

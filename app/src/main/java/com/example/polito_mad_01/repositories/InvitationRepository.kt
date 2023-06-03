@@ -1,5 +1,7 @@
 package com.example.polito_mad_01.repositories
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.model.Invitation
@@ -7,19 +9,25 @@ import com.example.polito_mad_01.model.InvitationInfo
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDateTime
 
 class InvitationRepository {
     private val fs = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getUserInvitations() : LiveData<List<Invitation>> {
         val invitationList = MutableLiveData<List<Invitation>>().apply { value = listOf() }
 
         fs.collection("gameRequests")
             .where(
-                Filter.equalTo("receiver", userId)
+                Filter.or(
+                    Filter.equalTo("receiver", userId),
+                    Filter.greaterThanOrEqualTo("date", LocalDateTime.now())
+                )
             )
             .get()
             .addOnSuccessListener { result ->
@@ -55,4 +63,24 @@ class InvitationRepository {
 
         return invitationList
     }
+
+
+    fun acceptInvitation(invitation: InvitationInfo){
+        fs.collection("reservations")
+            .document(invitation.slotID.toString().padStart(3, '0'))
+            .update("attendants", FieldValue.arrayUnion(userId))
+            .addOnSuccessListener {
+                fs.collection("gameRequests")
+                    .document("${invitation.sender}-${invitation.receiver}-${invitation.slotID}")
+                    .delete()
+            }
+    }
+
+    fun declineInvitation(invitation: InvitationInfo){
+        fs.collection("gameRequests")
+            .document("${invitation.sender}-${invitation.receiver}-${invitation.slotID}")
+            .delete()
+    }
+
+
 }

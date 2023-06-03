@@ -26,8 +26,8 @@ class ShowReservationsViewModel(private val reservationsRepository: ReservationR
         return userRepository.getUserFriends()
     }
 
-    fun sendGameRequest(invitedMail: String, slotID: Int) {
-        userRepository.sendGameRequest(invitedMail, slotID)
+    fun sendGameRequest(invitedMail: String, slot: Slot) {
+        userRepository.sendGameRequest(invitedMail, slot)
     }
 }
 

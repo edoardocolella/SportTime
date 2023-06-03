@@ -90,7 +90,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         vm.user.value?.nickname = nicknameInputLayout.editText?.text.toString()
         vm.user.value?.gender = genderInputLayout.editText?.text.toString()
         vm.user.value?.location = locationInputLayout.editText?.text.toString()
-        vm.user.value?.achievements = listOf( achievementsInputLayout.editText?.text.toString() )
+        vm.user.value?.achievements = achievementsInputLayout.editText?.text.toString()
         vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
         vm.user.value?.phoneNumber = phonenumberInputLayout.editText?.text.toString()
         vm.user.value?.email = emailInputLayout.editText?.text.toString()
