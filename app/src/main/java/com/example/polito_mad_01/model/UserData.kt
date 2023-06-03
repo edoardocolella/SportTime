@@ -37,7 +37,7 @@ class UserData(
             birthdate,
             gender,
             location,
-            listOf(),
+            "",
             skills,
             image_uri,
             email,
