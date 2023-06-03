@@ -7,6 +7,7 @@ import com.example.polito_mad_01.model.InvitationInfo
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -55,4 +56,24 @@ class InvitationRepository {
 
         return invitationList
     }
+
+
+    fun acceptInvitation(invitation: InvitationInfo){
+        fs.collection("reservations")
+            .document(invitation.slotID.toString().padStart(3, '0'))
+            .update("attendants", FieldValue.arrayUnion(userId))
+            .addOnSuccessListener {
+                fs.collection("gameRequests")
+                    .document("${invitation.sender}-${invitation.receiver}-${invitation.slotID}")
+                    .delete()
+            }
+    }
+
+    fun declineInvitation(invitation: InvitationInfo){
+        fs.collection("gameRequests")
+            .document("${invitation.sender}-${invitation.receiver}-${invitation.slotID}")
+            .delete()
+    }
+
+
 }
