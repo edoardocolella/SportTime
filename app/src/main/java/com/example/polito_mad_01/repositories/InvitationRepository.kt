@@ -1,5 +1,7 @@
 package com.example.polito_mad_01.repositories
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.polito_mad_01.model.Invitation
@@ -10,17 +12,22 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDateTime
 
 class InvitationRepository {
     private val fs = FirebaseFirestore.getInstance()
     private val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getUserInvitations() : LiveData<List<Invitation>> {
         val invitationList = MutableLiveData<List<Invitation>>().apply { value = listOf() }
 
         fs.collection("gameRequests")
             .where(
-                Filter.equalTo("receiver", userId)
+                Filter.or(
+                    Filter.equalTo("receiver", userId),
+                    Filter.greaterThanOrEqualTo("date", LocalDateTime.now())
+                )
             )
             .get()
             .addOnSuccessListener { result ->

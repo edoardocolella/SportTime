@@ -40,11 +40,12 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
             }
         }
 
-        vm.getReservation(slotID).observe(viewLifecycleOwner){
+        vm.getReservation(slotID).observe(viewLifecycleOwner){ slot ->
+
             plusButton = view.findViewById<Button>(R.id.addParticipantsButton)
-            println("slot_user: ${it.user_id}")
+            println("slot_user: ${slot.user_id}")
             println("current_user: ${fAuth.currentUser?.uid}")
-            if(it.user_id == fAuth.currentUser?.uid){
+            if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
                 plusButton.setOnClickListener{
                     vm.getUserFriends().observe(viewLifecycleOwner) {p ->
@@ -68,7 +69,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                             }
                             .setPositiveButton("Invite"){ dialog, _ ->
                                 selectedFriends.forEach {
-                                    vm.sendGameRequest(it, slotID)
+                                    vm.sendGameRequest(it, slot)
                                 }
                                 dialog.dismiss()
                             }
