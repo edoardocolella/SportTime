@@ -18,41 +18,37 @@ import com.google.android.material.textfield.TextInputLayout
 
 class Step1Fragment: Fragment(R.layout.step1fragment) {
     private lateinit var mView: View
-    private lateinit var registrationViewModel : RegistrationViewModel
-
+    private lateinit var vm : RegistrationViewModel
+    private lateinit var emailInputLayout: TextInputLayout
+    private lateinit var passwordInputLayout: TextInputLayout
 
     @SuppressLint("FragmentLiveDataObserve")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?    ): View {
         mView = inflater.inflate(R.layout.step1fragment, container, false)
-        registrationViewModel = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
+        vm = ViewModelProvider(requireActivity())[RegistrationViewModel::class.java]
         return mView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        emailInputLayout = mView.findViewById(R.id.registrationUsername)
+        passwordInputLayout = mView.findViewById(R.id.loginPassword)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setAllView()
     }
 
-    private fun setAllView(){
-        val email = mView.findViewById<TextInputLayout>(R.id.registrationUsername)
-        email.editText?.setText(registrationViewModel.user.value?.email)
-        email.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                registrationViewModel.user.value?.email = s.toString()
-            }
-        })
+    override fun onStop() {
+        super.onStop()
+        vm.user.value?.email = emailInputLayout.editText?.text.toString()
+        vm.user.value?.password = passwordInputLayout.editText?.text.toString()
+    }
 
-        val password = mView.findViewById<TextInputLayout>(R.id.loginPassword)
-        password.editText?.setText(registrationViewModel.user.value?.password)
-        password.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                registrationViewModel.user.value?.password = s.toString()
-            }
-        })
+    private fun setAllView() {
+        emailInputLayout.editText?.setText(vm.user.value?.email ?: "")
+        passwordInputLayout.editText?.setText(vm.user.value?.password ?: "")
     }
 }

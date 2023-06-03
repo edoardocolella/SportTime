@@ -39,12 +39,21 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     private val IMAGE_CAPTURE_CODE = 654
     private val PERMISSION_REQUEST_CODE = 200
     private  var imageUriForCamera : Uri? = null
-
+    private lateinit var mView: View
+    private lateinit var nameInputLayout: TextInputLayout
+    private lateinit var surnameInputLayout: TextInputLayout
+    private lateinit var achievementsInputLayout: TextInputLayout
+    private lateinit var genderInputLayout: TextInputLayout
+    private lateinit var birthdayInputLayout: TextInputLayout
+    private lateinit var locationInputLayout: TextInputLayout
+    private lateinit var nicknameInputLayout: TextInputLayout
+    private lateinit var phonenumberInputLayout: TextInputLayout
+    private lateinit var emailInputLayout: TextInputLayout
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mView = view
         requireActivity().onBackPressedDispatcher
             .addCallback(this) {
                 showExitDialog()
@@ -54,10 +63,42 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
+        getAllView()
+    }
 
-        if(savedInstanceState == null )
-            setAllView(view)
+    private fun getAllView() {
+        nameInputLayout = mView.findViewById(R.id.nameInputLayout)
+        surnameInputLayout = mView.findViewById(R.id.surnameInputLayout)
+        locationInputLayout = mView.findViewById(R.id.locationInputLayout)
+        nicknameInputLayout = mView.findViewById(R.id.nicknameInputLayout)
+        achievementsInputLayout = mView.findViewById(R.id.achievementsInputLayout)
+        genderInputLayout = mView.findViewById(R.id.genderInputLayout)
+        birthdayInputLayout = mView.findViewById(R.id.birthdayInputLayout)
+        phonenumberInputLayout = mView.findViewById(R.id.phonenumberInputLayout)
+        emailInputLayout = mView.findViewById(R.id.emailInputLayout)
+    }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+        setAllView()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        saveAllView()
+    }
+
+    private fun saveAllView() {
+        vm.user.value?.name = nameInputLayout.editText?.text.toString()
+        vm.user.value?.surname = surnameInputLayout.editText?.text.toString()
+        vm.user.value?.nickname = nicknameInputLayout.editText?.text.toString()
+        vm.user.value?.gender = genderInputLayout.editText?.text.toString()
+        vm.user.value?.location = locationInputLayout.editText?.text.toString()
+        vm.user.value?.achievements = listOf( achievementsInputLayout.editText?.text.toString() )
+        vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
+        vm.user.value?.phoneNumber = phonenumberInputLayout.editText?.text.toString()
+        vm.user.value?.email = emailInputLayout.editText?.text.toString()
     }
 
 
@@ -157,49 +198,83 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         return true
     }
 
-    private fun setValue(attribute: String, newValue: String) {
-        when (attribute) {
-            "name" -> vm.user.value?.name = newValue
-            "surname" -> vm.user.value?.surname = newValue
-            "nickname" -> vm.user.value?.nickname = newValue
-            "description" -> vm.user.value?.achievements = listOf(newValue)
-            "email" -> vm.user.value?.email = newValue
-            "phoneNumber" -> vm.user.value?.phoneNumber = newValue
-            "location" -> vm.user.value?.location = newValue
-            "gender" -> vm.user.value?.gender = newValue
-            "birthdate" -> vm.user.value?.birthdate = newValue
-        }
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setAllView(view: View) {
-
+    private fun setAllView() {
         vm.getUser().observe(viewLifecycleOwner) { user ->
-            setTextViews(view, user)
-            setButtons(user)
+            setTextViews(user)
+            setButtons()
             setSpinners()
+            setGenderView(user)
+            setBirthdateView(user)
+        }
+        vm.getUserImage().observe(viewLifecycleOwner){ setImage(it) }
+    }
+
+    private fun setTextViews(user: User) {
+        nameInputLayout.editText?.setText(user.name)
+        surnameInputLayout.editText?.setText(user.surname)
+        locationInputLayout.editText?.setText(user.location)
+        nicknameInputLayout.editText?.setText(user.nickname)
+        achievementsInputLayout .editText?.setText(user.achievements.toString())
+        genderInputLayout .editText?.setText(user.gender)
+        birthdayInputLayout.editText?.setText(user.birthdate)
+        phonenumberInputLayout.editText?.setText(user.phoneNumber)
+        emailInputLayout.editText?.setText(user.email)
+    }
+
+    private fun setBirthdateView(user: User) {
+        val birthdateView = UIUtils.findTextInputById(view,R.id.birthday)
+        birthdateView?.editText?.setText(user.birthdate)
+
+        val materialDatePicker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select a Date").build()
+        materialDatePicker.addOnPositiveButtonClickListener {
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
+            birthdateView?.editText?.setText(date)
+            vm.user.value?.birthdate = date
         }
 
-        vm.getUserImage().observe(viewLifecycleOwner){ setImage(it) }
+        birthdateView?.editText?.setOnClickListener {
+            materialDatePicker.show(childFragmentManager, "DATE_PICKER")
+        }
 
     }
 
-    private fun setButtons(user: User) {
-        setButtonAndListener(R.id.mondayButton, user.availability["monday"]!!, "monday")
-        setButtonAndListener(R.id.tuesdayButton, user.availability["tuesday"]!!, "tuesday")
-        setButtonAndListener(R.id.wednesdayButton, user.availability["wednesday"]!!, "wednesday")
-        setButtonAndListener(R.id.thursdayButton, user.availability["thursday"]!!, "thursday")
-        setButtonAndListener(R.id.fridayButton, user.availability["friday"]!!, "friday")
-        setButtonAndListener(R.id.saturdayButton, user.availability["saturday"]!!, "saturday")
-        setButtonAndListener(R.id.sundayButton, user.availability["sunday"]!!, "sunday")
+    private fun setGenderView(user: User){
+        mView.findViewById<AutoCompleteTextView>(R.id.genderSelector)?.let {
+            it.setText(user.gender)
+            it.setOnItemClickListener {  parent, _, position, _ ->
+                vm.user.value?.gender = parent.getItemAtPosition(position).toString()
+            }
+        }
     }
 
-    private fun setButtonAndListener(id: Int, value: Boolean, attribute: String) {
-        val button = requireView().findViewById<Button>(id)
+    private fun setSpinners() {
+        val textField = UIUtils.findTextInputById(view,R.id.gender)
+        val genderArray = resources.getStringArray(R.array.genderArray)
+        val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
+        (textField?.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun setButtons(){
+        setButtonAndListener(R.id.mondayButton, "monday")
+        setButtonAndListener(R.id.tuesdayButton,"tuesday")
+        setButtonAndListener(R.id.wednesdayButton, "wednesday")
+        setButtonAndListener(R.id.thursdayButton, "thursday")
+        setButtonAndListener(R.id.fridayButton, "friday")
+        setButtonAndListener(R.id.saturdayButton, "saturday")
+        setButtonAndListener(R.id.sundayButton, "sunday")
+    }
+
+    private fun setButtonAndListener(id: Int, attribute: String) {
+        val value = vm.user.value?.availability?.get(attribute)!!
+        val button = mView.findViewById<Button>(id)
         setButtonColor(value, button)
         button.setOnClickListener {
-            val newValue = !getAvailability(attribute)
-            setAvailability(attribute, newValue)
+            val newValue = !vm.user.value?.availability?.get(attribute)!!
+            vm.user.value?.availability?.put(attribute, newValue)
             setButtonColor(newValue, button)
         }
     }
@@ -212,78 +287,9 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         else button.setBackgroundColor(colorFalse)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setTextViews(view: View, user: User) {
-        val currUser = FirebaseAuth.getInstance().currentUser
-
-        setEditTextViewAndListener(R.id.name, user.name, "name")
-        setEditTextViewAndListener(R.id.surname, user.surname, "surname")
-        setEditTextViewAndListener(R.id.nickName_value, user.nickname, "nickname")
-        setEditTextViewAndListener(R.id.achievements_value, user.achievements.toString(), "description")
-        setEditTextViewAndListener(R.id.mail_value, currUser?.email, "email")
-        setEditTextViewAndListener(R.id.phoneNumber_value, user.phoneNumber, "phoneNumber")
-        setEditTextViewAndListener(R.id.location_value, user.location, "location")
-        setGenderView(view, user)
-        setBirthdateView(view, user)
-    }
-
-    private fun setBirthdateView(view: View, user: User) {
-        val birthdateView = UIUtils.findTextInputById(view,R.id.birthday)
-        birthdateView?.editText?.setText(user.birthdate)
-
-        val materialDatePicker =
-            MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a Date").build()
-        materialDatePicker.addOnPositiveButtonClickListener {
-            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-            birthdateView?.editText?.setText(date)
-            setValue("birthdate", date)
-        }
-
-        birthdateView?.editText?.setOnClickListener {
-            materialDatePicker.show(childFragmentManager, "DATE_PICKER")
-        }
-
-    }
-
-    private fun setGenderView(view: View, user: User){
-        view.findViewById<AutoCompleteTextView>(R.id.genderSelector)?.let {
-            it.setText(user.gender)
-            it.setOnItemClickListener {  parent, _, position, _ ->
-                setValue("gender", parent.getItemAtPosition(position).toString())
-            }
-        }
-    }
-
-    private fun setSpinners() {
-        val textField = UIUtils.findTextInputById(view,R.id.gender)
-        val genderArray = resources.getStringArray(R.array.genderArray)
-        val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
-        (textField?.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-    }
-
-    private fun setAvailability(attribute: String, checked: Boolean) {
-        vm.user.value?.availability?.put(attribute, checked)
-    }
-
-    private fun getAvailability(attribute: String): Boolean {
-        return vm.user.value?.availability?.get(attribute)!!
-    }
-
-    private fun setEditTextViewAndListener(id: Int, field: String?, attribute: String) {
-        val textName = requireView().findViewById<TextInputLayout>(id)
-        textName.editText?.setText(field)
-        textName.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
-                setValue(attribute, s.toString())
-        })
-    }
 
     private fun setImage(image: Uri?) {
-        //println("IMAGE: $image")
-        val frame = view?.findViewById<ImageView>(R.id.profileImage_imageView)!!
+        val frame = mView.findViewById<ImageView>(R.id.profileImage_imageView)!!
         if (image!= null && image != Uri.EMPTY)
             frame.setImageURI(image)
     }
