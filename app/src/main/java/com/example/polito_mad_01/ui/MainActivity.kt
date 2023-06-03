@@ -93,6 +93,10 @@ class MainActivity : AppCompatActivity() {
                     supportActionBar?.title = "Invitations"
                     navController.navigate(R.id.invitationContainer)
                 }
+                R.id.findFriends -> {
+                    supportActionBar?.title = "Find Friends"
+                    navController.navigate(R.id.findFriendsWithFilters)
+                }
                 R.id.logout -> {
                     vm.logout()
                     auth.signOut()

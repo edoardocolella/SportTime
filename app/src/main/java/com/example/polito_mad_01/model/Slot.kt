@@ -6,7 +6,7 @@ data class Slot(
     var date: String,
     var start_time: String,
     var end_time: String,
-    val total_price: Double,
+    val total_price: Int,
     var reserved: Boolean,
     var services: MutableMap<String,Boolean>,
     val playgroundName: String,
@@ -16,7 +16,7 @@ data class Slot(
     val attendants: MutableList<String>,
     val maxNumber: Int
 ){
-    constructor(): this(0, "", "", "", "", 0.0, false, mutableMapOf(), "", "", 0, "", mutableListOf(), 0)
+    constructor(): this(0, "", "", "", "", 0, false, mutableMapOf(), "", "", 0, "", mutableListOf(), 0)
 }
 
 

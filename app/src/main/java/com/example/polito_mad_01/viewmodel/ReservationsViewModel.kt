@@ -39,18 +39,18 @@ class ReservationsViewModel(private val reservationsRepository: ReservationRepos
 
 
     private fun add4Slots(date: String, index: Int, myHourList: List<Pair<String, String>>): Int{
-        val serviceMap = mutableMapOf<String,Boolean>(Pair("heating", false), Pair("equipment", false), Pair("locker_room", false), Pair("lighting", false))
+        val serviceMap = mutableMapOf(Pair("heating", false), Pair("equipment", false), Pair("locker_room", false), Pair("lighting", false))
 
-        val slot1 =  Slot(index, null, date, myHourList[0].first, myHourList[0].second, Random.nextDouble(1.0,10.0), false, serviceMap, "Mana Beach", "Volley", 1, "Turin", mutableListOf(), 8)
+        val slot1 =  Slot(index, null, date, myHourList[0].first, myHourList[0].second, Random.nextInt(1,10), false, serviceMap, "Mana Beach", "Volley", 1, "Turin", mutableListOf(), 8)
         reservationsRepository.populateSlot(slot1)
 
-        val slot2 =  Slot(index+1, null, date, myHourList[1].first, myHourList[1].second, Random.nextDouble(1.0,10.0), false, serviceMap,   "Centro sociale Comala", "Ping Pong", 2, "Turin", mutableListOf(), 4)
+        val slot2 =  Slot(index+1, null, date, myHourList[1].first, myHourList[1].second, Random.nextInt(1,10), false, serviceMap,   "Centro sociale Comala", "Ping Pong", 2, "Turin", mutableListOf(), 4)
         reservationsRepository.populateSlot(slot2)
 
-        val slot3= Slot(index+2, null, date, myHourList[2].first, myHourList[2].second, Random.nextDouble(1.0,10.0), false, serviceMap, "Campo da Canestro Braccini", "Basket", 3,"Turin", mutableListOf(), 10)
+        val slot3= Slot(index+2, null, date, myHourList[2].first, myHourList[2].second, Random.nextInt(1,10), false, serviceMap, "Campo da Canestro Braccini", "Basket", 3,"Turin", mutableListOf(), 10)
         reservationsRepository.populateSlot(slot3)
 
-        val slot4 =  Slot(index+3, null, date, myHourList[3].first, myHourList[3].second, Random.nextDouble(1.0,10.0), false, serviceMap, "Campo Sportivo Carmagnola", "Football", 4, "Turin", mutableListOf(), 10)
+        val slot4 =  Slot(index+3, null, date, myHourList[3].first, myHourList[3].second, Random.nextInt(1,10), false, serviceMap, "Campo Sportivo Carmagnola", "Football", 4, "Turin", mutableListOf(), 10)
         reservationsRepository.populateSlot(slot4)
         return index+4
     }

@@ -27,6 +27,8 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
         } catch (e: NotImplementedError) {
             e.printStackTrace()
         }
+
+
     }
 
     private fun setAllView() {
