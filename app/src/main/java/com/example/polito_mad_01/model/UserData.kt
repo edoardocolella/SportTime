@@ -12,7 +12,8 @@ class UserData(
     var email : String,
     var phoneNumber : String,
     var availability : MutableMap<String,Boolean>,
-    var password : String
+    var password : String,
+    var achievements : String = ""
     ) {
     constructor() : this(
         name="",
@@ -37,7 +38,7 @@ class UserData(
             birthdate,
             gender,
             location,
-            "",
+            achievements,
             skills,
             image_uri,
             email,

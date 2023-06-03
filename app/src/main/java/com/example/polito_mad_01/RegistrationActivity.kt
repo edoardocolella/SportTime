@@ -64,18 +64,21 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
             var validFlag = true
-            if(stepper.currentStep == 0) {
-                println("STEP 0")
-                validFlag = validateStep0()
+            when(stepper.currentStep){
+                0 -> {
+                    println("STEP 0")
+                    validFlag = validateStep0()
+                }
+                1 -> {
+                    println("STEP 1")
+                    validFlag = validateStep1()
+                }
+                2 -> {
+                    println("STEP 2")
+                    validFlag = validateStep2()
+                }
             }
-            else if(stepper.currentStep == 1){
-                println("STEP 1")
-                validFlag = validateStep1()
-            }
-            else if(stepper.currentStep ==2){
-                println("STEP 2")
-                validFlag = validateStep2()
-            }
+
 
             if(validFlag) {
                 stepper.goToNextStep()
@@ -141,54 +144,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun isValid(user: UserData):Boolean{
-        /*if(user.name.isEmpty()) {
-            Toast.makeText(this, "Insert your name", Toast.LENGTH_SHORT).show()
-            return false }
-        if(user.surname.isEmpty()) {
-            Toast.makeText(this, "Insert your surname", Toast.LENGTH_SHORT).show()
-            return false }
-        if(user.nickname.isEmpty()) {
-            Toast.makeText(this, "Insert your nickname", Toast.LENGTH_SHORT).show()
-            return false }
-        if(user.birthdate.isEmpty()) {
-            Toast.makeText(this, "Insert your birthdate", Toast.LENGTH_SHORT).show()
-            return false        }
-
-        if(user.birthdate > LocalDate.now().toString()) {
-            Toast.makeText(this, "Insert a birthdate in the past", Toast.LENGTH_SHORT).show()
-            return false }
-
-
-        if(user.gender.isEmpty()) {
-            Toast.makeText(this, "Insert your gender", Toast.LENGTH_SHORT).show()
-            return false }
-        if(user.location.isEmpty()) {
-            Toast.makeText(this, "Insert your location", Toast.LENGTH_SHORT).show()
-            return false}
-
-        if(user.email.isEmpty()) {
-            Toast.makeText(this, "Insert your email", Toast.LENGTH_SHORT).show()
-            return false }
-
-        if(user.password.isEmpty() || user.password.length<6){
-            Toast.makeText(this, "Insert a password longer than 6 characters", Toast.LENGTH_SHORT).show()
-            return false}
-
-        if(user.phoneNumber.isEmpty()){
-            Toast.makeText(this, "Insert a phone number", Toast.LENGTH_SHORT).show()
-            return false}
-
-        if(user.phoneNumber.length<10) {
-            Toast.makeText(this, "Phone number must have at least 10 digits", Toast.LENGTH_SHORT).show()
-            return false }
-
-         */
-
-        return true
-    }
-
     override fun onStepChanged(step: Int) {
         //Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()
     }
@@ -219,6 +174,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun validateStep1(): Boolean{
         val nameInput = findViewById<TextInputLayout>(R.id.registrationNameInputLayout)
         if(nameInput.editText?.text!!.isEmpty()){
@@ -240,6 +196,12 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             return false
         }else{ nicknameInput.error = null }
 
+        val achievementInput = findViewById<TextInputLayout>(R.id.registrationAchievementsInputLayout)
+        if (achievementInput.editText?.text!!.isEmpty()){
+            achievementInput.error = "Achievements are empty"
+            return false
+        }else{ achievementInput.error = null }
+
         val genderInput = findViewById<TextInputLayout>(R.id.registrationGenderInputLayout)
         if (genderInput.editText?.text!!.isEmpty()){
             genderInput.error = "Choose an option"
@@ -249,6 +211,11 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         val birthdateInput = findViewById<TextInputLayout>(R.id.registrationBirthdayInputLayout)
         if(birthdateInput.editText?.text!!.isEmpty()) {
             birthdateInput.error = "Insert your birthdate"
+            return false
+        }else{ birthdateInput.error = null }
+
+        if(birthdateInput.editText?.text.toString() > LocalDate.now().toString()) {
+            birthdateInput.error = "Insert a birthdate in the past"
             return false
         }else{ birthdateInput.error = null }
 

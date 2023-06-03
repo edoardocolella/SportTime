@@ -25,6 +25,7 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
     private lateinit var birthdayInputLayout: TextInputLayout
     private lateinit var locationInputLayout: TextInputLayout
     private lateinit var nicknameInputLayout: TextInputLayout
+    private lateinit var achievementsInputLayout: TextInputLayout
 
 
     @SuppressLint("FragmentLiveDataObserve")
@@ -49,6 +50,7 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
         birthdayInputLayout = mView.findViewById(R.id.registrationBirthdayInputLayout)
         locationInputLayout = mView.findViewById(R.id.registrationLocationInputLayout)
         nicknameInputLayout = mView.findViewById(R.id.registrationNicknameInputLayout)
+        achievementsInputLayout = mView.findViewById(R.id.registrationAchievementsInputLayout)
     }
 
     private fun setSpinners() {
@@ -84,6 +86,7 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
         vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
         vm.user.value?.location = locationInputLayout.editText?.text.toString()
         vm.user.value?.nickname = nicknameInputLayout.editText?.text.toString()
+        vm.user.value?.achievements = achievementsInputLayout.editText?.text.toString()
     }
 
     private fun setAllView(){
@@ -93,6 +96,7 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
         birthdayInputLayout.editText?.setText(vm.user.value?.birthdate ?: "")
         locationInputLayout.editText?.setText(vm.user.value?.location ?: "")
         nicknameInputLayout.editText?.setText(vm.user.value?.nickname ?: "")
+        achievementsInputLayout.editText?.setText(vm.user.value?.achievements ?: "")
     }
 
 }
