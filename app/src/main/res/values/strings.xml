@@ -131,4 +131,6 @@
     <string name="noRequests">You have no friend requests</string>
     <string name="cannotReserve">You cannot reserve a slot in the past</string>
     <string name="sent_by">Sent by: </string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
 </resources>

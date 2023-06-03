@@ -199,9 +199,17 @@
         android:id="@+id/invitationContainer"
         android:name="com.example.polito_mad_01.ui.InvitationContainer"
         android:label="fragment_invitation_container"
-        tools:layout="@layout/fragment_invitation_container" />
+        tools:layout="@layout/fragment_invitation_container" >
+        <action
+            android:id="@+id/action_invitationContainer_to_reservationContainer"
+            app:destination="@id/reservationContainer" />
+    </fragment>
     <fragment
         android:id="@+id/findFriendsWithFilters"
         android:name="com.example.polito_mad_01.ui.FindFriendsWithFilters"
         android:label="FindFriendsWithFilters" />
+    <fragment
+        android:id="@+id/showInvitations"
+        android:name="com.example.polito_mad_01.ui.ShowInvitations"
+        android:label="ShowInvitations" />
 </navigation>

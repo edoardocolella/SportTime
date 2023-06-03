@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
@@ -30,7 +31,7 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
 
     private fun setAllView() {
         vm.getUserInvitations().observe(viewLifecycleOwner) { invitations ->
-            recyclerViewGameInvitations.adapter= InvitationAdapter(invitations)
+            recyclerViewGameInvitations.adapter= InvitationAdapter(invitations, findNavController())
 
             if (invitations.isEmpty()) {
                 recyclerViewGameInvitations.visibility = View.GONE
