@@ -1,8 +1,10 @@
 package com.example.polito_mad_01.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
     private lateinit var recyclerViewGameInvitations: RecyclerView
     private lateinit var noInvitations: TextView
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,9 +32,11 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
         setAllView()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView() {
         vm.getUserInvitations().observe(viewLifecycleOwner) { invitations ->
-            recyclerViewGameInvitations.adapter= InvitationAdapter(invitations, findNavController())
+            println(invitations)
+            recyclerViewGameInvitations.adapter= InvitationAdapter(invitations, vm, viewLifecycleOwner, findNavController())
 
             if (invitations.isEmpty()) {
                 recyclerViewGameInvitations.visibility = View.GONE

@@ -20,10 +20,11 @@ class InvitationRepository {
     private val fAuth = FirebaseAuth.getInstance()
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getUserInvitations() : LiveData<List<Invitation>> {
+    fun getUserInvitations() : LiveData<List<InvitationInfo>> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
 
         val invitationList = MutableLiveData<List<Invitation>>().apply { value = listOf() }
+        val invitationInfoList = MutableLiveData<List<InvitationInfo>>().apply { value = listOf() }
 
         fs.collection("gameRequests")
             .whereEqualTo("receiver", userID)
@@ -32,34 +33,38 @@ class InvitationRepository {
                     .filter { it.getField<String>("date")!! > LocalDateTime.now().toString() }
                     .map { it.toObject(InvitationInfo::class.java)!! }
 
-                requests.forEach {
-                    fs.collection("reservations")
-                        .document(it.slotID.toString().padStart(3, '0'))
-                        .get()
-                        .addOnSuccessListener { slot ->
-                            val requestSlot = slot.toObject(Slot::class.java)!!
-
-                            fs.collection("users")
-                                .document(it.sender)
-                                .get()
-                                .addOnSuccessListener { user ->
-                                    val requestUser = user.toObject(User::class.java)!!
-
-                                    val invitation = Invitation(
-                                        requestUser,
-                                        requestSlot,
-                                    )
-
-                                    invitationList.value = invitationList.value?.plus(
-                                        invitation
-                                    )
-                                }
-                        }
-                }
-
+                invitationInfoList.value = requests
             }
 
-        return invitationList
+        return invitationInfoList
+    }
+
+    fun getInvitationData(invitation : InvitationInfo) : MutableLiveData<Invitation>{
+        val invitationData = MutableLiveData<Invitation>()
+
+        fs.collection("reservations")
+            .document(invitation.slotID.toString().padStart(3, '0'))
+            .get()
+            .addOnSuccessListener { slot ->
+                val requestSlot = slot.toObject(Slot::class.java)!!
+
+                fs.collection("users")
+                    .document(invitation.sender)
+                    .get()
+                    .addOnSuccessListener { user ->
+                        val requestUser = user.toObject(User::class.java)!!
+
+                        invitationData.value = Invitation(
+                            invitation,
+                            requestUser,
+                            requestSlot,
+                        )
+
+
+                    }
+            }
+
+        return invitationData
     }
 
 

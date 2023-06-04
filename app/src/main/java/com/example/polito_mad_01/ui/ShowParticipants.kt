@@ -77,7 +77,6 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                                 dialog.dismiss()
                             }
                             .show()
-                        return@observe
                     }
                 }
             }else{

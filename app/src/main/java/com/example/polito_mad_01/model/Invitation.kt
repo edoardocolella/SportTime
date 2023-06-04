@@ -9,6 +9,7 @@ data class InvitationInfo(
 }
 
 data class Invitation(
+    val info: InvitationInfo,
     val sender: User,
     val slot: Slot,
 )
