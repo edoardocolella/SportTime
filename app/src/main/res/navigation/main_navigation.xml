@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_reservationsFragment_to_reservationContainer"
             app:destination="@id/reservationContainer" />
+        <action
+            android:id="@+id/action_reservationsFragment_to_showReservationFragment"
+            app:destination="@id/showReservationFragment" />
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
