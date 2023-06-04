@@ -18,6 +18,10 @@ class FindFriendsWithFiltersViewModal (private val userRepository: UserRepositor
     fun findFriendBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
         return userRepository.findFriendsBySkillAndLocation(skillName, skillValue, location)
     }
+
+    fun sendRequest(email: String){
+        userRepository.addFriend(email)
+    }
 }
 
 class FindFriendsWithFiltersViewModalFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
