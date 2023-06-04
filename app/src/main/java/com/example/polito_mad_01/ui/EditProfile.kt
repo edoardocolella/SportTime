@@ -23,6 +23,8 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -224,7 +226,12 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
         val materialDatePicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a Date").build()
+                .setTitleText("Select a Date")
+                .setCalendarConstraints(
+                    CalendarConstraints.Builder()
+                        .setValidator(DateValidatorPointBackward.now())
+                        .build())
+                .build()
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
             if(date > LocalDate.now().toString()){

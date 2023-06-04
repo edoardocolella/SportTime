@@ -58,10 +58,10 @@ class Step3Fragment: Fragment(R.layout.step3fragment) {
 
     override fun onStop() {
         super.onStop()
-        val basketSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelBasketMenu)
-        val footballSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelFootballMenu)
-        val pingPongSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelPingPongMenu)
-        val volleyballSkillView = mView.findViewById<MaterialAutoCompleteTextView>(R.id.sportLevelVolleyballMenu)
+        val basketSkillView = mView.findViewById<AutoCompleteTextView>(R.id.sportLevelBasketMenu)
+        val footballSkillView = mView.findViewById<AutoCompleteTextView>(R.id.sportLevelFootballMenu)
+        val pingPongSkillView = mView.findViewById<AutoCompleteTextView>(R.id.sportLevelPingPongMenu)
+        val volleyballSkillView = mView.findViewById<AutoCompleteTextView>(R.id.sportLevelVolleyballMenu)
 
         val map = mutableMapOf<String,String>()
         if(basketSkillView.text.toString().isNotEmpty())

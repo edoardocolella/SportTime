@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +22,7 @@ import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -135,6 +138,12 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
                             vm.createUser(auth.currentUser!!.uid)
 
+                            Snackbar.make(
+                                findViewById(android.R.id.content),
+                                "Registration successful",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
                         }
@@ -229,9 +238,28 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     }
 
     private fun validateStep2():Boolean{
-        var validFlag = true
 
-        return validFlag
+        val checkBoxBasket = findViewById<CheckBox>(R.id.checkBoxBasket).isChecked
+        val checkBoxFootball = findViewById<CheckBox>(R.id.checkBoxFootball).isChecked
+        val checkBoxPingPong = findViewById<CheckBox>(R.id.checkBoxPingPong).isChecked
+        val checkBoxVolleyball = findViewById<CheckBox>(R.id.checkBoxVolleyball).isChecked
+
+        if(!checkBoxBasket && !checkBoxFootball && !checkBoxPingPong && !checkBoxVolleyball){
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one sport", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
+
+        val basketSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelBasketMenu).text.toString()
+        val footballSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelFootballMenu).text.toString()
+        val pingPongSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelPingPongMenu).text.toString()
+        val volleyballSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelVolleyballMenu).text.toString()
+
+        if(basketSkillView.isEmpty() && footballSkillView.isEmpty() && pingPongSkillView.isEmpty() && volleyballSkillView.isEmpty()){
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one skill", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     private fun validateStep3():Boolean{
@@ -245,7 +273,7 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
         val values = vm.user.value?.availability?.values!!
         if(!values.contains(true)){
-            Toast.makeText(this, "Select at least one day", Toast.LENGTH_SHORT).show()
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one day\"", Snackbar.LENGTH_SHORT).show()
             return false
         }
 
