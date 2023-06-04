@@ -252,7 +252,9 @@ class UserRepository{
             .whereEqualTo("location", location)
             .get()
             .addOnSuccessListener { query ->
-                liveDataList.value = query.documents.filter { it.id != userID }.map {
+                liveDataList.value = query.documents.filter { it.id != userID }
+                    .filter { !(it["friends"] as List<*>).contains(userID) }
+                    .map {
                     it.toObject(User::class.java)!!
                 }
             }
