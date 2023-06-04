@@ -23,8 +23,8 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-/*        noInvitations = UIUtils.findTextViewById(view, R.id.noInvitationTextView)!!
-        noInvitations.visibility= View.GONE*/
+        noInvitations = UIUtils.findTextViewById(view, R.id.noInvitationTextView)!!
+        noInvitations.visibility= View.GONE
         recyclerViewGameInvitations =view.findViewById(R.id.invitationList)
         recyclerViewGameInvitations.layoutManager = LinearLayoutManager(view.context)
 
@@ -40,10 +40,10 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
 
             if (invitations.isEmpty()) {
                 recyclerViewGameInvitations.visibility = View.GONE
-                //noInvitations.visibility = View.VISIBLE
+                noInvitations.visibility = View.VISIBLE
             } else {
                 recyclerViewGameInvitations.visibility = View.VISIBLE
-                //noInvitations.visibility = View.GONE
+                noInvitations.visibility = View.GONE
             }
         }
     }
