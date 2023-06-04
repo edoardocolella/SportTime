@@ -36,9 +36,8 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
 
             val friends = user.friends
 
-            vm.getFriends(friends).observe(viewLifecycleOwner){ friendsPair ->
-                val friendsNick = friendsPair.map{it.second}
-                recyclerViewFriends.adapter= FriendsAdapter(friendsNick)
+            vm.getFriends().observe(viewLifecycleOwner){ friends ->
+                recyclerViewFriends.adapter= FriendsAdapter(friends)
 
             }
 
