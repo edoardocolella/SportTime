@@ -32,9 +32,15 @@ class FreeSlotAdapter(val data:List<Slot>, private val navController: NavControl
 
 
         fun bind(fs: Slot){
-
             freeSlotItem.setOnClickListener {
-                navController.navigate(R.id.createReservation, bundleOf("slotID" to fs.slot_id))
+                when(navController.currentDestination?.id) {
+                    R.id.reservationsFragment -> {
+                        navController.navigate(R.id.action_reservationsFragment_to_createReservation, bundleOf("slotID" to fs.slot_id))
+                    }
+                    R.id.browseFragment -> {
+                        navController.navigate(R.id.action_browseFragment_to_createReservation, bundleOf("slotID" to fs.slot_id))
+                    }
+                }
             }
 
             playgroundName.text = fs.playgroundName
