@@ -130,4 +130,6 @@
     <string name="participants">Participants</string>
     <string name="noRequests">You have no friend requests</string>
     <string name="cannotReserve">You cannot reserve a slot in the past</string>
+    <string name="sendRequest">Send request</string>
+    <string name="noFriendsFound">Nobody corresponds to these criteria: don\'t you feel a little picky?</string>
 </resources>
