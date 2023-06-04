@@ -21,11 +21,16 @@ import com.example.polito_mad_01.model.UserData
 import com.example.polito_mad_01.repositories.UserRepository
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks.await
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
 
 
@@ -164,22 +169,45 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     //stepperNavListener = this
 
 
-    private fun validateStep0() : Boolean{
+    private fun validateStep0() : Boolean {
         val emailInput = findViewById<TextInputLayout>(R.id.registrationUsername)
         val passwordInput = findViewById<TextInputLayout>(R.id.loginPassword)
-        if(emailInput.editText?.text!!.isEmpty()){
+        if (emailInput.editText?.text!!.isEmpty()) {
             emailInput.error = "Email is empty"
             return false
-        }else if(
-            !Patterns.EMAIL_ADDRESS.matcher(emailInput.editText?.text!!).matches()){
+        } else if (
+            !Patterns.EMAIL_ADDRESS.matcher(emailInput.editText?.text!!).matches()) {
             emailInput.error = "Email is not valid"
             return false
-        } else{ emailInput.error = null }
+        } else {
+            emailInput.error = null
+        }
 
-        if(passwordInput.editText?.text!!.length < 6) {
+
+
+        var flag = false
+        runBlocking {
+            val methods = auth.fetchSignInMethodsForEmail(emailInput.editText?.text.toString())
+                .await()
+                .signInMethods
+            if (methods != null && methods.isNotEmpty()) {
+                flag = true
+                emailInput.error = "Email already exists"
+            }
+            else{
+                emailInput.error = null
+            }
+        }
+        if(flag) return false
+
+
+        if (passwordInput.editText?.text!!.length < 6) {
             passwordInput.error = "Password must have at least 6 characters"
             return false
-        }else{ passwordInput.error = null }
+        } else {
+            passwordInput.error = null
+        }
+
         return true
     }
 
