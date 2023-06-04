@@ -59,6 +59,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         registerForContextMenu(imgButton)
         imgButton.setOnClickListener { v -> v.showContextMenu() }
         getAllView()
+        setAllView()
     }
 
     private fun getAllView() {
@@ -72,31 +73,6 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         phonenumberInputLayout = mView.findViewById(R.id.phonenumberInputLayout)
         emailInputLayout = mView.findViewById(R.id.emailInputLayout)
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onResume() {
-        super.onResume()
-        setAllView()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        saveAllView()
-    }
-
-    private fun saveAllView() {
-        vm.user.value?.name = nameInputLayout.editText?.text.toString()
-        vm.user.value?.surname = surnameInputLayout.editText?.text.toString()
-        vm.user.value?.nickname = nicknameInputLayout.editText?.text.toString()
-        vm.user.value?.gender = genderInputLayout.editText?.text.toString()
-        vm.user.value?.location = locationInputLayout.editText?.text.toString()
-        vm.user.value?.achievements = listOf( achievementsInputLayout.editText?.text.toString() )
-        vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
-        vm.user.value?.phoneNumber = phonenumberInputLayout.editText?.text.toString()
-        vm.user.value?.email = emailInputLayout.editText?.text.toString()
-    }
-
-
     override fun onCreateContextMenu(
         menu: ContextMenu,
         v: View,
@@ -199,7 +175,6 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         vm.getUser().observe(viewLifecycleOwner) { user ->
             setTextViews(user)
             setButtons()
-            setSpinners()
             setGenderView(user)
             setBirthdateView(user)
         }
@@ -207,19 +182,41 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setTextViews(user: User) {
-        nameInputLayout.editText?.setText(user.name)
-        surnameInputLayout.editText?.setText(user.surname)
-        locationInputLayout.editText?.setText(user.location)
-        nicknameInputLayout.editText?.setText(user.nickname)
-        achievementsInputLayout .editText?.setText(user.achievements.toString())
+        setEditTextViewAndListener(nameInputLayout, user.name, "name")
+        setEditTextViewAndListener(surnameInputLayout, user.surname, "surname")
+        setEditTextViewAndListener(locationInputLayout, user.location, "location")
+        setEditTextViewAndListener(nicknameInputLayout, user.nickname, "nickname")
+        setEditTextViewAndListener(achievementsInputLayout, user.achievements, "achievements")
         genderInputLayout .editText?.setText(user.gender)
         birthdayInputLayout.editText?.setText(user.birthdate)
-        phonenumberInputLayout.editText?.setText(user.phoneNumber)
+        setEditTextViewAndListener(phonenumberInputLayout, user.phoneNumber, "phoneNumber")
         emailInputLayout.editText?.setText(user.email)
     }
 
+    private fun setEditTextViewAndListener(textView: TextInputLayout, field: String?, attribute: String) {
+        textView.editText?.setText(field)
+        textView.editText?.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
+                setValue(attribute, s.toString())
+        })
+    }
+
+    private fun setValue(attribute: String, value:String){
+        println("attribute: $attribute, value: $value")
+        when(attribute){
+            "name" -> {vm.user.value?.name = value; println("name: ${vm.user.value?.name}")}
+            "surname" -> {vm.user.value?.surname = value; println("surname: ${vm.user.value?.surname}")}
+            "location" -> {vm.user.value?.location = value; println("location: ${vm.user.value?.location}")}
+            "nickname" -> {vm.user.value?.nickname = value; println("nickname: ${vm.user.value?.nickname}")}
+            "achievements" -> {vm.user.value?.achievements = value; println("achievements: ${vm.user.value?.achievements}")}
+            "phoneNumber" -> {vm.user.value?.phoneNumber = value; println("phoneNumber: ${vm.user.value?.phoneNumber}")}
+        }
+    }
+
     private fun setBirthdateView(user: User) {
-        val birthdateView = UIUtils.findTextInputById(view,R.id.birthday)
+        val birthdateView = UIUtils.findTextInputById(view,R.id.birthdayInputLayout)
         birthdateView?.editText?.setText(user.birthdate)
 
         val materialDatePicker =
@@ -237,20 +234,17 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
 
     }
 
-    private fun setGenderView(user: User){
-        mView.findViewById<AutoCompleteTextView>(R.id.genderSelector)?.let {
-            it.setText(user.gender)
-            it.setOnItemClickListener {  parent, _, position, _ ->
-                vm.user.value?.gender = parent.getItemAtPosition(position).toString()
-            }
-        }
-    }
-
-    private fun setSpinners() {
-        val textField = UIUtils.findTextInputById(view,R.id.gender)
+    private fun setGenderView(user: User) {
+        val genderValue = mView.findViewById<TextInputLayout>(R.id.genderInputLayout)
+        genderValue.editText?.setText(user.gender)
         val genderArray = resources.getStringArray(R.array.genderArray)
         val adapter = ArrayAdapter(requireContext(), R.layout.gender_list_item, genderArray)
-        (textField?.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        (genderValue.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+        val genderSelector = mView.findViewById<AutoCompleteTextView>(R.id.genderSelector)
+        genderSelector.setOnItemClickListener { parent, _, position, _ ->
+            vm.user.value?.gender = parent.getItemAtPosition(position).toString()
+        }
     }
 
     private fun setButtons(){

@@ -25,7 +25,7 @@ class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) 
                     val args = bundleOf(
                         "selectedDate" to it.date
                     )
-                    findNavController().navigate(R.id.action_showReservationFragment2_to_reservationsFragment, args)
+                    findNavController().navigate(R.id.reservationsFragment, args)
                 }
                 .isEnabled = true
 

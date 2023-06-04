@@ -68,13 +68,15 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
 
     private fun trySaveData(): Boolean {
         return try {
-            saveAllView()
+            //saveAllView()
+            println("USER ${vm.user.value!!}")
             isNotValid()
             vm.updateUser()
             findNavController().navigate(R.id.showProfileContainer)
             Snackbar.make(requireView(), "Profile updated successfully.", Snackbar.LENGTH_LONG).show()
             true
         } catch (e: Exception) {
+            println(e.message)
             Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
             false
         }
@@ -114,26 +116,5 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
     private fun fieldIsValid(field: String?, fieldName: String) {
         if (field.isNullOrEmpty())
             throw Exception("$fieldName is invalid")
-    }
-
-    private fun saveAllView() {
-        val nameInputLayout = mView.findViewById<TextInputLayout>(R.id.nameInputLayout)
-        val surnameInputLayout = mView.findViewById<TextInputLayout>(R.id.surnameInputLayout)
-        val locationInputLayout = mView.findViewById<TextInputLayout>(R.id.locationInputLayout)
-        val nicknameInputLayout = mView.findViewById<TextInputLayout>(R.id.nicknameInputLayout)
-        val achievementsInputLayout = mView.findViewById<TextInputLayout>(R.id.achievementsInputLayout)
-        val genderInputLayout = mView.findViewById<TextInputLayout>(R.id.genderInputLayout)
-        val birthdayInputLayout = mView.findViewById<TextInputLayout>(R.id.birthdayInputLayout)
-        val phoneNumberInputLayout = mView.findViewById<TextInputLayout>(R.id.phonenumberInputLayout)
-        val emailInputLayout = mView.findViewById<TextInputLayout>(R.id.emailInputLayout)
-        vm.user.value?.name = nameInputLayout.editText?.text.toString()
-        vm.user.value?.surname = surnameInputLayout.editText?.text.toString()
-        vm.user.value?.nickname = nicknameInputLayout.editText?.text.toString()
-        vm.user.value?.gender = genderInputLayout.editText?.text.toString()
-        vm.user.value?.location = locationInputLayout.editText?.text.toString()
-        vm.user.value?.achievements = listOf( achievementsInputLayout.editText?.text.toString() )
-        vm.user.value?.birthdate = birthdayInputLayout.editText?.text.toString()
-        vm.user.value?.phoneNumber = phoneNumberInputLayout.editText?.text.toString()
-        vm.user.value?.email = emailInputLayout.editText?.text.toString()
     }
 }

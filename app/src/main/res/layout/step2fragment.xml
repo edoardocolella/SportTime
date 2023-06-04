@@ -93,6 +93,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registrationAchievementsInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="name"
+            android:ems="10"
+            android:layout_marginTop="10dp"
+            android:hint="Tell us something about you"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textSize="38sp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registrationAchievementsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/registrationGenderInputLayout"
             style=" @style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
