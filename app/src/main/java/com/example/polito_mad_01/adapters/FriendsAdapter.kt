@@ -1,12 +1,13 @@
 package com.example.polito_mad_01.adapters
 
 import android.view.*
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.util.UIUtils
 
 
-class FriendsAdapter ( private val data:List<String>): RecyclerView.Adapter<FriendsAdapter.FriendsHolder>(){
+class FriendsAdapter ( private val data:List<String>, ): RecyclerView.Adapter<FriendsAdapter.FriendsHolder>(){
 
 
     override fun getItemCount() = data.size
@@ -23,9 +24,13 @@ class FriendsAdapter ( private val data:List<String>): RecyclerView.Adapter<Frie
 
     class FriendsHolder(v: View): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
+        private val item = v.findViewById<CardView>(R.id.friendItem)!!
 
         fun bind(friend: String){
             friendId.text = friend
+            item.setOnClickListener{
+                //findNavController().navigate(R.id.action_showFriends_to_showFriendProfile)
+            }
         }
     }
 

@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/frienItem"
+        android:id="@+id/friendItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"

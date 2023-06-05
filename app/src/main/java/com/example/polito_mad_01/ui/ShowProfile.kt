@@ -32,15 +32,18 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
     }
 
     private fun setAllView() {
-        val currUser = FirebaseAuth.getInstance().currentUser
 
-        vm.getUser().observe(viewLifecycleOwner) {user->
+        val currUser = if(arguments != null){
+            arguments?.getString("user").toString()
+        }else FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
             user.let {
                 setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 setTextView(R.id.nickname, it.nickname,view)
-                setTextView(R.id.description, it.achievements.toString(),view)
+                setTextView(R.id.description, it.achievements,view)
                 setTextView(R.id.birthdate, it.birthdate,view)
-                setTextView(R.id.email_text, currUser?.email ,view)
+                setTextView(R.id.email_text, it.email ,view)
                 setTextView(R.id.phoneNumber_text, it.phoneNumber,view)
                 setTextView(R.id.gender, it.gender,view)
                 setTextView(R.id.location, it.location,view)

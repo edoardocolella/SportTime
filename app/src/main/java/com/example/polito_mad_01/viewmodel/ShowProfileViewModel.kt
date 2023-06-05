@@ -14,6 +14,11 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
         return user
     }
 
+    fun getUserById(userId: String): LiveData<User> {
+        user = userRepository.getUserById(userId) as MutableLiveData<User>
+        return user
+    }
+
     fun getUserImage(): LiveData<Uri?> {
         return userRepository.getProfileImage()
     }

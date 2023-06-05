@@ -32,6 +32,16 @@ class UserRepository{
         return user
     }
 
+    fun getUserById(userID: String): LiveData<User> {
+        val user = MutableLiveData<User>()
+        fs.collection("users")
+            .document(userID)
+            .addSnapshotListener { r, _ ->
+                user.value =  r?.toObject(User::class.java)
+            }
+        return user
+    }
+
     fun updateUser(user: User) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
@@ -245,5 +255,7 @@ class UserRepository{
             }
         return liveDataList
     }
+
+
 
 }
