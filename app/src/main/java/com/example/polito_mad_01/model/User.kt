@@ -1,6 +1,7 @@
 package com.example.polito_mad_01.model
 
 data class User(
+    var id: String,
     var name: String,
     var surname: String,
     var nickname: String,
@@ -17,6 +18,7 @@ data class User(
 ) {
 
     constructor() : this(
+        "",
         "",
         "",
         "",
