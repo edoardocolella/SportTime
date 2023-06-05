@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.text.*
 import android.view.*
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -53,11 +54,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mView = view
-        requireActivity().onBackPressedDispatcher
-            .addCallback(this) {
-                showExitDialog()
-            }
-            .isEnabled = true
+
 
         val imgButton = view.findViewById<ImageButton>(R.id.imageButton)
         registerForContextMenu(imgButton)
@@ -65,6 +62,8 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         getAllView()
         setAllView()
     }
+
+
 
     private fun getAllView() {
         nameInputLayout = mView.findViewById(R.id.nameInputLayout)
@@ -165,14 +164,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
             .setPositiveButton("OK") { _, _ -> requestPermission() }
     }
 
-    private fun showExitDialog(): Boolean {
-        AlertDialog.Builder(activity)
-            .setTitle("Are you sure?").setMessage("All changes will be lost")
-            .setPositiveButton("YES")
-            { _, _ -> findNavController().navigate(R.id.showProfileContainer) }
-            .setNegativeButton("NO") { _, _ -> }.show()
-        return true
-    }
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

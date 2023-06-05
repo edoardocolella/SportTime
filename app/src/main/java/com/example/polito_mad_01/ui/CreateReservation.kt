@@ -39,6 +39,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         slotID = requireArguments().getInt("slotID")
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
+            if(it.reserved) findNavController().navigate(R.id.reservationsFragment)
             setImage(it.playground_id)
             setAllTextViews(it)
             setAllCheckBoxes(it)

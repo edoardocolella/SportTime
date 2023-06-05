@@ -1,9 +1,12 @@
 package com.example.polito_mad_01.ui
 
+import android.app.AlertDialog
 import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.os.Bundle
 import android.view.*
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -22,6 +25,8 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
     private lateinit var viewPager: ViewPager2
     private lateinit var editProfilePageAdapter: EditProfilePageAdapter
     private lateinit var mView: View
+    private lateinit var backCallBack: OnBackPressedCallback
+
 
     private val vm: EditProfileViewModel by viewModels {
         EditProfileViewModelFactory((activity?.application as SportTimeApplication).userRepository)
@@ -30,6 +35,12 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
             setHasOptionsMenu(true)
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        backCallBack.remove()
     }
 
     @Deprecated("Deprecated in Java")
@@ -62,6 +73,12 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
             }
         }.attach()
 
+
+        backCallBack = requireActivity().onBackPressedDispatcher
+            .addCallback(this) {
+                showExitDialog()
+            }
+        backCallBack.isEnabled = true
     }
 
     private fun trySaveData(): Boolean {
@@ -109,5 +126,14 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
     private fun fieldIsValid(field: String?, fieldName: String) {
         if (field.isNullOrEmpty())
             throw Exception("$fieldName is invalid")
+    }
+
+    private fun showExitDialog(): Boolean {
+        AlertDialog.Builder(activity)
+            .setTitle("Are you sure?").setMessage("All changes will be lost")
+            .setPositiveButton("YES")
+            { _, _ -> findNavController().navigate(R.id.showProfileContainer) }
+            .setNegativeButton("NO") { _, _ -> }.show()
+        return true
     }
 }

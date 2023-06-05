@@ -14,6 +14,7 @@ import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.getField
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 class InvitationRepository {
     private val fs = FirebaseFirestore.getInstance()
@@ -30,7 +31,11 @@ class InvitationRepository {
             .whereEqualTo("receiver", userID)
             .addSnapshotListener{ result, _ ->
                 val requests = result!!.documents
-                    .filter { it.getField<String>("date")!! > LocalDateTime.now().toString() }
+                    .filter {
+                        (it.getField<String>("date")!! > LocalDateTime.now().toString()) ||
+                                (it.getField<String>("date")!! == LocalDateTime.now().toString()
+                                        && it.getField<String>("start_time")!! >= LocalTime.now().toString())
+                    }
                     .map { it.toObject(InvitationInfo::class.java)!! }
 
                 invitationInfoList.value = requests

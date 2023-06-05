@@ -63,6 +63,20 @@ class UserRepository{
         return image
     }
 
+    fun getProfileImageById(userID: String): LiveData<Uri?> {
+        //val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        val storageReference = storage.reference
+        val imageRef = storageReference.child("profileImages/$userID.jpg")
+        val localFile = File.createTempFile("images", "jpg")
+        val image = MutableLiveData<Uri?>()
+        imageRef.getFile(localFile).addOnSuccessListener {
+            image.value = localFile.toUri()
+        }.addOnFailureListener {
+            image.value = null
+        }
+        return image
+    }
+
     fun updateProfileImage(imageUri: Uri) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
@@ -225,7 +239,14 @@ class UserRepository{
             .addOnSuccessListener { result ->
                     fs.collection("gameRequests")
                         .document("${userID}-${result.documents[0].id}-${slot.slot_id}")
-                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slot.slot_id, "date" to slot.date))
+                        .set(mapOf
+                            ("sender" to userID,
+                            "receiver" to result.documents[0].id,
+                            "slotID" to slot.slot_id,
+                            "date" to slot.date,
+                            "start_time" to slot.start_time
+                        )
+                        )
                         .addOnSuccessListener{
                             GlobalScope.launch (Dispatchers.IO){
                                 val data = NotificationData("Game request",

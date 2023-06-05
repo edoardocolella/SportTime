@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.*
-import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
@@ -32,11 +30,7 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
 
     private fun setAllView() {
 
-        val currUser = if(arguments != null){
-            arguments?.getString("user").toString()
-        }else FirebaseAuth.getInstance().currentUser?.uid.toString()
-
-        vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
+        vm.getUser().observe(viewLifecycleOwner) {user->
             user.let {
                 setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 setTextView(R.id.nickname, it.nickname,view)

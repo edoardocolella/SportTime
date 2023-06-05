@@ -47,7 +47,7 @@ class FindFriendsAdapter (private val users: List<Pair<User,String>>, private va
 
             v.findViewById<CardView>(R.id.findFriendsItem).setOnClickListener {
                 navController.navigate(R.id.action_findFriendsWithFilters_to_showUserProfile, bundleOf(
-                    "userID" to friend.second
+                    "userId" to friend.second
                 ))
             }
 
