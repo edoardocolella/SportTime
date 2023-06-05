@@ -24,7 +24,7 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
     }
 
 
-    fun getFriends(): LiveData<List<User>> {
+    fun getFriends(): LiveData<List<Pair<User,String>>> {
         return userRepository.getUserFriends()
     }
 

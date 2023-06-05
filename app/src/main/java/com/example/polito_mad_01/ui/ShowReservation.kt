@@ -17,17 +17,8 @@ import com.example.polito_mad_01.viewmodel.*
 class ShowReservation(val slotID : Int = 0, val vm : ShowReservationsViewModel) : Fragment(R.layout.fragment_show_reservation) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
         vm.getReservation(slotID).observe(viewLifecycleOwner) {
-/*            requireActivity().onBackPressedDispatcher
-                .addCallback(this) {
-                    val args = bundleOf(
-                        "selectedDate" to it.date
-                    )
-                    findNavController().navigate(R.id.reservationsFragment, args)
-                }
-                .isEnabled = true*/
 
             setTextView(R.id.playgroundName, it.playgroundName, view)
             setTextView(R.id.playgroundLocation, it.location, view)

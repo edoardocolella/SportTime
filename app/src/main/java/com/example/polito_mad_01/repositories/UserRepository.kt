@@ -73,9 +73,9 @@ class UserRepository{
         }
     }
 
-    fun getUserFriends() : LiveData<List<User>>{
+    fun getUserFriends() : LiveData<List<Pair<User,String>>>{
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-        val liveDataList = MutableLiveData<List<User>>()
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
 
         fs.collection("users")
             .document(userID)
@@ -89,7 +89,7 @@ class UserRepository{
                             val list = query.documents
                                 .filter { friendsIds.contains(it.id) }
                                 .map {
-                                    it.toObject(User::class.java)!!
+                                    Pair(it.toObject(User::class.java)!!, it.id)
                                 }
                             liveDataList.value = list
                         }

@@ -243,6 +243,11 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
             return false
         }else phoneNumberInput.error = null
 
+        if(phoneNumberInput.editText?.text!!.length < 10){
+            phoneNumberInput.error = "Phone number is not valid"
+            return false
+        }else phoneNumberInput.error = null
+
         val values = vm.user.value?.availability?.values!!
         if(!values.contains(true)){
             Snackbar.make(findViewById(android.R.id.content), "Select at least one day\"", Snackbar.LENGTH_SHORT).show()

@@ -32,11 +32,6 @@ class EditSkill(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edit_
         return mView
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-    }
-
     private fun showBottomSheetDialogFragment() {
         ModalBottomSheet(vm).show(parentFragmentManager, ModalBottomSheet.TAG)
     }

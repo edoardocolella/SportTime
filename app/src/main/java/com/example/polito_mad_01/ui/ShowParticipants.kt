@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.FriendsAdapter
@@ -29,7 +30,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            recyclerViewParticipants.adapter= FriendsAdapter(it)
+            recyclerViewParticipants.adapter= FriendsAdapter(it,findNavController())
 
             if(it.isEmpty()){
                 recyclerViewParticipants.visibility=View.GONE
@@ -49,7 +50,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 vm.getUserFriends().observe(viewLifecycleOwner) {p ->
                     val friends = p
                         //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                        .map { it.email }
+                        .map { it.first.email }
                         .sorted()
                         .toTypedArray()
                     val selectedFriends = mutableListOf<String>()
