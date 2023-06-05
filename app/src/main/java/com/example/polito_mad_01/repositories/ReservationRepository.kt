@@ -68,7 +68,6 @@ class ReservationRepository{
         return slot
     }
 
-    fun getReservationParticipants(slotID: Int) : LiveData<List<Pair<User, String>>>{
     fun getReservationParticipants(slotID: Int) : LiveData<List<Pair<User,String>>>{
         val idFormatted = slotID.toString().padStart(3, '0')
         val reservationQuery = fs.collection("reservations").document(idFormatted)
