@@ -82,6 +82,7 @@ class ReservationRepository{
 
                 usersQuery.addOnSuccessListener { query ->
                     val list = query.documents.filter { attendants.contains(it.id) }.map {
+                       Pair( it.toObject(User::class.java)!!, it.id)
                         Pair(it.toObject(User::class.java)!!, it.id)
                     }
                     liveDataList.value = list

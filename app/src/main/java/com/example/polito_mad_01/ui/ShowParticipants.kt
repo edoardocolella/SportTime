@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.adapters.FriendsAdapter
+import com.example.polito_mad_01.adapters.ParticipantsAdapter
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowReservationsViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
 class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fragment(R.layout.fragment_show_participants) {
@@ -23,26 +21,14 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fAuth = FirebaseAuth.getInstance()
+        var userID = fAuth.currentUser?.uid
 
         noParticipants = UIUtils.findTextViewById(view, R.id.noParticipantsTextView)!!
         noParticipants.visibility=View.GONE
         recyclerViewParticipants = view.findViewById(R.id.participantsRecyclerView)
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
-        vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            recyclerViewParticipants.adapter= FriendsAdapter(it,findNavController())
-
-            if(it.isEmpty()){
-                recyclerViewParticipants.visibility=View.GONE
-                noParticipants.visibility=View.VISIBLE
-            }else{
-                recyclerViewParticipants.visibility=View.VISIBLE
-                noParticipants.visibility=View.GONE
-            }
-        }
-
         vm.getReservation(slotID).observe(viewLifecycleOwner){ slot ->
-
             plusButton = view.findViewById(R.id.addParticipantsButton)
             if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
@@ -79,5 +65,24 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 plusButton.visibility=View.GONE
             }
         }
+
+        vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
+            var mutable = it.toMutableList()
+            var organizer = mutable.first { pair -> pair.second == userID }
+            val index = mutable.indexOf(organizer)
+            mutable.remove(organizer)
+            organizer=Pair(organizer.first,"organizer")
+            mutable.add(0,organizer)
+            recyclerViewParticipants.adapter= ParticipantsAdapter(mutable.toList())
+
+            if(it.isEmpty()){
+                recyclerViewParticipants.visibility=View.GONE
+                noParticipants.visibility=View.VISIBLE
+            }else{
+                recyclerViewParticipants.visibility=View.VISIBLE
+                noParticipants.visibility=View.GONE
+            }
+        }
+
     }
 }

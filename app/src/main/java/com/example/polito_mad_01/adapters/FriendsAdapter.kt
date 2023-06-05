@@ -29,12 +29,15 @@ class FriendsAdapter ( private val data:List<Pair<User,String>>,
 
     class FriendsHolder(v: View, private val navController: NavController): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
+        private val friendNickname = UIUtils.findTextViewById(v,R.id.friendNickname)!!
+
         private val item = v.findViewById<CardView>(R.id.friendItem)
         //private val item = v.findViewById<CardView>(R.id.friendItem)!!
 
 
         fun bind(friend: Pair<User,String>) {
-            friendId.text = friend.first.nickname
+            friendId.text = friend.first.name + " "+ friend.first.surname
+            friendNickname.text = friend.first.nickname
 
             item.setOnClickListener {
                 when (navController.currentDestination?.id) {
