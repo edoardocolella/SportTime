@@ -63,6 +63,20 @@ class UserRepository{
         return image
     }
 
+    fun getProfileImageById(userID: String): LiveData<Uri?> {
+        //val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        val storageReference = storage.reference
+        val imageRef = storageReference.child("profileImages/$userID.jpg")
+        val localFile = File.createTempFile("images", "jpg")
+        val image = MutableLiveData<Uri?>()
+        imageRef.getFile(localFile).addOnSuccessListener {
+            image.value = localFile.toUri()
+        }.addOnFailureListener {
+            image.value = null
+        }
+        return image
+    }
+
     fun updateProfileImage(imageUri: Uri) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
