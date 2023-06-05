@@ -35,7 +35,7 @@ class FindFriendsAdapter (private val users: List<User>, private val vm: FindFri
             val fullName = "${friend.name} ${friend.surname}"
             friendFullName.text = fullName
             addButton.setOnClickListener {
-                vm.sendRequest(friend.nickname)
+                vm.sendRequest(friend.email)
                 addButton.setText(R.string.requestSent)
                 addButton.setBackgroundColor(Color.WHITE)
                 addButton.setTextColor(Color.BLACK)
