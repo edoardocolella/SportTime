@@ -48,7 +48,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 plusButton.visibility=View.VISIBLE
 
                 vm.getUserFriends().observe(viewLifecycleOwner) {friends ->
-                    val friendsName : Array<String> = friends.map { it.first.nickname }.toTypedArray()
+                    val friendsName : Array<String> = friends.map { "${it.first.name} ${it.first.surname}\n(${it.first.nickname})" }.toTypedArray()
                     val selectedFriends = mutableListOf<String>()
 
                     plusButton.setOnClickListener{
