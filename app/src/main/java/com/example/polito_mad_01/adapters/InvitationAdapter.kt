@@ -73,7 +73,7 @@ class InvitationHolder(private val v: View,
                 else -> R.drawable.selection_background
             })
 
-            val text = "  ${invitation.sender.nickname} (${invitation.sender.name} ${invitation.sender.surname})"
+            val text = "${invitation.sender.nickname} (${invitation.sender.name} ${invitation.sender.surname})"
             sender.text = text
         }
 
