@@ -21,7 +21,7 @@ class FirebaseService : FirebaseMessagingService() {
 
     override fun onNewToken(newToken: String) {
         super.onNewToken(newToken)
-        println("This is the token: $newToken")
+        //println("This is the token: $newToken")
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
@@ -32,16 +32,14 @@ class FirebaseService : FirebaseMessagingService() {
             // Create a notification
             val intent = Intent(this, MainActivity::class.java)
 
-            println("This is the message: ${message.data}")
+            //println("This is the message: ${message.data}")
 
             val type = message.data["type"]
             if(type == "friendRequests"){
                 intent.putExtra("friendRequests", true)
-                println("PUT EXTRA: friendRequests")
             }
             else if(type == "gameRequests") {
                 intent.putExtra("gameRequests", true)
-                println("PUT EXTRA: gameRequests")
             }
 
 

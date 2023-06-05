@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
@@ -61,7 +63,11 @@ class Step2Fragment: Fragment(R.layout.step2fragment) {
 
     private fun setBirthdateView() {
         val materialDatePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a Date").build()
+                .setTitleText("Select a Date")
+                .setCalendarConstraints(
+                CalendarConstraints.Builder()
+                    .setValidator(DateValidatorPointBackward.now())
+                    .build()).build()
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
             birthdayInputLayout.editText?.setText(date)

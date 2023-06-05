@@ -34,11 +34,9 @@ class FriendRequestAdapter(private val data: List<Pair<String, User>>, private v
             val text = "${friend.second.nickname} (${friend.second.name} ${friend.second.surname})"
             friendId.text = text
             acceptButton?.setOnClickListener {
-                println("accept $friend")
                 vm.acceptRequest(friend.first)
             }
             declineButton?.setOnClickListener {
-                println("decline $friend")
                 vm.declineRequest(friend.first)
             }
         }

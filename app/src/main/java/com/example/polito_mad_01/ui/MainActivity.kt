@@ -3,6 +3,7 @@ package com.example.polito_mad_01.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.*
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 
@@ -31,22 +33,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val parentLayout: View = findViewById(android.R.id.content)
+
         val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
-        println("FRIEND-CHECK: ${intent.getBooleanExtra("friendRequests", false)}")
-        println("GAME-CHECK: ${intent.getBooleanExtra("gameRequests", false)}")
-
-        println(intent.extras)
-
-        if(intent.getBooleanExtra("friendRequests", false)){
-            println("GOTO: friendRequests")
+        if(intent.getBooleanExtra("friendRequests", false))
                 navController.navigate(R.id.showProfileContainer, bundleOf("goto" to "friendRequests"))
-            }
-        else if (intent.getBooleanExtra("gameRequests", false)) {
-            println("GOTO: gameRequests")
+        else if (intent.getBooleanExtra("gameRequests", false))
             navController.navigate(R.id.invitationContainer, bundleOf("goto" to "gameRequests"))
-            }
-
 
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)
@@ -59,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             vm.getUser().observe(this) { user ->
                 if(user == null) return@observe // TODO: replace
 
+                Snackbar.make(parentLayout, "Welcome back ${user.name}", Snackbar.LENGTH_LONG).show()
                 val view = navView.getHeaderView(0)
                 val nameSurname = "${user.name} ${user.surname}"
                 view.findViewById<TextView>(R.id.nameNav).text = nameSurname

@@ -1,45 +1,35 @@
 package com.example.polito_mad_01
 
 import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
+import android.os.*
+import android.util.*
+import android.view.*
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
-import com.aceinteract.android.stepper.StepperNavListener
-import com.aceinteract.android.stepper.StepperNavigationView
-import com.example.polito_mad_01.model.User
-import com.example.polito_mad_01.model.UserData
-import com.example.polito_mad_01.repositories.UserRepository
+import com.aceinteract.android.stepper.*
 import com.example.polito_mad_01.ui.MainActivity
 import com.example.polito_mad_01.viewmodel.RegistrationViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textfield.*
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.time.LocalDate
-
 
 class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     private lateinit var auth: FirebaseAuth
-    //private val vm : RegistrationViewModel by activityViewModels()
-
     private lateinit var vm : RegistrationViewModel
     override fun onStart() {
         super.onStart()
         vm = ViewModelProvider(this)[RegistrationViewModel::class.java]
 
-        if(auth.currentUser != null){
+        if(auth.currentUser != null)
             findViewById<StepperNavigationView>(R.id.stepper).goToNextStep()
-        }
-    }
 
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,38 +45,21 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         auth = FirebaseAuth.getInstance()
 
         findViewById<Button>(R.id.registerButton).setOnClickListener {
-            if (stepper.currentStep == 3) {
-                println("STEP 3")
-                if (validateStep3())
+            if (stepper.currentStep == 3 &&validateStep3())
                     register()
-            }
         }
 
         findViewById<Button>(R.id.nextButton).setOnClickListener {
             var validFlag = true
             when(stepper.currentStep){
-                0 -> {
-                    println("STEP 0")
-                    validFlag = validateStep0()
-                }
-                1 -> {
-                    println("STEP 1")
-                    validFlag = validateStep1()
-                }
-                2 -> {
-                    println("STEP 2")
-                    validFlag = validateStep2()
-                }
+                0 -> validFlag = validateStep0()
+                1 -> validFlag = validateStep1()
+                2 -> validFlag = validateStep2()
             }
-
 
             if(validFlag) {
                 stepper.goToNextStep()
-                //onStepChanged(stepper.currentStep)
-                println("STEPPER NUMBER : ${stepper.currentStep}")
-
                 findViewById<Button>(R.id.backButton).visibility = View.VISIBLE
-
                 if (stepper.currentStep == 3) {
                     findViewById<Button>(R.id.nextButton).visibility = View.INVISIBLE
                     findViewById<Button>(R.id.registerButton).visibility = View.VISIBLE
@@ -95,7 +68,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         }
 
         findViewById<Button>(R.id.backButton).setOnClickListener {
-
             if(stepper.currentStep == 1) {
                 stepper.goToPreviousStep()
                 onStepChanged(stepper.currentStep)
@@ -104,7 +76,6 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
                 stepper.goToPreviousStep()
                 onStepChanged(stepper.currentStep)
             }
-
             if(stepper.currentStep == 2){
                 findViewById<Button>(R.id.nextButton).visibility = View.VISIBLE
                 findViewById<Button>(R.id.registerButton).visibility = View.INVISIBLE
@@ -118,22 +89,19 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
 
         vm.user.observe(this) {
             if(auth.currentUser != null){
-                println("USER MAIL ")
                 it.email = auth.currentUser!!.email!!
                 vm.createUser(auth.currentUser!!.uid)
-
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-
                 return@observe
             }
             auth.createUserWithEmailAndPassword(vm.user.value!!.email, vm.user.value!!.password)
-                    .addOnCompleteListener(
-                        this
-                    ) { task ->
+                    .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-
                             vm.createUser(auth.currentUser!!.uid)
+
+                            Snackbar.make(findViewById(android.R.id.content), "Registration successful",
+                                Snackbar.LENGTH_SHORT).show()
 
                             val intent = Intent(this, MainActivity::class.java)
                             startActivity(intent)
@@ -145,32 +113,46 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
     }
 
     override fun onStepChanged(step: Int) {
-        //Toast.makeText(this, "Step changed to ${step}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onCompleted() {
-        //Toast.makeText(this, "Stepper completed", Toast.LENGTH_SHORT).show()
     }
 
-    //stepperNavListener = this
-
-
-    private fun validateStep0() : Boolean{
+    private fun validateStep0() : Boolean {
         val emailInput = findViewById<TextInputLayout>(R.id.registrationUsername)
         val passwordInput = findViewById<TextInputLayout>(R.id.loginPassword)
-        if(emailInput.editText?.text!!.isEmpty()){
+        if (emailInput.editText?.text!!.isEmpty()) {
             emailInput.error = "Email is empty"
             return false
-        }else if(
-            !Patterns.EMAIL_ADDRESS.matcher(emailInput.editText?.text!!).matches()){
+        } else if (
+            !Patterns.EMAIL_ADDRESS.matcher(emailInput.editText?.text!!).matches()) {
             emailInput.error = "Email is not valid"
             return false
-        } else{ emailInput.error = null }
+        } else {
+            emailInput.error = null
+        }
 
-        if(passwordInput.editText?.text!!.length < 6) {
+
+
+        var flag = false
+        runBlocking {
+            val methods = auth.fetchSignInMethodsForEmail(emailInput.editText?.text.toString())
+                .await()
+                .signInMethods
+            if (methods != null && methods.isNotEmpty()) {
+                flag = true
+                emailInput.error = "Email already exists"
+            }
+            else emailInput.error = null
+        }
+        if(flag) return false
+
+
+        if (passwordInput.editText?.text!!.length < 6) {
             passwordInput.error = "Password must have at least 6 characters"
-            return false
-        }else{ passwordInput.error = null }
+            return false}
+        else passwordInput.error = null
+
         return true
     }
 
@@ -188,64 +170,82 @@ class RegistrationActivity: AppCompatActivity(), StepperNavListener {
         if(surnameInput.editText?.text!!.isEmpty()){
             surnameInput.error = "Surname is empty"
             return false
-        }else{ surnameInput.error = null}
+        }else surnameInput.error = null
 
         val nicknameInput = findViewById<TextInputLayout>(R.id.registrationNicknameInputLayout)
         if (nicknameInput.editText?.text!!.isEmpty()){
             nicknameInput.error = "Nickname is empty"
             return false
-        }else{ nicknameInput.error = null }
+        }else nicknameInput.error = null
 
         val achievementInput = findViewById<TextInputLayout>(R.id.registrationAchievementsInputLayout)
         if (achievementInput.editText?.text!!.isEmpty()){
             achievementInput.error = "Achievements are empty"
             return false
-        }else{ achievementInput.error = null }
+        }else achievementInput.error = null
 
         val genderInput = findViewById<TextInputLayout>(R.id.registrationGenderInputLayout)
         if (genderInput.editText?.text!!.isEmpty()){
             genderInput.error = "Choose an option"
             return false
-        }else { genderInput.error = null }
+        }else genderInput.error = null
 
         val birthdateInput = findViewById<TextInputLayout>(R.id.registrationBirthdayInputLayout)
         if(birthdateInput.editText?.text!!.isEmpty()) {
             birthdateInput.error = "Insert your birthdate"
             return false
-        }else{ birthdateInput.error = null }
+        }else birthdateInput.error = null
 
         if(birthdateInput.editText?.text.toString() > LocalDate.now().toString()) {
             birthdateInput.error = "Insert a birthdate in the past"
             return false
-        }else{ birthdateInput.error = null }
+        }else birthdateInput.error = null
 
         val locationInput = findViewById<TextInputLayout>(R.id.registrationLocationInputLayout)
         if(locationInput.editText?.text!!.isEmpty()){
             locationInput.error = "Insert your location"
             return false
-        } else{ locationInput.error = null }
+        } else locationInput.error = null
 
         return true
     }
 
     private fun validateStep2():Boolean{
-        var validFlag = true
 
-        return validFlag
+        val checkBoxBasket = findViewById<CheckBox>(R.id.checkBoxBasket).isChecked
+        val checkBoxFootball = findViewById<CheckBox>(R.id.checkBoxFootball).isChecked
+        val checkBoxPingPong = findViewById<CheckBox>(R.id.checkBoxPingPong).isChecked
+        val checkBoxVolleyball = findViewById<CheckBox>(R.id.checkBoxVolleyball).isChecked
+
+        if(!checkBoxBasket && !checkBoxFootball && !checkBoxPingPong && !checkBoxVolleyball){
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one sport", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
+
+        val basketSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelBasketMenu).text.toString()
+        val footballSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelFootballMenu).text.toString()
+        val pingPongSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelPingPongMenu).text.toString()
+        val volleyballSkillView = findViewById<AutoCompleteTextView>(R.id.sportLevelVolleyballMenu).text.toString()
+
+        if(basketSkillView.isEmpty() && footballSkillView.isEmpty() && pingPongSkillView.isEmpty() && volleyballSkillView.isEmpty()){
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one skill", Snackbar.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     private fun validateStep3():Boolean{
 
-        val phonenumberInput = findViewById<TextInputLayout>(R.id.registrationPhoneNumberEditText)
-        if(phonenumberInput.editText?.text!!.isEmpty()){
-            phonenumberInput.error = "Insert your phone number"
-            println("${phonenumberInput.editText?.text!!}")
+        val phoneNumberInput = findViewById<TextInputLayout>(R.id.registrationPhoneNumberEditText)
+        if(phoneNumberInput.editText?.text!!.isEmpty()){
+            phoneNumberInput.error = "Insert your phone number"
             return false
-        }else{ phonenumberInput.error = null }
+        }else phoneNumberInput.error = null
 
         val values = vm.user.value?.availability?.values!!
         if(!values.contains(true)){
-            Toast.makeText(this, "Select at least one day", Toast.LENGTH_SHORT).show()
+            Snackbar.make(findViewById(android.R.id.content), "Select at least one day\"", Snackbar.LENGTH_SHORT).show()
             return false
         }
 

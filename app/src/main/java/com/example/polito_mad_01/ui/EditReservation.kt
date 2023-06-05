@@ -126,7 +126,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             navigate(vm.reservation.value?.slot_id!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), "Error while saving data", Toast.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), "Error while saving data", Snackbar.LENGTH_LONG).show()
         }
     }
 
