@@ -9,6 +9,7 @@ import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.*
@@ -25,7 +26,6 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
         noFriends = UIUtils.findTextViewById(view, R.id.noFriendsTextView)!!
         noFriends.visibility=View.GONE
@@ -36,8 +36,8 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
 
             val friends = user.friends
 
-            vm.getFriends().observe(viewLifecycleOwner){ friends ->
-                recyclerViewFriends.adapter= FriendsAdapter(friends)
+            vm.getFriends().observe(viewLifecycleOwner){ friendsPair ->
+                recyclerViewFriends.adapter= FriendsAdapter(friendsPair,findNavController())
 
             }
 

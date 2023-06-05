@@ -25,8 +25,6 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
 
         noOldSlots = view.findViewById(R.id.no_old_res_tv)
         noOldSlots.visibility=View.GONE

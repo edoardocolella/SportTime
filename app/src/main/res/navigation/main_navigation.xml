@@ -160,7 +160,11 @@
         android:id="@+id/showFriends"
         android:name="com.example.polito_mad_01.ui.ShowFriends"
         android:label="fragment_show_friends"
-        tools:layout="@layout/fragment_show_friends" />
+        tools:layout="@layout/fragment_show_friends" >
+        <action
+            android:id="@+id/action_showFriends_to_showUserProfile"
+            app:destination="@id/showUserProfile" />
+    </fragment>
     <fragment
         android:id="@+id/showProfileContainer"
         android:name="com.example.polito_mad_01.ui.ShowProfileContainer"
@@ -178,6 +182,9 @@
         <action
             android:id="@+id/action_showProfileContainer_to_friendRequest"
             app:destination="@id/friendRequest" />
+        <action
+            android:id="@+id/action_showProfileContainer_to_showUserProfile"
+            app:destination="@id/showUserProfile" />
     </fragment>
     <fragment
         android:id="@+id/friendRequest"
@@ -210,9 +217,18 @@
     <fragment
         android:id="@+id/findFriendsWithFilters"
         android:name="com.example.polito_mad_01.ui.FindFriendsWithFilters"
-        android:label="FindFriendsWithFilters" />
+        android:label="FindFriendsWithFilters" >
+        <action
+            android:id="@+id/action_findFriendsWithFilters_to_showUserProfile"
+            app:destination="@id/showUserProfile" />
+    </fragment>
     <fragment
         android:id="@+id/showInvitations"
         android:name="com.example.polito_mad_01.ui.ShowInvitations"
         android:label="ShowInvitations" />
+    <fragment
+        android:id="@+id/showUserProfile"
+        android:name="com.example.polito_mad_01.ui.ShowUserProfile"
+        android:label="fragment_show_user_profile"
+        tools:layout="@layout/fragment_show_user_profile" />
 </navigation>

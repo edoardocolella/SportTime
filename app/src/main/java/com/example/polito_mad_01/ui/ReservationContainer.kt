@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
+import java.time.LocalTime
 
 class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
 
@@ -45,7 +46,10 @@ class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         vm.getReservation(requireArguments().getInt("slotID")).observe(viewLifecycleOwner) {
-            if (LocalDate.now().toString() < it.date && it.user_id == FirebaseAuth.getInstance().currentUser!!.uid) {
+            if ((LocalDate.now().toString() < it.date
+                        || (LocalDate.now().toString() == it.date
+                        && it.start_time > LocalTime.now().toString()))
+                && it.user_id == FirebaseAuth.getInstance().currentUser!!.uid) {
                 inflater.inflate(R.menu.menu_show_reservation, menu)
             }
         }

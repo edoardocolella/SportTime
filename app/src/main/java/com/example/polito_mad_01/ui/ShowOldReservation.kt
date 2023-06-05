@@ -31,9 +31,6 @@ class ShowOldReservation : Fragment(R.layout.fragment_show_old_reservation) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
-
         userId = requireArguments().getString("userId").orEmpty()
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")

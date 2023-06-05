@@ -33,10 +33,6 @@ class Browse : Fragment(R.layout.fragment_browse) {
 
         super.onCreate(savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
-
-
         noFreeSlots = UIUtils.findTextViewById(view, R.id.no_free_slots)
         noFreeSlots?.visibility = View.GONE
         recyclerViewBrowse =view.findViewById(R.id.recyclerViewBrowse)

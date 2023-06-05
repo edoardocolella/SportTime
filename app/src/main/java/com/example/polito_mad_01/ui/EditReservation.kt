@@ -30,7 +30,6 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
         setAllView()
     }
 

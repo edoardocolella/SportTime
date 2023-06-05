@@ -16,7 +16,6 @@ class FreeSlotList(private val slotList: List<Slot> = listOf()) : Fragment(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
         freeSlotView = view.findViewById(R.id.freeSlotList)
         freeSlotView.layoutManager = LinearLayoutManager(view.context)
