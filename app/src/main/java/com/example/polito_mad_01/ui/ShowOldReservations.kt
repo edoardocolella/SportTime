@@ -26,6 +26,8 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as MainActivity).setTitle("Past Reservations")
+
         noOldSlots = view.findViewById(R.id.no_old_res_tv)
         noOldSlots.visibility=View.VISIBLE
         recyclerViewOldRes =view.findViewById(R.id.oldResRecyclerView)

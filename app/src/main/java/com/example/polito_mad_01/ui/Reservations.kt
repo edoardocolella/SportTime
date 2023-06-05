@@ -44,6 +44,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         val selectedDateString = arguments?.getString("selectedDate")
         //vm.selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
 
+        (requireActivity() as MainActivity).setTitle("Reservations")
+
 
         tabLayout =  view.findViewById(R.id.reservationTabLayout)
         viewPager = view.findViewById(R.id.reservationViewPager)

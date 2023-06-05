@@ -39,6 +39,9 @@ class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        (requireActivity() as MainActivity).setTitle("Reservation")
+
+
         if(savedInstanceState == null)
             setHasOptionsMenu(true)
     }

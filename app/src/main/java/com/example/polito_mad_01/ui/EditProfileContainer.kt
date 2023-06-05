@@ -34,7 +34,9 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-            setHasOptionsMenu(true)
+        (requireActivity() as MainActivity).setTitle("Edit Profile")
+
+        setHasOptionsMenu(true)
 
     }
 
