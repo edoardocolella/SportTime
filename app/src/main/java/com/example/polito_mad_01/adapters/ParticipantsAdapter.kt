@@ -25,11 +25,15 @@ class ParticipantsAdapter (private val data:List<Pair<User,String>>): RecyclerVi
 
     class FriendsHolder(v: View): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
+        private val friendNickname = UIUtils.findTextViewById(v,R.id.friendNickname)!!
         private val crown = v.findViewById<ImageView>(R.id.friendItemCrown)
 
 
         fun bind(friend: Pair<User, String>){
-            friendId.text = friend.first.nickname
+            val text = "${friend.first.name} ${friend.first.surname}"
+            friendId.text = text
+            friendNickname.text = friend.first.nickname
+
             if (friend.second == "organizer"){
                 crown.visibility=View.VISIBLE
             }else{
