@@ -50,10 +50,17 @@ class MainActivity : AppCompatActivity() {
 
         auth.currentUser?.let {
             vm.subscribeToNotifications()
+            var showSnackbar = true
+
             vm.getUser().observe(this) { user ->
                 if(user == null) return@observe // TODO: replace
 
-                Snackbar.make(parentLayout, "Welcome back ${user.name}", Snackbar.LENGTH_LONG).show()
+                if(showSnackbar){
+                    Snackbar.make(parentLayout, "Welcome back ${user.name}", Snackbar.LENGTH_LONG).show()
+                    showSnackbar = false
+                    // che vergogna
+                }
+
                 val view = navView.getHeaderView(0)
                 val nameSurname = "${user.name} ${user.surname}"
                 view.findViewById<TextView>(R.id.nameNav).text = nameSurname

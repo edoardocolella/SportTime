@@ -15,7 +15,7 @@ class FindFriendsWithFiltersViewModel (private val userRepository: UserRepositor
      var location = MutableLiveData<String>()
 
 
-    fun findFriendBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
+    fun findFriendBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<Pair<User,String>>> {
         return userRepository.findFriendsBySkillAndLocation(skillName, skillValue, location)
     }
 

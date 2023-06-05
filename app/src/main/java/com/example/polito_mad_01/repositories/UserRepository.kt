@@ -32,6 +32,16 @@ class UserRepository{
         return user
     }
 
+    fun getUserById(userID: String): LiveData<User> {
+        val user = MutableLiveData<User>()
+        fs.collection("users")
+            .document(userID)
+            .addSnapshotListener { r, _ ->
+                user.value =  r?.toObject(User::class.java)
+            }
+        return user
+    }
+
     fun updateUser(user: User) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
@@ -41,6 +51,20 @@ class UserRepository{
 
     fun getProfileImage(): LiveData<Uri?> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        val storageReference = storage.reference
+        val imageRef = storageReference.child("profileImages/$userID.jpg")
+        val localFile = File.createTempFile("images", "jpg")
+        val image = MutableLiveData<Uri?>()
+        imageRef.getFile(localFile).addOnSuccessListener {
+            image.value = localFile.toUri()
+        }.addOnFailureListener {
+            image.value = null
+        }
+        return image
+    }
+
+    fun getProfileImageById(userID: String): LiveData<Uri?> {
+        //val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
         val localFile = File.createTempFile("images", "jpg")
@@ -63,9 +87,9 @@ class UserRepository{
         }
     }
 
-    fun getUserFriends() : LiveData<List<User>>{
+    fun getUserFriends() : LiveData<List<Pair<User,String>>>{
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-        val liveDataList = MutableLiveData<List<User>>()
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
 
         fs.collection("users")
             .document(userID)
@@ -79,7 +103,7 @@ class UserRepository{
                             val list = query.documents
                                 .filter { friendsIds.contains(it.id) }
                                 .map {
-                                    it.toObject(User::class.java)!!
+                                    Pair(it.toObject(User::class.java)!!, it.id)
                                 }
                             liveDataList.value = list
                         }
@@ -215,7 +239,14 @@ class UserRepository{
             .addOnSuccessListener { result ->
                     fs.collection("gameRequests")
                         .document("${userID}-${result.documents[0].id}-${slot.slot_id}")
-                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slot.slot_id, "date" to slot.date))
+                        .set(mapOf
+                            ("sender" to userID,
+                            "receiver" to result.documents[0].id,
+                            "slotID" to slot.slot_id,
+                            "date" to slot.date,
+                            "start_time" to slot.start_time
+                        )
+                        )
                         .addOnSuccessListener{
                             GlobalScope.launch (Dispatchers.IO){
                                 val data = NotificationData("Game request",
@@ -228,8 +259,8 @@ class UserRepository{
             }
     }
 
-    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
-        val liveDataList = MutableLiveData<List<User>>()
+    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<Pair<User,String>>> {
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
             .whereEqualTo("skills.$skillName", skillValue)
@@ -240,10 +271,12 @@ class UserRepository{
                     .filter { !(it["friends"] as List<*>).contains(userID) }
                     .filter { it["location"].toString().lowercase() == location.lowercase()}
                     .map {
-                    it.toObject(User::class.java)!!
+                        Pair(it.toObject(User::class.java)!!, it.id )
                 }
             }
         return liveDataList
     }
+
+
 
 }

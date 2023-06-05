@@ -69,6 +69,7 @@ class ReservationRepository{
     }
 
     fun getReservationParticipants(slotID: Int) : LiveData<List<Pair<User, String>>>{
+    fun getReservationParticipants(slotID: Int) : LiveData<List<Pair<User,String>>>{
         val idFormatted = slotID.toString().padStart(3, '0')
         val reservationQuery = fs.collection("reservations").document(idFormatted)
 
@@ -83,6 +84,7 @@ class ReservationRepository{
                 usersQuery.addOnSuccessListener { query ->
                     val list = query.documents.filter { attendants.contains(it.id) }.map {
                        Pair( it.toObject(User::class.java)!!, it.id)
+                        Pair(it.toObject(User::class.java)!!, it.id)
                     }
                     liveDataList.value = list
                 }

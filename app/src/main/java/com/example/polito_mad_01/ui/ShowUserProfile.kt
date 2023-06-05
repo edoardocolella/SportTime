@@ -2,19 +2,27 @@ package com.example.polito_mad_01.ui
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import android.view.View
+import android.widget.Button
 import androidx.core.content.ContextCompat
-import com.example.polito_mad_01.*
+import androidx.fragment.app.viewModels
+import com.example.polito_mad_01.R
+import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.User
-import com.example.polito_mad_01.util.UIUtils.setTextView
+import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.*
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
-class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_profile) {
+class ShowUserProfile : Fragment(R.layout.fragment_profile) {
+
+    private val vm: ShowUserProfileViewModel by viewModels {
+        ShowUserProfileViewModelFactory(
+            (activity?.application as SportTimeApplication).userRepository,
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,30 +32,27 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
         } catch (e: NotImplementedError) {
             e.printStackTrace()
         }
-
-
     }
 
     private fun setAllView() {
 
-        vm.getUser().observe(viewLifecycleOwner) {user->
+        val currUser = requireArguments().getString("userId").toString()
+
+        vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
             user.let {
-                setTextView(R.id.fullname, it.name + " " + it.surname, view)
-                setTextView(R.id.nickname, it.nickname,view)
-                setTextView(R.id.description, it.achievements,view)
-                setTextView(R.id.birthdate, it.birthdate,view)
-                setTextView(R.id.email_text, it.email ,view)
-                setTextView(R.id.phoneNumber_text, it.phoneNumber,view)
-                setTextView(R.id.gender, it.gender,view)
-                setTextView(R.id.location, it.location,view)
+                UIUtils.setTextView(R.id.fullname, it.name + " " + it.surname, view)
+                UIUtils.setTextView(R.id.nickname, it.nickname, view)
+                UIUtils.setTextView(R.id.description, it.achievements, view)
+                UIUtils.setTextView(R.id.birthdate, it.birthdate, view)
+                UIUtils.setTextView(R.id.email_text, it.email, view)
+                UIUtils.setTextView(R.id.phoneNumber_text, it.phoneNumber, view)
+                UIUtils.setTextView(R.id.gender, it.gender, view)
+                UIUtils.setTextView(R.id.location, it.location, view)
                 setAllButtons(it)
             }
 
             val skills = user.skills
             for(skill in skills){
-
-                //if(skill.level == "none") continue
-
                 val chip = Chip(context)
 
                 chip.text = skill.key
@@ -71,23 +76,23 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
 
         }
 
-        vm.getUserImage().observe(viewLifecycleOwner) { image ->
+        vm.getUserImage(currUser).observe(viewLifecycleOwner) { image ->
             setImage(image)
         }
     }
 
 
     private fun setAllButtons(user: User) {
-        setButtonColor(R.id.mondayButton, user.availability["monday"]!!, "monday")
-        setButtonColor(R.id.tuesdayButton, user.availability["tuesday"]!!, "tuesday")
-        setButtonColor(R.id.wednesdayButton, user.availability["wednesday"]!!, "wednesday")
-        setButtonColor(R.id.thursdayButton, user.availability["thursday"]!!, "thursday")
-        setButtonColor(R.id.fridayButton, user.availability["friday"]!!, "friday")
-        setButtonColor(R.id.saturdayButton, user.availability["saturday"]!!, "saturday")
-        setButtonColor(R.id.sundayButton, user.availability["sunday"]!!, "sunday")
+        setButtonColor(R.id.mondayButton, user.availability["monday"]!!)
+        setButtonColor(R.id.tuesdayButton, user.availability["tuesday"]!!)
+        setButtonColor(R.id.wednesdayButton, user.availability["wednesday"]!!)
+        setButtonColor(R.id.thursdayButton, user.availability["thursday"]!!)
+        setButtonColor(R.id.fridayButton, user.availability["friday"]!!)
+        setButtonColor(R.id.saturdayButton, user.availability["saturday"]!!)
+        setButtonColor(R.id.sundayButton, user.availability["sunday"]!!)
     }
 
-    private fun setButtonColor(id: Int, value: Boolean, attribute: String) {
+    private fun setButtonColor(id: Int, value: Boolean) {
 
         val button = requireView().findViewById<Button>(id)
 

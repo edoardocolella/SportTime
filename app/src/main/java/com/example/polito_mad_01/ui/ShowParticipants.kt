@@ -6,7 +6,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
-import com.example.polito_mad_01.adapters.FriendsAdapter
 import com.example.polito_mad_01.adapters.ParticipantsAdapter
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowReservationsViewModel
@@ -37,7 +36,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 vm.getUserFriends().observe(viewLifecycleOwner) {p ->
                     val friends = p
                         //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                        .map { it.email }
+                        .map { it.first.email }
                         .sorted()
                         .toTypedArray()
                     val selectedFriends = mutableListOf<String>()

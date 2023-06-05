@@ -72,6 +72,7 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
             Snackbar.make(requireView(), "Profile updated successfully.", Snackbar.LENGTH_LONG).show()
             true
         } catch (e: Exception) {
+            Snackbar.make(requireView(), "An error has occurred", Snackbar.LENGTH_LONG).show()
             println(e.message)
             false
         }

@@ -82,6 +82,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         v: View,
         menuInfo: ContextMenu.ContextMenuInfo?
     ) {
+        menu.clearHeader()
         requireActivity().menuInflater.inflate(R.menu.menu_picture, menu)
         super.onCreateContextMenu(menu, v, menuInfo)
     }

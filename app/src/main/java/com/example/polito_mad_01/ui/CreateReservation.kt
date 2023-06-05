@@ -30,7 +30,6 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
         setAllView()
     }
 
@@ -40,6 +39,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         slotID = requireArguments().getInt("slotID")
         vm.getReservation(slotID).observe(viewLifecycleOwner)
         {
+            if(it.reserved) findNavController().navigate(R.id.reservationsFragment)
             setImage(it.playground_id)
             setAllTextViews(it)
             setAllCheckBoxes(it)
@@ -80,7 +80,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         UIUtils.setTextView(R.id.playgroundSport, slot.sport, view)
         UIUtils.setTextView(R.id.dateText, slot.date, view)
         UIUtils.setTextView(R.id.timeText, "${slot.start_time}-${slot.end_time}", view)
-        UIUtils.setTextView(R.id.reservationTotalPrice, slot.total_price.toString(), view)
+        UIUtils.setTextView(R.id.reservationTotalPrice, slot.total_price.toString() + "€", view)
 
     }
 
