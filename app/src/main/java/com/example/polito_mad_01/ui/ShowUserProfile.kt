@@ -16,7 +16,7 @@ import com.google.android.material.chip.*
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
-class ShowUserProfile : Fragment(R.layout.fragment_profile) {
+class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
 
     private val vm: ShowUserProfileViewModel by viewModels {
         ShowUserProfileViewModelFactory(
