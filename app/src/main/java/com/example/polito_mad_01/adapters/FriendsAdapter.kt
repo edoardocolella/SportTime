@@ -39,20 +39,17 @@ class FriendsAdapter ( private val data:List<Pair<User,String>>,
             item.setOnClickListener {
                 when (navController.currentDestination?.id) {
                     R.id.showProfileContainer -> {
-                        navController.navigate(R.id.action_showProfileContainer_to_showUserProfile)
+                        navController.navigate(R.id.action_showProfileContainer_to_showUserProfile,
+                            bundleOf("userId" to friend.second)
+                        )
                     }
-                    R.id.findFriendsWithFilters -> {
-                        navController.navigate(R.id.action_findFriendsWithFilters_to_showUserProfile)
+                    R.id.reservationContainer -> {
+                        navController.navigate(R.id.action_reservationContainer_to_showUserProfile,
+                            bundleOf("userId" to friend.second)
+                        )
                     }
                     else -> println("ID ${navController.currentDestination?.displayName} ")
                 }
-            }
-            fun bind(friend: Pair<User, String>) {
-                friendId.text = friend.first.nickname
-                item.setOnClickListener {
-                    navController.navigate(R.id.profileFragment, bundleOf("user" to friend.second))
-                }
-
             }
         }
     }

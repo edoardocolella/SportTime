@@ -71,9 +71,10 @@ android:layout_height="match_parent">
             android:id="@+id/reservationTotalPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="4dp"
             android:ems="10"
             android:textSize="20sp"
-            app:drawableLeftCompat="@drawable/payments_48px"/>
+            app:drawableLeftCompat="@drawable/payments_48px" />
 
 
         <View

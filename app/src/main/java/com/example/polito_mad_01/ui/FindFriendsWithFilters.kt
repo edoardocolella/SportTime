@@ -7,6 +7,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
@@ -83,7 +84,7 @@ class FindFriendsWithFilters : Fragment(R.layout.fragment_find_friends_with_filt
                     }else{
                         noFriendsFound.visibility = View.GONE
                         recyclerViewFoundFriends.visibility = View.VISIBLE
-                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users.map { it.first }, vm)
+                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users, vm, findNavController())
                     }
                 }
         }
