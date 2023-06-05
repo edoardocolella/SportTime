@@ -15,6 +15,7 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.*
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
@@ -76,7 +77,12 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
                 view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
 
-            view?.findViewById<Button>(R.id.removeFriendButton)?.setOnClickListener{
+
+            val button = view?.findViewById<Button>(R.id.removeFriendButton)
+            if(friendUser == FirebaseAuth.getInstance().currentUser?.uid)
+                button?.visibility = View.GONE
+
+            button?.setOnClickListener{
                 vm.removeFriend(friendUser)
                 Snackbar.make(it, "Friend removed", Snackbar.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.reservationsFragment)
