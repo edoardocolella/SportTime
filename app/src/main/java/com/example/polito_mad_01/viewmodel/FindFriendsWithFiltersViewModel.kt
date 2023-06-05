@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.repositories.UserRepository
 
-class FindFriendsWithFiltersViewModal (private val userRepository: UserRepository):ViewModel(){
+class FindFriendsWithFiltersViewModel (private val userRepository: UserRepository):ViewModel(){
 
 
      var skillName = MutableLiveData<String>()
@@ -24,11 +24,11 @@ class FindFriendsWithFiltersViewModal (private val userRepository: UserRepositor
     }
 }
 
-class FindFriendsWithFiltersViewModalFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
+class FindFriendsWithFiltersViewModelFactory(private val repository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FindFriendsWithFiltersViewModal::class.java)) {
+        if (modelClass.isAssignableFrom(FindFriendsWithFiltersViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return FindFriendsWithFiltersViewModal(repository) as T
+            return FindFriendsWithFiltersViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
