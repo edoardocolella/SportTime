@@ -13,6 +13,7 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.util.UIUtils.setTextView
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.snackbar.Snackbar
 
 class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
 
@@ -94,7 +95,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             .setPositiveButton("Yes") { _, _ ->
                 tryDeleteSlot()
                 findNavController().navigate(R.id.action_editReservationFragment_to_reservationsFragment)
-                Toast.makeText(requireContext(), "Reservation deleted", Toast.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "Reservation deleted", Snackbar.LENGTH_LONG).show()
             }
             .setNegativeButton("No") { _, _ -> }
             .create().show()
@@ -125,7 +126,7 @@ class EditReservation : Fragment(R.layout.fragment_edit_reservation) {
             navigate(vm.reservation.value?.slot_id!!)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), "Error while saving data", Toast.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), "Error while saving data", Snackbar.LENGTH_LONG).show()
         }
     }
 

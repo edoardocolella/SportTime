@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.*
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
@@ -13,6 +14,7 @@ import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.Slot
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.snackbar.Snackbar
 import java.time.*
 
 class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
@@ -53,12 +55,11 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         if(res.date > LocalDate.now().toString() || (res.date == LocalDate.now().toString() && res.start_time > LocalTime.now().toString())) {
             button?.setOnClickListener {
                 vm.createReservation()
-                findNavController().navigate(R.id.reservationsFragment)
+                Snackbar.make(requireView(), "Slot reserved successfully", Snackbar.LENGTH_LONG).show()
+                findNavController().navigate(R.id.reservationContainer, bundleOf("slotID" to slotID))
             }
         }
         else{
-            println("resDate ${res.date} now ${LocalDate.now()}")
-            println("resTime ${res.start_time} now ${LocalTime.now()}")
             button?.text = getString(R.string.cannotReserve)
             button?.isClickable = false
             button?.isEnabled = false

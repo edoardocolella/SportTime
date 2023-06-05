@@ -36,9 +36,8 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
 
             val friends = user.friends
 
-            vm.getFriends(friends).observe(viewLifecycleOwner){ friendsPair ->
-                val friendsNick = friendsPair.map{it.second}
-                recyclerViewFriends.adapter= FriendsAdapter(friendsNick)
+            vm.getFriends().observe(viewLifecycleOwner){ friends ->
+                recyclerViewFriends.adapter= FriendsAdapter(friends)
 
             }
 
@@ -59,7 +58,6 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
                 .setPositiveButton("Add"){ dialog, _ ->
                     val email = (dialog as AlertDialog).findViewById<TextView>(R.id.emailEditText)?.text.toString()
                     vm.addFriend(email).observe(viewLifecycleOwner){ result ->
-                        println("RESULT $result")
                         if(isValidEmail(email)){
                             when(result) {
                                 "noAccount" -> Snackbar.make(requireView(), "There is no profile linked to that address", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()

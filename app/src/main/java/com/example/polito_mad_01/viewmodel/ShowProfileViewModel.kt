@@ -19,8 +19,8 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
     }
 
 
-    fun getFriends(idList: List<String>): LiveData<List<Pair<String,String>>> {
-        return userRepository.getFriendsNickname(idList)
+    fun getFriends(): LiveData<List<User>> {
+        return userRepository.getUserFriends()
     }
 
     fun addFriend(email: String) : LiveData<String> {
@@ -30,7 +30,7 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
     fun getFriendRequests(): LiveData<List<String>> {
         return userRepository.getRequestsUUID()
     }
-    fun getFriendsRequestsNickname(idList: List<String>): LiveData<List<Pair<String,String>>> {
+    fun getFriendsRequestsNickname(idList: List<String>): LiveData<List<Pair<String,User>>> {
         return userRepository.getFriendsNickname(idList)
     }
 

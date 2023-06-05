@@ -29,7 +29,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            recyclerViewParticipants.adapter= FriendsAdapter(it.map { user -> user.nickname })
+            recyclerViewParticipants.adapter= FriendsAdapter(it)
 
             if(it.isEmpty()){
                 recyclerViewParticipants.visibility=View.GONE
@@ -42,9 +42,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
 
         vm.getReservation(slotID).observe(viewLifecycleOwner){ slot ->
 
-            plusButton = view.findViewById<Button>(R.id.addParticipantsButton)
-            println("slot_user: ${slot.user_id}")
-            println("current_user: ${fAuth.currentUser?.uid}")
+            plusButton = view.findViewById(R.id.addParticipantsButton)
             if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
 

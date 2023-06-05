@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
 
-class FriendRequestAdapter(private val data: List<Pair<String,String>>, private val vm: ShowProfileViewModel) : RecyclerView.Adapter<FriendRequestAdapter.FriendsHolder>() {
+class FriendRequestAdapter(private val data: List<Pair<String, User>>, private val vm: ShowProfileViewModel) : RecyclerView.Adapter<FriendRequestAdapter.FriendsHolder>() {
 
     override fun getItemCount() = data.size
 
@@ -29,14 +30,13 @@ class FriendRequestAdapter(private val data: List<Pair<String,String>>, private 
         private val declineButton = v.findViewById<Button>(R.id.denyButton)
 
 
-        fun bind(friend: Pair<String,String>){
-            friendId.text = friend.second
+        fun bind(friend: Pair<String, User>){
+            val text = "${friend.second.nickname} (${friend.second.name} ${friend.second.surname})"
+            friendId.text = text
             acceptButton?.setOnClickListener {
-                println("accept $friend")
                 vm.acceptRequest(friend.first)
             }
             declineButton?.setOnClickListener {
-                println("decline $friend")
                 vm.declineRequest(friend.first)
             }
         }

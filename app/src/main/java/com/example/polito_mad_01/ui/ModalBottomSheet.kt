@@ -9,6 +9,7 @@ import com.example.polito_mad_01.util.UIUtils.getIcon
 import com.example.polito_mad_01.viewmodel.EditProfileViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialogFragment() {
@@ -46,13 +47,13 @@ class ModalBottomSheet(private val vm: EditProfileViewModel) : BottomSheetDialog
             findTextInputById(view,R.id.sportLevel)?.editText?.text.toString()
 
         if(sportLevel != "Beginner" && sportLevel != "Intermediate" && sportLevel != "Expert"){
-            Toast.makeText(context, "Choose a level", Toast.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), "Choose a level", Snackbar.LENGTH_SHORT).show()
             return
         }
         val oldList = vm.user.value?.skills!!
 
         if(oldList.containsKey(sportName)){
-            Toast.makeText(context, "There is already that skill", Toast.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), "There is already that skill", Snackbar.LENGTH_SHORT).show()
             return
         }
         else{

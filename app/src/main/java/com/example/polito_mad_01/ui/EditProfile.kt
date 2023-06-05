@@ -23,8 +23,12 @@ import com.example.polito_mad_01.*
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import java.time.LocalDate
 import java.util.*
 
 
@@ -42,7 +46,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     private lateinit var birthdayInputLayout: TextInputLayout
     private lateinit var locationInputLayout: TextInputLayout
     private lateinit var nicknameInputLayout: TextInputLayout
-    private lateinit var phonenumberInputLayout: TextInputLayout
+    private lateinit var phoneNumberInputLayout: TextInputLayout
     private lateinit var emailInputLayout: TextInputLayout
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -70,7 +74,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         achievementsInputLayout = mView.findViewById(R.id.achievementsInputLayout)
         genderInputLayout = mView.findViewById(R.id.genderInputLayout)
         birthdayInputLayout = mView.findViewById(R.id.birthdayInputLayout)
-        phonenumberInputLayout = mView.findViewById(R.id.phonenumberInputLayout)
+        phoneNumberInputLayout = mView.findViewById(R.id.phonenumberInputLayout)
         emailInputLayout = mView.findViewById(R.id.emailInputLayout)
     }
     override fun onCreateContextMenu(
@@ -189,7 +193,7 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
         setEditTextViewAndListener(achievementsInputLayout, user.achievements, "achievements")
         genderInputLayout .editText?.setText(user.gender)
         birthdayInputLayout.editText?.setText(user.birthdate)
-        setEditTextViewAndListener(phonenumberInputLayout, user.phoneNumber, "phoneNumber")
+        setEditTextViewAndListener(phoneNumberInputLayout, user.phoneNumber, "phoneNumber")
         emailInputLayout.editText?.setText(user.email)
     }
 
@@ -204,28 +208,38 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setValue(attribute: String, value:String){
-        println("attribute: $attribute, value: $value")
         when(attribute){
-            "name" -> {vm.user.value?.name = value; println("name: ${vm.user.value?.name}")}
-            "surname" -> {vm.user.value?.surname = value; println("surname: ${vm.user.value?.surname}")}
-            "location" -> {vm.user.value?.location = value; println("location: ${vm.user.value?.location}")}
-            "nickname" -> {vm.user.value?.nickname = value; println("nickname: ${vm.user.value?.nickname}")}
-            "achievements" -> {vm.user.value?.achievements = value; println("achievements: ${vm.user.value?.achievements}")}
-            "phoneNumber" -> {vm.user.value?.phoneNumber = value; println("phoneNumber: ${vm.user.value?.phoneNumber}")}
+            "name" -> vm.user.value?.name = value
+            "surname" -> vm.user.value?.surname = value
+            "location" -> vm.user.value?.location = value
+            "nickname" -> vm.user.value?.nickname = value
+            "achievements" -> vm.user.value?.achievements = value
+            "phoneNumber" -> vm.user.value?.phoneNumber = value
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setBirthdateView(user: User) {
         val birthdateView = UIUtils.findTextInputById(view,R.id.birthdayInputLayout)
         birthdateView?.editText?.setText(user.birthdate)
 
         val materialDatePicker =
             MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a Date").build()
+                .setTitleText("Select a Date")
+                .setCalendarConstraints(
+                    CalendarConstraints.Builder()
+                        .setValidator(DateValidatorPointBackward.now())
+                        .build())
+                .build()
         materialDatePicker.addOnPositiveButtonClickListener {
             val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(it)
-            birthdateView?.editText?.setText(date)
-            vm.user.value?.birthdate = date
+            if(date > LocalDate.now().toString()){
+                Snackbar.make(requireView(), "Invalid Date", Snackbar.LENGTH_SHORT).show()
+            }
+            else {
+                birthdateView?.editText?.setText(date)
+                vm.user.value?.birthdate = date
+            }
         }
 
         birthdateView?.editText?.setOnClickListener {

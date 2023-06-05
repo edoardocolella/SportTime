@@ -4,7 +4,6 @@ import android.icu.text.SimpleDateFormat
 import android.net.ParseException
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.*
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
@@ -14,7 +13,6 @@ import com.google.android.material.tabs.TabLayout
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import com.google.android.material.textfield.TextInputLayout
 import java.util.*
 
 
@@ -68,8 +66,6 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
 
     private fun trySaveData(): Boolean {
         return try {
-            //saveAllView()
-            println("USER ${vm.user.value!!}")
             isNotValid()
             vm.updateUser()
             findNavController().navigate(R.id.showProfileContainer)
@@ -77,11 +73,9 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
             true
         } catch (e: Exception) {
             println(e.message)
-            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
             false
         }
     }
-
 
     private fun isNotValid() {
         val user = vm.user.value!!
@@ -108,8 +102,6 @@ class EditProfileContainer : Fragment(R.layout.fragment_edit_profile_container) 
         if (!regexPhone.matches(user.phoneNumber)) {
             throw Exception("Phone number should be a 10 digit number")
         }
-
-        //imageUri?.let { user.image_uri = it.toString() }
 
     }
 
