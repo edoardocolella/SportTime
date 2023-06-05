@@ -10,6 +10,7 @@ import com.example.polito_mad_01.R
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowProfileViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class FriendRequestAdapter(private val data: List<Pair<String, User>>, private val vm: ShowProfileViewModel) : RecyclerView.Adapter<FriendRequestAdapter.FriendsHolder>() {
 
@@ -38,9 +39,11 @@ class FriendRequestAdapter(private val data: List<Pair<String, User>>, private v
 
             acceptButton?.setOnClickListener {
                 vm.acceptRequest(friend.first)
+                Snackbar.make(v, "Friend request accepted", Snackbar.LENGTH_LONG).show()
             }
             declineButton?.setOnClickListener {
                 vm.declineRequest(friend.first)
+                Snackbar.make(v, "Friend request declined", Snackbar.LENGTH_LONG).show()
             }
         }
     }

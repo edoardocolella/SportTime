@@ -15,6 +15,7 @@ import com.example.polito_mad_01.model.Invitation
 import com.example.polito_mad_01.model.InvitationInfo
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.InvitationsViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class InvitationAdapter(private val data: List<InvitationInfo>,
                         private val vm: InvitationsViewModel,
@@ -80,10 +81,12 @@ class InvitationHolder(private val v: View,
 
         v.findViewById<Button>(R.id.acceptInvitationButton).setOnClickListener {
             vm.acceptInvitation(invitationInfo)
+            Snackbar.make(v, "Invitation accepted", Snackbar.LENGTH_SHORT).show()
         }
 
         v.findViewById<Button>(R.id.declineInvitationButton).setOnClickListener {
             vm.declineInvitation(invitationInfo)
+            Snackbar.make(v, "Invitation declined", Snackbar.LENGTH_SHORT).show()
         }
     }
 }

@@ -23,6 +23,10 @@ class ShowUserProfileViewModel(private val userRepository: UserRepository) : Vie
         userRepository.removeFriend(friendUser)
     }
 
+    fun addFriend(friendUserId: String) {
+        userRepository.addFriend(friendUserId)
+    }
+
 }
 
 class ShowUserProfileViewModelFactory(private val userRepository: UserRepository) :

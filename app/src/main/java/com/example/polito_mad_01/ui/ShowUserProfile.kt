@@ -78,15 +78,35 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
             }
 
 
-            val button = view?.findViewById<Button>(R.id.removeFriendButton)
-            if(friendUser == FirebaseAuth.getInstance().currentUser?.uid)
-                button?.visibility = View.GONE
+            val myUserId = FirebaseAuth.getInstance().currentUser?.uid
 
-            button?.setOnClickListener{
+            val addFriendButton = view?.findViewById<Button>(R.id.addFriendButton)
+            val deleteButton = view?.findViewById<Button>(R.id.removeFriendButton)
+            if(friendUser == myUserId){
+                deleteButton?.visibility = View.GONE
+                addFriendButton?.visibility = View.GONE
+            }
+            if(user.friends.contains(myUserId)){
+                deleteButton?.visibility = View.VISIBLE
+                addFriendButton?.visibility = View.GONE
+            }
+            if(!user.friends.contains(myUserId)) {
+                deleteButton?.visibility = View.GONE
+                addFriendButton?.visibility = View.VISIBLE
+            }
+
+            deleteButton?.setOnClickListener{
                 vm.removeFriend(friendUser)
                 Snackbar.make(it, "Friend removed", Snackbar.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.reservationsFragment)
             }
+            addFriendButton?.setOnClickListener{
+                vm.addFriend(user.email)
+                Snackbar.make(it, "Friend request sent", Snackbar.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.reservationsFragment)
+            }
+
+
 
         }
 
