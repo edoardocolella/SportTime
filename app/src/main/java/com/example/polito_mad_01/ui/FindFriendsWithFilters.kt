@@ -83,7 +83,7 @@ class FindFriendsWithFilters : Fragment(R.layout.fragment_find_friends_with_filt
                     }else{
                         noFriendsFound.visibility = View.GONE
                         recyclerViewFoundFriends.visibility = View.VISIBLE
-                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users.map { it }, vm)
+                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users.map { it.first }, vm)
                     }
                 }
         }

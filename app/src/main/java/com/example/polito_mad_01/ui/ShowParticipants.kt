@@ -30,7 +30,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            recyclerViewParticipants.adapter= FriendsAdapter(it, findNavController())
+            recyclerViewParticipants.adapter= FriendsAdapter(it,findNavController())
 
             if(it.isEmpty()){
                 recyclerViewParticipants.visibility=View.GONE
@@ -50,7 +50,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 vm.getUserFriends().observe(viewLifecycleOwner) {p ->
                     val friends = p
                         //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                        .map { it.email }
+                        .map { it.first.email }
                         .sorted()
                         .toTypedArray()
                     val selectedFriends = mutableListOf<String>()

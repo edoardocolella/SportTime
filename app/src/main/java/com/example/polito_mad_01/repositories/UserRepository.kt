@@ -32,6 +32,16 @@ class UserRepository{
         return user
     }
 
+    fun getUserById(userID: String): LiveData<User> {
+        val user = MutableLiveData<User>()
+        fs.collection("users")
+            .document(userID)
+            .addSnapshotListener { r, _ ->
+                user.value =  r?.toObject(User::class.java)
+            }
+        return user
+    }
+
     fun updateUser(user: User) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
@@ -63,9 +73,9 @@ class UserRepository{
         }
     }
 
-    fun getUserFriends() : LiveData<List<User>>{
+    fun getUserFriends() : LiveData<List<Pair<User,String>>>{
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-        val liveDataList = MutableLiveData<List<User>>()
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
 
         fs.collection("users")
             .document(userID)
@@ -79,7 +89,7 @@ class UserRepository{
                             val list = query.documents
                                 .filter { friendsIds.contains(it.id) }
                                 .map {
-                                    it.toObject(User::class.java)!!
+                                    Pair(it.toObject(User::class.java)!!, it.id)
                                 }
                             liveDataList.value = list
                         }
@@ -228,8 +238,8 @@ class UserRepository{
             }
     }
 
-    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
-        val liveDataList = MutableLiveData<List<User>>()
+    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<Pair<User,String>>> {
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
             .whereEqualTo("skills.$skillName", skillValue)
@@ -240,10 +250,12 @@ class UserRepository{
                     .filter { !(it["friends"] as List<*>).contains(userID) }
                     .filter { it["location"].toString().lowercase() == location.lowercase()}
                     .map {
-                    it.toObject(User::class.java)!!
+                        Pair(it.toObject(User::class.java)!!, it.id )
                 }
             }
         return liveDataList
     }
+
+
 
 }

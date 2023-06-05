@@ -26,7 +26,6 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
         noFriends = UIUtils.findTextViewById(view, R.id.noFriendsTextView)!!
         noFriends.visibility=View.GONE
@@ -37,8 +36,8 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
 
             val friends = user.friends
 
-            vm.getFriends().observe(viewLifecycleOwner){ friends ->
-                recyclerViewFriends.adapter= FriendsAdapter(friends, findNavController())
+            vm.getFriends().observe(viewLifecycleOwner){ friendsPair ->
+                recyclerViewFriends.adapter= FriendsAdapter(friendsPair,findNavController())
 
             }
 

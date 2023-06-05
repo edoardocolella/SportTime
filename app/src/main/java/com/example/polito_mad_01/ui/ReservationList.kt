@@ -16,7 +16,6 @@ class ReservationList(private val slotList: List<Slot> = listOf()) : Fragment(R.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
 
 
         reservationsView = view.findViewById(R.id.reservationList)

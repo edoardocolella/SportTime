@@ -39,8 +39,6 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
 
         reservationMap = mutableMapOf()
         val selectedDateString = arguments?.getString("selectedDate")
@@ -51,10 +49,8 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
         viewPager = view.findViewById(R.id.reservationViewPager)
         viewPager.adapter = DaySlotAdapter(this, listOf())
 
-
         // serve solo a creare un dataset
         //vm.createSlots()
-
 
         // p1
         setupList(view)

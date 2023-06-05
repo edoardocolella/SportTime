@@ -28,9 +28,6 @@ class CreateFeedback : Fragment(R.layout.fragment_create_feedback) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = false
-
-
         slotId = requireArguments().getInt("slotId")
         playgroundId = requireArguments().getInt("playgroundId")
         userId = requireArguments().getString("userId").orEmpty()
