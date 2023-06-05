@@ -277,6 +277,17 @@ class UserRepository{
         return liveDataList
     }
 
+    fun removeFriend(friendUUID: String) {
+        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
+        fs.collection("users")
+            .document(userID)
+            .update("friends", FieldValue.arrayRemove(friendUUID))
+
+        fs.collection("users")
+            .document(friendUUID)
+            .update("friends", FieldValue.arrayRemove(userID))
+    }
+
 
 
 }

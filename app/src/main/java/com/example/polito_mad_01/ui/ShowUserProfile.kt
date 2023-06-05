@@ -7,16 +7,18 @@ import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.*
+import com.google.android.material.snackbar.Snackbar
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
-class ShowUserProfile : Fragment(R.layout.fragment_profile) {
+class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
 
     private val vm: ShowUserProfileViewModel by viewModels {
         ShowUserProfileViewModelFactory(
@@ -36,9 +38,9 @@ class ShowUserProfile : Fragment(R.layout.fragment_profile) {
 
     private fun setAllView() {
 
-        val currUser = requireArguments().getString("userId").toString()
+        val friendUser = requireArguments().getString("userId").toString()
 
-        vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
+        vm.getUserById(friendUser).observe(viewLifecycleOwner) { user->
             user.let {
                 UIUtils.setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 UIUtils.setTextView(R.id.nickname, it.nickname, view)
@@ -74,9 +76,15 @@ class ShowUserProfile : Fragment(R.layout.fragment_profile) {
                 view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
 
+            view?.findViewById<Button>(R.id.removeFriendButton)?.setOnClickListener{
+                vm.removeFriend(friendUser)
+                Snackbar.make(it, "Friend removed", Snackbar.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.reservationsFragment)
+            }
+
         }
 
-        vm.getUserImage(currUser).observe(viewLifecycleOwner) { image ->
+        vm.getUserImage(friendUser).observe(viewLifecycleOwner) { image ->
             setImage(image)
         }
     }

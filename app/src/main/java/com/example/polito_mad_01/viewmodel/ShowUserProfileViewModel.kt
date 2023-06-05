@@ -19,6 +19,10 @@ class ShowUserProfileViewModel(private val userRepository: UserRepository) : Vie
         return userRepository.getProfileImageById(id)
     }
 
+    fun removeFriend(friendUser: String) {
+        userRepository.removeFriend(friendUser)
+    }
+
 }
 
 class ShowUserProfileViewModelFactory(private val userRepository: UserRepository) :
