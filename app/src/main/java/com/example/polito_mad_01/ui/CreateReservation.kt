@@ -79,7 +79,7 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
         UIUtils.setTextView(R.id.playgroundSport, slot.sport, view)
         UIUtils.setTextView(R.id.dateText, slot.date, view)
         UIUtils.setTextView(R.id.timeText, "${slot.start_time}-${slot.end_time}", view)
-        UIUtils.setTextView(R.id.reservationTotalPrice, slot.total_price.toString(), view)
+        UIUtils.setTextView(R.id.reservationTotalPrice, slot.total_price.toString() + "€", view)
 
     }
 
