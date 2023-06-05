@@ -30,8 +30,8 @@ class ShowProfileViewModel(private val userRepository:  UserRepository): ViewMod
     fun getFriendRequests(): LiveData<List<String>> {
         return userRepository.getRequestsUUID()
     }
-    fun getFriendsRequestsNickname(): LiveData<List<Pair<String,User>>> {
-        return userRepository.getUserFriends()
+    fun getFriendsRequestsNickname(idList: List<String>): LiveData<List<Pair<String,User>>> {
+        return userRepository.getFriendsNickname(idList)
     }
 
     fun acceptRequest(first: String) {

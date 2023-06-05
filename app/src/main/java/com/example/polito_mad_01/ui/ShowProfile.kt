@@ -21,7 +21,7 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = true
+        //requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = true
         try {
             setAllView()
         } catch (e: NotImplementedError) {
@@ -32,7 +32,6 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
     }
 
     private fun setAllView() {
-        val currUser = FirebaseAuth.getInstance().currentUser
 
         vm.getUser().observe(viewLifecycleOwner) {user->
             user.let {
@@ -40,7 +39,7 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
                 setTextView(R.id.nickname, it.nickname,view)
                 setTextView(R.id.description, it.achievements.toString(),view)
                 setTextView(R.id.birthdate, it.birthdate,view)
-                setTextView(R.id.email_text, currUser?.email ,view)
+                setTextView(R.id.email_text, it.email ,view)
                 setTextView(R.id.phoneNumber_text, it.phoneNumber,view)
                 setTextView(R.id.gender, it.gender,view)
                 setTextView(R.id.location, it.location,view)

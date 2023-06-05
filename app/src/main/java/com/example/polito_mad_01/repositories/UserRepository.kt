@@ -90,14 +90,14 @@ class UserRepository{
         return liveDataList
     }
 
-    fun getFriendsNickname(idList: List<String>): LiveData<List<Pair<String,String>>> {
-        val nicknameList = MutableLiveData<List<Pair<String,String>>>()
+    fun getFriendsNickname(idList: List<String>): LiveData<List<Pair<String,User>>> {
+        val nicknameList = MutableLiveData<List<Pair<String,User>>>()
         fs.collection("users")
             .get()
             .addOnSuccessListener { result ->
                 nicknameList.value = result.documents
                     .filter { idList.contains(it.id) }
-                    .map { Pair(it.id,it["nickname"].toString()) }
+                    .map { Pair(it.id,it.toObject(User::class.java)!!) }
             }
         return nicknameList
     }
