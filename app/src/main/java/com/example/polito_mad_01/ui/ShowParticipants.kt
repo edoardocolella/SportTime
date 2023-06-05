@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.ParticipantsAdapter
@@ -74,12 +75,11 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
 
     private fun getParticipants(){
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            var mutable = it.toMutableList()
-            var organizer = mutable.first { pair -> pair.second == slotOrganizer }
+            val mutable = it.toMutableList()
+            val organizer = mutable.first { pair -> pair.second == slotOrganizer }
             mutable.remove(organizer)
-            organizer=Pair(organizer.first,"organizer")
             mutable.add(0,organizer)
-            recyclerViewParticipants.adapter= ParticipantsAdapter(mutable.toList())
+            recyclerViewParticipants.adapter= ParticipantsAdapter(mutable, findNavController(), slotOrganizer)
 
             if(it.isEmpty()){
                 recyclerViewParticipants.visibility=View.GONE

@@ -37,6 +37,7 @@ class ShowUserProfile : Fragment(R.layout.fragment_profile) {
     private fun setAllView() {
 
         val currUser = requireArguments().getString("userId").toString()
+        println(currUser)
 
         vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
             user.let {
