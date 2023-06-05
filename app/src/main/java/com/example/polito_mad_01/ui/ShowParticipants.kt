@@ -47,24 +47,20 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
             if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
 
-                vm.getUserFriends().observe(viewLifecycleOwner) {p ->
-                    val friends = p
-                        //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                        .map { it.first.email }
-                        .sorted()
-                        .toTypedArray()
+                vm.getUserFriends().observe(viewLifecycleOwner) {friends ->
+                    val friendsName : Array<String> = friends.map { it.first.nickname }.toTypedArray()
                     val selectedFriends = mutableListOf<String>()
 
                     plusButton.setOnClickListener{
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("Invite Friends")
                             .setMultiChoiceItems(
-                                friends, null
+                                friendsName, null
                             ) { _, which, isChecked ->
                                 if (isChecked) {
-                                    selectedFriends += friends[which]
-                                } else if (selectedFriends.contains(friends[which])) {
-                                    selectedFriends.remove(friends[which])
+                                    selectedFriends += friends[which].first.email
+                                } else if (selectedFriends.contains(friends[which].first.email)) {
+                                    selectedFriends.remove(friends[which].first.email)
                                 }
                             }
                             .setPositiveButton("Invite"){ dialog, _ ->
