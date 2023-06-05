@@ -17,11 +17,11 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
     private lateinit var recyclerViewParticipants: RecyclerView
     private lateinit var noParticipants: TextView
     private lateinit var plusButton: Button
+    var slotOrganizer = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fAuth = FirebaseAuth.getInstance()
-        var userID = fAuth.currentUser?.uid
 
         noParticipants = UIUtils.findTextViewById(view, R.id.noParticipantsTextView)!!
         noParticipants.visibility=View.GONE
@@ -29,6 +29,9 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
         vm.getReservation(slotID).observe(viewLifecycleOwner){ slot ->
+
+            slotOrganizer = slot.user_id!!
+            getParticipants()
             plusButton = view.findViewById(R.id.addParticipantsButton)
             if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
@@ -66,10 +69,13 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
             }
         }
 
+
+    }
+
+    private fun getParticipants(){
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
             var mutable = it.toMutableList()
-            var organizer = mutable.first { pair -> pair.second == userID }
-            val index = mutable.indexOf(organizer)
+            var organizer = mutable.first { pair -> pair.second == slotOrganizer }
             mutable.remove(organizer)
             organizer=Pair(organizer.first,"organizer")
             mutable.add(0,organizer)
@@ -83,6 +89,5 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 noParticipants.visibility=View.GONE
             }
         }
-
     }
 }
