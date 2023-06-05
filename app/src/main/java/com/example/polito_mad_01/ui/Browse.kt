@@ -31,6 +31,9 @@ class Browse : Fragment(R.layout.fragment_browse) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as MainActivity).setTitle("Free Slots")
+
+
         super.onCreate(savedInstanceState)
 
         noFreeSlots = UIUtils.findTextViewById(view, R.id.no_free_slots)

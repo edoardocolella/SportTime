@@ -23,6 +23,9 @@ class ShowProfileContainer : Fragment(R.layout.fragment_show_profile_container) 
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
+
+            (requireActivity() as MainActivity).setTitle("Profile")
+
             if(savedInstanceState == null)
                 setHasOptionsMenu(true)
         }

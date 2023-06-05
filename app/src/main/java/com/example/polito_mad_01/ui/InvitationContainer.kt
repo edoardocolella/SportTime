@@ -28,6 +28,9 @@ class InvitationContainer : Fragment(R.layout.fragment_invitation_container) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as MainActivity).setTitle("Invitations")
+
+
         tabLayout = view.findViewById(R.id.tabLayout)
         viewPager = view.findViewById(R.id.invitationViewPager)
         invitationPageAdapter = InvitationsPageAdapter(requireActivity(), vm)
