@@ -1,19 +1,33 @@
 package com.example.polito_mad_01
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
+import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.ui.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.system.exitProcess
 
 class LandingPageActivity : AppCompatActivity() {
+
+    private lateinit var backCallBack: OnBackPressedCallback
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing_page)
+
+        backCallBack = onBackPressedDispatcher
+            .addCallback(this) {
+                showExitDialog()
+            }
+        backCallBack.isEnabled = true
 
         val auth = FirebaseAuth.getInstance()
         if(auth.currentUser != null){
@@ -44,13 +58,27 @@ class LandingPageActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.registerButton).setOnClickListener {
             val intent = Intent(this, RegistrationActivity::class.java)
+            backCallBack.remove()
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.signInButton).setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
+            backCallBack.remove()
             startActivity(intent)
         }
+    }
+
+    private fun showExitDialog(): Boolean {
+        AlertDialog.Builder(this)
+            .setTitle("Are you sure?").setMessage("All changes will be lost")
+            .setPositiveButton("YES")
+            { _, _ ->
+                //findNavController().navigate(R.id.showProfileContainer)
+                exitProcess(0)
+            }
+            .setNegativeButton("NO") { _, _ -> }.show()
+        return true
     }
 
 }
