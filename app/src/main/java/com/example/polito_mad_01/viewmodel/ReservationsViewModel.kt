@@ -5,12 +5,16 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.ReservationRepository
+import java.time.LocalDate
+import java.util.*
 import kotlin.concurrent.thread
 import kotlin.random.Random
 
 class ReservationsViewModel(private val reservationsRepository: ReservationRepository) : ViewModel() {
 
     lateinit var reservations: LiveData<List<Slot>>
+    @RequiresApi(Build.VERSION_CODES.O)
+    var selectedDate: LocalDate? = LocalDate.now()
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getUserSlots(): LiveData<List<Slot>> {

@@ -25,7 +25,7 @@ import java.time.format.*
 import java.util.*
 
 class Reservations : Fragment(R.layout.fragment_reservations) {
-    private var selectedDate: LocalDate? = null
+    //private var selectedDate: LocalDate? = null
 
     private lateinit var tabLayout : TabLayout
     private lateinit var viewPager : ViewPager2
@@ -42,7 +42,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         reservationMap = mutableMapOf()
         val selectedDateString = arguments?.getString("selectedDate")
-        selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
+        //vm.selectedDate = if(selectedDateString != null) LocalDate.parse(selectedDateString) else LocalDate.now()
 
 
         tabLayout =  view.findViewById(R.id.reservationTabLayout)
@@ -84,7 +84,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
 
         val daysOfWeek = daysOfWeek(firstDayOfWeek = DayOfWeek.MONDAY)
         calendarView.setup(currentMonth, endMonth, daysOfWeek.first())
-        selectedDate?.let {
+        vm.selectedDate?.let {
             calendarView.scrollToMonth(it.yearMonth)
             calendarView.notifyDateChanged(it)
         }
@@ -118,7 +118,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 }
 
                 // Set background for selected date
-                if (data.date == selectedDate) {
+                if (data.date == vm.selectedDate) {
                     textView.setBackgroundResource(R.drawable.selection_background)
                 } else {
                     textView.background = null
@@ -127,15 +127,15 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
                 container.view.setOnClickListener {
                     if (container.day.position == DayPosition.MonthDate) {
 
-                        val currentSelection = selectedDate
+                        val currentSelection = vm.selectedDate
                         if (currentSelection == container.day.date) {
                             // If the user clicks the same date, clear selection.
-                            selectedDate = null
+                            vm.selectedDate = null
                             calendarView.notifyDateChanged(currentSelection)
                             setList()
 
                         } else {
-                            selectedDate = container.day.date
+                            vm.selectedDate = container.day.date
                             calendarView.notifyDateChanged(container.day.date)
 
                             setList()
@@ -177,7 +177,7 @@ class Reservations : Fragment(R.layout.fragment_reservations) {
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun setList(){
-        val dateString = selectedDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        val dateString = vm.selectedDate?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         val slotList = reservationMap[dateString] ?: listOf()
 
         viewPager.adapter = DaySlotAdapter(this, slotList)
