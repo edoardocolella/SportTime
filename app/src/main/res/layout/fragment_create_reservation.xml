@@ -110,7 +110,8 @@ android:layout_height="match_parent">
                 android:id="@+id/dateText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_weight="4"
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/timeIcon"
@@ -123,7 +124,8 @@ android:layout_height="match_parent">
                 android:id="@+id/timeText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4" />
+                android:layout_weight="4"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
