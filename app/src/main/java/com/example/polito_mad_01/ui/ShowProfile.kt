@@ -21,7 +21,7 @@ class  ShowProfile(val vm: ShowProfileViewModel) : Fragment(R.layout.fragment_pr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = true
+        //requireActivity().onBackPressedDispatcher.addCallback(this) {}.isEnabled = true
         try {
             setAllView()
         } catch (e: NotImplementedError) {

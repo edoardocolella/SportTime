@@ -21,47 +21,49 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/internalLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:clickable="false"
-            android:focusable="true">
+            android:focusable="true"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/friendId"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="@string/friends"
-                android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/acceptButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textSize="24sp" />
 
-            <Button
-                android:id="@+id/acceptButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="A"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/denyButton"
-                app:layout_constraintStart_toEndOf="@+id/friendId"
-                app:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:padding="8dp">
 
-            <Button
-                android:id="@+id/denyButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/red"
-                android:text="D"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/acceptButton"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/denyButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:backgroundTint="#F44336"
+                    android:text="@string/decline"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/acceptButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#4CAF50"
+                    android:text="@string/accept"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

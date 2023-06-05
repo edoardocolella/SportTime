@@ -99,14 +99,14 @@ class UserRepository{
         return liveDataList
     }
 
-    fun getFriendsNickname(idList: List<String>): LiveData<List<Pair<String,String>>> {
-        val nicknameList = MutableLiveData<List<Pair<String,String>>>()
+    fun getFriendsNickname(idList: List<String>): LiveData<List<Pair<String,User>>> {
+        val nicknameList = MutableLiveData<List<Pair<String,User>>>()
         fs.collection("users")
             .get()
             .addOnSuccessListener { result ->
                 nicknameList.value = result.documents
                     .filter { idList.contains(it.id) }
-                    .map { Pair(it.id,it["nickname"].toString()) }
+                    .map { Pair(it.id,it.toObject(User::class.java)!!) }
             }
         return nicknameList
     }
@@ -238,8 +238,8 @@ class UserRepository{
             }
     }
 
-    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<User>> {
-        val liveDataList = MutableLiveData<List<User>>()
+    fun findFriendsBySkillAndLocation(skillName: String, skillValue:String, location: String): LiveData<List<Pair<User,String>>> {
+        val liveDataList = MutableLiveData<List<Pair<User,String>>>()
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
             .whereEqualTo("skills.$skillName", skillValue)
@@ -250,7 +250,7 @@ class UserRepository{
                     .filter { !(it["friends"] as List<*>).contains(userID) }
                     .filter { it["location"].toString().lowercase() == location.lowercase()}
                     .map {
-                    it.toObject(User::class.java)!!
+                        Pair(it.toObject(User::class.java)!!, it.id )
                 }
             }
         return liveDataList

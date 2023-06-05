@@ -2,19 +2,24 @@ package com.example.polito_mad_01.adapters
 
 import android.view.*
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
+import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 
 
-class FriendsAdapter ( private val data:List<String>, ): RecyclerView.Adapter<FriendsAdapter.FriendsHolder>(){
+class FriendsAdapter ( private val data:List<Pair<User,String>>,
+                       private val navController: NavController
+): RecyclerView.Adapter<FriendsAdapter.FriendsHolder>(){
 
 
     override fun getItemCount() = data.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsHolder{
         val v = LayoutInflater.from(parent.context).inflate(R.layout.friend_item_layout ,parent, false)
-        return FriendsHolder(v)
+        return FriendsHolder(v, navController)
     }
 
     override fun onBindViewHolder(holder: FriendsHolder, position: Int) {
@@ -22,15 +27,17 @@ class FriendsAdapter ( private val data:List<String>, ): RecyclerView.Adapter<Fr
         holder.bind(friend)
     }
 
-    class FriendsHolder(v: View): RecyclerView.ViewHolder(v){
+    class FriendsHolder(v: View, private val navController: NavController): RecyclerView.ViewHolder(v){
         private val friendId = UIUtils.findTextViewById(v,R.id.friendId)!!
         private val item = v.findViewById<CardView>(R.id.friendItem)!!
 
-        fun bind(friend: String){
-            friendId.text = friend
+
+        fun bind(friend: Pair<User,String>){
+            friendId.text = friend.first.nickname
             item.setOnClickListener{
-                //findNavController().navigate(R.id.action_showFriends_to_showFriendProfile)
+                navController.navigate(R.id.profileFragment, bundleOf("user" to friend.second))
             }
+
         }
     }
 
