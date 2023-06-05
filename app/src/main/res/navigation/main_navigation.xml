@@ -204,6 +204,9 @@
         <action
             android:id="@+id/action_reservationContainer_to_showReservationFragment"
             app:destination="@id/showReservationFragment" />
+        <action
+            android:id="@+id/action_reservationContainer_to_showUserProfile"
+            app:destination="@id/showUserProfile" />
     </fragment>
     <fragment
         android:id="@+id/invitationContainer"
