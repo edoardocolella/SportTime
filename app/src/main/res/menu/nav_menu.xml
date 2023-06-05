@@ -20,12 +20,12 @@
 
     <item
         android:id="@+id/invitations"
-        android:icon="@drawable/mail_48px"
+        android:icon="@drawable/directions_run_48px"
         android:title="@string/invitations" />
 
     <item
         android:id="@+id/findFriends"
-        android:icon="@drawable/stars_48px"
+        android:icon="@drawable/group_48px"
         android:title="Find Friends" />
 
         <!-- Altri elementi del menu... -->
