@@ -324,6 +324,36 @@
                     </com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/friendRequestButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/declineRequestButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#F44336"
+                        android:text="@string/decline"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/acceptRequestButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#4CAF50"
+                        android:text="@string/accept"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/addFriendButton"
                     android:layout_width="match_parent"
