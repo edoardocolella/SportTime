@@ -136,4 +136,7 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="no_invitations">No invitations found</string>
+    <string name="requestSent">Request sent</string>
+    <string name="search">Search</string>
+    <string name="skill_name">Skill Name</string>
 </resources>

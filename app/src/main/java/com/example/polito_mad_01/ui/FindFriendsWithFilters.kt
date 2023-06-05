@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.*
 import com.example.polito_mad_01.adapters.FindFriendsAdapter
-import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 
 
@@ -27,8 +25,8 @@ class FindFriendsWithFilters : Fragment(R.layout.fragment_find_friends_with_filt
     private lateinit var recyclerViewFoundFriends: RecyclerView
     private lateinit var noFriendsFound: TextView
 
-    private val vm: FindFriendsWithFiltersViewModal by viewModels{
-        FindFriendsWithFiltersViewModalFactory((activity?.application as SportTimeApplication).userRepository)
+    private val vm: FindFriendsWithFiltersViewModel by viewModels{
+        FindFriendsWithFiltersViewModelFactory((activity?.application as SportTimeApplication).userRepository)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,7 +83,7 @@ class FindFriendsWithFilters : Fragment(R.layout.fragment_find_friends_with_filt
                     }else{
                         noFriendsFound.visibility = View.GONE
                         recyclerViewFoundFriends.visibility = View.VISIBLE
-                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users.map { it.nickname })
+                        recyclerViewFoundFriends.adapter=FindFriendsAdapter(users.map { it }, vm)
                     }
                 }
         }
