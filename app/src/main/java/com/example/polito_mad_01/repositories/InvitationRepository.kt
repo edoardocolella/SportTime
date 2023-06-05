@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Filter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.getField
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
@@ -24,7 +25,6 @@ class InvitationRepository {
     fun getUserInvitations() : LiveData<List<InvitationInfo>> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
 
-        val invitationList = MutableLiveData<List<Invitation>>().apply { value = listOf() }
         val invitationInfoList = MutableLiveData<List<InvitationInfo>>().apply { value = listOf() }
 
         fs.collection("gameRequests")
@@ -32,8 +32,8 @@ class InvitationRepository {
             .addSnapshotListener{ result, _ ->
                 val requests = result!!.documents
                     .filter {
-                        (it.getField<String>("date")!! > LocalDateTime.now().toString()) ||
-                                (it.getField<String>("date")!! == LocalDateTime.now().toString()
+                        (it.getField<String>("date")!! > LocalDate.now().toString()) ||
+                                (it.getField<String>("date")!! == LocalDate.now().toString()
                                         && it.getField<String>("start_time")!! >= LocalTime.now().toString())
                     }
                     .map { it.toObject(InvitationInfo::class.java)!! }
