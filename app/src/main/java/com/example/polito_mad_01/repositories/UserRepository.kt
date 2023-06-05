@@ -239,7 +239,14 @@ class UserRepository{
             .addOnSuccessListener { result ->
                     fs.collection("gameRequests")
                         .document("${userID}-${result.documents[0].id}-${slot.slot_id}")
-                        .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slot.slot_id, "date" to slot.date))
+                        .set(mapOf
+                            ("sender" to userID,
+                            "receiver" to result.documents[0].id,
+                            "slotID" to slot.slot_id,
+                            "date" to slot.date,
+                            "start_time" to slot.start_time
+                        )
+                        )
                         .addOnSuccessListener{
                             GlobalScope.launch (Dispatchers.IO){
                                 val data = NotificationData("Game request",

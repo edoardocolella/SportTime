@@ -30,7 +30,11 @@ class InvitationRepository {
             .whereEqualTo("receiver", userID)
             .addSnapshotListener{ result, _ ->
                 val requests = result!!.documents
-                    .filter { it.getField<String>("date")!! > LocalDateTime.now().toString() }
+                    .filter {
+                        (it.getField<String>("date")!! > LocalDateTime.now().toString()) ||
+                                (it.getField<String>("date")!! == LocalDateTime.now().toString()
+                                        && it.getField<String>("start_time")!! >= LocalDateTime.now().toString())
+                    }
                     .map { it.toObject(InvitationInfo::class.java)!! }
 
                 invitationInfoList.value = requests
