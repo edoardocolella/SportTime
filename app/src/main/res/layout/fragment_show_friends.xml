@@ -41,7 +41,6 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/noFriends"
             android:textAlignment="gravity"
-            android:textColor="@color/black"
             android:textSize="24sp" />
 
     </LinearLayout>

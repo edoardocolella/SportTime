@@ -11,6 +11,7 @@ import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.ShowReservationsViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fragment(R.layout.fragment_show_participants) {
@@ -48,8 +49,8 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
 
                 vm.getUserFriends().observe(viewLifecycleOwner) {p ->
                     val friends = p
-                        //.map { "${it.nickname} (${it.name} ${it.surname})" }
-                        .map { it.email }
+                        .map { "${it.name} ${it.surname} \n(${it.nickname})" }
+                        //.map { it.email }
                         .sorted()
                         .toTypedArray()
                     val selectedFriends = mutableListOf<String>()
@@ -69,6 +70,7 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                             .setPositiveButton("Invite"){ dialog, _ ->
                                 selectedFriends.forEach {
                                     vm.sendGameRequest(it, slot)
+                                    //Snackbar.make(requireView(), "Invitation sent successfully", Snackbar.LENGTH_LONG).setAnchorView(R.id.addParticipantsButton).show()
                                 }
                                 dialog.dismiss()
                             }
