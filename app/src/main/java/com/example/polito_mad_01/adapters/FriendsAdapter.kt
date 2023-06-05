@@ -47,13 +47,6 @@ class FriendsAdapter ( private val data:List<Pair<User,String>>,
                     else -> println("ID ${navController.currentDestination?.displayName} ")
                 }
             }
-            fun bind(friend: Pair<User, String>) {
-                friendId.text = friend.first.nickname
-                item.setOnClickListener {
-                    navController.navigate(R.id.profileFragment, bundleOf("user" to friend.second))
-                }
-
-            }
         }
     }
 }
