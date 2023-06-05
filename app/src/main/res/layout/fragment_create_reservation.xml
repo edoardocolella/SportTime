@@ -204,10 +204,11 @@ android:layout_height="match_parent">
             <Button
                 android:id="@+id/createReservation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="55dp"
                 android:layout_marginTop="30dp"
                 android:text="@string/reserve"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
