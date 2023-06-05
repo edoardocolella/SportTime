@@ -8,12 +8,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
-import androidx.navigation.fragment.findNavController
+import androidx.activity.*
 import com.example.polito_mad_01.ui.MainActivity
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.system.exitProcess
 
 class LandingPageActivity : AppCompatActivity() {
 
@@ -24,9 +21,7 @@ class LandingPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_landing_page)
 
         backCallBack = onBackPressedDispatcher
-            .addCallback(this) {
-                showExitDialog()
-            }
+            .addCallback(this) {showExitDialog()}
         backCallBack.isEnabled = true
 
         val auth = FirebaseAuth.getInstance()
@@ -69,16 +64,13 @@ class LandingPageActivity : AppCompatActivity() {
         }
     }
 
-    private fun showExitDialog(): Boolean {
+    private fun showExitDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Are you sure?").setMessage("All changes will be lost")
+            .setTitle("Do you want to exit?")
+            .setMessage("Are you sure?")
             .setPositiveButton("YES")
-            { _, _ ->
-                //findNavController().navigate(R.id.showProfileContainer)
-                exitProcess(0)
-            }
+            { _, _ -> this.finishAffinity()}
             .setNegativeButton("NO") { _, _ -> }.show()
-        return true
     }
 
 }
