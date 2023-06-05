@@ -182,6 +182,9 @@
         <action
             android:id="@+id/action_showProfileContainer_to_friendRequest"
             app:destination="@id/friendRequest" />
+        <action
+            android:id="@+id/action_showProfileContainer_to_showUserProfile"
+            app:destination="@id/showUserProfile" />
     </fragment>
     <fragment
         android:id="@+id/friendRequest"
