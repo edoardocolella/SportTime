@@ -39,9 +39,9 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
 
     private fun setAllView() {
 
-        val friendUser = requireArguments().getString("userId").toString()
+        val friendUserId = requireArguments().getString("userId").toString()
 
-        vm.getUserById(friendUser).observe(viewLifecycleOwner) { user->
+        vm.getUserById(friendUserId).observe(viewLifecycleOwner) { user->
             user.let {
                 UIUtils.setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 UIUtils.setTextView(R.id.nickname, it.nickname, view)
@@ -77,42 +77,70 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
                 view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
 
+            setFriendButton(friendUserId,user)
 
-            val myUserId = FirebaseAuth.getInstance().currentUser?.uid
+        }
 
-            val addFriendButton = view?.findViewById<Button>(R.id.addFriendButton)
-            val deleteButton = view?.findViewById<Button>(R.id.removeFriendButton)
-            if(friendUser == myUserId){
+        vm.getUserImage(friendUserId).observe(viewLifecycleOwner) { image ->
+            setImage(image)
+        }
+    }
+
+    private fun setFriendButton(friendUserId: String, user: User){
+        val myUserId = FirebaseAuth.getInstance().currentUser?.uid
+
+        val addFriendButton = view?.findViewById<Button>(R.id.addFriendButton)
+        val deleteButton = view?.findViewById<Button>(R.id.removeFriendButton)
+        val acceptRequest  = view?.findViewById<Button>(R.id.acceptRequestButton)
+        val declineRequest = view?.findViewById<Button>(R.id.declineRequestButton)
+
+        if(requireArguments().containsKey("isRequest")){
+            deleteButton?.visibility = View.GONE
+            addFriendButton?.visibility = View.GONE
+            acceptRequest?.visibility = View.VISIBLE
+            declineRequest?.visibility = View.VISIBLE
+
+            acceptRequest?.setOnClickListener{
+                vm.acceptRequest(friendUserId)
+                Snackbar.make(it, "Friend request accepted", Snackbar.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.showProfileContainer)
+            }
+
+            declineRequest?.setOnClickListener{
+                vm.declineRequest(friendUserId)
+                Snackbar.make(it, "Friend request declined", Snackbar.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.showProfileContainer)
+            }
+
+        }
+        else {
+            acceptRequest?.visibility = View.GONE
+            declineRequest?.visibility = View.GONE
+            if (friendUserId == myUserId) {
                 deleteButton?.visibility = View.GONE
                 addFriendButton?.visibility = View.GONE
             }
-            if(user.friends.contains(myUserId)){
+            if (user.friends.contains(myUserId)) {
                 deleteButton?.visibility = View.VISIBLE
                 addFriendButton?.visibility = View.GONE
             }
-            if(!user.friends.contains(myUserId)) {
+            if (!user.friends.contains(myUserId)) {
                 deleteButton?.visibility = View.GONE
                 addFriendButton?.visibility = View.VISIBLE
             }
 
-            deleteButton?.setOnClickListener{
-                vm.removeFriend(friendUser)
+            deleteButton?.setOnClickListener {
+                vm.removeFriend(friendUserId)
                 Snackbar.make(it, "Friend removed", Snackbar.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.reservationsFragment)
             }
-            addFriendButton?.setOnClickListener{
+            addFriendButton?.setOnClickListener {
                 vm.addFriend(user.email)
                 Snackbar.make(it, "Friend request sent", Snackbar.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.reservationsFragment)
             }
-
-
-
         }
 
-        vm.getUserImage(friendUser).observe(viewLifecycleOwner) { image ->
-            setImage(image)
-        }
     }
 
 

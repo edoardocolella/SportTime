@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
@@ -37,7 +38,7 @@ class FriendRequest(private val vm: ShowProfileViewModel) : Fragment(R.layout.fr
 
 
 
-                recyclerViewFriendRequests.adapter= FriendRequestAdapter(friendRequestsNickname, vm)
+                recyclerViewFriendRequests.adapter= FriendRequestAdapter(friendRequestsNickname, vm, findNavController())
 
 
                 if (friendRequestsNickname.isEmpty()) {

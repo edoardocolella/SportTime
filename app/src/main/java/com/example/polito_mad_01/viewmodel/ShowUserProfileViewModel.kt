@@ -27,6 +27,14 @@ class ShowUserProfileViewModel(private val userRepository: UserRepository) : Vie
         userRepository.addFriend(friendUserId)
     }
 
+    fun declineRequest(friendUserId: String) {
+        userRepository.declineRequest(friendUserId)
+    }
+
+    fun acceptRequest(friendUserId: String) {
+        userRepository.acceptRequest(friendUserId)
+    }
+
 }
 
 class ShowUserProfileViewModelFactory(private val userRepository: UserRepository) :
