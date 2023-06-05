@@ -208,14 +208,13 @@ class EditProfile(val vm: EditProfileViewModel) : Fragment(R.layout.fragment_edi
     }
 
     private fun setValue(attribute: String, value:String){
-        println("attribute: $attribute, value: $value")
         when(attribute){
-            "name" -> {vm.user.value?.name = value; println("name: ${vm.user.value?.name}")}
-            "surname" -> {vm.user.value?.surname = value; println("surname: ${vm.user.value?.surname}")}
-            "location" -> {vm.user.value?.location = value; println("location: ${vm.user.value?.location}")}
-            "nickname" -> {vm.user.value?.nickname = value; println("nickname: ${vm.user.value?.nickname}")}
-            "achievements" -> {vm.user.value?.achievements = value; println("achievements: ${vm.user.value?.achievements}")}
-            "phoneNumber" -> {vm.user.value?.phoneNumber = value; println("phoneNumber: ${vm.user.value?.phoneNumber}")}
+            "name" -> vm.user.value?.name = value
+            "surname" -> vm.user.value?.surname = value
+            "location" -> vm.user.value?.location = value
+            "nickname" -> vm.user.value?.nickname = value
+            "achievements" -> vm.user.value?.achievements = value
+            "phoneNumber" -> vm.user.value?.phoneNumber = value
         }
     }
 

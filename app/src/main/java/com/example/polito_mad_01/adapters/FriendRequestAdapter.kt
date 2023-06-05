@@ -32,11 +32,9 @@ class FriendRequestAdapter(private val data: List<Pair<String,String>>, private 
         fun bind(friend: Pair<String,String>){
             friendId.text = friend.second
             acceptButton?.setOnClickListener {
-                println("accept $friend")
                 vm.acceptRequest(friend.first)
             }
             declineButton?.setOnClickListener {
-                println("decline $friend")
                 vm.declineRequest(friend.first)
             }
         }

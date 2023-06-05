@@ -35,7 +35,6 @@ class ShowInvitations(val vm: InvitationsViewModel) : Fragment(R.layout.fragment
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setAllView() {
         vm.getUserInvitations().observe(viewLifecycleOwner) { invitations ->
-            println(invitations)
             recyclerViewGameInvitations.adapter= InvitationAdapter(invitations, vm, viewLifecycleOwner, findNavController())
 
             if (invitations.isEmpty()) {

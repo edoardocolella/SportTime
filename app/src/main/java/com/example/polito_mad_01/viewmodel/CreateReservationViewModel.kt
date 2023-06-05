@@ -1,10 +1,8 @@
 package com.example.polito_mad_01.viewmodel
 
 import android.net.Uri
-import android.widget.Toast
 import androidx.lifecycle.*
-import com.example.polito_mad_01.model.Slot
-import com.example.polito_mad_01.model.User
+import com.example.polito_mad_01.model.*
 import com.example.polito_mad_01.repositories.*
 import kotlin.concurrent.thread
 

@@ -58,7 +58,6 @@ class UserRepository{
         val storageReference = storage.reference
         val imageRef = storageReference.child("profileImages/$userID.jpg")
         imageRef.putFile(imageUri)
-            //.addOnSuccessListener { println("Image uploaded") }
         .addOnFailureListener {
             throw Exception("Error while uploading image")
         }
@@ -106,7 +105,6 @@ class UserRepository{
         fs.collection("users")
             .document(uuid)
             .set(user)
-            .addOnSuccessListener { println("User created") }
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -120,8 +118,6 @@ class UserRepository{
                 if (result.isEmpty) {
                     toBeReturned.value = "noAccount"
                 } else {
-                    println("User found ${result.documents[0].id}")
-
                     fs.collection("users")
                         .document(userID).get()
                         .addOnSuccessListener {
@@ -130,7 +126,6 @@ class UserRepository{
                                     .document("${userID}-${result.documents[0].id}")
                                     .set(mapOf("sender" to userID, "receiver" to result.documents[0].id))
                                     .addOnSuccessListener {
-                                        println("Friend request sent")
                                         GlobalScope.launch (Dispatchers.IO){
                                             val data = NotificationData("Friend request",
                                                 "You have a new friend request from ${fAuth.currentUser?.email}",
@@ -167,17 +162,14 @@ class UserRepository{
         fs.collection("users")
             .document(userID)
             .update("friends", FieldValue.arrayUnion(senderUUID))
-            .addOnSuccessListener { println("Friend added") }
 
         fs.collection("users")
             .document(senderUUID)
             .update("friends", FieldValue.arrayUnion(userID))
-            .addOnSuccessListener { println("Friend added") }
 
         fs.collection("friendRequests")
             .document("$senderUUID-$userID")
             .delete()
-            .addOnSuccessListener { println("Request deleted") }
     }
 
     fun declineRequest(senderUUID: String) {
@@ -185,7 +177,6 @@ class UserRepository{
         fs.collection("friendRequests")
             .document("$senderUUID-$userID")
             .delete()
-            .addOnSuccessListener { println("Request deleted") }
     }
 
 
@@ -195,8 +186,6 @@ class UserRepository{
 
     fun subscribeToNotifications() {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-
-        println("SUB Subscribing to notifications")
         FirebaseMessaging.getInstance().subscribeToTopic(userID)
             .addOnCompleteListener {
                 if(it.isSuccessful)
@@ -220,15 +209,10 @@ class UserRepository{
     @OptIn(DelicateCoroutinesApi::class)
     fun sendGameRequest(email: String, slot: Slot) {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-
-        println("email: $email, slotID: ${slot.slot_id}")
-
         fs.collection("users")
             .whereEqualTo("email", email)
             .get()
             .addOnSuccessListener { result ->
-                    println("User found ${result.documents[0].id}")
-
                     fs.collection("gameRequests")
                         .document("${userID}-${result.documents[0].id}-${slot.slot_id}")
                         .set(mapOf("sender" to userID, "receiver" to result.documents[0].id, "slotID" to slot.slot_id, "date" to slot.date))
@@ -249,11 +233,12 @@ class UserRepository{
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
         fs.collection("users")
             .whereEqualTo("skills.$skillName", skillValue)
-            .whereEqualTo("location", location)
+            //.whereEqualTo("location", location)
             .get()
             .addOnSuccessListener { query ->
                 liveDataList.value = query.documents.filter { it.id != userID }
                     .filter { !(it["friends"] as List<*>).contains(userID) }
+                    .filter { it["location"].toString().lowercase() == location.lowercase()}
                     .map {
                     it.toObject(User::class.java)!!
                 }

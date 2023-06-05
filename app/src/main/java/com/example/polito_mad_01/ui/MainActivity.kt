@@ -37,20 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         val navController = (supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
-        println("FRIEND-CHECK: ${intent.getBooleanExtra("friendRequests", false)}")
-        println("GAME-CHECK: ${intent.getBooleanExtra("gameRequests", false)}")
-
-        println(intent.extras)
-
-        if(intent.getBooleanExtra("friendRequests", false)){
-            println("GOTO: friendRequests")
+        if(intent.getBooleanExtra("friendRequests", false))
                 navController.navigate(R.id.showProfileContainer, bundleOf("goto" to "friendRequests"))
-            }
-        else if (intent.getBooleanExtra("gameRequests", false)) {
-            println("GOTO: gameRequests")
+        else if (intent.getBooleanExtra("gameRequests", false))
             navController.navigate(R.id.invitationContainer, bundleOf("goto" to "gameRequests"))
-            }
-
 
         drawerLayout = findViewById(R.id.drawerLayout)
         navView = findViewById(R.id.navView)

@@ -2,17 +2,15 @@ package com.example.polito_mad_01
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.polito_mad_01.ui.MainActivity
-import com.example.polito_mad_01.viewmodel.MainActivityViewModel
-import com.example.polito_mad_01.viewmodel.MainActivityViewModelFactory
-import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.example.polito_mad_01.viewmodel.*
+import com.firebase.ui.auth.*
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.gms.common.SignInButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.*
@@ -89,10 +87,7 @@ class LoginActivity : AppCompatActivity() {
                                     else -> "Some error occured: ${e.errorCode}"
                                 }
 
-                                Toast.makeText(applicationContext,
-                                    errorMessage,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                               Snackbar.make(findViewById(android.R.id.content), errorMessage, Snackbar.LENGTH_LONG).show()
                             }
                         }
                     }
@@ -138,9 +133,8 @@ class LoginActivity : AppCompatActivity() {
                         loginSuccess()
 
                 }
-            } else {
-                Toast.makeText(this, idpResponse.error?.message.toString(), Toast.LENGTH_LONG).show()
             }
+            else Snackbar.make(findViewById(android.R.id.content), idpResponse.error?.message.toString(), Snackbar.LENGTH_LONG).show()
         }
     }
 
