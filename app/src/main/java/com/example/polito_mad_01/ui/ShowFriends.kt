@@ -62,7 +62,6 @@ class ShowFriends(private val vm :ShowProfileViewModel) : Fragment(R.layout.frag
                             when(result) {
                                 "noAccount" -> Snackbar.make(requireView(), "There is no profile linked to that address", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
                                 "alreadyFriend" -> Snackbar.make(requireView(), "You are already friends.", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
-                                "sameMail" -> Snackbar.make(requireView(), "You can't add yourself.", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
                                 else -> Snackbar.make(requireView(), "Request sent successfully.", Snackbar.LENGTH_LONG).setAnchorView(R.id.addFriendButton).show()
                             }
                         }else{

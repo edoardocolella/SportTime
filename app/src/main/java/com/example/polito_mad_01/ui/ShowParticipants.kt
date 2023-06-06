@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.adapters.ParticipantsAdapter
@@ -18,11 +17,11 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
     private lateinit var recyclerViewParticipants: RecyclerView
     private lateinit var noParticipants: TextView
     private lateinit var plusButton: Button
-    var slotOrganizer = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val fAuth = FirebaseAuth.getInstance()
+        var userID = fAuth.currentUser?.uid
 
         noParticipants = UIUtils.findTextViewById(view, R.id.noParticipantsTextView)!!
         noParticipants.visibility=View.GONE
@@ -30,28 +29,28 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
         recyclerViewParticipants.layoutManager = LinearLayoutManager(view.context)
 
         vm.getReservation(slotID).observe(viewLifecycleOwner){ slot ->
-
-            if(slot.user_id != null)
-                slotOrganizer = slot.user_id!!
-            getParticipants()
             plusButton = view.findViewById(R.id.addParticipantsButton)
             if(slot.user_id == fAuth.currentUser?.uid){
                 plusButton.visibility=View.VISIBLE
 
-                vm.getUserFriends().observe(viewLifecycleOwner) {friends ->
-                    val friendsName : Array<String> = friends.map { "${it.first.name} ${it.first.surname}\n(${it.first.nickname})" }.toTypedArray()
+                vm.getUserFriends().observe(viewLifecycleOwner) {p ->
+                    val friends = p
+                        //.map { "${it.nickname} (${it.name} ${it.surname})" }
+                        .map { it.first.email }
+                        .sorted()
+                        .toTypedArray()
                     val selectedFriends = mutableListOf<String>()
 
                     plusButton.setOnClickListener{
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("Invite Friends")
                             .setMultiChoiceItems(
-                                friendsName, null
+                                friends, null
                             ) { _, which, isChecked ->
                                 if (isChecked) {
-                                    selectedFriends += friends[which].first.email
-                                } else if (selectedFriends.contains(friends[which].first.email)) {
-                                    selectedFriends.remove(friends[which].first.email)
+                                    selectedFriends += friends[which]
+                                } else if (selectedFriends.contains(friends[which])) {
+                                    selectedFriends.remove(friends[which])
                                 }
                             }
                             .setPositiveButton("Invite"){ dialog, _ ->
@@ -71,16 +70,14 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
             }
         }
 
-
-    }
-
-    private fun getParticipants(){
         vm.getReservationParticipants(slotID).observe(viewLifecycleOwner) {
-            val mutable = it.toMutableList()
-            val organizer = mutable.first { pair -> pair.second == slotOrganizer }
+            var mutable = it.toMutableList()
+            var organizer = mutable.first { pair -> pair.second == userID }
+            val index = mutable.indexOf(organizer)
             mutable.remove(organizer)
+            organizer=Pair(organizer.first,"organizer")
             mutable.add(0,organizer)
-            recyclerViewParticipants.adapter= ParticipantsAdapter(mutable, findNavController(), slotOrganizer)
+            recyclerViewParticipants.adapter= ParticipantsAdapter(mutable.toList())
 
             if(it.isEmpty()){
                 recyclerViewParticipants.visibility=View.GONE
@@ -90,5 +87,6 @@ class ShowParticipants(val slotID: Int, val vm: ShowReservationsViewModel) : Fra
                 noParticipants.visibility=View.GONE
             }
         }
+
     }
 }

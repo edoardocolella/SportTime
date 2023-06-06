@@ -26,18 +26,14 @@ class ShowOldReservations : Fragment(R.layout.fragment_show_old_reservations) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as MainActivity).setTitle("Past Reservations")
-
         noOldSlots = view.findViewById(R.id.no_old_res_tv)
-        noOldSlots.visibility=View.VISIBLE
+        noOldSlots.visibility=View.GONE
         recyclerViewOldRes =view.findViewById(R.id.oldResRecyclerView)
         recyclerViewOldRes.layoutManager = LinearLayoutManager(view.context)
 
         vm.getOldReservations(LocalDate.now().toString()).observe(viewLifecycleOwner){ oldSlots ->
             recyclerViewOldRes.adapter= OldSlotAdapter(oldSlots, findNavController())
-            println("SLOTS $oldSlots")
             if(oldSlots.isEmpty()){
-                println("VYTO")
                 recyclerViewOldRes.visibility=View.GONE
                 noOldSlots.visibility=View.VISIBLE
             }else{

@@ -24,9 +24,6 @@ class CreateReservation : Fragment(R.layout.fragment_create_reservation) {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        (requireActivity() as MainActivity).setTitle("Free Slot")
-
         setHasOptionsMenu(true)
     }
 

@@ -76,26 +76,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/reservationPlayground"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/reservationPlayground"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:text="Playground Name" />
-
-                        <ImageView
-                            android:id="@+id/slotOwnerIcon"
-                            android:layout_width="0dp"
-                            android:layout_height="16dp"
-                            android:layout_weight="1"
-                            android:visibility="gone"
-                            app:srcCompat="@drawable/crown_solid" />
-                    </LinearLayout>
+                        android:text="Playground Name" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

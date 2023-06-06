@@ -2,7 +2,8 @@ package com.example.polito_mad_01.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.*
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
                 if(showSnackbar){
                     Snackbar.make(parentLayout, "Welcome back ${user.name}", Snackbar.LENGTH_LONG).show()
                     showSnackbar = false
+                    // che vergogna
                 }
 
                 val view = navView.getHeaderView(0)
@@ -73,12 +75,30 @@ class MainActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.profilePage -> navController.navigate(R.id.showProfileContainer)
-                R.id.reservationsPage -> navController.navigate(R.id.reservationsFragment)
-                R.id.browsePage -> navController.navigate(R.id.browseFragment)
-                R.id.oldReservations -> navController.navigate(R.id.showOldReservations)
-                R.id.invitations -> navController.navigate(R.id.invitationContainer)
-                R.id.findFriends -> navController.navigate(R.id.findFriendsWithFilters)
+                R.id.profilePage -> {
+                    supportActionBar?.title = "Profile"
+                    navController.navigate(R.id.showProfileContainer)
+                }
+                R.id.reservationsPage -> {
+                    supportActionBar?.title = "Reservations"
+                    navController.navigate(R.id.reservationsFragment)
+                }
+                R.id.browsePage -> {
+                    supportActionBar?.title = "Free slots"
+                    navController.navigate(R.id.browseFragment)
+                }
+                R.id.oldReservations -> {
+                    supportActionBar?.title = "Past Reservations"
+                    navController.navigate(R.id.showOldReservations)
+                }
+                R.id.invitations -> {
+                    supportActionBar?.title = "Invitations"
+                    navController.navigate(R.id.invitationContainer)
+                }
+                R.id.findFriends -> {
+                    supportActionBar?.title = "Find Friends"
+                    navController.navigate(R.id.findFriendsWithFilters)
+                }
                 R.id.logout -> {
                     vm.logout()
                     auth.signOut()
@@ -89,10 +109,6 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawers()
             true
         }
-    }
-
-    fun setTitle(title: String){
-        supportActionBar?.title = title
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

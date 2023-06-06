@@ -7,19 +7,16 @@ import android.view.View
 import android.widget.Button
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.SportTimeApplication
 import com.example.polito_mad_01.model.User
 import com.example.polito_mad_01.util.UIUtils
 import com.example.polito_mad_01.viewmodel.*
 import com.google.android.material.chip.*
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import io.getstream.avatarview.AvatarView
 import io.getstream.avatarview.coil.loadImage
 
-class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
+class ShowUserProfile : Fragment(R.layout.fragment_profile) {
 
     private val vm: ShowUserProfileViewModel by viewModels {
         ShowUserProfileViewModelFactory(
@@ -39,9 +36,9 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
 
     private fun setAllView() {
 
-        val friendUserId = requireArguments().getString("userId").toString()
+        val currUser = requireArguments().getString("userId").toString()
 
-        vm.getUserById(friendUserId).observe(viewLifecycleOwner) { user->
+        vm.getUserById(currUser).observe(viewLifecycleOwner) {user->
             user.let {
                 UIUtils.setTextView(R.id.fullname, it.name + " " + it.surname, view)
                 UIUtils.setTextView(R.id.nickname, it.nickname, view)
@@ -77,70 +74,11 @@ class ShowUserProfile : Fragment(R.layout.fragment_show_user_profile) {
                 view?.findViewById<ChipGroup>(R.id.chip_group)?.addView(chip)
             }
 
-            setFriendButton(friendUserId,user)
-
         }
 
-        vm.getUserImage(friendUserId).observe(viewLifecycleOwner) { image ->
+        vm.getUserImage(currUser).observe(viewLifecycleOwner) { image ->
             setImage(image)
         }
-    }
-
-    private fun setFriendButton(friendUserId: String, user: User){
-        val myUserId = FirebaseAuth.getInstance().currentUser?.uid
-
-        val addFriendButton = view?.findViewById<Button>(R.id.addFriendButton)
-        val deleteButton = view?.findViewById<Button>(R.id.removeFriendButton)
-        val acceptRequest  = view?.findViewById<Button>(R.id.acceptRequestButton)
-        val declineRequest = view?.findViewById<Button>(R.id.declineRequestButton)
-
-        if(requireArguments().containsKey("isRequest")){
-            deleteButton?.visibility = View.GONE
-            addFriendButton?.visibility = View.GONE
-            acceptRequest?.visibility = View.VISIBLE
-            declineRequest?.visibility = View.VISIBLE
-
-            acceptRequest?.setOnClickListener{
-                vm.acceptRequest(friendUserId)
-                Snackbar.make(it, "Friend request accepted", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.showProfileContainer)
-            }
-
-            declineRequest?.setOnClickListener{
-                vm.declineRequest(friendUserId)
-                Snackbar.make(it, "Friend request declined", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.showProfileContainer)
-            }
-
-        }
-        else {
-            acceptRequest?.visibility = View.GONE
-            declineRequest?.visibility = View.GONE
-            if (friendUserId == myUserId) {
-                deleteButton?.visibility = View.GONE
-                addFriendButton?.visibility = View.GONE
-            }
-            if (user.friends.contains(myUserId)) {
-                deleteButton?.visibility = View.VISIBLE
-                addFriendButton?.visibility = View.GONE
-            }
-            if (!user.friends.contains(myUserId)) {
-                deleteButton?.visibility = View.GONE
-                addFriendButton?.visibility = View.VISIBLE
-            }
-
-            deleteButton?.setOnClickListener {
-                vm.removeFriend(friendUserId)
-                Snackbar.make(it, "Friend removed", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.reservationsFragment)
-            }
-            addFriendButton?.setOnClickListener {
-                vm.addFriend(user.email)
-                Snackbar.make(it, "Friend request sent", Snackbar.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.reservationsFragment)
-            }
-        }
-
     }
 
 

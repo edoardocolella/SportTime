@@ -32,11 +32,11 @@ class FriendsAdapter ( private val data:List<Pair<User,String>>,
         private val friendNickname = UIUtils.findTextViewById(v,R.id.friendNickname)!!
 
         private val item = v.findViewById<CardView>(R.id.friendItem)
+        //private val item = v.findViewById<CardView>(R.id.friendItem)!!
 
 
         fun bind(friend: Pair<User,String>) {
-            val text = "${friend.first.name} ${friend.first.surname}"
-            friendId.text = text
+            friendId.text = friend.first.name + " "+ friend.first.surname
             friendNickname.text = friend.first.nickname
 
             item.setOnClickListener {

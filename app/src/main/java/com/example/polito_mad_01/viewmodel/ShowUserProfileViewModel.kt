@@ -19,22 +19,6 @@ class ShowUserProfileViewModel(private val userRepository: UserRepository) : Vie
         return userRepository.getProfileImageById(id)
     }
 
-    fun removeFriend(friendUser: String) {
-        userRepository.removeFriend(friendUser)
-    }
-
-    fun addFriend(friendUserId: String) {
-        userRepository.addFriend(friendUserId)
-    }
-
-    fun declineRequest(friendUserId: String) {
-        userRepository.declineRequest(friendUserId)
-    }
-
-    fun acceptRequest(friendUserId: String) {
-        userRepository.acceptRequest(friendUserId)
-    }
-
 }
 
 class ShowUserProfileViewModelFactory(private val userRepository: UserRepository) :

@@ -33,9 +33,6 @@ class FindFriendsWithFilters : Fragment(R.layout.fragment_find_friends_with_filt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (requireActivity() as MainActivity).setTitle("Find Friends")
-
-
         mView = view
 
         skillName = mView.findViewById(R.id.skillName)

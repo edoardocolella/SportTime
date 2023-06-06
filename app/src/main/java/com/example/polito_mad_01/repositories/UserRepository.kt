@@ -134,15 +134,7 @@ class UserRepository{
     @OptIn(DelicateCoroutinesApi::class)
     fun addFriend(email: String): LiveData<String> {
         val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-        val myMail = fAuth.currentUser?.email ?: throw Exception("User not logged in")
         val toBeReturned = MutableLiveData<String>()
-
-        if(myMail == email){
-            toBeReturned.value = "sameMail"
-            return toBeReturned
-        }
-
-
         fs.collection("users")
             .whereEqualTo("email", email)
             .get()
@@ -283,17 +275,6 @@ class UserRepository{
                 }
             }
         return liveDataList
-    }
-
-    fun removeFriend(friendUUID: String) {
-        val userID = fAuth.currentUser?.uid ?: throw Exception("User not logged in")
-        fs.collection("users")
-            .document(userID)
-            .update("friends", FieldValue.arrayRemove(friendUUID))
-
-        fs.collection("users")
-            .document(friendUUID)
-            .update("friends", FieldValue.arrayRemove(userID))
     }
 
 

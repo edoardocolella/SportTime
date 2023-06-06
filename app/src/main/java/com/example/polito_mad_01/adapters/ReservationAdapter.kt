@@ -7,7 +7,6 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.polito_mad_01.R
 import com.example.polito_mad_01.model.*
-import com.google.firebase.auth.FirebaseAuth
 
 class ReservationAdapter(
     private val data: List<Slot>,
@@ -35,7 +34,6 @@ class ReservationAdapter(
         private val slotDate = findTextViewById(R.id.reservationDate)
         private val slotTime = findTextViewById(R.id.reservationTime)
         private val sportImage = view.findViewById<ImageView>(R.id.reservationSportImage)
-        private val slotOwnerIcon = view.findViewById<ImageView>(R.id.slotOwnerIcon)
 
         private val reservationItem: View = view.findViewById(R.id.reservationItem)
 
@@ -45,6 +43,8 @@ class ReservationAdapter(
         }
 
         fun bind(slot: Slot) {
+
+
             reservationItem.setOnClickListener {
                 when(navController.currentDestination?.id){
                     R.id.reservationsFragment -> {
@@ -74,14 +74,6 @@ class ReservationAdapter(
                     else -> R.drawable.selection_background
                 }
             )
-
-            val userId = FirebaseAuth.getInstance().currentUser!!.uid
-
-            if(slot.user_id == userId){
-                slotOwnerIcon.visibility = View.VISIBLE
-            } else {
-                slotOwnerIcon.visibility = View.GONE
-            }
         }
     }
 }

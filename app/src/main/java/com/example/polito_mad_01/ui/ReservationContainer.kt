@@ -39,18 +39,13 @@ class ReservationContainer : Fragment(R.layout.fragment_reservation_container) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (requireActivity() as MainActivity).setTitle("Reservation")
-
-
-        if(savedInstanceState == null)
-            setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         vm.getReservation(requireArguments().getInt("slotID")).observe(viewLifecycleOwner) {
-            menu.clear()
             if ((LocalDate.now().toString() < it.date
                         || (LocalDate.now().toString() == it.date
                         && it.start_time > LocalTime.now().toString()))
