@@ -6,4 +6,4 @@ Credential to access:
 
 ## Images
 
-![screenshot}(./screenshot.png)
+![screenshot](./screenshot.png)
