@@ -3,3 +3,7 @@
 Credential to access:
 - mail: `mario.rossi@mail.com` 
 - password: `password`
+
+## Images
+
+![screenshot}(./screenshot.png)
